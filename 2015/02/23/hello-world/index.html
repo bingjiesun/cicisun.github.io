@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Hello World | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-23T06:27:24.000Z" itemprop="datePublished">
+          Feb 23 2015
+      </time>
+    
+</span>
+    <h1 class="post-title">Hello World</h1>
+    <section class="post-content">
+      <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> urllib</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> codecs</div><div class="line">from lxml <span class="keyword">import</span> etree</div><div class="line"><span class="keyword">import</span> nltk</div><div class="line"></div><div class="line">rootURL = <span class="string">'https://api.datamarket.azure.com/Bing/Search/v1/Web'</span></div><div class="line"># To be substituted</div><div class="line">accKey = <span class="string">'gQ+gama5GAfLoQmix8AKEn5Nop24Tlu34tRapNPOImI'</span></div><div class="line"># iteration times</div><div class="line">times = <span class="number">1</span></div><div class="line"></div><div class="line">def main():</div><div class="line">	queryStr = raw_input(<span class="string">'Please input the query word(s), separated by space: '</span>)</div><div class="line">	target = raw_input(<span class="string">'Please input the target precision: '</span>)</div><div class="line">	<span class="keyword">try</span>:</div><div class="line">		target = <span class="keyword">float</span>(target)</div><div class="line">		<span class="keyword">if</span> target &lt; <span class="number">0</span> or target &gt; <span class="number">1</span>:</div><div class="line">			raise ValueError</div><div class="line">	except ValueError:</div><div class="line">		print <span class="string">'Illegal precision!'</span></div><div class="line">		sys.exit()</div><div class="line"></div><div class="line">	data, precision = startSearch(queryStr)</div><div class="line"></div><div class="line">	<span class="keyword">while</span> precision &lt; target:</div><div class="line">		print <span class="string">'Still below than the target precision of'</span>, target</div><div class="line">		queryStr = adjustQuery(queryStr, data)</div><div class="line">		times += <span class="number">1</span></div><div class="line">		data, precision = startSearch(queryStr)</div><div class="line">	print <span class="string">'Target precision reached. Done.'</span></div><div class="line">#calculate precison each iteration:</div><div class="line">def calcPrecison(data):</div><div class="line">	rel = <span class="number">0</span></div><div class="line">	<span class="keyword">for</span> item in data:</div><div class="line">		<span class="keyword">if</span> item[<span class="string">'rel'</span>]:</div><div class="line">			rel += <span class="number">1</span></div><div class="line">	<span class="keyword">return</span> <span class="keyword">float</span>(rel) / len(data)</div><div class="line">#pre-process text: str_source is the text needed to be processed; replace all words to <span class="keyword">char</span></div><div class="line">def str_replace(str_source,<span class="keyword">char</span>,*words):</div><div class="line">    str_temp=str_source    </div><div class="line">    <span class="keyword">for</span> word in words:</div><div class="line">        str_temp=str_temp.replace(word,<span class="keyword">char</span>)</div><div class="line">    <span class="keyword">return</span> str_temp	</div><div class="line">def startSearch(queryStr):</div><div class="line">	print <span class="string">'========================'</span></div><div class="line">	print <span class="string">'Round'</span>, times</div><div class="line">	print <span class="string">'Query:'</span>, queryStr</div><div class="line">	print <span class="string">'========================'</span></div><div class="line">	uri = rootURL + <span class="string">"?Query="</span> + urllib.quote_plus(<span class="string">"'"</span> + queryStr + <span class="string">"'"</span>)</div><div class="line">	result = requests.get(uri, auth=(accKey, accKey))</div><div class="line">	# Parse result</div><div class="line">	data = [{} <span class="keyword">for</span> i in range(<span class="number">10</span>)]</div><div class="line">	# <span class="keyword">for</span> test only</div><div class="line">	tree = etree.fromstring(result.text.encode(<span class="string">'ascii'</span>, <span class="string">'replace'</span>))</div><div class="line">	#tree = etree.fromstring(result.text)</div><div class="line">	metas = tree.findall(<span class="string">'.//m:properties'</span>, tree.nsmap)</div><div class="line">	#set data dict values</div><div class="line">	<span class="keyword">for</span> i in range(<span class="number">10</span>):</div><div class="line">		title = metas[i].find(<span class="string">'d:Title'</span>, tree.nsmap).text</div><div class="line">		description = metas[i].find(<span class="string">'d:Description'</span>, tree.nsmap).text</div><div class="line">		url = metas[i].find(<span class="string">'d:Url'</span>, tree.nsmap).text</div><div class="line">		# record data</div><div class="line">		data[i][<span class="string">'url'</span>] = url</div><div class="line">		data[i][<span class="string">'title'</span>] = title</div><div class="line">		data[i][<span class="string">'description'</span>] = description</div><div class="line">		print <span class="string">'Result'</span>, i + <span class="number">1</span></div><div class="line">		print <span class="string">'['</span></div><div class="line">		print <span class="string">' URL:'</span>, url</div><div class="line">		print <span class="string">' Ttile:'</span>, title</div><div class="line">		print <span class="string">' Summary:'</span>, description</div><div class="line">		print <span class="string">']'</span></div><div class="line">		rel = raw_input(<span class="string">'\nRelevant (Y/N)?'</span>)</div><div class="line">		data[i][<span class="string">'rel'</span>] = True <span class="keyword">if</span> rel == <span class="string">'Y'</span> or rel == <span class="string">'y'</span> <span class="keyword">else</span> False</div><div class="line">	#calculate precsion</div><div class="line">	precision = calcPrecison(data)</div><div class="line">	print <span class="string">'========================'</span></div><div class="line">	print <span class="string">'Feedback Summary'</span></div><div class="line">	print <span class="string">'Query:'</span>, queryStr</div><div class="line">	print <span class="string">'Precision:'</span>, precision</div><div class="line">	<span class="keyword">return</span> data, precision</div><div class="line"># Adjust query - key part</div><div class="line">def adjustQuery(queryStr, data):</div><div class="line">	### start calculating TF-IDF scores</div><div class="line">	tf={}  </div><div class="line">	df={} </div><div class="line">	N=len(data)</div><div class="line">	print <span class="string">'Indexing results ....'</span></div><div class="line">	<span class="keyword">for</span> i in xrange(N):</div><div class="line">		#tokenize each description, more pre-processing measure to be added...</div><div class="line">		tmp_dj=data[i][<span class="string">'description'</span>]</div><div class="line">		<span class="keyword">for</span> word in nltk.word_tokenize(tmp_dj):</div><div class="line">			<span class="keyword">if</span> word not in tf[i]:</div><div class="line">				tf[i][word]=</div><div class="line">	print <span class="string">'Augmenting by: ['</span> ,queryStr,<span class="string">']'</span></div><div class="line">	<span class="keyword">return</span> queryStr</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>: main()</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/23/hello-world/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/23/hello-world/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/23/hello-world/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/23/hello-world/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/12.31/">
+        ← Add Binary, Add Two Numbers
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

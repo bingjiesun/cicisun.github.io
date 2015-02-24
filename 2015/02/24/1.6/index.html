@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Substring with Concatenation of All Words, Longest Substring Without Repeating Characters, Minimum Window Substring, Longest Palindromic Substring | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-24T08:51:40.000Z" itemprop="datePublished">
+          Feb 24 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Sort/'>Sort</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Substring with Concatenation of All Words, Longest Substring Without Repeating Characters, Minimum Window Substring, Longest Palindromic Substring</h1>
+    <section class="post-content">
+      <h2 id="Substring_with_Concatenation_of_All_Words">Substring with Concatenation of All Words</h2>
+<blockquote>
+<p>You are given a string, S, and a list of words, L, that are all of the same length. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.<br>For example, given:<br>S: “barfoothefoobarman”<br>L: [“foo”, “bar”]<br>You should return the indices: [0,9].<br>(order does not matter).</p>
+</blockquote>
+<h3 id="Brute_Force_Solution">Brute Force Solution</h3>
+<p>Two Hashmaps</p>
+<li>rest: store all words in L, including times of appreance</li>
+
+<li>found: renew at each round, store matched words, including times of appreance</li>
+
+<p>Two pointers</p>
+<li>i: starting index of current substring</li>
+
+<li>j: numebers of words matched to current substring</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">findSubstring</span>(String S, String[] L) {</div><div class="line">     ArrayList&lt;Integer&gt; res=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">     HashMap&lt;String, Integer&gt; rest=<span class="keyword">new</span>  HashMap&lt;String, Integer&gt;();</div><div class="line">     HashMap&lt;String, Integer&gt; found=<span class="keyword">new</span>  HashMap&lt;String, Integer&gt;();</div><div class="line">     <span class="keyword">if</span>(S==<span class="keyword">null</span>||L.length==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">     <span class="keyword">int</span> wordlen=L[<span class="number">0</span>].length(), Llen=L.length, Slen=S.length();</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;L.length;i++){</div><div class="line">         <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">         <span class="keyword">if</span>(rest.get(L[i])!=<span class="keyword">null</span>) </div><div class="line">             num+=rest.get(L[i]);</div><div class="line">         rest.put(L[i], num);</div><div class="line">     }</div><div class="line">    </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;Slen-Llen*wordlen+<span class="number">1</span>;i++){</div><div class="line">         <span class="keyword">int</span> j=<span class="number">0</span>;</div><div class="line">         found.clear();</div><div class="line">         <span class="keyword">for</span>(;j&lt;Llen;j++){</div><div class="line">             <span class="keyword">int</span> start=i+j*wordlen;</div><div class="line">             <span class="keyword">int</span> end=start+wordlen;</div><div class="line">             <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">             String tmp=S.substring(start, end);</div><div class="line">             <span class="keyword">if</span>(!rest.containsKey(tmp)) <span class="keyword">break</span>;</div><div class="line">             <span class="keyword">if</span>(found.get(tmp)!=<span class="keyword">null</span>) num+=found.get(tmp);</div><div class="line">             <span class="keyword">if</span>(num&gt;rest.get(tmp)) <span class="keyword">break</span>;</div><div class="line">             found.put(tmp, num);</div><div class="line">         }</div><div class="line">         <span class="keyword">if</span>(j==Llen) res.add(i);</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> res;   </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<p><a href="http://www.cnblogs.com/springfor/p/3872516.html" target="_blank" rel="external">Minimun Window Solution</a></p>
+<li>outer loop: i increment wordlen times, each time scan through S</li>
+
+<li>inner loop: j increment wordlen per time, until first letter of last word</li>
+
+<li>each outerloop: reset count=0, reset index=i</li>
+
+<li>each innerloop: curdict to store current window</li>
+
+<p>If tmp str not found in dict, increment index, reset count and curdict<br>If found, add to curdict, count++<br>before count++: compare num, if exceeded, increment index ,then decrement count and curdict<br>If count equals listlen add index into result, increment index, update curdict</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">findSubstring</span>(String S, String[] L) { </div><div class="line">  ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">  <span class="keyword">if</span>(S==<span class="keyword">null</span>||L==<span class="keyword">null</span>||S.length()==<span class="number">0</span>||L.length==<span class="number">0</span>)</div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">  <span class="keyword">int</span> wordLen = L[<span class="number">0</span>].length();<span class="comment">//same length for each word in dictionary</span></div><div class="line">  </div><div class="line">  <span class="comment">//put given dictionary into hashmap with each word's count</span></div><div class="line">  HashMap&lt;String, Integer&gt; dict = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">  <span class="keyword">for</span>(String word: L){</div><div class="line">      <span class="keyword">if</span>(!dict.containsKey(word))</div><div class="line">         dict.put(word, <span class="number">1</span>);</div><div class="line">      <span class="keyword">else</span></div><div class="line">         dict.put(word, dict.get(word) + <span class="number">1</span>);</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; wordLen; i++){</div><div class="line">      <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">      <span class="keyword">int</span> index = i;<span class="comment">//index of each startpoint</span></div><div class="line">      HashMap&lt;String, Integer&gt; curdict = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">      <span class="comment">//till the first letter of last word </span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt;= S.length() - wordLen; j += wordLen){</div><div class="line">          String curWord = S.substring(j, j + wordLen);</div><div class="line">          <span class="comment">//check each word to tell if it existes in give dictionary</span></div><div class="line">          <span class="keyword">if</span>(!dict.containsKey(curWord)){</div><div class="line">              curdict.clear();</div><div class="line">              count = <span class="number">0</span>;</div><div class="line">              index = j + wordLen;</div><div class="line">          }<span class="keyword">else</span>{</div><div class="line">              <span class="comment">//form current dictionary</span></div><div class="line">              <span class="keyword">if</span>(!curdict.containsKey(curWord))</div><div class="line">                 curdict.put(curWord, <span class="number">1</span>);</div><div class="line">              <span class="keyword">else</span></div><div class="line">                 curdict.put(curWord, curdict.get(curWord) + <span class="number">1</span>);</div><div class="line">              </div><div class="line">              <span class="comment">//count for current found word and check if it exceed given word count</span></div><div class="line">              <span class="keyword">if</span>(curdict.get(curWord) &lt;= dict.get(curWord)){</div><div class="line">                  count++;</div><div class="line">              }<span class="keyword">else</span>{</div><div class="line">                <span class="keyword">while</span>(curdict.get(curWord) &gt; dict.get(curWord)){</div><div class="line">                     String temp = S.substring(index, index + wordLen);</div><div class="line">                     curdict.put(temp, curdict.get(temp)-<span class="number">1</span>);</div><div class="line">                     index = index + wordLen;<span class="comment">//make index move next</span></div><div class="line">                     <span class="keyword">if</span>(curdict.get(temp)&lt;dict.get(temp))</div><div class="line">                     count--;</div><div class="line">                 }</div><div class="line">              }</div><div class="line">              </div><div class="line">              <span class="comment">//put into res and move index point to nextword </span></div><div class="line">              <span class="comment">//and update current dictionary as well as count num</span></div><div class="line">              <span class="keyword">if</span>(count == L.length){</div><div class="line">                  res.add(index);</div><div class="line">                  String temp = S.substring(index, index + wordLen);</div><div class="line">                  curdict.put(temp, curdict.get(temp)-<span class="number">1</span>);</div><div class="line">                  index = index + wordLen;</div><div class="line">                  count--;</div><div class="line">              }</div><div class="line">          }</div><div class="line">      }<span class="comment">//end for j</span></div><div class="line">  }<span class="comment">//end for i</span></div><div class="line">   <span class="keyword">return</span> res;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<h2 id="Longest_Substring_Without_Repeating_Characters">Longest Substring Without Repeating Characters</h2>
+<blockquote>
+<p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.</p>
+</blockquote>
+<h3 id="Brute_force_method">Brute force method</h3>
+<p>Find all substrings and check if each of it contains only unique characters. As for the maxlength, we use Greedy Algorithm to only keep the longest substring seen so far. There are one inner loop and each check takes linear time, O(N^2) time won’t pass the OJ.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span>(String s) {</div><div class="line"><span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> maxlen=<span class="number">1</span>;</div><div class="line">Hashtable &lt;Character, Boolean&gt; map=<span class="keyword">new</span> Hashtable&lt;Character, Boolean&gt;();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt; s.length();i++){</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;s.length();j++){</div><div class="line">        <span class="keyword">if</span>(map.containsKey(s.charAt(j))){map.clear(); <span class="keyword">break</span>;}</div><div class="line">        <span class="keyword">else</span>{map.put(s.charAt(j), <span class="keyword">false</span>);}</div><div class="line">        <span class="keyword">int</span> len=map.size();</div><div class="line">        <span class="keyword">if</span>(len&gt;maxlen){maxlen=len;}</div><div class="line">    }</div><div class="line">}</div><div class="line">    <span class="keyword">return</span> maxlen;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><a href="http://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/" target="_blank" rel="external">Better Solution</a><br>Use a Hashmap/Hashset recording current substring and two pointers to record current positions.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span>(String s) {</div><div class="line">    <span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> maxlen=<span class="number">1</span>,l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">        Hashtable &lt;Character, Boolean&gt; map=<span class="keyword">new</span> Hashtable&lt;Character, Boolean&gt;();</div><div class="line">        <span class="keyword">while</span>(r&lt;s.length()){</div><div class="line">            <span class="keyword">char</span> tmp=s.charAt(r);</div><div class="line">            <span class="keyword">if</span>(!map.containsKey(tmp)||map.get(tmp)==<span class="keyword">false</span>){</div><div class="line">                map.put(tmp, <span class="keyword">true</span>);</div><div class="line">                maxlen=Math.max((r-l+<span class="number">1</span>), maxlen);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">while</span>(s.charAt(l)!=s.charAt(r)){map.put(s.charAt(l), <span class="keyword">false</span>);l++;}</div><div class="line">                l++;</div><div class="line">            }</div><div class="line">            r++;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> maxlen;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="Minimum_Window_Substring">Minimum Window Substring</h2>
+<blockquote>
+<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).<br>For example,<br>S = “ADOBECODEBANC”<br>T = “ABC”<br>Minimum window is “BANC”.<br>Note:<br>If there is no such window in S that covers all characters in T, return the emtpy string “”.<br>If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.</p>
+</blockquote>
+<h3 id="Min_Sliding_Window_Solution"><a href="http://blog.csdn.net/linhuanmars/article/details/20343903" target="_blank" rel="external">Min Sliding Window Solution</a></h3>
+<li>Use a Hashmap to record each character, numbers in T</li>
+
+<li>Two pointers:</li><br>left: increment when current substring contains all chars in T, pass unrelevant chars and exceeded chars<br>right: increment each loop, if found a match in T decrement its Hashmap value<br><br><li>Minlen: when we found a new substring update minlength</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">    HashMap&lt;Character,Integer&gt; dict=<span class="keyword">new</span> HashMap&lt;Character,Integer&gt;();</div><div class="line">    <span class="keyword">int</span> tlen=T.length(), slen=S.length(),minlen=slen+<span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tlen;i++){</div><div class="line">        <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(dict.containsKey(T.charAt(i))) num+=dict.get(T.charAt(i));</div><div class="line">        dict.put(T.charAt(i),num);</div><div class="line">    }</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>,left=<span class="number">0</span>,start=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;slen;i++){</div><div class="line">        <span class="keyword">if</span>(dict.containsKey(S.charAt(i))){</div><div class="line">            dict.put(S.charAt(i),dict.get(S.charAt(i))-<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(dict.get(S.charAt(i))&gt;=<span class="number">0</span>) count++;</div><div class="line">            <span class="keyword">if</span>(count==tlen){</div><div class="line">                <span class="keyword">while</span>(count==tlen){</div><div class="line">                    <span class="keyword">if</span>(i-left+<span class="number">1</span>&lt;minlen){minlen=i-left+<span class="number">1</span>; start=left; }</div><div class="line">                    <span class="keyword">if</span>(dict.containsKey(S.charAt(left))) {</div><div class="line">                         dict.put(S.charAt(left),dict.get(S.charAt(left))+<span class="number">1</span>);</div><div class="line">                         <span class="keyword">if</span>(dict.get(S.charAt(left))&gt;<span class="number">0</span>) count--;</div><div class="line">                    }</div><div class="line">                    left++;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    </div><div class="line">     <span class="keyword">return</span> minlen&gt;slen? <span class="string">""</span>:S.substring(start,start+minlen);</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Another version using <a href="http://www.lifeincode.net/programming/leetcode-minimum-window-substring-java/" target="_blank" rel="external">two hashmaps</a>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">    HashMap&lt;Character, Integer&gt; dict = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T.length(); i++) {</div><div class="line">        <span class="keyword">char</span> c = T.charAt(i);</div><div class="line">        <span class="keyword">if</span> (!dict.containsKey(c))</div><div class="line">            dict.put(c, <span class="number">1</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            dict.put(c, dict.get(c) + <span class="number">1</span>);</div><div class="line">    }</div><div class="line">    HashMap&lt;Character, Integer&gt; found = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">int</span> foundCounter = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> end = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> min = Integer.MAX_VALUE;</div><div class="line">    String minWindow = <span class="string">""</span>;</div><div class="line">    <span class="keyword">while</span> (end &lt; S.length()) {</div><div class="line">        <span class="keyword">char</span> c = S.charAt(end);</div><div class="line">        <span class="keyword">if</span> (dict.containsKey(c)) {</div><div class="line">            <span class="keyword">if</span> (found.containsKey(c)) {</div><div class="line">                <span class="keyword">if</span> (found.get(c) &lt; dict.get(c))</div><div class="line">                    foundCounter++;</div><div class="line">                found.put(c, found.get(c) + <span class="number">1</span>);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                found.put(c, <span class="number">1</span>);</div><div class="line">                foundCounter++;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (foundCounter == T.length()) {</div><div class="line">            <span class="comment">//When foundCounter equals to T.length(), in other words, found all characters.</span></div><div class="line">            <span class="keyword">char</span> sc = S.charAt(start);</div><div class="line">            <span class="keyword">while</span> (!found.containsKey(sc) || found.get(sc) &gt; dict.get(sc)) {</div><div class="line">                <span class="keyword">if</span> (found.containsKey(sc) && found.get(sc) &gt; dict.get(sc))</div><div class="line">                    found.put(sc, found.get(sc) - <span class="number">1</span>);</div><div class="line">                start++;</div><div class="line">                sc = S.charAt(start);</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span> (end - start + <span class="number">1</span> &lt; min) {</div><div class="line">                minWindow = S.substring(start, end + <span class="number">1</span>);</div><div class="line">                min = end - start + <span class="number">1</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        end++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> minWindow;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Array_Solution">Array Solution</h3>
+<p>To count occurrence of characters, instead of using a hash map, can use an int array of 256<br>Two pointer method with one point to end and one point to start.<br>Pointer advance condition: move end forward till finds one window, then move start forward till the window no longer valid</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">        <span class="keyword">int</span>[] map=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>],found=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">int</span> start=<span class="number">0</span>, count=<span class="number">0</span>,end=<span class="number">0</span>,minlen=S.length()+<span class="number">1</span>,tlen=T.length(),slen=S.length();</div><div class="line">        String min=<span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tlen; i++){</div><div class="line">            map[T.charAt(i)]++;</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(;end&lt;slen;end++){</div><div class="line">            <span class="keyword">if</span>(map[S.charAt(end)]&gt;found[S.charAt(end)]) {count++;}</div><div class="line">            found[S.charAt(end)]++;</div><div class="line">            <span class="keyword">if</span>(count==T.length()){</div><div class="line">                <span class="keyword">while</span>(found[S.charAt(start)]&gt;map[S.charAt(start)])</div><div class="line">                {   found[S.charAt(start)]--;</div><div class="line">                    start++;</div><div class="line">                }</div><div class="line">                <span class="keyword">if</span>(end-start+<span class="number">1</span>&lt;minlen) {minlen=end-start+<span class="number">1</span>; min = S.substring(start, end+<span class="number">1</span>);</div><div class="line">}</div><div class="line">                found[S.charAt(start)]--;</div><div class="line">                start++;</div><div class="line">                count--;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> min;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Longest_Palindromic_Substring">Longest Palindromic Substring</h2>
+<blockquote>
+<p>Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.</p>
+</blockquote>
+<h3 id="Brute_Force_Solution-1">Brute Force Solution</h3>
+<p>Find all possible substrings and check if each is palindrome. O(N^3) too LTE…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome</span>(String s) {</div><div class="line">       <span class="keyword">int</span> maxlen=<span class="number">0</span>; </div><div class="line">       String maxstr=<span class="keyword">null</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;s.length();j++){</div><div class="line">               String tmp=s.substring(i,j+<span class="number">1</span>);</div><div class="line">               <span class="keyword">if</span>(IsPalindrome(tmp)&&tmp.length()&gt;maxlen)</div><div class="line">                   {</div><div class="line">                   maxlen=tmp.length();</div><div class="line">                   maxstr=tmp;}</div><div class="line">           }</div><div class="line">       }<span class="keyword">return</span> maxstr;</div><div class="line">   }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> Boolean <span class="title">IsPalindrome</span>(String s) {</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">       <span class="keyword">if</span>(s.charAt(i)!=s.charAt(s.length()-<span class="number">1</span>-i)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       } <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<p>Time O(n^2) Space O(n^2) but didn’t pass OJ. Why?<br>Three rounds of loops:</p>
+<li>set diagonal to 1: t[i][i]=0</li><br><li>set top-right second diagonal: t[i][i+1]=1 if two consecutive character</li><br><li>set whole table [diagonaly]</li><br><li>a. start from substring length 3 to full length</li><br><li>b. inner loop: from 0 to length-len, check substring(i, i+len), set t[i][i+len-1] according to changing rule:</li><br><li>c. If s.charAt(i) == s.charAt(j) then t[i][j] = t[i + 1][j - 1]</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome2</span>(String s) {</div><div class="line">          <span class="keyword">int</span> maxlen=<span class="number">0</span>; </div><div class="line">          String maxstr=<span class="keyword">null</span>;</div><div class="line">          <span class="keyword">int</span>[][] t=<span class="keyword">new</span> <span class="keyword">int</span>[s.length()][s.length()];</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){t[i][i]=<span class="number">1</span>;}</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length()-<span class="number">1</span>;i++){</div><div class="line">              <span class="keyword">if</span>(s.charAt(i)==s.charAt(i+<span class="number">1</span>))</div><div class="line">                  {t[i][i+<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">                  maxlen=<span class="number">2</span>;maxstr=s.substring(i,i+<span class="number">2</span>);}</div><div class="line">              <span class="keyword">else</span> t[i][i+<span class="number">1</span>]=<span class="number">0</span>;</div><div class="line">              }</div><div class="line">          </div><div class="line">          printTable(t);</div><div class="line">          </div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">3</span>; len &lt;= s.length(); len++) {</div><div class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= s.length()-len; i++) {</div><div class="line">                  <span class="keyword">int</span> j = i + len - <span class="number">1</span>;</div><div class="line">                  <span class="keyword">if</span> (s.charAt(i) == s.charAt(j)) {</div><div class="line">                      t[i][j] = t[i + <span class="number">1</span>][j - <span class="number">1</span>];</div><div class="line">                      <span class="keyword">if</span> (t[i][j] == <span class="number">1</span> && len &gt; maxlen)</div><div class="line">                          maxstr = s.substring(i, j + <span class="number">1</span>);</div><div class="line">                  } </div><div class="line">                  <span class="keyword">else</span> {t[i][j]=<span class="number">0</span>;}</div><div class="line">                  printTable(t);</div><div class="line">              }</div><div class="line">          }</div><div class="line">          </div><div class="line">          <span class="keyword">return</span> maxstr;</div><div class="line">          </div><div class="line">    }</div><div class="line">      </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printTable</span>(<span class="keyword">int</span>[][] x){</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> [] y : x){</div><div class="line">              <span class="keyword">for</span>(<span class="keyword">int</span> z: y){</div><div class="line">                  System.out.print(z + <span class="string">" "</span>);</div><div class="line">              }</div><div class="line">              System.out.println();</div><div class="line">          }</div><div class="line">          System.out.println(<span class="string">"------"</span>);</div><div class="line">      }</div></pre></td></tr></table></figure>
+
+<p><a href="http://www.programcreek.com/2013/12/leetcode-solution-of-longest-palindromic-substring-java/" target="_blank" rel="external">Another Algorithm</a></p>
+<p>i from 0 to length-1, get palindrom substring with center of i or i, i+1, keep updating the longest substring: Time O(n^2), space O(1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome</span>(String s) {       </div><div class="line">          String maxstr = <span class="string">""</span>;</div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) {</div><div class="line">              <span class="comment">// get longest palindrome with center of i eg: BAB</span></div><div class="line">              String tmp = helper(s, i, i);</div><div class="line">              <span class="keyword">if</span> (tmp.length() &gt; maxstr.length()) {</div><div class="line">                  maxstr = tmp;</div><div class="line">              }</div><div class="line">       </div><div class="line">              <span class="comment">// get longest palindrome with center of i, i+1 eg: ABBA</span></div><div class="line">              tmp = helper(s, i, i + <span class="number">1</span>);</div><div class="line">              <span class="keyword">if</span> (tmp.length() &gt; maxstr.length()) {</div><div class="line">                  maxstr = tmp;</div><div class="line">              }</div><div class="line">          }</div><div class="line">       </div><div class="line">          <span class="keyword">return</span> maxstr;</div><div class="line">      }</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">helper</span>(String s, <span class="keyword">int</span> begin, <span class="keyword">int</span> end) {</div><div class="line">          <span class="keyword">while</span> (begin &gt;= <span class="number">0</span> && end &lt;= s.length() - <span class="number">1</span> && s.charAt(begin) == s.charAt(end)) {</div><div class="line">              begin--;</div><div class="line">              end++;</div><div class="line">          }</div><div class="line">          <span class="keyword">return</span> s.substring(begin + <span class="number">1</span>, end);</div><div class="line">          }</div></pre></td></tr></table></figure>
+
+<p><a href="http://algs4.cs.princeton.edu/53substring/Manacher.java.html" target="_blank" rel="external">Manacher’s algorithm</a><br>Computes the longest palindromic substring in linear time.</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/24/1.6/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/24/1.6/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/24/1.6/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/24/1.6/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/1.17/">
+        ← Best Time to Buy and Sell Stock, Best Time to Buy and Sell Stock II, Best Time to Buy and Sell Stock III
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/1.9/">
+        Reverse Integer, Reverse Linked List I, Reverse Linked List II, Reverse Nodes in k-Group, Rotate List →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

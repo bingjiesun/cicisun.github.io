@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Majority Element, Gray Code | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-24T09:47:34.000Z" itemprop="datePublished">
+          Feb 24 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Sort/'>Sort</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Majority Element, Gray Code</h1>
+    <section class="post-content">
+      <h2 id="Majority_Element">Majority Element</h2>
+<blockquote>
+<p>Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.<br>You may assume that the array is non-empty and the majority element always exist in the array.</p>
+</blockquote>
+<h3 id="Two_pass_solution">Two pass solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">majorityElement</span>(<span class="keyword">int</span>[] num) {</div><div class="line">    <span class="keyword">int</span> n=num.length;</div><div class="line">    HashMap&lt;Integer, Integer&gt; map=<span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(!map.containsKey(num[i])) map.put(num[i], <span class="number">1</span>);</div><div class="line">        <span class="keyword">else</span> map.put(num[i], map.get(num[i])+<span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span>(map.get(num[i])&gt;=(n/<span class="number">2</span>)+<span class="number">1</span>) <span class="keyword">return</span> num[i];</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Moore_voting_algorithm">Moore voting algorithm</h3>
+<p>Basic idea of the algorithm is if we cancel out each occurrence of an element e with all the other elements that are different from e then e will exist till end if it is a majority element. This takes O(n) time.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">majorityElement</span>(<span class="keyword">int</span>[] num) {</div><div class="line">    <span class="keyword">int</span> n=num.length, count=<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> tmp=num[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(count==<span class="number">0</span>) {tmp=num[i];count++;}</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(num[i]==tmp) count++;</div><div class="line">        <span class="keyword">else</span> count--;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> tmp;     </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Gray_Code">Gray Code</h2>
+<blockquote>
+<p>The gray code is a binary numeral system where two successive values differ in only one bit.<br>Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.<br>For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">00 - 0</div><div class="line">01 - 1</div><div class="line">11 - 3</div><div class="line">10 - 2</div></pre></td></tr></table></figure>
+
+<p>Note:<br>For a given n, a gray code sequence is not uniquely defined.<br>For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.<br>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p>
+<h3 id="Recursive_solution">Recursive solution</h3>
+<p>For 3 bit case: [0,1,3,2,6,7,5,4], we found that the first four numbers in case n=3 are the same as the the numbers in case n=2. Besides, [6,7,5,4] = [2+4,3+4,1+4,0+4].</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">grayCode</span>(<span class="keyword">int</span> n) {</div><div class="line">    List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) {</div><div class="line">        ret.add(<span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    }</div><div class="line">    </div><div class="line">    ret = grayCode(n - <span class="number">1</span>);</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = ret.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {</div><div class="line">        <span class="keyword">int</span> num = ret.get(i);</div><div class="line">        num += <span class="number">1</span> &lt;&lt; (n - <span class="number">1</span>);</div><div class="line">        ret.add(num);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ret;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<p>Use the above mentioned mirror image property:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">grayCode</span>(<span class="keyword">int</span> n) {</div><div class="line">  ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">  <span class="keyword">if</span> (n == <span class="number">0</span>) {</div><div class="line">    result.add(<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  }</div><div class="line">  ;</div><div class="line">  result.add(<span class="number">0</span>);</div><div class="line">  result.add(<span class="number">1</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) {</div><div class="line">    ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(result);</div><div class="line">    Integer a = <span class="number">1</span> &lt;&lt; i;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = result.size() - <span class="number">1</span>; k &gt;= <span class="number">0</span>; k--) {</div><div class="line">      tmp.add(result.get(k) + a);</div><div class="line">    }</div><div class="line">    result = tmp;</div><div class="line">  }</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/24/2.3/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/24/2.3/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/24/2.3/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/24/2.3/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/2.5/">
+        ← Roman to Integer, Integer to Roman, ZigZag Conversion....
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/1.27/">
+        Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

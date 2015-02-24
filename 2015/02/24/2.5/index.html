@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Roman to Integer, Integer to Roman, ZigZag Conversion.... | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-24T09:50:28.000Z" itemprop="datePublished">
+          Feb 24 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Sort/'>Sort</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Roman to Integer, Integer to Roman, ZigZag Conversion....</h1>
+    <section class="post-content">
+      <h2 id="Roman_to_Integer">Roman to Integer</h2>
+<blockquote>
+<p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>How roman numbers work:</p>
+<p>M | D | C | L | X | V | I |</p>
+<p>1000 | 500 | 100 | 50 | 10 | 5 | 1 |</p>
+<p>If the current character is larger than previous one, then we substract previous form current, otherwise add up all digits.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span>(String s) {</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n=s.length(),res=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i&lt; n;i++){</div><div class="line">    </div><div class="line">            <span class="keyword">switch</span>(s.charAt(i)){</div><div class="line">            </div><div class="line">                <span class="keyword">case</span> <span class="string">'I'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">1</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span>{res+=<span class="number">1</span>; <span class="keyword">break</span>;}</div><div class="line">                </div><div class="line">                <span class="keyword">case</span> <span class="string">'V'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">5</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">5</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'X'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'L'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">10</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">10</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'L'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">50</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">50</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'C'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">100</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">100</span>;<span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'D'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>) {res-=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'M'</span>: res+=<span class="number">1000</span>; <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Integer_to_Roman">Integer to Roman</h2>
+<blockquote>
+<p>Given an integer, convert it to a roman numeral.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> String <span class="title">intToRoman</span>(<span class="keyword">int</span> num) {</div><div class="line">     <span class="keyword">int</span>[] numbers={<span class="number">1000</span>, <span class="number">900</span>, <span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">90</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>};</div><div class="line">     String[] tokens={<span class="string">"M"</span>,<span class="string">"CM"</span>,<span class="string">"D"</span>,<span class="string">"CD"</span>,<span class="string">"C"</span>,<span class="string">"XC"</span>,<span class="string">"L"</span>,<span class="string">"XL"</span>,<span class="string">"X"</span>,<span class="string">"IX"</span>,<span class="string">"V"</span>,<span class="string">"IV"</span>,<span class="string">"I"</span>};</div><div class="line">     StringBuilder sb=<span class="keyword">new</span> StringBuilder();</div><div class="line">     <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">     <span class="keyword">while</span>(num&gt;<span class="number">0</span>){</div><div class="line">         <span class="keyword">int</span> tmp=num/numbers[i];</div><div class="line">         num=num-tmp*numbers[i];</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> k=tmp;k&gt;=<span class="number">1</span>;k--){</div><div class="line">             sb.append(tokens[i]);</div><div class="line">         }</div><div class="line">         i++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> sb.toString();</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="ZigZag_Conversion">ZigZag Conversion</h2>
+<blockquote>
+<p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">P   A   H   <span class="keyword">N</span></div><div class="line">A P L S <span class="keyword">I</span> <span class="keyword">I</span> G</div><div class="line">Y   <span class="keyword">I</span>   R</div></pre></td></tr></table></figure>
+
+<p>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:<br>string convert(string text, int nRows);<br>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
+<h3 id="Solution-2">Solution</h3>
+<p>Each group of words are 2*nRows-2, we add the String row by row. Be careful about first and last row:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">convert</span>(String s, <span class="keyword">int</span> nRows) {</div><div class="line">        <span class="keyword">int</span> nCol=<span class="number">0</span>,size=<span class="number">2</span>*nRows-<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span> || nRows==<span class="number">1</span>) <span class="keyword">return</span> s; </div><div class="line">        StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="comment">//add char to stringbuilder row by row</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nRows;i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;s.length();j+=size){</div><div class="line">                res.append(s.charAt(j));</div><div class="line">                <span class="keyword">if</span>(i!=<span class="number">0</span> && i!=nRows-<span class="number">1</span> && j+size-<span class="number">2</span>*i&lt;s.length())</div><div class="line">                res.append(s.charAt(j+size-<span class="number">2</span>*i));</div><div class="line">            }    </div><div class="line">        }</div><div class="line">         <span class="keyword">return</span> res.toString();</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/24/2.5/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/24/2.5/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/24/2.5/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/24/2.5/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/Paganini/">
+        ← Niccolo Paganini selected works
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/2.3/">
+        Majority Element, Gray Code →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

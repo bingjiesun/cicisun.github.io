@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-24T09:45:24.000Z" itemprop="datePublished">
+          Feb 24 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Sort/'>Sort</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix</h1>
+    <section class="post-content">
+      <h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
+<blockquote>
+<p>Implement regular expression matching with support for ‘.’ and ‘‘.<br>‘.’ Matches any single character.<br>‘‘ Matches zero or more of the preceding element.<br>The matching should cover the entire input string (not partial).<br>The function prototype should be:<br>bool isMatch(const char s, const char p)<br>Some examples:<br>isMatch(“aa”,”a”) → false<br>isMatch(“aa”,”aa”) → true<br>isMatch(“aaa”,”aa”) → false<br>isMatch(“aa”, “a“) → true<br>isMatch(“aa”, “.“) → true<br>isMatch(“ab”, “.“) → true<br>isMatch(“aab”, “ca*b”) → true</p>
+</blockquote>
+<h3 id="Recursive_solution">Recursive solution</h3>
+<p>So hard to think of all the cases….</p>
+<p>Base case: p was cut to zero<br>Special Case: p=1, when to return false? (now p!=’‘, this case will be process next<br>Case 1: p.charAt(1) is not ‘‘,<br>Case 2: p.charAt(1) is ‘*’,</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(String s, String p){</div><div class="line">  <span class="comment">//base case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">0</span>) <span class="keyword">return</span> s.length()==<span class="number">0</span>;</div><div class="line">  <span class="comment">//p=1 special case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">1</span> || p.charAt(<span class="number">1</span>)!=<span class="string">'*'</span>){</div><div class="line">    <span class="comment">//false case: s len=0; </span></div><div class="line">        <span class="comment">/*if the first char of s and the first char of p is not the same, </span></div><div class="line">        and the char of p is not '.', return false; </div><div class="line">    if(s.length()&lt;1 || p.charAt(0)!=s.charAt(0) && p.charAt(0)!='.')</div><div class="line">      return false;</div><div class="line">    //otherwise, compare the rest of the string of s and p.</div><div class="line">    else return isMatch(s.substring(1),p.substring(1));</div><div class="line">  }</div><div class="line">  //p!=1 and  when the second char of p is '*'</div><div class="line">  else{</div><div class="line">    int i=-1;</div><div class="line">    while(i&lt;s.length() && (i&lt; 0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){</div><div class="line">      //start from isMatch(s itself, p.substring(2)) stands for 0 preceding element</div><div class="line">      //when the '*' stands for 1 or more preceding element,try every possible number</div><div class="line">      if(isMatch(s.substring(i+1), p.substring(2)))</div><div class="line">        return true;</div><div class="line">      i++;}</div><div class="line">  }</div><div class="line">  return false;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Edit_Distance">Edit Distance</h2>
+<blockquote>
+<p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)<br>You have the following 3 operations permitted on a word:<br>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
+</blockquote>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">        <span class="keyword">if</span>(word1.equals(word2)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(word1==<span class="keyword">null</span> || word1.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">        <span class="keyword">if</span>(word2==<span class="keyword">null</span> || word2.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> delete_dis=minDistance(word1.substring(<span class="number">1</span>),word2)+<span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> add_dis=minDistance(word1,word2.substring(<span class="number">1</span>))+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> change_dis=minDistance(word1.substring(<span class="number">1</span>),word2.substring(<span class="number">1</span>)) + word1.charAt(<span class="number">0</span>)==word2.charAt(<span class="number">0</span>) ?  <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> Math.min(Math.min(delete_dis, add_dis), change_dis);</div><div class="line">    </div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+
+<h3 id="DP_Solution">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">    <span class="keyword">if</span>(word2.length()==<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">    <span class="keyword">if</span>(word1.length()==<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">    <span class="keyword">int</span> m=word1.length()+<span class="number">1</span>, n=word2.length()+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span>[][] Dis=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">    <span class="comment">//initiate null cases</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){Dis[i][<span class="number">0</span>]=i;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){Dis[<span class="number">0</span>][j]=j;}</div><div class="line">    <span class="comment">//fill up whole table</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;m;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">            <span class="keyword">int</span> del_dis=Dis[i-<span class="number">1</span>][j]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> add_dis=Dis[i][j-<span class="number">1</span>]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> change_dis=Dis[i-<span class="number">1</span>][j-<span class="number">1</span>]+ (word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>)? <span class="number">0</span> :<span class="number">1</span>);</div><div class="line">            Dis[i][j]=Math.min(Math.min(del_dis,add_dis),change_dis);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Dis[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rotate_Image">Rotate Image</h2>
+<blockquote>
+<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>swap four directions layer by layer:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">  </div><div class="line">    <span class="keyword">int</span> len = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> layer = <span class="number">0</span>; layer &lt; len / <span class="number">2</span>; layer++) {</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = layer; i &lt; len - <span class="number">1</span> - layer; i++) {</div><div class="line">        <span class="comment">// save upper</span></div><div class="line">        <span class="keyword">int</span> temp = matrix[layer][i];</div><div class="line">     </div><div class="line">        <span class="comment">// upper = left</span></div><div class="line">        matrix[layer][i] = matrix[len - <span class="number">1</span> - i][layer];</div><div class="line">        <span class="comment">// left = bottom</span></div><div class="line">   </div><div class="line">        matrix[len - <span class="number">1</span> - i][layer] = matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i];</div><div class="line">      </div><div class="line">        <span class="comment">// bottom = right</span></div><div class="line">        matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i] = matrix[i][len - <span class="number">1</span> - layer];</div><div class="line">        <span class="comment">// right = up</span></div><div class="line">        matrix[i][len - <span class="number">1</span> - layer] = temp;</div><div class="line">        </div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<blockquote>
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>You should return [1,2,3,6,9,8,7,4,5].</p>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">    ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> result;</div><div class="line">    <span class="keyword">int</span> m = matrix.length;</div><div class="line">    <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>; </div><div class="line">    <span class="keyword">int</span> y=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(m&gt;<span class="number">0</span> && n&gt;<span class="number">0</span>){</div><div class="line">        <span class="comment">//if one row/column left, no circle can be formed</span></div><div class="line">        <span class="keyword">if</span>(m==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">                result.add(matrix[x][y++]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++){</div><div class="line">                result.add(matrix[x++][y]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">//below, process a circle</span></div><div class="line">        <span class="comment">//top - move right</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y++]);</div><div class="line">        }</div><div class="line">        <span class="comment">//right - move down</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x++][y]);</div><div class="line">        }</div><div class="line">        <span class="comment">//bottom - move left</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y--]);</div><div class="line">        }</div><div class="line">        <span class="comment">//left - move up</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x--][y]);</div><div class="line">        }</div><div class="line">        x++;</div><div class="line">        y++;</div><div class="line">        m=m-<span class="number">2</span>;</div><div class="line">        n=n-<span class="number">2</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/24/1.27/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/24/1.27/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/24/1.27/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/24/1.27/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/2.3/">
+        ← Majority Element, Gray Code
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/1.23/">
+        Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

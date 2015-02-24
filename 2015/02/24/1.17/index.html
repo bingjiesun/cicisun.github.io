@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Best Time to Buy and Sell Stock, Best Time to Buy and Sell Stock II, Best Time to Buy and Sell Stock III | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-24T08:55:41.000Z" itemprop="datePublished">
+          Feb 24 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Sort/'>Sort</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Best Time to Buy and Sell Stock, Best Time to Buy and Sell Stock II, Best Time to Buy and Sell Stock III</h1>
+    <section class="post-content">
+      <h2 id="Best_Time_to_Buy_and_Sell_Stock">Best Time to Buy and Sell Stock</h2>
+<blockquote>
+<p>Say you have an array for which the ith element is the price of a given stock on day i.<br>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+</blockquote>
+<h3 id="Brute_Force_Solution">Brute Force Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">    <span class="keyword">int</span> maxp=<span class="number">0</span>, low=Integer.MAX_VALUE;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length;i++){</div><div class="line">            <span class="keyword">if</span>(prices[i]&lt;low) low=prices[i];</div><div class="line">            <span class="keyword">if</span>(prices[i]-low&gt;maxp)</div><div class="line">            maxp=prices[i]-low;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> maxp;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">int</span> maxp=<span class="number">0</span>, tmp=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length &lt;<span class="number">2</span>) { <span class="keyword">return</span> <span class="number">0</span>;}</div><div class="line">        <span class="keyword">int</span>[] t=<span class="keyword">new</span> <span class="keyword">int</span>[prices.length-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length-<span class="number">1</span>;i++){</div><div class="line">                t[i]=prices[i+<span class="number">1</span>]-prices[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t.length;i++){</div><div class="line">            tmp+=t[i];</div><div class="line">                <span class="keyword">if</span>(tmp&gt;maxp) maxp=tmp;</div><div class="line">                <span class="keyword">if</span>(tmp&lt;<span class="number">0</span>) tmp=<span class="number">0</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxp;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Best_Time_to_Buy_and_Sell_Stock_II">Best Time to Buy and Sell Stock II</h2>
+<h3 id="Greedy_Solution:_trasaction_once_there_exist_profit-">Greedy Solution: trasaction once there exist profit.</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">      <span class="keyword">if</span>(prices.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">      <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;prices.length; i++){</div><div class="line">          <span class="keyword">if</span>(prices[i] &gt; prices[i-<span class="number">1</span>])</div><div class="line">            ans += prices[i]-prices[i-<span class="number">1</span>];</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> ans;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution-1">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">int</span> maxp=<span class="number">0</span>, tmp=<span class="number">0</span>,curmax=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length &lt;<span class="number">2</span>) { <span class="keyword">return</span> <span class="number">0</span>;}</div><div class="line">        <span class="keyword">int</span>[] t=<span class="keyword">new</span> <span class="keyword">int</span>[prices.length-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length-<span class="number">1</span>;i++){</div><div class="line">                t[i]=prices[i+<span class="number">1</span>]-prices[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t.length;i++){</div><div class="line">          <span class="keyword">if</span>(t[i]&gt;<span class="number">0</span>) maxp+=t[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxp;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Best_Time_to_Buy_and_Sell_Stock_III">Best Time to Buy and Sell Stock III</h2>
+<blockquote>
+<p>Say you have an array for which the ith element is the price of a given stock on day i.<br>Design an algorithm to find the maximum profit. You may complete at most two transactions.<br>Note:<br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+</blockquote>
+<h3 id="DP_Solution-1">DP Solution</h3>
+<p>First thought: we can cut the array in half in n ways, and get the max profit from both sides using solution in the first question. This will be O(n^2), too LTE…<br>Using DP to store the max profit from both sides? just scan twice from both directions and update the max profit array for [0…i] and [i…n-1]. Return the max value when a[i]+b[i] is max.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">if</span>(prices==<span class="keyword">null</span>||prices.length&lt;<span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n=prices.length, maxsofar=<span class="number">0</span>, low=<span class="number">0</span>,high=<span class="number">0</span>;</div><div class="line">        <span class="comment">//curmax[i] shows max profit from [0..i]</span></div><div class="line">        <span class="keyword">int</span>[] curmax=<span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        curmax[<span class="number">0</span>]=<span class="number">0</span>;low=prices[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++){</div><div class="line">            <span class="keyword">if</span>(prices[i]&lt;low) low=prices[i];</div><div class="line">            <span class="keyword">if</span>(prices[i]-low&gt;maxsofar) maxsofar=prices[i]-low;</div><div class="line">            curmax[i]=maxsofar;</div><div class="line">        }</div><div class="line">        <span class="comment">//backmax[i] shows max profits from [i...n-1]</span></div><div class="line">        <span class="keyword">int</span>[] backmax=<span class="keyword">new</span> <span class="keyword">int</span>[n];maxsofar=<span class="number">0</span>;</div><div class="line">        backmax[n-<span class="number">1</span>]=<span class="number">0</span>; high=prices[n-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(i=n-<span class="number">2</span>;i&gt;=<span class="number">0</span>;i--){</div><div class="line">            <span class="keyword">if</span>(high&lt;prices[i]) high=prices[i];</div><div class="line">            <span class="keyword">if</span>(high-prices[i]&gt;maxsofar) maxsofar=high-prices[i];</div><div class="line">            backmax[i]=maxsofar;</div><div class="line">        }</div><div class="line">        maxsofar=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">            <span class="keyword">if</span>(backmax[i]+curmax[i]&gt;maxsofar) maxsofar = backmax[i]+curmax[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxsofar;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="General_DP_Solution"><a href="https://oj.leetcode.com/discuss/15153/a-clean-dp-solution-which-generalizes-to-k-transactions" target="_blank" rel="external">General DP Solution</a></h3>
+<p>Two cases select max as f[k][i]</p>
+<li>transact on i: p[i]-p[j]+f[k-1][j] or write as p[i]-max(f[k-1][j]-p[j]) j belongs to [0,i-1]</li><br><li>no transaction on i: t[k][i-1]</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">    <span class="keyword">if</span>(prices==<span class="keyword">null</span>||prices.length&lt;<span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> n=prices.length, maxsofar=<span class="number">0</span>, K=<span class="number">2</span>;</div><div class="line">    <span class="keyword">int</span>[][] f=<span class="keyword">new</span> <span class="keyword">int</span>[K+<span class="number">1</span>][n];</div><div class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> kk = <span class="number">1</span>; kk &lt;= K; kk++) {</div><div class="line">            <span class="keyword">int</span> tmpMax = f[kk-<span class="number">1</span>][<span class="number">0</span>] - prices[<span class="number">0</span>];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> ii = <span class="number">1</span>; ii &lt; n; ii++) {</div><div class="line">                f[kk][ii] = Math.max(f[kk][ii-<span class="number">1</span>], prices[ii] + tmpMax);</div><div class="line">                tmpMax = Math.max(tmpMax, f[kk-<span class="number">1</span>][ii] - prices[ii]);</div><div class="line">                maxsofar = Math.max(f[kk][ii], maxsofar);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> maxsofar;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/24/1.17/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/24/1.17/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/24/1.17/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/24/1.17/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/24/1.20/">
+        ← Subsets, Subsets II, Missing Ranges
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/1.6/">
+        Substring with Concatenation of All Words, Longest Substring Without Repeating Characters, Minimum Window Substring, Longest Palindromic Substring →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archive"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about/index/"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
