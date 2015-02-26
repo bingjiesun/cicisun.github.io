@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Remove Duplicates from Sorted List I &amp; II, Remove Duplicates from Sorted Array I &amp; II | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-26T03:40:19.000Z" itemprop="datePublished">
+          Feb 25 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/LinkedList/'>LinkedList</a>,
+    
+    <a href='/tags/Array/'>Array</a>
+    
+    
+</span>
+    <h1 class="post-title">Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II</h1>
+    <section class="post-content">
+      <h2 id="Remove_Duplicates_from_Sorted_List_I">Remove Duplicates from Sorted List I</h2>
+<blockquote>
+<p>Given a sorted linked list, delete all duplicates such that each element appear only once.<br>For example,<br>Given 1-&gt;1-&gt;2, return 1-&gt;2.<br>Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Two loops One pointer solution, only move cursor to next when we confirmed cur.next.val!==cur.val.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">    ListNode h = head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur= head;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.next.val==cur.val)</div><div class="line">        cur.next=cur.next.next;</div><div class="line">        cur=cur.next;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or we can use only one loop:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">      ListNode h = head;</div><div class="line">      <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">      ListNode cur= head;</div><div class="line">      <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">          ListNode tmp=cur.next;</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="keyword">null</span>&&tmp.val==cur.val){</div><div class="line">              cur.next=tmp.next;}</div><div class="line">          <span class="keyword">else</span> cur=cur.next;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> h;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_List_II">Remove Duplicates from Sorted List II</h2>
+<blockquote>
+<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.<br>Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Similar to how we deleted duplicates in I, now we add a pre pointer to record the last non-duplicate element, and a dummy head to deal with cases where head needs to be removed. Note: we can only move pre to next when we confirmed now cur is pointing to a unique element.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">       ListNode dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next=head;</div><div class="line">       ListNode cur=head, pre=dummy;</div><div class="line">       <span class="keyword">while</span>(cur!=<span class="keyword">null</span>&& cur.next!=<span class="keyword">null</span>){</div><div class="line">           <span class="comment">//if dup found, keep cur at last dup element</span></div><div class="line">           <span class="keyword">if</span>(cur.val==cur.next.val){</div><div class="line">           <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.val==cur.next.val){cur=cur.next;}</div><div class="line">           <span class="comment">//remove the dups, remember to move the cur for detecting more dups</span></div><div class="line">           pre.next=cur.next;</div><div class="line">           cur=cur.next;}</div><div class="line">           <span class="comment">//move the two pointers next when no dup found</span></div><div class="line">           <span class="keyword">else</span> {pre=pre.next; cur=cur.next;}     </div><div class="line">       }       </div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_Array">Remove Duplicates from Sorted Array</h2>
+<blockquote>
+<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = [1,1,2],<br>Your function should return length = 2, and A is now [1,2].</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<p>Just replace current element with the first non-duplicate, in other words, non-equal-to-current element.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">          <span class="keyword">int</span> n=A.length;</div><div class="line">          <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">          <span class="keyword">if</span>(A.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">              <span class="comment">//count points to the last element of our new array, i pointer finds the next non-dup element</span></div><div class="line">              <span class="keyword">if</span>(A[i]!=A[count]){A[++count]=A[i];}</div><div class="line">          }<span class="keyword">return</span> count+<span class="number">1</span>;</div><div class="line">      }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_Array_II">Remove Duplicates from Sorted Array II</h2>
+<blockquote>
+<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = [1,1,1,2,2,3],<br>Your function should return length = 5, and A is now [1,1,2,2,3].</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<p>The solution is a bit tricky. We use two pointers, pre to keep the second duplicate element, and cur to keep the first element different from current duplicate element. Then we replcace the next element of pre, to whatever next element cur is pointing at.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       <span class="keyword">int</span> n = A.length;</div><div class="line">       <span class="keyword">int</span> pre=<span class="number">1</span>,cur=<span class="number">2</span>;</div><div class="line">       <span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>||n==<span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">       <span class="keyword">while</span>(cur&lt;n){</div><div class="line">           <span class="comment">//confirm no three dups in new array  </span></div><div class="line">           <span class="keyword">if</span>(A[cur]==A[pre-<span class="number">1</span>]){</div><div class="line">               <span class="comment">//cur points to the first element different from current dups</span></div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> {</div><div class="line">               <span class="comment">//move pre to the third dup element</span></div><div class="line">               pre++;</div><div class="line">               <span class="comment">//replace the third dup with the next element </span></div><div class="line">               A[pre]=A[cur];</div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> pre+<span class="number">1</span>;</div><div class="line">       </div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/25/1.5/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/25/1.5/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/25/1.5/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/25/1.5/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/25/1.6/">
+        ← Substring with Concatenation of All Words, Longest Substring Without Repeating Characters, Minimum Window Substring, Longest Palindromic Substring
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/25/1.27/">
+        Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>

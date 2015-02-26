@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Add Binary, Add Two Numbers | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/logo.svg" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-02-26T02:58:41.000Z" itemprop="datePublished">
+          Feb 25 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Array/'>Array</a>,
+    
+    <a href='/tags/LinkedList/'>LinkedList</a>
+    
+    
+</span>
+    <h1 class="post-title">Add Binary, Add Two Numbers</h1>
+    <section class="post-content">
+      <h2 id="Add_Binary">Add Binary</h2>
+<blockquote>
+<p>Given two binary strings, return their sum (also a binary string).<br>For example,<br>a = “11”<br>b = “1”<br>Return “100”.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Note:Int can be converted to String for manipulation, however, converting String to Int might cause overflow errors.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> String <span class="title">addBinary</span>(String a, String b) {</div><div class="line">		</div><div class="line">		<span class="keyword">if</span>(a==<span class="keyword">null</span>|a.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> b;</div><div class="line">		<span class="keyword">if</span>(b==<span class="keyword">null</span>|b.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> a;</div><div class="line"><span class="comment">//switch a,b if a is shorter than b </span></div><div class="line">        <span class="keyword">if</span>(a.length() &lt; b.length()){</div><div class="line">            String temp = a;</div><div class="line">            a = b;</div><div class="line">            b = temp;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> m = a.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> n = b.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        String rst = <span class="string">""</span>;</div><div class="line">        </div><div class="line"><span class="comment">//Add from last digit</span></div><div class="line">        <span class="keyword">while</span>(n &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + (<span class="keyword">int</span>)(b.charAt(n) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">            n --;</div><div class="line">        }</div><div class="line"><span class="comment">//Add the longer digits        </span></div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(m &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">        }       </div><div class="line">        </div><div class="line"><span class="comment">//Don't forget the highest digit </span></div><div class="line">        <span class="keyword">if</span> (res == <span class="number">1</span>)</div><div class="line">            rst = <span class="string">"1"</span> + rst;</div><div class="line">        <span class="keyword">return</span> rst;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Add_Two_Numbers">Add Two Numbers</h2>
+<blockquote>
+<p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.<br>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>We don’t have to compare the length of two lists an match digits since we are given reversed order. So just add each pair and the rest, pay attention to the last carries.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span>(ListNode l1, ListNode l2) {</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(l1==<span class="keyword">null</span> && l2==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        ListNode head=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode cur=head;</div><div class="line">        <span class="keyword">int</span> carries=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>&&l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=l1.val+l2.val+carries;</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            ListNode n=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            cur.next=n;</div><div class="line">            </div><div class="line">            l1=l1.next;</div><div class="line">            l2=l2.next;</div><div class="line">            cur=cur.next; </div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l1.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l1=l1.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l2.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l2=l2.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(carries!=<span class="number">0</span>){</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(carries%<span class="number">10</span>);</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> head.next;</div><div class="line">           }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flabyrinth-ear%2Furchin&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ ?url=sunbingjie.tk/2015/02/25/12.31/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/02/25/12.31/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/02/25/12.31/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/02/25/12.31/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/02/25/1.10/">
+        ← Multiply Strings, Implement strStr(), Reverse Words in a String, String to Integer (atoi)
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/24/blackmirror/">
+        Black Mirror Christmas Special →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
