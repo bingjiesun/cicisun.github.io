@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Java Related Questions | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-03-13T08:49:13.000Z" itemprop="datePublished">
+          Mar 13 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Concepts/'>Concepts</a>
+    
+    
+</span>
+    <h1 class="post-title">Java Related Questions</h1>
+    <section class="post-content">
+      <h1 id="Java_Questions">Java Questions</h1>
+<p>Contents:</p>
+<ul>
+<li><a href="#Keywords">Keywords</a></li>
+<li><a href="#Concepts">Concepts</a></li>
+<li><a href="#OOP">OOP</a></li>
+<li><a href="#Collections">Collections</a></li>
+<li><a href="#Thread">Threading</a></li>
+</ul>
+<h2 id="Object_Oriented">Object Oriented</h2>
+<ul>
+<li>model organized around objects rather than actions and data rather than logic</li>
+<li>based on the concept of “objects”</li>
+<li>contain data in the form of fields(attributes)</li>
+<li>code in the form of procedures(methods)</li>
+<li>object’s procedures can access and modify the data fields of the associated object</li>
+</ul>
+<p><a name="Keywords"></a></p>
+<h2 id="Java_Keywords">Java Keywords</h2>
+<ul>
+<li><p>Access modifiers</p>
+<p>| modifier | access in same package | access in different package |<br>| ———— | ——————————— | —————————————- |<br>| private  |         no             |          no                 |<br>| public   |         yes            |         yes                 |<br>| default  |         yes            |          no                 |<br>| protected|         yes            |     only if extend class    |  </p>
+</li>
+<li><p><code>final</code> keyword</p>
+<ul>
+<li>can be assigned to variable, method, class, object</li>
+<li>if assigned<ul>
+<li>variable: behave like a constant and cannot change value</li>
+<li>method: cannot be overridden in its child class</li>
+<li>class: no other class can extend it</li>
+<li>object: only instantiated once</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>synchronized</code> keyword</p>
+<ul>
+<li>provide lock on the object and prevent race condition</li>
+<li>can be applied to static/non-static methods or block of code</li>
+<li>only one thread at a time can access synchronized methods</li>
+<li>if multiple threads, need to wait for execution complete</li>
+</ul>
+</li>
+<li><p><code>volatile</code> keyword</p>
+<ul>
+<li>volatile variable stored in main memory</li>
+<li>every thread can access </li>
+<li>local copy updated from main memory</li>
+<li>has performance issues</li>
+</ul>
+</li>
+<li><p><code>static</code> variable</p>
+<ul>
+<li><code>static</code> cannot be used for class</li>
+<li>everything declared as <code>static</code> is related to class not object</li>
+<li>multiple objects of a class share the same instance of static variable</li>
+</ul>
+</li>
+<li><p><code>static</code> method</p>
+<ul>
+<li>can be accessed without creating the objects</li>
+<li>use class name to access static method</li>
+<li>static method can only access static variables and not local or global non-static variable: because if the class is not instantiated and therefore the variables are not initialized and cannot be accessed from a static method</li>
+<li>static method can only call static methods and not non-static methods</li>
+<li>non-static methods can call static methods</li>
+</ul>
+</li>
+<li><p>static class</p>
+<ul>
+<li>class cannot be declared as static</li>
+<li>class is static if all variables and methods are static and constructor is private, so the only way to access is to use class name </li>
+</ul>
+</li>
+<li><p><code>throw</code> keyword</p>
+<ul>
+<li>throw exception manually</li>
+<li>used when program fails the condition and wants to give warning</li>
+<li>throw the exception from a method to the calling method</li>
+<li>calling method can decide to handle exception or throw to its calling method</li>
+</ul>
+</li>
+</ul>
+<p><a name="Concepts"></a></p>
+<h2 id="Concepts">Concepts</h2>
+<ul>
+<li><p>object vs. class</p>
+<ul>
+<li>an object is an instance of a class<ul>
+<li>object refers to an actual instance of a class</li>
+<li>every object must belong to a class</li>
+<li>objects are created and then destroyed, only live in the program for limited time</li>
+</ul>
+</li>
+<li>objects have a lifespan but classes do not<ul>
+<li>properties of objects can change while they live</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>static</code> and <code>instance</code> method</p>
+<ul>
+<li>instance method<ul>
+<li>belong to the instance of a class and require the instance before it can be called</li>
+<li>dynamic binding</li>
+<li>JVM selects the method to invoke based on the type of object reference, known at run time </li>
+</ul>
+</li>
+<li>static method<ul>
+<li>belong to the class itself</li>
+<li>static binding </li>
+<li>JVM selects the method to invoke based on the actual class of the object, known at compile time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>abstract</code> class and <code>interface</code></p>
+<ul>
+<li>abstract class<ul>
+<li>contain at least one abstract method</li>
+<li>can contain numbers of concrete methods</li>
+<li>variable can be <code>public</code>, <code>private</code>,<code>protected</code>, <code>default</code>, or constants</li>
+<li>a class can only extend one abstract class</li>
+<li>not compulsory to implement all methods</li>
+<li>if want to add a new feature, simply implement in the abstract class and call it from subclass</li>
+</ul>
+</li>
+<li>interface<ul>
+<li>only contain abstract methods</li>
+<li>variable is by default <code>public final</code>, only has constants</li>
+<li>a class can implement multiple interfaces</li>
+<li>compulsory to implement all methods</li>
+<li>if want to add a new feature, need to implement the method in all classes implementing the interface</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>instanceof</code> and <code>isInstance(Object obj)</code></p>
+<ul>
+<li><code>instacneof</code> is a keyword but <code>isInstance()</code> is a method</li>
+<li><code>instanceof</code> check whether the object is type of particular class or subclass</li>
+<li><code>isInstance()</code> only used to identify if object is of a particular class</li>
+</ul>
+</li>
+<li><p>pass by value and pass by reference</p>
+<ul>
+<li>Java only supports pass by value, actual value is passed</li>
+<li>Java passes the references by value, the pointer to the object is passed as value</li>
+<li>references passed to the method are actually copies of the original references</li>
+</ul>
+</li>
+<li><p><code>==</code> and <code>equals()</code></p>
+<ul>
+<li><code>==</code> is used to compare the references of the objects</li>
+<li><code>equals()</code> can compare the values of two objects</li>
+</ul>
+</li>
+<li><p><code>StringBuffer</code> and <code>StringBuild</code></p>
+<ul>
+<li><code>StringBuffer</code> is synchronized but <code>StringBuild</code> is not</li>
+</ul>
+</li>
+<li><p><code>final</code>, <code>finally</code>,<code>finalize()</code></p>
+<ul>
+<li><code>final</code>: a final variable acts like constant, a final method cannot be overridden, a final class is immutable</li>
+<li><code>finally</code>: handles exception, clean up after try block</li>
+<li><code>finalize()</code>: method helps in garbage collection, invoked before an object is discarded by the garbage collector, allowing it to clean up its state</li>
+</ul>
+</li>
+<li><p>static block and init block</p>
+<ul>
+<li>static block is loaded when class is loaded by JVM for the first time</li>
+<li>init block is loaded every time the class is loaded</li>
+</ul>
+</li>
+<li><p>object reflections</p>
+<ul>
+<li>provide a way to get reflective information of class and object</li>
+<li>perform operations such as<ul>
+<li>get information about methods and fields present inside the class at runtime</li>
+<li>get a new instance of a class</li>
+<li>get and set object fields directly by getting field reference, regardless what the access modifier is</li>
+</ul>
+</li>
+<li>advantage<ul>
+<li>help in observing or manipulating runtime behavior</li>
+<li>help in debugging or testing programs</li>
+<li>can call method by name when we do not know the method in advance  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Overload, Override<br>-Overloading and overriding are complementary things, overloading means the same method name but different parameters, and overriding means the same method name in a subclass with the same parameters. So its not possible for overloading and overriding to happen at the same time because overloading implies different parameters.</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/// }</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/* method overriden */</span> }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth(String b) { <span class="comment">/* method overloaded */</span> }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+<p><a name="OOP"></a></p>
+<h2 id="OOP">OOP</h2>
+<ul>
+<li><p>polymorphism</p>
+<ul>
+<li>define more than one function with the same name</li>
+<li>compile time polymorphism(overloading) and runtime polymorphism(overriding)</li>
+<li>method override: a class method has same name and signature as a method in parent class, JVM determines the proper method to call at runtime</li>
+<li>method overloading: method with same name but different signature, determined at compile time</li>
+</ul>
+</li>
+<li><p>inheritance</p>
+<ul>
+<li>allow a child class to inherit some properties from its parent class</li>
+<li>use <code>extends</code> keyword</li>
+<li>only public and protected access modifiers can be accessed in child class</li>
+</ul>
+</li>
+<li><p>multiple inheritance</p>
+<ul>
+<li>Java does not support multiple inheritance</li>
+<li>diamond problem</li>
+<li>use of multiple interfaces (or extend a class and implement some interfaces)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">A</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">A</span>,<span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li><p>abstraction</p>
+<ul>
+<li>convert real world objects in terms of class</li>
+</ul>
+</li>
+<li><p>encapsulation</p>
+<ul>
+<li>achieved by combining the methods and attribute into a class</li>
+<li>class acting like a container encapsulation the properties</li>
+<li>hide how things work and expose the user requests</li>
+</ul>
+</li>
+</ul>
+<p><a name="Collections"></a></p>
+<h2 id="Collections">Collections</h2>
+<ul>
+<li><p>ArrayList and vector</p>
+<ul>
+<li>synchronization<ul>
+<li>ArrayList is not thread-safe but vector is </li>
+<li>each method in vector class is surrounded by a synchronized block</li>
+</ul>
+</li>
+<li>data growth<ul>
+<li>both use arrays to store contents</li>
+<li>enlarge array if not enough space</li>
+</ul>
+</li>
+<li>performance<ul>
+<li>vector is slower than arraylist because of thread-safe</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Sort objects in lists</p>
+<ul>
+<li>implement Comparable interface for the object class and override compareTo() method</li>
+<li>if object class is a jar file, create Comparator and override compare() method</li>
+<li>call Collection.sort()</li>
+</ul>
+</li>
+<li><p>HashMap and HashTable</p>
+<ul>
+<li>HashMap is not synchronized but HashTable is</li>
+<li>use Iterator for HashMap(fail-safe) and enumerator for Hashtable(not fail-safe)</li>
+<li>HashMap allows null values and only one null key; Hashtable does not allow null key or null value</li>
+</ul>
+</li>
+<li><p>List interface</p>
+<ul>
+<li>ArrayList<ul>
+<li>resizable array implementation</li>
+<li>dynamic size</li>
+<li>not thread-safe</li>
+</ul>
+</li>
+<li>Vector<ul>
+<li>ArrayList implementation</li>
+<li>thread-safe</li>
+</ul>
+</li>
+<li>LinkedList<ul>
+<li>also implements Queue interface</li>
+<li>FIFO</li>
+<li>faster for insertion and deletion</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Set interface</p>
+<ul>
+<li>SortedSet<ul>
+<li>interface extends Set</li>
+<li>allow data to be sorted</li>
+<li>all elements inserted must implement Comparator or Comparable interface</li>
+</ul>
+</li>
+<li>TreeSet<ul>
+<li>implementation of SortedSet interface</li>
+<li>O(logn) time for add, remove, contains operations</li>
+<li>not synchronized</li>
+</ul>
+</li>
+<li>HashSet<ul>
+<li>implements Set interface</li>
+<li>back up by hash table</li>
+<li>no guarantee on constant order</li>
+<li>allow null element</li>
+<li>O(1) time for add,remove,contains</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Arrays and ArrayList</p>
+<ul>
+<li>arrays are fixed size but ArrayLists are dynamic</li>
+<li>elements in the array list can be added or removed at runtime</li>
+<li>array contains elements of same type but arraylist can contain elements of different type</li>
+</ul>
+</li>
+<li><p>ArrayList and LinkedList</p>
+<ul>
+<li>both fast in insertion, inserting into arraylist and into first position of linkedlist takes O(1) time</li>
+<li>random lookup in ArrayList is fast, but slow for LinkedList</li>
+<li>remove is slow for ArrayList(elements need to be shifted) but fast for LinkedList</li>
+</ul>
+</li>
+<li><p>Advantage of iterator</p>
+<ul>
+<li>used when no clue about object type</li>
+<li>iterator allows updates</li>
+</ul>
+</li>
+<li><p>Preferred declaration</p>
+<ul>
+<li><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;()</code> not <code>ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;()</code></li>
+<li>because function may take List as parameter</li>
+<li>more flexible</li>
+</ul>
+</li>
+<li><p>Iterator access and index access</p>
+<ul>
+<li>insert,update,or delete is faster for iterator access for elements in between the structure</li>
+<li>insert,update,or delete is faster for index access for elements at the end</li>
+<li>search is fast for index access</li>
+</ul>
+</li>
+</ul>
+<p><a name="Thread"></a></p>
+<h2 id="Threading">Threading</h2>
+<ul>
+<li>Thread vs. Process<ul>
+<li>definition<ul>
+<li>process: executing instance of an application</li>
+<li>thread: a path of execution within a process</li>
+</ul>
+</li>
+<li>relationship<ul>
+<li>a process can contain multiple threads</li>
+<li>thread considered as lightweight process</li>
+</ul>
+</li>
+<li>comparison<ul>
+<li>thread for small tasks, process for heavy tasks</li>
+<li>thread within the same process share the same address space(allow threads to read and write data to the same structures and variables, allow communication between threads), but different processes do not</li>
+<li>threads are easier to create than processes because they do not require a separate address space</li>
+<li>multi-threading: be careful that threads share structures that should be modified by one thread at a time</li>
+<li>processes are independent of each other</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fxenyriki%2Fthe-pretty-reckless-under-the&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/03/13/2.12-3/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/03/13/2.12-3/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/03/13/2.12-3/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/03/13/2.12-3/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/03/13/2.12/">
+        ← Basic Comparisons
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/02/27/1.3/">
+        Shortest word in Dictionary →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
