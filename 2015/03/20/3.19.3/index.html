@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-03-20T07:14:41.000Z" itemprop="datePublished">
+          Mar 20 2015
+      </time>
+    
+</span>
+    <h1 class="post-title"></h1>
+    <section class="post-content">
+      <p>title: [Design] Stack and Heap<br>category: 刷题<br>tag: </p>
+<ul>
+<li>Design</li>
+</ul>
+<hr>
+<h2 id="Overview">Overview</h2>
+<p>Value types are created on the stack, and reference types are created on the heap.</p>
+<p>Both are stored in computer RAM.</p>
+<p>Each thread gets a stack, while there’s typically only one heap for the application.</p>
+<h2 id="Stack">Stack</h2>
+<p>When a function is called, a block is reserved on the top of the stack for local variables and some bookkeeping data in a LIFO order. Freeing a block from the stack is nothing more than adjusting one pointer.</p>
+<h2 id="Heap">Heap</h2>
+<p>Unlike the stack, there’s no enforced pattern to the allocation and deallocation of blocks from the heap; you can allocate a block at any time and free it at any time. This makes it much more complex to keep track of which parts of the heap are allocated or free at any given time; there are many custom heap allocators available to tune heap performance for different usage patterns.</p>
+<h2 id="Q_&amp;_A">Q &amp; A</h2>
+<h4 id="What_is_their_scope?">What is their scope?</h4>
+<p>The stack is attached to a thread, so when the thread exits the stack is reclaimed.</p>
+<p>The heap is typically allocated at application startup by the runtime, and is reclaimed when the application (technically process) exits.</p>
+<h4 id="What_determines_the_size_of_each_of_them?">What determines the size of each of them?</h4>
+<p>The size of the stack is set when a thread is created.</p>
+<p>The size of the heap is set on application startup, but can grow as space is needed (the allocator requests more memory from the operating system).</p>
+<h4 id="What_makes_one_faster?">What makes one faster?</h4>
+<p>The stack is faster because the access pattern makes it trivial to allocate and deallocate memory from it, while the heap has much more complex bookkeeping involved in an allocation or free.</p>
+<p>Each byte in the stack tends to be reused very frequently which means it tends to be mapped to the processor’s cache, making it very fast.</p>
+<p>Another performance hit for the heap is that the heap, being mostly a global resource, typically has to be multi-threading safe, i.e. each allocation and deallocation needs to be (typically) synchronized.</p>
+<p><img src="http://okckd.github.io/assets/images/stack-and-heap.png" alt=""></p>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Frapid-snap%2Ftwenty-one-pilots-cant-help%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/03/20/3.19.3/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/03/20/3.19.3/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/03/20/3.19.3/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/03/20/3.19.3/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2015/03/20/3.19/">
+        ← Unique Combination of Factors
+    </a>
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/03/13/2.12-2/">
+        Basic Data Structure →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
