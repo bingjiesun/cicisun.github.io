@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>StringtoLong, Implement Trinary Tree | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-04-02T05:24:47.000Z" itemprop="datePublished">
+          Apr 2 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Math/'>Math</a>,
+    
+    <a href='/tags/Recursion/'>Recursion</a>,
+    
+    <a href='/tags/String/'>String</a>,
+    
+    <a href='/tags/Tree/'>Tree</a>
+    
+    
+</span>
+    <h1 class="post-title">StringtoLong, Implement Trinary Tree</h1>
+    <section class="post-content">
+      <h2 id="StringtoLong">StringtoLong</h2>
+<blockquote>
+<p>Converts input String to Long</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>input validation</li>
+<li>Over/Underflow</li>
+<li>positive/negative </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> stringToLong(String s)</div><div class="line">	{</div><div class="line">		<span class="comment">// Use Regex to filter out illegal inputs</span></div><div class="line">		<span class="keyword">if</span>(!s.matches(<span class="string">"-?\\d+"</span>)){ </div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" is illegal number format"</span>);</div><div class="line">		}</div><div class="line">		<span class="comment">// Convert a string to a long </span></div><div class="line">		<span class="keyword">long</span> result = <span class="number">0</span>;</div><div class="line">		<span class="keyword">boolean</span> IsNegative = s.charAt(<span class="number">0</span>)== <span class="string">'-'</span>;</div><div class="line">		<span class="keyword">int</span> start=IsNegative ? <span class="number">1</span>:<span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;s.length();i++){</div><div class="line">			<span class="comment">/* Deal with overflow and underflow */</span></div><div class="line">			</div><div class="line">			<span class="keyword">if</span>(((!IsNegative) && result &gt; (Long.MAX_VALUE)/<span class="number">10</span> )|| ((!IsNegative) && result == (Long.MAX_VALUE)/<span class="number">10</span> && (s.charAt(i) - <span class="number">48</span>)&gt;<span class="number">7</span>)){</div><div class="line">				</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" out of bound (overflow)"</span>);</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span>((IsNegative && (-<span class="number">1</span> * result) &lt; (Long.MIN_VALUE)/<span class="number">10</span> ) || (IsNegative &&  (-<span class="number">1</span> * result) == (Long.MIN_VALUE)/<span class="number">10</span> ) && (s.charAt(i) - <span class="number">48</span>)&gt;<span class="number">8</span> ){</div><div class="line">				</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" out of bound (underflow)"</span>);</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				result=result * <span class="number">10</span> + (s.charAt(i) - <span class="number">48</span>);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> IsNegative ? -result : result;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<h2 id="Implement_Trinary_Tree">Implement Trinary Tree</h2>
+<blockquote>
+<p>Insersion and Deletion</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li>Define Node class</li>
+<li>Recursivly add/delete node</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrinaryNode</span></span>{</div><div class="line">	<span class="keyword">int</span> val;</div><div class="line">	TrinaryNode left;</div><div class="line">	TrinaryNode right;</div><div class="line">	TrinaryNode middle;</div><div class="line">	TrinaryNode(<span class="keyword">int</span> x){</div><div class="line">		<span class="keyword">this</span>.val = x;</div><div class="line">	}</div><div class="line"></div><div class="line">}</div><div class="line"><span class="comment">////////////</span></div><div class="line">TrinaryNode root;</div><div class="line">	TrinaryTree(){</div><div class="line">		root = <span class="keyword">null</span>;</div><div class="line">	}</div><div class="line">	TrinaryTree(<span class="keyword">int</span> x){</div><div class="line">		root = <span class="keyword">new</span> TrinaryNode(x);</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Insertion</span></div><div class="line">	TrinaryNode insert(TrinaryNode root, <span class="keyword">int</span> x){</div><div class="line"></div><div class="line">		TrinaryNode tmp = <span class="keyword">new</span> TrinaryNode(x);</div><div class="line">		<span class="comment">//Insert root if root is not set</span></div><div class="line">		<span class="keyword">if</span>(root==<span class="keyword">null</span>){</div><div class="line">			root = tmp;</div><div class="line">			<span class="keyword">return</span> root;</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in left subtree if x is smaller than current node</span></div><div class="line">		<span class="keyword">if</span>(root.val &gt; x){</div><div class="line">			<span class="keyword">if</span>(root.left==<span class="keyword">null</span>){</div><div class="line">				root.left = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.left, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in right subtree if x is larger than current node</span></div><div class="line">		<span class="keyword">if</span>(root.val &lt; x){</div><div class="line">			<span class="keyword">if</span>(root.right==<span class="keyword">null</span>){</div><div class="line">				root.right = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.right, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in middle subtree if x is equal to current node</span></div><div class="line">		<span class="keyword">if</span>(root.val == x){</div><div class="line">			<span class="keyword">if</span>(root.middle==<span class="keyword">null</span>){</div><div class="line">				root.middle = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.middle, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> root;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Deletion</span></div><div class="line">	TrinaryNode delete(TrinaryNode root, <span class="keyword">int</span> x){</div><div class="line">		<span class="comment">//Target node is in left subtree</span></div><div class="line">		<span class="keyword">if</span>(root.val &gt; x){</div><div class="line">			root.left = delete(root.left, x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Target node is in right subtree</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; x){</div><div class="line">			root.right = delete(root.right, x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Target node equals current node</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.middle != <span class="keyword">null</span>){</div><div class="line">			<span class="comment">//Delete middle node that is equal to current node</span></div><div class="line">			root.middle = delete(root.middle ,x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Replace current node with its successor in right subtree</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.right !=<span class="keyword">null</span>){ </div><div class="line">			root.val = Sucessor(root.right).val;</div><div class="line">			delete(root, Sucessor(root.right).val);</div><div class="line">		}</div><div class="line">		<span class="comment">//Transplant left subtree directly</span></div><div class="line">		<span class="keyword">else</span> {</div><div class="line">			root = root.left;</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> root;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Function to find successor in right subtree</span></div><div class="line">	TrinaryNode Sucessor(TrinaryNode root){</div><div class="line">		TrinaryNode tmp = root;</div><div class="line">		<span class="keyword">while</span>(tmp.left!=<span class="keyword">null</span>){</div><div class="line">			tmp=tmp.left;</div><div class="line">		} </div><div class="line">		<span class="keyword">return</span> tmp;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Function to in-order traverse the tree for testing purpose</span></div><div class="line">	<span class="keyword">void</span> test_print(TrinaryNode root){</div><div class="line">		<span class="keyword">if</span> (root!=<span class="keyword">null</span>){</div><div class="line">			System.out.println(<span class="string">"Node Value: "</span> + root.val);</div><div class="line">		}</div><div class="line">		<span class="keyword">else</span> <span class="keyword">return</span>;</div><div class="line">		test_print(root.left);</div><div class="line">		test_print(root.middle);</div><div class="line">		test_print(root.right);</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+
+
+
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fsamsmithworld%2Fsamsmithasaprocky&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/04/02/4.1/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/04/02/4.1/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/04/02/4.1/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/04/02/4.1/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/03/24/3.19/">
+        Unique Combination of Factors, Factorial Trailing Zeroes →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
