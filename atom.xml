@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="sunbingjie.tk/"/>
-  <updated>2015-04-07T06:40:46.616Z</updated>
+  <updated>2015-04-07T06:43:54.515Z</updated>
   <id>sunbingjie.tk/</id>
   
   <author>
@@ -18,8 +18,8 @@
     <title><![CDATA[Floodfill]]></title>
     <link href="sunbingjie.tk/2015/04/07/4.6/"/>
     <id>sunbingjie.tk/2015/04/07/4.6/</id>
-    <published>2015-04-07T06:40:42.000Z</published>
-    <updated>2015-04-07T06:40:42.000Z</updated>
+    <published>2015-04-07T06:43:48.000Z</published>
+    <updated>2015-04-07T06:43:48.000Z</updated>
     <content type="html"><![CDATA[<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
 <blockquote>
 <p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
@@ -32,7 +32,33 @@
 <ul>
 <li>Mark each node visited to avoid duplicated counting.</li>
 </ul>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>]]></content>
+<p>public ArrayList<integer> countIslands(int[][] mat){<br>        //stop when 0/boundary found<br>        int one,count;<br>        ArrayList<integer> res = new ArrayList<integer>();<br>        int[][] mark = new int[mat.length][mat[0].length];</integer></integer></integer></p>
+<pre><code>    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
+        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
+
+            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
+                res.add(dfs(i,j, mat, mark));
+            }
+        }
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
+    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
+        <span class="keyword">return</span> <span class="number">0</span>;
+    mark[i][j] = <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
+    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
+    countIslands c = <span class="keyword">new</span> countIslands();
+    System.<span class="keyword">out</span>.println(c.countIslands(test));
+}
+</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>]]></content>
     <summary type="html">
     <![CDATA[<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
 <blockquote>
