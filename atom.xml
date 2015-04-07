@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="sunbingjie.tk/"/>
-  <updated>2015-04-07T06:43:54.515Z</updated>
+  <updated>2015-04-07T06:45:05.465Z</updated>
   <id>sunbingjie.tk/</id>
   
   <author>
@@ -18,22 +18,26 @@
     <title><![CDATA[Floodfill]]></title>
     <link href="sunbingjie.tk/2015/04/07/4.6/"/>
     <id>sunbingjie.tk/2015/04/07/4.6/</id>
-    <published>2015-04-07T06:43:48.000Z</published>
-    <updated>2015-04-07T06:43:48.000Z</updated>
+    <published>2015-04-07T06:44:58.000Z</published>
+    <updated>2015-04-07T06:44:58.000Z</updated>
     <content type="html"><![CDATA[<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
 <blockquote>
 <p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
 </blockquote>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
 
-<p>5， 1， 2</p>
+<p>Return 5， 1， 2</p>
 <h3 id="Solution">Solution</h3>
 <p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
 <ul>
 <li>Mark each node visited to avoid duplicated counting.</li>
 </ul>
-<p>public ArrayList<integer> countIslands(int[][] mat){<br>        //stop when 0/boundary found<br>        int one,count;<br>        ArrayList<integer> res = new ArrayList<integer>();<br>        int[][] mark = new int[mat.length][mat[0].length];</integer></integer></integer></p>
-<pre><code>    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
+<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
+    <span class="keyword">int</span> one,count;
+    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
+    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
+
+    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
 
     <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
         <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
