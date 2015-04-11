@@ -46,7 +46,7 @@
 <main class="content" role="main">
   <article class="post">
     <span class="post-meta">
-      <time datetime="2015-04-11T04:31:51.000Z" itemprop="datePublished">
+      <time datetime="2015-04-11T04:37:25.000Z" itemprop="datePublished">
           Apr 11 2015
       </time>
     
@@ -73,7 +73,12 @@
 <h3 id="Divide_and_Conquer_Solution_O(nlogn)">Divide and Conquer Solution O(nlogn)</h3>
 <ul>
 <li>more subtle does not mean cleaner…</li>
-<li>divide the given array in two halves and return the maximum of following three<br>..<em> Maximum subarray sum in left half<br>..</em> Maximum subarray sum in right half<br>..* Maximum subarray sum such that the subarray crosses the midpoint</li>
+<li>divide the given array in two halves and return the maximum of following three</li>
+<li>Maximum subarray sum in left half </li>
+</ul>
+<ul>
+<li>Maximum subarray sum in right half </li>
+<li>Maximum subarray sum such that the subarray crosses the midpoint</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>, r=A.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">return</span> rec(A, l, r);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rec</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">if</span>(l==r) <span class="keyword">return</span> A[l];</div><div class="line">        <span class="keyword">int</span> m= (l+r)/<span class="number">2</span>; </div><div class="line">        <span class="keyword">return</span> Math.max(Math.max(rec(A,l,m),rec(A,m+<span class="number">1</span>,r)),cross(A,m,l,r));</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">cross</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">int</span> suml=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluel=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m-<span class="number">1</span>;i&gt;=l;i--){</div><div class="line">            suml+=A[i];</div><div class="line">            <span class="keyword">if</span>(suml&gt;maxvaluel){</div><div class="line">                maxvaluel=suml;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">int</span> sumr=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluer=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=r;i++){</div><div class="line">            sumr+=A[i];</div><div class="line">            <span class="keyword">if</span>(sumr&gt;maxvaluer){</div><div class="line">                maxvaluer=sumr;</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxvaluel+maxvaluer-A[m];</div><div class="line">    }</div></pre></td></tr></table></figure>
 
@@ -90,7 +95,9 @@
 
 <h2 id="DP?_Solution">DP? Solution</h2>
 <ul>
-<li>There are only two cases when we get a larger result<br>..<em> mininum(negative) value multiply cur value(which happens to be negative)<br>..</em> maximum value multiply cur value</li>
+<li>There are only two cases when we get a larger result</li>
+<li>mininum(negative) value multiply cur value(which happens to be negative)</li>
+<li>maximum value multiply cur value</li>
 <li>Be careful with the special case when multiplying both would decrease the result, then change start point to self</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> minval=A[<span class="number">0</span>], maxval=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">	    <span class="keyword">int</span> a=A[i] * minval;</div><div class="line">	    <span class="keyword">int</span> b=A[i] * maxval;</div><div class="line">	    maxval=Math.max(Math.max(a,b),A[i]);</div><div class="line">	    minval=Math.min(Math.min(a,b),A[i]);</div><div class="line">	    maxvalue=Math.max(maxvalue,maxval);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
