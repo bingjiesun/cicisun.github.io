@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Maximum Subarray, Maximum Product Subarray | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-04-11T04:26:22.000Z" itemprop="datePublished">
+          Apr 11 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Array/'>Array</a>,
+    
+    <a href='/tags/DP/'>DP</a>
+    
+    
+</span>
+    <h1 class="post-title">Maximum Subarray, Maximum Product Subarray</h1>
+    <section class="post-content">
+      <h2 id="Maximum_Subarray">Maximum Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],<br>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
+</blockquote>
+<h3 id="O(n)_Solution">O(n) Solution</h3>
+<ul>
+<li>It’s called the Kadane’s Algorithm…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span> max_so_far = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> max_ending_here = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">        max_ending_here+=A[i];</div><div class="line">        max_ending_here = Math.max(max_ending_here, A[i]);</div><div class="line">        max_so_far = Math.max(max_ending_here, max_so_far);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> max_so_far;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Divide_and_Conquer_Solution_O(nlogn)">Divide and Conquer Solution O(nlogn)</h3>
+<p>-more subtle does not mean cleaner…<br>-divide the given array in two halves and return the maximum of following three<br>— Maximum subarray sum in left half<br>— Maximum subarray sum in right half<br>— Maximum subarray sum such that the subarray crosses the midpoint</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>, r=A.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">return</span> rec(A, l, r);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rec</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">if</span>(l==r) <span class="keyword">return</span> A[l];</div><div class="line">        <span class="keyword">int</span> m= (l+r)/<span class="number">2</span>; </div><div class="line">        <span class="keyword">return</span> Math.max(Math.max(rec(A,l,m),rec(A,m+<span class="number">1</span>,r)),cross(A,m,l,r));</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">cross</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">int</span> suml=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluel=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m-<span class="number">1</span>;i&gt;=l;i--){</div><div class="line">            suml+=A[i];</div><div class="line">            <span class="keyword">if</span>(suml&gt;maxvaluel){</div><div class="line">                maxvaluel=suml;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">int</span> sumr=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluer=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=r;i++){</div><div class="line">            sumr+=A[i];</div><div class="line">            <span class="keyword">if</span>(sumr&gt;maxvaluer){</div><div class="line">                maxvaluer=sumr;</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxvaluel+maxvaluer-A[m];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Maximum_Product_Subarray">Maximum Product Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.<br>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
+</blockquote>
+<h2 id="Near_Brute_force">Near Brute force</h2>
+<ul>
+<li>If we store result from i to j in t[i][j], the runtime is O(n^2)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=<span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;A.length;i++){</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;A.length;j++){</div><div class="line">			<span class="keyword">int</span> tmp=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=j;k++){</div><div class="line">			tmp*=A[k];</div><div class="line">					}</div><div class="line">			<span class="keyword">if</span>(tmp&gt;maxvalue){</div><div class="line">				maxvalue=tmp;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="DP?_Solution">DP? Solution</h2>
+<p>-There are only two cases when we get a larger result<br>—mininum(negative) value multiply cur value(which happens to be negative)<br>—maximum value multiply cur value<br>-Be careful with the special case when multiplying both would decrease the result, then change start point to self</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> minval=A[<span class="number">0</span>], maxval=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">	    <span class="keyword">int</span> a=A[i] * minval;</div><div class="line">	    <span class="keyword">int</span> b=A[i] * maxval;</div><div class="line">	    maxval=Math.max(Math.max(a,b),A[i]);</div><div class="line">	    minval=Math.min(Math.min(a,b),A[i]);</div><div class="line">	    maxvalue=Math.max(maxvalue,maxval);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fpatrick-champarnaud%2Fticking-bomb%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/04/11/4.9/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/04/11/4.9/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/04/11/4.9/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/04/11/4.9/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/04/07/4.6/">
+        Floodfill →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
