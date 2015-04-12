@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="sunbingjie.tk/"/>
-  <updated>2015-04-11T04:37:29.065Z</updated>
+  <updated>2015-04-12T06:31:06.233Z</updated>
   <id>sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,123 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Validate Binary Search Tree]]></title>
+    <link href="sunbingjie.tk/2015/04/12/4.10/"/>
+    <id>sunbingjie.tk/2015/04/12/4.10/</id>
+    <published>2015-04-12T06:30:42.000Z</published>
+    <updated>2015-04-12T06:30:42.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
+<blockquote>
+<p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:<br>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than the node’s key.<br>Both the left and right subtrees must also be binary search trees.</p>
+</blockquote>
+<h3 id="Brute_force_Solution">Brute force Solution</h3>
+<p>Inorder traversal, then compare each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    LinkedList&lt;Integer&gt; p = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    inorder(root, p);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>;j&lt; p.size() - <span class="number">1</span>;j++) {</div><div class="line">        <span class="keyword">if</span>(p.get(j)&gt;=p.get(j+<span class="number">1</span>))</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode r, LinkedList&lt;Integer&gt; p){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(r.left,p);</div><div class="line">    p.add(r.val);</div><div class="line">    inorder(r.right,p);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or use static variable to store the previous val:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> pre = Integer.MIN_VALUE; </div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.left)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(root.val&lt;=pre) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    System.out.println(pre);</div><div class="line">    pre=root.val;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.right)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive/MinMax_Solution">Recursive/MinMax Solution</h3>
+<p>At each node we must satisty</p>
+<ul>
+<li>left subtree max value must not exceed cur.val</li>
+<li>right subtree min value must not be lower than cur.val</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">return</span> dfs(root, (<span class="keyword">long</span>)Integer.MIN_VALUE-<span class="number">1</span>,(<span class="keyword">long</span>)Integer.MAX_VALUE+<span class="number">1</span>);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(TreeNode r,<span class="keyword">long</span> minv, <span class="keyword">long</span> maxv){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(r.val&gt;=maxv ||r.val&lt;=minv) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span>  dfs(r.left, minv, r.val) && dfs(r.right, r.val, maxv);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MYSVMgRr6pw" frameborder="0" allowfullscreen></iframe>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
+<blockquote>
+<p>Given a binary tree, determine if it is a valid binary]]>
+    </summary>
+    
+      <category term="Tree" scheme="sunbingjie.tk/tags/Tree/"/>
+    
+      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+    
+      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Number of Islands]]></title>
+    <link href="sunbingjie.tk/2015/04/12/4.6/"/>
+    <id>sunbingjie.tk/2015/04/12/4.6/</id>
+    <published>2015-04-12T06:23:51.000Z</published>
+    <updated>2015-04-12T06:23:51.000Z</updated>
+    <content type="html"><![CDATA[<p>Update—Leetcode now includes this problem:</p>
+<h2 id="Number_of_Islands">Number of Islands</h2>
+<blockquote>
+<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
+
+<h2 id="Solution">Solution</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
+<blockquote>
+<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
+
+<p>Return 5， 1， 2</p>
+<h3 id="Solution-1">Solution</h3>
+<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
+<ul>
+<li>Mark each node visited to avoid duplicated counting.</li>
+</ul>
+<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
+    <span class="keyword">int</span> one,count;
+    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
+    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
+
+    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
+        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
+
+            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
+                res.add(dfs(i,j, mat, mark));
+            }
+        }
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
+    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
+        <span class="keyword">return</span> <span class="number">0</span>;
+    mark[i][j] = <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
+    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
+    countIslands c = <span class="keyword">new</span> countIslands();
+    System.<span class="keyword">out</span>.println(c.countIslands(test));
+}
+</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>]]></content>
+    <summary type="html">
+    <![CDATA[<p>Update—Leetcode now includes this problem:</p>
+<h2 id="Number_of_Islands">Number of Islands</h2>
+<blockquote>
+<p>Given a 2d grid map of ‘]]>
+    </summary>
+    
+      <category term="DFS" scheme="sunbingjie.tk/tags/DFS/"/>
+    
+      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+    
+      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Maximum Subarray, Maximum Product Subarray]]></title>
@@ -72,71 +189,6 @@
       <category term="Array" scheme="sunbingjie.tk/tags/Array/"/>
     
       <category term="DP" scheme="sunbingjie.tk/tags/DP/"/>
-    
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Floodfill]]></title>
-    <link href="sunbingjie.tk/2015/04/07/4.6/"/>
-    <id>sunbingjie.tk/2015/04/07/4.6/</id>
-    <published>2015-04-07T06:44:58.000Z</published>
-    <updated>2015-04-07T06:44:58.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
-<blockquote>
-<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
-
-<p>Return 5， 1， 2</p>
-<h3 id="Solution">Solution</h3>
-<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
-<ul>
-<li>Mark each node visited to avoid duplicated counting.</li>
-</ul>
-<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
-    <span class="keyword">int</span> one,count;
-    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
-    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
-
-    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
-        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
-
-            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
-                res.add(dfs(i,j, mat, mark));
-            }
-        }
-    }
-    <span class="keyword">return</span> res;
-}
-
-<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
-    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
-        <span class="keyword">return</span> <span class="number">0</span>;
-    mark[i][j] = <span class="number">1</span>;
-    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
-}
-
-<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
-    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
-    countIslands c = <span class="keyword">new</span> countIslands();
-    System.<span class="keyword">out</span>.println(c.countIslands(test));
-}
-</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
-<blockquote>
-<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
-</blockquote>
-<figur]]>
-    </summary>
-    
-      <category term="DFS" scheme="sunbingjie.tk/tags/DFS/"/>
-    
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
     
       <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
@@ -2411,81 +2463,6 @@ nana
     </summary>
     
       <category term="LinkedList" scheme="sunbingjie.tk/tags/LinkedList/"/>
-    
-      <category term="Array" scheme="sunbingjie.tk/tags/Array/"/>
-    
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix]]></title>
-    <link href="sunbingjie.tk/2015/02/25/1.27/"/>
-    <id>sunbingjie.tk/2015/02/25/1.27/</id>
-    <published>2015-02-26T03:39:40.000Z</published>
-    <updated>2015-02-26T03:39:40.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
-<blockquote>
-<p>Implement regular expression matching with support for ‘.’ and ‘‘.<br>‘.’ Matches any single character.<br>‘‘ Matches zero or more of the preceding element.<br>The matching should cover the entire input string (not partial).<br>The function prototype should be:<br>bool isMatch(const char s, const char p)<br>Some examples:<br>isMatch(“aa”,”a”) → false<br>isMatch(“aa”,”aa”) → true<br>isMatch(“aaa”,”aa”) → false<br>isMatch(“aa”, “a“) → true<br>isMatch(“aa”, “.“) → true<br>isMatch(“ab”, “.“) → true<br>isMatch(“aab”, “ca*b”) → true</p>
-</blockquote>
-<h3 id="Recursive_solution">Recursive solution</h3>
-<p>So hard to think of all the cases….</p>
-<p>Base case: p was cut to zero<br>Special Case: p=1, when to return false? (now p!=’‘, this case will be process next<br>Case 1: p.charAt(1) is not ‘‘,<br>Case 2: p.charAt(1) is ‘*’,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(String s, String p){</div><div class="line">  <span class="comment">//base case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">0</span>) <span class="keyword">return</span> s.length()==<span class="number">0</span>;</div><div class="line">  <span class="comment">//p=1 special case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">1</span> || p.charAt(<span class="number">1</span>)!=<span class="string">'*'</span>){</div><div class="line">    <span class="comment">//false case: s len=0; </span></div><div class="line">        <span class="comment">/*if the first char of s and the first char of p is not the same, </span></div><div class="line">        and the char of p is not '.', return false; </div><div class="line">    if(s.length()&lt;1 || p.charAt(0)!=s.charAt(0) && p.charAt(0)!='.')</div><div class="line">      return false;</div><div class="line">    //otherwise, compare the rest of the string of s and p.</div><div class="line">    else return isMatch(s.substring(1),p.substring(1));</div><div class="line">  }</div><div class="line">  //p!=1 and  when the second char of p is '*'</div><div class="line">  else{</div><div class="line">    int i=-1;</div><div class="line">    while(i&lt;s.length() && (i&lt; 0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){</div><div class="line">      //start from isMatch(s itself, p.substring(2)) stands for 0 preceding element</div><div class="line">      //when the '*' stands for 1 or more preceding element,try every possible number</div><div class="line">      if(isMatch(s.substring(i+1), p.substring(2)))</div><div class="line">        return true;</div><div class="line">      i++;}</div><div class="line">  }</div><div class="line">  return false;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Edit_Distance">Edit Distance</h2>
-<blockquote>
-<p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)<br>You have the following 3 operations permitted on a word:<br>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
-</blockquote>
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">        <span class="keyword">if</span>(word1.equals(word2)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(word1==<span class="keyword">null</span> || word1.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">        <span class="keyword">if</span>(word2==<span class="keyword">null</span> || word2.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> delete_dis=minDistance(word1.substring(<span class="number">1</span>),word2)+<span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> add_dis=minDistance(word1,word2.substring(<span class="number">1</span>))+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> change_dis=minDistance(word1.substring(<span class="number">1</span>),word2.substring(<span class="number">1</span>)) + word1.charAt(<span class="number">0</span>)==word2.charAt(<span class="number">0</span>) ?  <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> Math.min(Math.min(delete_dis, add_dis), change_dis);</div><div class="line">    </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-
-<h3 id="DP_Solution">DP Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">    <span class="keyword">if</span>(word2.length()==<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">    <span class="keyword">if</span>(word1.length()==<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">    <span class="keyword">int</span> m=word1.length()+<span class="number">1</span>, n=word2.length()+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span>[][] Dis=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">    <span class="comment">//initiate null cases</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){Dis[i][<span class="number">0</span>]=i;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){Dis[<span class="number">0</span>][j]=j;}</div><div class="line">    <span class="comment">//fill up whole table</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;m;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">            <span class="keyword">int</span> del_dis=Dis[i-<span class="number">1</span>][j]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> add_dis=Dis[i][j-<span class="number">1</span>]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> change_dis=Dis[i-<span class="number">1</span>][j-<span class="number">1</span>]+ (word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>)? <span class="number">0</span> :<span class="number">1</span>);</div><div class="line">            Dis[i][j]=Math.min(Math.min(del_dis,add_dis),change_dis);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Dis[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Rotate_Image">Rotate Image</h2>
-<blockquote>
-<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>swap four directions layer by layer:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">  </div><div class="line">    <span class="keyword">int</span> len = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> layer = <span class="number">0</span>; layer &lt; len / <span class="number">2</span>; layer++) {</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = layer; i &lt; len - <span class="number">1</span> - layer; i++) {</div><div class="line">        <span class="comment">// save upper</span></div><div class="line">        <span class="keyword">int</span> temp = matrix[layer][i];</div><div class="line">     </div><div class="line">        <span class="comment">// upper = left</span></div><div class="line">        matrix[layer][i] = matrix[len - <span class="number">1</span> - i][layer];</div><div class="line">        <span class="comment">// left = bottom</span></div><div class="line">   </div><div class="line">        matrix[len - <span class="number">1</span> - i][layer] = matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i];</div><div class="line">      </div><div class="line">        <span class="comment">// bottom = right</span></div><div class="line">        matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i] = matrix[i][len - <span class="number">1</span> - layer];</div><div class="line">        <span class="comment">// right = up</span></div><div class="line">        matrix[i][len - <span class="number">1</span> - layer] = temp;</div><div class="line">        </div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-
-
-<hr>
-<h2 id="Spiral_Matrix">Spiral Matrix</h2>
-<blockquote>
-<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<p>You should return [1,2,3,6,9,8,7,4,5].</p>
-<h3 id="Solution-1">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">    ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> result;</div><div class="line">    <span class="keyword">int</span> m = matrix.length;</div><div class="line">    <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>; </div><div class="line">    <span class="keyword">int</span> y=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(m&gt;<span class="number">0</span> && n&gt;<span class="number">0</span>){</div><div class="line">        <span class="comment">//if one row/column left, no circle can be formed</span></div><div class="line">        <span class="keyword">if</span>(m==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">                result.add(matrix[x][y++]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++){</div><div class="line">                result.add(matrix[x++][y]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">//below, process a circle</span></div><div class="line">        <span class="comment">//top - move right</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y++]);</div><div class="line">        }</div><div class="line">        <span class="comment">//right - move down</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x++][y]);</div><div class="line">        }</div><div class="line">        <span class="comment">//bottom - move left</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y--]);</div><div class="line">        }</div><div class="line">        <span class="comment">//left - move up</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x--][y]);</div><div class="line">        }</div><div class="line">        x++;</div><div class="line">        y++;</div><div class="line">        m=m-<span class="number">2</span>;</div><div class="line">        n=n-<span class="number">2</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falextambo%2Flinkin-park-session&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-
-
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
-<blockquote>
-<p>Implement regular expression matching with support for]]>
-    </summary>
-    
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
-    
-      <category term="String" scheme="sunbingjie.tk/tags/String/"/>
     
       <category term="Array" scheme="sunbingjie.tk/tags/Array/"/>
     
