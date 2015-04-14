@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Search Tree Iterator | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-04-14T05:42:40.000Z" itemprop="datePublished">
+          Apr 14 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Tree/'>Tree</a>,
+    
+    <a href='/tags/Recursion/'>Recursion</a>,
+    
+    <a href='/tags/Stack/'>Stack</a>
+    
+    
+</span>
+    <h1 class="post-title">Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Search Tree Iterator</h1>
+    <section class="post-content">
+      <h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
+<blockquote>
+<p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:<br>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than the node’s key.<br>Both the left and right subtrees must also be binary search trees.</p>
+</blockquote>
+<h3 id="Brute_force_Solution">Brute force Solution</h3>
+<p>Inorder traversal, then compare each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    LinkedList&lt;Integer&gt; p = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    inorder(root, p);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>;j&lt; p.size() - <span class="number">1</span>;j++) {</div><div class="line">        <span class="keyword">if</span>(p.get(j)&gt;=p.get(j+<span class="number">1</span>))</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode r, LinkedList&lt;Integer&gt; p){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(r.left,p);</div><div class="line">    p.add(r.val);</div><div class="line">    inorder(r.right,p);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or use static variable to store the previous val:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> pre = Integer.MIN_VALUE; </div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.left)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(root.val&lt;=pre) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    System.out.println(pre);</div><div class="line">    pre=root.val;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.right)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive/MinMax_Solution">Recursive/MinMax Solution</h3>
+<p>At each node we must satisty</p>
+<ul>
+<li>left subtree max value must not exceed cur.val</li>
+<li>right subtree min value must not be lower than cur.val</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">return</span> dfs(root, (<span class="keyword">long</span>)Integer.MIN_VALUE-<span class="number">1</span>,(<span class="keyword">long</span>)Integer.MAX_VALUE+<span class="number">1</span>);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(TreeNode r,<span class="keyword">long</span> minv, <span class="keyword">long</span> maxv){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(r.val&gt;=maxv ||r.val&lt;=minv) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span>  dfs(r.left, minv, r.val) && dfs(r.right, r.val, maxv);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="Unique_Binary_Search_Trees">Unique Binary Search Trees</h2>
+<blockquote>
+<p>Given n, how many structurally unique BST’s (binary search trees) that store values 1…n?<br>For example,<br>Given n = 3, there are a total of 5 unique BST’s.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<ul>
+<li>Define c[i] as the number of unique binary tree possibly generated with [0….i]</li>
+<li>A tree with i as its root, left subtree is consist of [1…i-1], right subtree is consist of [i+1…n]</li>
+<li>c[0] = 0 ; c[1]=1 ; c[2] = c[0]<em>c[1] //1 as root + c[1]</em>c[0] //0 as root; c[3] = c[0] <em> c[2] //1 as root + c[1] </em> c[1] //2 as root + c[2] * c[0] //3 as root</li>
+<li>Ct+1 += Ci*Ct-i(0&lt;= i &lt;= t)</li>
+<li>Ct += Ci*t-1-i(0&lt;=i&lt;=t-1, 1&lt;=t&lt;=n)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>||n == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span>[] C = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        C[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>;t&lt;=n;t++){  </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=t-<span class="number">1</span>;i++){  </div><div class="line">            C[t] += C[i]*C[t-<span class="number">1</span>-i];  </div><div class="line">        }  </div><div class="line">    }</div><div class="line">        <span class="keyword">return</span> C[n];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Unique_Binary_Search_Trees_II">Unique Binary Search Trees II</h2>
+<blockquote>
+<p>Given n, generate all structurally unique BST’s (binary search trees) that store values 1…n.<br>For example,<br>Given n = 3, your program should return all 5 unique BST’s shown below.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
+
+<h3 id="DFS_Solution"><a href="http://www.cnblogs.com/springfor/p/3884029.html" target="_blank" rel="external">DFS Solution</a></h3>
+<p>Similar to I, we pick (1…n) as root, recursivly get all left and right subtrees.<br>We pick one from left subtree and one from right subtree, attach them to current root and return all the possibilities.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">generateTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">return</span> buildTrees(<span class="number">1</span>,n);</div><div class="line">    </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">buildTrees</span>(<span class="keyword">int</span> min, <span class="keyword">int</span> max){</div><div class="line">    ArrayList&lt;TreeNode&gt; res = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(min&gt;max){res.add(<span class="keyword">null</span>); <span class="keyword">return</span> res;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=min;i&lt;=max;i++){</div><div class="line">        ArrayList&lt;TreeNode&gt; l = buildTrees(min,i-<span class="number">1</span>);</div><div class="line">        ArrayList&lt;TreeNode&gt; r = buildTrees(i+<span class="number">1</span>,max);</div><div class="line">        <span class="keyword">for</span>(TreeNode j: l){</div><div class="line">            <span class="keyword">for</span>(TreeNode k:r){</div><div class="line">                TreeNode root =  <span class="keyword">new</span> TreeNode(i);</div><div class="line">                root.left = j;</div><div class="line">                root.right = k;</div><div class="line">                res.add(root);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Preorder_Traversal">Binary Tree Preorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the preorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    preorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">preorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    res.add(n.val);</div><div class="line">    preorder(n.left,res);</div><div class="line">    preorder(n.right,res);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; <span class="comment">//别忘了这句...</span></div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        res.add(tmp.val);</div><div class="line">        <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">        <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Inorder_Traversal">Binary Tree Inorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; stk=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        stk.push(root);</div><div class="line">        <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">            TreeNode tmp = stk.pop();</div><div class="line">            <span class="keyword">if</span>(tmp == <span class="keyword">null</span>){</div><div class="line">                res.add(stk.pop().val);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){stk.push(tmp.right);}</div><div class="line">                stk.push(tmp);</div><div class="line">                stk.push(<span class="keyword">null</span>);</div><div class="line">                <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>){stk.push(tmp.left);}</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Postorder_Traversal">Binary Tree Postorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the postorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution-1">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    postorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    postorder(n.left,res);</div><div class="line">    postorder(n.right,res);</div><div class="line">    res.add(n.val);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; </div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        <span class="keyword">if</span>(tmp==<span class="keyword">null</span>) res.add(stk.pop().val);</div><div class="line">        <span class="keyword">else</span>{</div><div class="line">            stk.push(tmp);</div><div class="line">            stk.push(<span class="keyword">null</span>);</div><div class="line">            <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">            <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">        }</div><div class="line">    }        </div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Search_Tree_Iterator">Binary Search Tree Iterator</h2>
+<blockquote>
+<p>Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.<br>Calling next() will return the next smallest number in the BST.<br>Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>Use one Array to store the inorder traversal of nodes </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">ArrayDeque&lt;TreeNode&gt; arr;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    arr = <span class="keyword">new</span> ArrayDeque&lt;TreeNode&gt;();</div><div class="line">    inorder(root, arr);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode root, ArrayDeque&lt;TreeNode&gt; arr){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(root.left, arr);</div><div class="line">    arr.add(root);</div><div class="line">    inorder(root.right,arr);</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !arr.isEmpty();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(hasNext()) <span class="keyword">return</span> arr.poll().val;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="O(1)_Time_O(h)_Memory_Solution">O(1) Time O(h) Memory Solution</h3>
+<ul>
+<li>Dissect inorder into two parts</li>
+<li>push root’s all left children into stack</li>
+<li>upon calling next(), pop one node and push all right child’s left child into stack </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">Stack&lt;TreeNode&gt; stk;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    stk = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">while</span>(root!=<span class="keyword">null</span>){</div><div class="line">        stk.push(root);</div><div class="line">        root=root.left;</div><div class="line">    }</div><div class="line">   </div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !stk.isEmpty();</div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(!stk.isEmpty())</div><div class="line">        {TreeNode tmp = stk.pop();</div><div class="line">         <span class="keyword">int</span> res=tmp.val;</div><div class="line">         <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){</div><div class="line">             TreeNode node = tmp.right;</div><div class="line">             <span class="keyword">while</span>(node!=<span class="keyword">null</span>){</div><div class="line">                 stk.push(node);</div><div class="line">                 node=node.left;</div><div class="line">             }</div><div class="line">         }</div><div class="line">         <span class="keyword">return</span> res;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MYSVMgRr6pw" frameborder="0" allowfullscreen></iframe>
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/04/14/4.10/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/04/14/4.10/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/04/14/4.10/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/04/14/4.10/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/04/13/4.11/">
+        Unique Binary Search Trees →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
