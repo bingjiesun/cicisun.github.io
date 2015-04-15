@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   
 
@@ -64,6 +64,14 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
@@ -76,6 +84,14 @@
         <a href="/tags">
           <i class="menu-item-icon icon-tags"></i> <br />
           Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
         </a>
       </li>
     
@@ -122,8 +138,8 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/02/25/blackmirror/">
-              Black Mirror Christmas Special
+            <a class="post-title-link" href="/2015/02/25/1.17/">
+              Best Time to Buy and Sell Stock, Best Time to Buy and Sell Stock II, Best Time to Buy and Sell Stock III
             </a>
         
       </div>
@@ -153,8 +169,8 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/02/25/2.5/">
-              Roman to Integer, Integer to Roman, ZigZag Conversion
+            <a class="post-title-link" href="/2015/02/25/1.14/">
+              Container With Most Water, Trapping Rain Water
             </a>
         
       </div>
@@ -184,8 +200,8 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/02/25/2.3/">
-              Majority Element, Gray Code
+            <a class="post-title-link" href="/2015/02/25/1.14-2/">
+              Valid Palindrome, Palindrome Number, Scramble String, Reverse Binary, Interleaving String
             </a>
         
       </div>
@@ -215,8 +231,8 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/02/25/1.9/">
-              Reverse Integer, Reverse Linked List I, Reverse Linked List II, Reverse Nodes in k-Group, Rotate List
+            <a class="post-title-link" href="/2015/02/25/1.10/">
+              Multiply Strings, Implement strStr(), Reverse Words in a String, String to Integer (atoi)
             </a>
         
       </div>
@@ -246,14 +262,45 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/02/25/1.7/">
-              2Sum, 3Sum, 3Sum Closest
+            <a class="post-title-link" href="/2015/02/25/12.31/">
+              Add Binary, Add Two Numbers
             </a>
         
       </div>
 
       <div class="post-meta">
         <span class="post-time"> 02-26 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/02/24/1.19/">
+              東京喰種, 寄生兽
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 02-24 </span>
       </div>
 
     </div>
@@ -267,7 +314,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2015/page/3/">&laquo;</a><a class="page-number" href="/archives/2015/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2015/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2015/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2015/page/8/">8</a><a class="extend next" rel="next" href="/archives/2015/page/5/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/archives/2015/page/3/">&laquo;</a><a class="page-number" href="/archives/2015/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2015/page/3/">3</a><span class="page-number current">4</span>
   </div>
 
 
@@ -305,10 +352,10 @@
           </div>
 
           <div class="site-state-item site-state-categories">
-            
+            <a href="/categories">
               <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">categories</span>
-              
+              </a>
           </div>
 
           <div class="site-state-item site-state-tags">
@@ -379,7 +426,7 @@
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 
@@ -504,6 +551,9 @@
       $.Velocity.RunSequence([
         { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
         { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
         
         { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
       ]);

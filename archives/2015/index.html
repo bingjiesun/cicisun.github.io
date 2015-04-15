@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   
 
@@ -64,6 +64,14 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
@@ -76,6 +84,14 @@
         <a href="/tags">
           <i class="menu-item-icon icon-tags"></i> <br />
           Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
         </a>
       </li>
     
@@ -263,11 +279,166 @@
 
     
 
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/04/02/4.1/">
+              StringtoLong, Implement Trinary Tree
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 04-02 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/03/24/3.19/">
+              Unique Combination of Factors, Factorial Trailing Zeroes
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 03-24 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/03/20/3.19.3/">
+              Stack and Heap
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 03-20 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/03/13/2.12-2/">
+              Basic Data Structure
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 03-13 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <div class="post post-type-normal">
+    <div class="post-header">
+
+      <div class="post-title">
+        
+            <a class="post-title-link" href="/2015/03/13/2.12/">
+              Basic Comparisons
+            </a>
+        
+      </div>
+
+      <div class="post-meta">
+        <span class="post-time"> 03-13 </span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
+
   </div>
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2015/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2015/page/8/">8</a><a class="extend next" rel="next" href="/archives/2015/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/archives/2015/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2015/page/4/">4</a><a class="extend next" rel="next" href="/archives/2015/page/2/">&raquo;</a>
   </div>
 
 
@@ -305,10 +476,10 @@
           </div>
 
           <div class="site-state-item site-state-categories">
-            
+            <a href="/categories">
               <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">categories</span>
-              
+              </a>
           </div>
 
           <div class="site-state-item site-state-tags">
@@ -379,7 +550,7 @@
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 
@@ -504,6 +675,9 @@
       $.Velocity.RunSequence([
         { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
         { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
         
         { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
       ]);
