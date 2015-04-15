@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum | Cici&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <meta name="generator" content="Cici's Blog">
+
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="/atom.xml">
+  
+  
+
+  
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body class="home-template">
+<div id="perspective" class="perspective effect-movedown">
+  <div class="container">
+    <!-- wrapper -->
+    <div class="wrapper">
+
+      <header class="site-head"  style="background: #24282b url(/img/img-bg.jpg) 0 -20%" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+            
+            <h1 class="blog-title">Cici's Blog</h1>
+            <h2 class="blog-description"><button id="showMenu">Show Menu</button></h2>
+        </div>
+    </div>
+</header>
+
+      
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2015-04-15T07:56:58.000Z" itemprop="datePublished">
+          Apr 15 2015
+      </time>
+    
+    
+    | 
+    <a href='/tags/Tree/'>Tree</a>,
+    
+    <a href='/tags/Recursion/'>Recursion</a>,
+    
+    <a href='/tags/DP/'>DP</a>
+    
+    
+</span>
+    <h1 class="post-title">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum</h1>
+    <section class="post-content">
+      <h2 id="Path_Sum">Path Sum</h2>
+<blockquote>
+<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.<br>For example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Given the below binary tree and sum = 22,</div><div class="line">              5</div><div class="line">             / <span class="command">\</span></div><div class="line">            4   8</div><div class="line">           /   / <span class="command">\</span></div><div class="line">          11  13  4</div><div class="line">         /  <span class="command">\ </span>     <span class="command">\</span></div><div class="line">        7    2      1</div></pre></td></tr></table></figure>
+
+<p>return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</p>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span>(TreeNode root, <span class="keyword">int</span> sum) {</div><div class="line">    <span class="keyword">return</span> dfs(root, sum);</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(TreeNode root, <span class="keyword">int</span> sum){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    sum = sum-root.val;</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span> && root.right==<span class="keyword">null</span>) <span class="keyword">return</span> sum==<span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> dfs(root.left, sum) || dfs(root.right, sum);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<ul>
+<li>Use two queues to store all possible sum and curnode pairs</li>
+<li>when reached a leave, check if the corresponding sum is true</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span>(TreeNode root, <span class="keyword">int</span> sum) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    LinkedList&lt;TreeNode&gt; node = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">    LinkedList&lt;Integer&gt; value = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    node.offer(root);</div><div class="line">    value.offer(root.val);</div><div class="line">    <span class="keyword">while</span>(!node.isEmpty()){</div><div class="line">        TreeNode cur = node.poll();</div><div class="line">        <span class="keyword">int</span> cursum = value.poll();</div><div class="line">        <span class="keyword">if</span>(cur.left==<span class="keyword">null</span> && cur.right==<span class="keyword">null</span> && cursum==sum){</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>) {</div><div class="line">            node.offer(cur.left);</div><div class="line">            value.offer(cursum+cur.left.val);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>){</div><div class="line">            node.offer(cur.right);</div><div class="line">            value.offer(cursum+cur.right.val);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;   </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Path_Sum_II">Path Sum II</h2>
+<blockquote>
+<p>Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.<br>For example:<br>Given the below binary tree and sum = 22,<br>`<br>              5<br>             / \<br>            4   8<br>           /   / \<br>          11  13  4<br>         /  \    / \<br>        7    2  5   1<br>return<br>[<br>   [5,4,11,2],<br>   [5,8,4,5]<br>]</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="preprocessor">### DFS Solution</span></div></pre></td></tr></table></figure>
+
+<p>java<br>    public ArrayList<linkedlist<integer>&gt; pathSum(TreeNode root, int sum) {<br>        ArrayList<linkedlist<integer>&gt; res = new ArrayList<linkedlist<integer>&gt;();<br>        if(root==null) return res;<br>        LinkedList<integer> pathlist = new LinkedList<integer>();<br>        dfs(root, sum, pathlist, res);<br>        return res;<br>    }</integer></integer></linkedlist<integer></linkedlist<integer></linkedlist<integer></p>
+<pre><code><span class="keyword">private</span> <span class="literal">void</span> dfs(TreeNode r, int <span class="keyword">sum</span>, LinkedList<span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> pathlist, ArrayList<span class="subst">&lt;</span>LinkedList<span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;&gt;</span> res){
+    pathlist<span class="built_in">.</span>add(r<span class="built_in">.</span>val);
+    int curvalue <span class="subst">=</span> <span class="keyword">sum</span><span class="attribute">-r</span><span class="built_in">.</span>val;
+    <span class="keyword">if</span>(r<span class="built_in">.</span>left<span class="subst">==</span><span class="built_in">null</span> <span class="subst">&amp;&amp;</span> r<span class="built_in">.</span>right<span class="subst">==</span><span class="built_in">null</span> <span class="subst">&amp;&amp;</span> curvalue<span class="subst">==</span><span class="number">0</span>) {res<span class="built_in">.</span>add(<span class="literal">new</span> LinkedList<span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>(pathlist));}
+    <span class="keyword">if</span>(r<span class="built_in">.</span>left<span class="subst">!=</span><span class="built_in">null</span>) dfs(r<span class="built_in">.</span>left, curvalue, pathlist, res);
+    <span class="keyword">if</span>(r<span class="built_in">.</span>right<span class="subst">!=</span><span class="built_in">null</span>) dfs(r<span class="built_in">.</span>right, curvalue, pathlist, res);
+    pathlist<span class="built_in">.</span>remove(pathlist<span class="built_in">.</span>size()<span class="subst">-</span><span class="number">1</span>); <span class="comment">//**</span>
+}
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">---</span></div><div class="line"></div><div class="line"><span class="comment">## Binary Tree Maximum Path Sum </span></div><div class="line">&gt;Given <span class="operator">a</span> binary tree, find <span class="operator">the</span> maximum path <span class="built_in">sum</span>.</div><div class="line">The path may start <span class="operator">and</span> <span class="function"><span class="keyword">end</span> <span class="title">at</span> <span class="title">any</span> <span class="title">node</span> <span class="title">in</span> <span class="title">the</span> <span class="title">tree</span>.</span></div><div class="line">For example:</div><div class="line">Given <span class="operator">the</span> below binary tree,</div></pre></td></tr></table></figure>
+
+<pre><code>   1
+  / <span class="command">\
+</span> 2   3
+</code></pre><p>Return 6.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">### DFS + DP Solution</span></div><div class="line"></div><div class="line">+ Return <span class="keyword">each</span> <span class="built_in">time</span> <span class="operator">the</span> <span class="built_in">max</span> single path starting <span class="built_in">from</span> current r</div><div class="line">+ update maxsofar <span class="operator">among</span> single/arc <span class="operator">of</span> current r</div></pre></td></tr></table></figure>
+
+<p>java<br>    public int maxPathSum(TreeNode root) {<br>        int[] maxsofar = new int[1];<br>        maxsofar[0]= Integer.MIN_VALUE;<br>        dfs(root,maxsofar);<br>        return maxsofar[0];<br>    }</p>
+<pre><code><span class="keyword">private</span> <span class="built_in">int</span> dfs(TreeNode r, <span class="built_in">int</span>[] maxsofar){
+    <span class="keyword">if</span>(r==<span class="literal">null</span>) return <span class="number">0</span>;
+    <span class="built_in">int</span> <span class="built_in">left</span> = dfs(r.<span class="built_in">left</span>, maxsofar);
+    <span class="built_in">int</span> <span class="built_in">right</span> = dfs(r.<span class="built_in">right</span>, maxsofar);
+    <span class="built_in">int</span> arc = <span class="built_in">left</span> + <span class="built_in">right</span> + r.val;
+    <span class="built_in">int</span> single = Math.max(r.val, Math.max(<span class="built_in">left</span>, <span class="built_in">right</span>)+r.val);
+    maxsofar[<span class="number">0</span>] = Math.max(maxsofar[<span class="number">0</span>], Math.max(single,arc));
+    return single;
+}
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">---</span></div><div class="line"></div><div class="line"><span class="comment">## Minimum Path Sum</span></div><div class="line">&gt;Given <span class="operator">a</span> m x n grid filled <span class="operator">with</span> non-negative numbers, find <span class="operator">a</span> path <span class="built_in">from</span> top left <span class="built_in">to</span> bottom <span class="constant">right</span> which minimizes <span class="operator">the</span> <span class="built_in">sum</span> <span class="operator">of</span> all numbers along its path.</div><div class="line">Note: You can only move either down <span class="operator">or</span> <span class="constant">right</span> <span class="keyword">at</span> <span class="keyword">any</span> point <span class="operator">in</span> <span class="built_in">time</span>.</div><div class="line"></div><div class="line"><span class="comment">### DP Solution</span></div></pre></td></tr></table></figure>
+
+<p>java<br>    public int minPathSum(int[][] grid) {<br>        int rows = grid.length;<br>        int cols = grid[0].length;<br>        int sum[][] = new int[rows][cols];<br>        for(int i=0;i&lt;rows;i++){<br>            for(int j=0;j&lt;cols;j++){<br>                if(i==0&amp;&amp;j==0){<br>                    sum[i][j] = grid[i][j];<br>                }<br>                if(i==0&amp;&amp;j!=0){<br>                    sum[i][j] = sum[i][j-1]+grid[i][j];<br>                }<br>                if(i!=0&amp;&amp;j==0){<br>                    sum[i][j] = sum[i-1][j]+grid[i][j];<br>                }<br>                if(i!=0&amp;&amp;j!=0){<br>                    int a = sum[i-1][j]+grid[i][j];<br>                    int b = sum[i][j-1]+grid[i][j];<br>                    sum[i][j] = Math.min(a,b);<br>                }<br>            }<br>        }<br>        return sum[rows-1][cols-1];<br>    }<br>```</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Cici Sun</h4>
+    <p>伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br></p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-sina-weibo" href="http://v.t.sina.com.cn/share/share.php?title=伪技术宅中的战斗机＝＝ <br> 每天被自己帅醒也是蛮累的 _(:3 ⌒ﾞ)_ </br> ?url=sunbingjie.tk/2015/04/15/4.11/" target="_blank">
+        <span class="hidden">weibo</span>
+    </a>
+    <a class="icon-twitter" href="http://twitter.com/share?url=sunbingjie.tk/2015/04/15/4.11/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=sunbingjie.tk/2015/04/15/4.11/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=sunbingjie.tk/2015/04/15/4.11/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="icon-logo">•</span>
+    
+    <a class="older-posts" href="/2015/04/15/4.12/">
+        Letter Combinations of a Phone Number →
+    </a>
+    
+</nav>
+
+  <div id="comment" class="comments-area">
+    <h4 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h4>
+    
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+    
+</div>
+
+</main>
+
+
+      
+<footer class="site-footer">
+  
+  <a class="subscribe icon-feed" href="/atom.xml"><span class="tooltip">Subscribe!</span></a>
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Cici's Blog</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/menu.js"></script>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'sunbingjie';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+  </div>
+</div>
+
+<nav  class="outer-nav top horizontal">
+
+          <a class="icon-home"  href="/"><span>Home</span></a>
+
+          <a class="icon-news"  href="/archives"><span>Archive</span></a>
+
+          <a class="icon-image"  href="/images"><span>Images</span></a>
+
+          <a class="icon-Favorites"  href="/favorites"><span>Favorites</span></a>
+
+          <a class="icon-mail"  href="/about"><span>Contact</span></a>
+
+</nav>
+
+</div>
+</body>
+</html>
