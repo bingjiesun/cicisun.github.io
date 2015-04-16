@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="DFS,Recursion," />
+  <meta name="keywords" content="DFS,Recursion,Bit Manipulation," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> Letter Combinations of a Phone Number // Cici's Blog </title>
+  <title> Letter Combinations of a Phone Number, Single Number, Single Number II, Decode Ways // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Letter Combinations of a Phone Number
+              Letter Combinations of a Phone Number, Single Number, Single Number II, Decode Ways
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-04-15
+          Posted on 2015-04-16
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/04/15/4.12/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/15/4.12/"></span>
+            <a href="/2015/04/16/4.12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/16/4.12/"></span>
             </a>
           </span>
           
@@ -179,6 +179,63 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">letterCombinations</span>(String digits) {</div><div class="line">    String map[] = {<span class="string">""</span>,<span class="string">""</span>,<span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"ghi"</span>,<span class="string">"jkl"</span>,<span class="string">"mno"</span>,<span class="string">"pqrs"</span>,<span class="string">"tuv"</span>,<span class="string">"wxyz"</span>};</div><div class="line">    StringBuilder tmp = <span class="keyword">new</span> StringBuilder();</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    <span class="keyword">if</span>(digits==<span class="keyword">null</span> || digits.length()==<span class="number">0</span>) <span class="keyword">return</span> res; <span class="comment">//[""] is not []...</span></div><div class="line">    dfs(digits, map, tmp, res, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(String digits, String[] map, StringBuilder tmp, ArrayList&lt;String&gt; res, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(height == digits.length()){</div><div class="line">        res.add(tmp.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line"> </div><div class="line">    <span class="keyword">int</span> num = digits.charAt(height)-<span class="string">'0'</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;map[num].length();i++){</div><div class="line">         tmp.append(map[num].charAt(i));</div><div class="line">         dfs(digits, map, tmp, res, height+<span class="number">1</span>);</div><div class="line">         tmp.deleteCharAt(tmp.length()-<span class="number">1</span>); <span class="comment">//delete when backtracking..</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
 
+<hr>
+<h2 id="Single_Number">Single Number</h2>
+<blockquote>
+<p>Given an array of integers, every element appears twice except for one. Find that single one.<br>Note:<br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+</blockquote>
+<h3 id="O(n)_Memory_O(n)_Time_Solution">O(n) Memory O(n) Time Solution</h3>
+<p>LTE? With an instantiated Iterator I can pass the OJ…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    HashSet&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">    <span class="keyword">for</span>(Integer i:A){</div><div class="line">        <span class="keyword">if</span>(set.contains(i)) set.remove(i);</div><div class="line">        <span class="keyword">else</span> set.add(i);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> set.iterator().next();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="XOR_Solution">XOR Solution</h3>
+<p><a href="http://wezly.iteye.com/blog/1120823" target="_blank" rel="external">Similar Problem</a></p>
+<ul>
+<li><p>n+1 elements in range n, find the duplicate. take XOR between 1 to n, and the given array.</p>
+</li>
+<li><p>Here we use the property x^x=0，x^0=x</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(Integer i:A){</div><div class="line">        res ^= i;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Single_Number_II">Single Number II</h2>
+<blockquote>
+<p>Given an array of integers, every element appears three times except for one. Find that single one.<br>Note:<br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>count 1 in each bit position among all A numbers.</li>
+<li>if a count can be divided by 3, then it does not contain single number</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span>[] count = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">32</span>];</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">32</span>;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;A.length;j++){</div><div class="line">            <span class="keyword">if</span>((A[j]&gt;&gt;i & <span class="number">1</span>)==<span class="number">1</span>){</div><div class="line">                count[i]+=<span class="number">1</span>; <span class="comment">//increment bit bin</span></div><div class="line">            }</div><div class="line">        }</div><div class="line">        res |= count[i]%<span class="number">3</span> &lt;&lt; i; <span class="comment">//recover single number</span></div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Decode_Ways">Decode Ways</h2>
+<blockquote>
+<p>A message containing letters from A-Z is being encoded to numbers using the following mapping:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="string">'A'</span> -&gt; <span class="number">1</span></div><div class="line"><span class="string">'B'</span> -&gt; <span class="number">2</span></div><div class="line"><span class="keyword">...</span></div><div class="line"><span class="string">'Z'</span> -&gt; <span class="number">26</span></div></pre></td></tr></table></figure>
+
+<p>Given an encoded message containing digits, determine the total number of ways to decode it.<br>For example,<br>Given encoded message “12”, it could be decoded as “AB” (1 2) or “L” (12).<br>The number of ways decoding “12” is 2.</p>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<ul>
+<li>quite straight forward…? LTE..</li>
+<li>when at i, we can decode i separately , or decode i,i+1 as a whole</li>
+<li>checking conditions: 1X or &lt;26, then we can return substr(1) + substr(2). </li>
+<li>only when len==2 under this case, s.len would be 0, and return 1</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numDecodings</span>(String s) {</div><div class="line">    <span class="keyword">if</span>(s.length() == <span class="number">0</span> || s.length() == <span class="number">1</span> && s.charAt(<span class="number">0</span>) != <span class="string">'0'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(s.charAt(<span class="number">0</span>) == <span class="string">'0'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(s.charAt(<span class="number">0</span>) == <span class="string">'1'</span> || (s.charAt(<span class="number">0</span>) == <span class="string">'2'</span> && s.charAt(<span class="number">1</span>) &lt;= <span class="string">'6'</span>))</div><div class="line">        <span class="keyword">return</span> numDecodings(s.substring(<span class="number">1</span>)) + numDecodings(s.substring(<span class="number">2</span>));</div><div class="line">    <span class="keyword">return</span> numDecodings(s.substring(<span class="number">1</span>));</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<p>＋ ways[i] represents the # of decoding from i to end</p>
+<ul>
+<li>given s[i] is not ‘0’, we can always decode s in ways[i+1] ways, viewing s[i] as a separate code, ways[i] = ways[i+1]</li>
+<li>check if i,i+1 forms a valid code, ways[i] = ways[i+1] + ways[i+2] </li>
+<li>if s[i] is ‘0’, ways[i] is set to 0</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numDecodings</span>(String s) {</div><div class="line">    <span class="keyword">if</span>(s.length() == <span class="number">0</span> || s==<span class="keyword">null</span> || s.charAt(<span class="number">0</span>) == <span class="string">'0'</span>)</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span>[] ways = <span class="keyword">new</span> <span class="keyword">int</span>[s.length()+<span class="number">1</span>];</div><div class="line">    ways[s.length()] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=s.length()-<span class="number">1</span>; i&gt;=<span class="number">0</span>;i--){</div><div class="line">        <span class="keyword">if</span>(s.charAt(i) == <span class="string">'0'</span>) ways[i]=<span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span> ways[i] = ways[i+<span class="number">1</span>];</div><div class="line">        <span class="keyword">if</span>(i+<span class="number">1</span>&lt;s.length() && (s.charAt(i) == <span class="string">'1'</span> || s.charAt(i) == <span class="string">'2'</span> && s.charAt(i+<span class="number">1</span>) &lt;= <span class="string">'6'</span>))</div><div class="line">            ways[i] = ways[i] + ways[i+<span class="number">2</span>];</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> ways[<span class="number">0</span>];</div><div class="line">}</div></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -191,6 +248,8 @@
           
             <a href="/tags/Recursion/"> #Recursion </a>
           
+            <a href="/tags/Bit-Manipulation/"> #Bit Manipulation </a>
+          
         </div>
       
 
@@ -198,13 +257,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/04/15/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum</a>
+              <a href="/2015/04/16/4.10/">Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Tree Zigzag Level Order Traversal, Binary Search Tree Iterator</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/14/4.10/">Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Search Tree Iterator</a>
+              <a href="/2015/04/15/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum</a>
             
           </div>
         </div>
@@ -324,7 +383,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Letter_Combinations_of_a_Phone_Number"><span class="nav-number">1.</span> <span class="nav-text">Letter Combinations of a Phone Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Iterative Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">1.2.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Letter_Combinations_of_a_Phone_Number"><span class="nav-number">1.</span> <span class="nav-text">Letter Combinations of a Phone Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Iterative Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">1.2.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single_Number"><span class="nav-number">2.</span> <span class="nav-text">Single Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O(n)_Memory_O(n)_Time_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">O(n) Memory O(n) Time Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XOR_Solution"><span class="nav-number">2.2.</span> <span class="nav-text">XOR Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single_Number_II"><span class="nav-number">3.</span> <span class="nav-text">Single Number II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decode_Ways"><span class="nav-number">4.</span> <span class="nav-text">Decode Ways</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">Recursive Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DP_Solution"><span class="nav-number">4.2.</span> <span class="nav-text">DP Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -897,8 +956,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/04/15/4.12/';
-      var disqus_url = 'sunbingjie.tk/2015/04/15/4.12/';
+      var disqus_identifier = '2015/04/16/4.12/';
+      var disqus_url = 'sunbingjie.tk/2015/04/16/4.12/';
 
       (function(){
         var dsq = document.createElement('script');
