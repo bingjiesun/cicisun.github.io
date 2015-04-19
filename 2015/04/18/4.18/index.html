@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="Concepts," />
+  <meta name="keywords" content="Tree,Recursion,LinkedList," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> Basic Comparisons // Cici's Blog </title>
+  <title> The Great Tree-List Recursion Problem // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Basic Comparisons
+              The Great Tree-List Recursion Problem
             
           
         </h1>
@@ -126,14 +126,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-03-13
+          Posted on 2015-04-19
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; In
             
-              <a href="/categories/CC/">CC</a>
+              <a href="/categories/刷题/">刷题</a>
 
               
               
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/03/13/2.12/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/13/2.12/"></span>
+            <a href="/2015/04/18/4.18/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/18/4.18/"></span>
             </a>
           </span>
           
@@ -161,261 +161,20 @@
       
 
       
-        <ul>
-<li><a href="#list">LinkedList vs ArrayList</a></li>
-<li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
-<li><a href="#setlistmap">Set vs. List vs. Map</a></li>
-<li><a href="#search">BST vs. HashTable</a></li>
-<li><a href="#graph">BFS vs. DFS</a></li>
-<li><a href="#treegraph">Graph vs. Tree</a></li>
-</ul>
-<p><a name="list"></a></p>
-<h2 id="Linkedlist_vs-_Arraylist_vs-_Vector">Linkedlist vs. Arraylist vs. Vector</h2>
-<ul>
-<li><p>Operations</p>
-<ul>
-<li>LinkedList<ul>
-<li>get(index): O(n)</li>
-<li>add(element): O(1)</li>
-<li>add(index, element): O(n)</li>
-<li>remove(index): O(n)</li>
-<li>Iterator.remove(): O(1), main benefit</li>
-<li>Iterator.add(element): O(1), main benefit</li>
-</ul>
-</li>
-<li>ArrayList<ul>
-<li>get(index): O(1), main benefit</li>
-<li>add(element): O(1) amortized, worst case O(n) because need to resize array and copy</li>
-<li>add(index, element): O(n-index) amortized, worst case O(n)</li>
-<li>remove(index): O(n-index), remove last is O(1)</li>
-<li>Iterator.remove(): O(n-index)</li>
-<li>Iterator.add(element): O(n-index)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Compare</p>
-<ul>
-<li>Linkedlist<ul>
-<li>O(1) time insertions or removals using iterator, but only sequential access</li>
-<li>finding a position in the linkedlist takes time O(n)</li>
-<li>each element of linkedlist have more memory overhead because pointers need to be stored</li>
-<li>linkedlist also implements queue interface which adds more methods such as offer(), peek(), poll()</li>
-</ul>
-</li>
-<li>Arraylist<ul>
-<li>fast random read access in O(1)</li>
-<li>adding or removing element except at the end require shifting latter elements, if add more elements, need to allocate new array and copy old values</li>
-<li>iterating over arraylist is technically faster</li>
-<li>to avoid overhead of resizing, construct arraylist with initial capacity</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Similarities</p>
-<ul>
-<li>both are implementation of list interface</li>
-<li>maintain elements in insertion order</li>
-<li>non-synchronized, but can be made synchronized explicitly</li>
-<li>if list is structurally modified after iterator is created, except through iterator’s own remove or add method, iterator will throw exception</li>
-</ul>
-</li>
-<li><p>When to use which</p>
-<ul>
-<li>frequent addition and deletion: linkedlist</li>
-<li>frequent search: arraylist</li>
-<li>less memory to store many elements: arraylist</li>
-</ul>
-</li>
-<li><p>Vector</p>
-<ul>
-<li>almost identical to arraylist, but is synchronized</li>
-<li>more overhead because of synchronization</li>
-<li>still use arraylist because they can make it synchronized explicitly by encapsulating: </li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">coll </span>=<span class="string"> Collections.synchronizedCollection(coll);</span></div></pre></td></tr></table></figure>
+        <h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
+<blockquote>
+<p>Convert a given Binary Tree to Doubly Linked List</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Inorder traversal, then link each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> DListNode pre = <span class="keyword">new</span> DListNode();</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> DListNode dummy = pre;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">btreetolist</span>(TreeNode r){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    btreetolist(r.left);</div><div class="line">    DListNode cur = <span class="keyword">new</span> DListNode(r);</div><div class="line">    cur.prev = pre;</div><div class="line">    pre.next = cur;</div><div class="line">    pre = cur;</div><div class="line">    btreetolist(r.right);</div><div class="line">    }</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">    TreeNode root = <span class="keyword">new</span> TreeNode(<span class="number">2</span>);</div><div class="line">    TreeNode l = <span class="keyword">new</span> TreeNode(<span class="number">1</span>);</div><div class="line">    TreeNode r = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</div><div class="line">    root.left = l; root.right=r;</div><div class="line">    btreetolist(root);</div><div class="line">    System.out.println(dummy.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.next.val.val);</div><div class="line">}</div></pre></td></tr></table></figure>
 
-<p><a name="map"></a></p>
-<h2 id="HashMap_vs-_TreeMap_vs-_HashTable_vs-_LinkedHashMap">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>HashMap: implemented as a hash table, no ordering on keys or values</li>
-<li>TreeMap: implemented based on red-black tree, ordered by key</li>
-<li>LinkedHashMap: preserves insertion order</li>
-<li>HashTable: synchronized in constrast to HashMap</li>
-</ul>
-</li>
-<li><p>HashMap</p>
-<ul>
-<li>operation<ul>
-<li>put(): average O(1), worst O(n) when collision</li>
-<li>get(), remove(): O(1)</li>
-</ul>
-</li>
-<li>if key is self-defined objects, need to implement equals() and hashCode()</li>
-<li>iteration order not predictable</li>
-<li>does not allow two identical elements<ul>
-<li>equals(): return true if two references refer to the same object</li>
-<li>hashCode(): return distinct integers for distinct objects</li>
-</ul>
-</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-<li><p>TreeMap</p>
-<ul>
-<li>operation<ul>
-<li>put(), get(), remove(): worst O(logn)</li>
-</ul>
-</li>
-<li>sorted by keys</li>
-<li>object for key has to implement Comparable interface</li>
-<li>only allow values to be null</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>HashMap is roughly equivalent to HashTable, except hashmap is not synchronized and permits null</li>
-<li>Hashtable does not allow null keys or values. HashMap allows one null key and any number of null values.</li>
-</ul>
-</li>
-<li><p>LinkedHashMap</p>
-<ul>
-<li>operation: see arraylist</li>
-<li>subclass of HashMap</li>
-<li>linkedlist preserves the insertion order</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-</ul>
-<p><a name="setlistmap"></a></p>
-<h2 id="Set_vs-_List_vs-_Map">Set vs. List vs. Map</h2>
-<ul>
-<li><p>Set</p>
-<ul>
-<li>unordered collection</li>
-<li>unique objects (!e1.equals(e2))</li>
-<li>contains at most one null</li>
-</ul>
-</li>
-<li><p>List</p>
-<ul>
-<li>ordered collection(sequence)</li>
-<li>access by index and search</li>
-<li>may contain duplicates</li>
-<li>user has control over where element inserted</li>
-</ul>
-</li>
-<li><p>Map</p>
-<ul>
-<li>object that maps keys to values</li>
-<li>no duplicated allowed</li>
-<li>a key can map to at most one value</li>
-</ul>
-</li>
-</ul>
-<p><a name="search"></a></p>
-<h2 id="BST_vs-_HashTable">BST vs. HashTable</h2>
-<ul>
-<li><p>BST</p>
-<ul>
-<li>insert and retrieve: O(logn)</li>
-<li>store data sorted</li>
-<li>no need to know size of input in advance</li>
-<li>memory efficient: do not reserve more memory than they need to</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>insert and retrieve: O(1)</li>
-<li>elements stored unsorted</li>
-<li>with more inputs, collisions may show up</li>
-<li>need more space than input data if to avoid collision</li>
-<li>need to know data size, otherwise might need to resize the table</li>
-</ul>
-</li>
-</ul>
-<p><a name="graph"></a></p>
-<h2 id="BFS_vs-_DFS">BFS vs. DFS</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>search algorithms for graphs and trees</li>
-<li>used for unordered graph and tree</li>
-<li>graph representation<ul>
-<li>adjacent list: space O(V+E)</li>
-<li>adjacent matrix: space O(V^2)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>BFS</p>
-<ul>
-<li>start with root node</li>
-<li>scan each node in the each level</li>
-<li>while traversing each level, decide if target is found</li>
-</ul>
-</li>
-<li><p>DFS</p>
-<ul>
-<li>start with root node</li>
-<li>follow on branch as far as possible until target is found or hit a leaf node</li>
-<li>if hit a leaf node, continue search at the nearest ancestor</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Comparison<ul>
-<li>memory<ul>
-<li>BFS uses a large amount of memory because need to store pointers to a level(serious problem if the tree is very wide)</li>
-<li>DFS uses less memory because no need to store all child pointers at a level</li>
-</ul>
-</li>
-<li>depend on the data you search for<ul>
-<li>look for people alive in family tree: DFS because targets are likely to be on the bottom of the tree</li>
-<li>look for people who died: BFS</li>
-</ul>
-</li>
-<li>implementation<ul>
-<li>BFS: queue</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">BFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">a</span> <span class="title">queue</span> <span class="title">Q</span></div><div class="line">   <span class="title">Q</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">while</span> <span class="title">Q</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">Q</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">          <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">             <span class="title">Q</span>.<span class="title">push</span><span class="params">(w)</span></div><div class="line">             <span class="title">label</span> <span class="title">w</span> <span class="title">as</span> <span class="title">visited</span></div></pre></td></tr></table></figure>
-
-<pre><code>-<span class="ruby"> <span class="constant">DFS</span><span class="symbol">:</span> stack
-</span>  + recursive
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">       <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">           <span class="title">DFS</span><span class="params">(G,w)</span></div></pre></td></tr></table></figure>
-
-<pre><code>  + iterative
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">stack</span> <span class="title">S</span></div><div class="line">   <span class="title">S</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">while</span> <span class="title">S</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">S</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">if</span> <span class="title">v</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">         <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">            <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">                <span class="title">S</span>.<span class="title">push</span><span class="params">(w)</span></div></pre></td></tr></table></figure>
-
-<ul>
-<li>solution<ul>
-<li>BFS: complete algorithm, give optimal solution</li>
-<li>DFS: suboptimal solution</li>
-</ul>
-</li>
-<li>complexity<ul>
-<li>BFS: worst time O(V+E), worst space O(V)</li>
-<li>DFS: worst time O(v+E), worst space O(V)</li>
-</ul>
-</li>
-</ul>
-<p><a name="treegraph"></a></p>
-<h2 id="Tree_vs-_Graph">Tree vs. Graph</h2>
-<ul>
-<li>tree is restricted form of a graph(directed acyclic graph)</li>
-<li>trees have direction(parent/child relationship)</li>
-<li>tree does not contain cycles</li>
-<li>in trees, a child can only have one parent</li>
-</ul>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Finterscope%2Fthe-pretty-reckless-make-me-2%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+<hr>
+<h2 id="The_Great_Tree-List_Recursion_Problem"><a href="http://cslibrary.stanford.edu/109/TreeListRecursion.html" target="_blank" rel="external">The Great Tree-List Recursion Problem</a></h2>
+<blockquote>
+<p>The challenge is to take an ordered binary tree and rearrange the internal pointers to make a circular doubly linked list out of it. The “small” pointer should play the role of “previous” and the “large” pointer should play the role of “next”. The list should be arranged so that the nodes are in increasing order…</p>
+</blockquote>
+<p>Thinking…</p>
 
       
     </div>
@@ -424,7 +183,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Concepts/"> #Concepts </a>
+            <a href="/tags/Tree/"> #Tree </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
           
         </div>
       
@@ -433,13 +196,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/03/13/2.12-2/">Basic Data Structure</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/03/13/2.12-3/">Java Related Questions</a>
+              <a href="/2015/04/18/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum</a>
             
           </div>
         </div>
@@ -559,7 +320,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linkedlist_vs-_Arraylist_vs-_Vector"><span class="nav-number">1.</span> <span class="nav-text">Linkedlist vs. Arraylist vs. Vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap_vs-_TreeMap_vs-_HashTable_vs-_LinkedHashMap"><span class="nav-number">2.</span> <span class="nav-text">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set_vs-_List_vs-_Map"><span class="nav-number">3.</span> <span class="nav-text">Set vs. List vs. Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BST_vs-_HashTable"><span class="nav-number">4.</span> <span class="nav-text">BST vs. HashTable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS_vs-_DFS"><span class="nav-number">5.</span> <span class="nav-text">BFS vs. DFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tree_vs-_Graph"><span class="nav-number">6.</span> <span class="nav-text">Tree vs. Graph</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First_Problem_ఠ_ఠ"><span class="nav-number">1.</span> <span class="nav-text">First Problem ఠ_ఠ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The_Great_Tree-List_Recursion_Problem"><span class="nav-number">2.</span> <span class="nav-text">The Great Tree-List Recursion Problem</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -1132,8 +893,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/03/13/2.12/';
-      var disqus_url = 'sunbingjie.tk/2015/03/13/2.12/';
+      var disqus_identifier = '2015/04/18/4.18/';
+      var disqus_url = 'sunbingjie.tk/2015/04/18/4.18/';
 
       (function(){
         var dsq = document.createElement('script');
