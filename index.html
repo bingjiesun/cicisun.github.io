@@ -120,6 +120,428 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/01/scrapy/">
+                Web scraping with Scrapy
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/学习/">学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/scrapy/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/scrapy/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
+</blockquote>
+<ul>
+<li>To write a web crawler, we need at least basic knowledge on XPath and Python, that’s enough! </li>
+</ul>
+<h3 id="Installation">Installation</h3>
+<p>Install using pip</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install Scrapy</div></pre></td></tr></table></figure>
+
+<p>Create project</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy startproject name</div></pre></td></tr></table></figure>
+
+<p>This will create a name dir with the following files</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name/</div><div class="line">    scrapy.cfg</div><div class="line">    tutorial/</div><div class="line">        __init__.py</div><div class="line">        items.py</div><div class="line">        pipelines.py</div><div class="line">        settings.py</div><div class="line">        spiders/</div><div class="line">            __init__.py</div><div class="line">            <span class="keyword">...</span></div></pre></td></tr></table></figure>
+
+<h3 id="Defining_the_Items_you_will_extract">Defining the Items you will extract</h3>
+<p>In items.py, item class which loads our data are declared by creating a scrapy.Item class and defining its attributes as scrapy.Field objects, like you will in an ORM.</p>
+<p>Here’s my Item definition:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    des = scrapy.Field()</div><div class="line">    image_urls = scrapy.Field()</div><div class="line">    images = scrapy.Field()</div></pre></td></tr></table></figure>
+
+<h3 id="Writing_a_spider_to_crawl_a_site_and_extract_Items">Writing a spider to crawl a site and extract Items</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> Rule, CrawlSpider</div><div class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> crawl.items <span class="keyword">import</span> CrawlItem</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line"></div><div class="line">    name = <span class="string">"crawl"</span></div><div class="line">    allowed_domains = [<span class="string">"polyvore.com"</span>]</div><div class="line">    start_urls = [<span class="string">"http://www.polyvore.com/?filter=fashion"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow =[<span class="string">'/.*'</span>]), <span class="string">'parse_crawl'</span>)]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_crawl</span><span class="params">(self, response)</span>:</span></div><div class="line"> </div><div class="line">        item =CrawlItem()</div><div class="line"></div><div class="line">        link_rel = response.xpath(<span class="string">"//img[@class='img_size_l']/@title"</span>).extract()</div><div class="line">        </div><div class="line">        item[<span class="string">'des'</span>] = [x <span class="keyword">for</span> x <span class="keyword">in</span> link_rel]</div><div class="line"> </div><div class="line">        link = response.xpath(<span class="string">"//img[@class='img_size_l']/@src"</span>).extract()</div><div class="line"> </div><div class="line">        item[<span class="string">'image_urls'</span>] = [ x <span class="keyword">for</span> x <span class="keyword">in</span> link]</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+
+<p>Start crawling…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl crawl</div></pre></td></tr></table></figure>
+
+<h3 id="Writing_an_Item_Pipeline_to_store_the_extracted_Items">Writing an Item Pipeline to store the extracted Items</h3>
+<p>If we are just downloading the images to local<br>Add these two lines in setting.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = {<span class="string">'scrapy.contrib.pipeline.images.ImagesPipeline'</span>: <span class="number">1</span>}</div><div class="line"> </div><div class="line">IMAGES_STORE = <span class="string">"img"</span></div></pre></td></tr></table></figure>
+
+<p>Results: all images are stored under name/img/full directory;)</p>
+<p>If we need to Write items to a JSON file,  by using the Feed exports.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl dmoz -o items.json</div></pre></td></tr></table></figure>
+
+<p>If backendDB is required:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySQLStorePipeline</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self.conn = MySQLdb.connect(user=<span class="string">'user'</span>, <span class="string">'passwd'</span>, <span class="string">'dbname'</span>, <span class="string">'host'</span>, charset=<span class="string">"utf8"</span>, use_unicode=<span class="keyword">True</span>)</div><div class="line">    self.cursor = self.conn.cursor()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span>    </div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        self.cursor.execute(<span class="string">"""INSERT INTO test (des, image_urls)  </span></div><div class="line">                        VALUES (%s, %s)""", </div><div class="line">                       (item[<span class="string">'des'</span>].encode(<span class="string">'utf-8'</span>), </div><div class="line">                        item[<span class="string">'image_urls'</span>].encode(<span class="string">'utf-8'</span>)))</div><div class="line"></div><div class="line">        self.conn.commit()</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">except</span> MySQLdb.Error, e:</div><div class="line">        <span class="keyword">print</span> <span class="string">"Error %d: %s"</span> % (e.args[<span class="number">0</span>], e.args[<span class="number">1</span>])</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+
+<hr>
+<p>recently falling for a bit METAL…ヾ(○´▽｀○)ノ </p>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnuclearblastrecords%2Fnightwish-amaranth&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crawler/"> #Crawler </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/01/mapreduceinonepage/">
+                MapReduce的模式、算法和用例
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/学习/">学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/mapreduceinonepage/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/mapreduceinonepage/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2>
+<p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combiners, Partitioners,和 sorting。如下图所示。<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PQ950-.png" alt=""></p>
+<h2 id="基本MapReduce模式">基本MapReduce模式</h2>
+<h3 id="计数与求和">计数与求和</h3>
+<p>问题陈述:有许多文档，每个文档都有一些字段组成。需要计算出每个字段在所有文档中的出现次数或者这些字段的其他什么统计值。例如，给定一个log文件，其中的每条记录都包含一个响应时间，需要计算出平均响应时间。</p>
+<p>解决方案:</p>
+<p>让我们先从简单的例子入手。在下面的代码片段里，Mapper每遇到指定词就把频次记1，Reducer一个个遍历这些词的集合然后把他们的频次加和。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(docid id, doc d)</div><div class="line"><span class="keyword">for</span> all term t <span class="keyword">in</span> doc d <span class="keyword">do</span></div><div class="line"><span class="type">Emit</span>(term t, count <span class="number">1</span>)</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(term t, counts [c1, c2,...])</div><div class="line">sum = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> all count c <span class="keyword">in</span> [c1, c2,...] <span class="keyword">do</span></div><div class="line">sum = sum + c</div><div class="line"><span class="type">Emit</span>(term t, count sum)</div></pre></td></tr></table></figure>
+
+<p>这种方法的缺点显而易见，Mapper提交了太多无意义的计数。它完全可以通过先对每个文档中的词进行计数从而减少传递给Reducer的数据量:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(docid id, doc d)</div><div class="line">H = new <span class="type">AssociativeArray</span></div><div class="line"><span class="keyword">for</span> all term t <span class="keyword">in</span> doc d <span class="keyword">do</span></div><div class="line">H{t} = H{t} + <span class="number">1</span></div><div class="line"><span class="keyword">for</span> all term t <span class="keyword">in</span> H <span class="keyword">do</span></div><div class="line"><span class="type">Emit</span>(term t, count H{t})</div></pre></td></tr></table></figure>
+
+<p>如果要累计计数的的不只是单个文档中的内容，还包括了一个Mapper节点处理的所有文档，那就要用到Combiner了:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(docid id, doc d)</div><div class="line"><span class="keyword">for</span> all term t <span class="keyword">in</span> doc d do</div><div class="line">Emit(term t, count <span class="number">1</span>)</div><div class="line"> </div><div class="line">class Combiner</div><div class="line">method Combine(term t, [c1, c2,<span class="keyword">...</span>])</div><div class="line">sum = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> all count c <span class="keyword">in</span> [c1, c2,<span class="keyword">...</span>] do</div><div class="line">sum = sum + c</div><div class="line">Emit(term t, count sum)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(term t, counts [c1, c2,<span class="keyword">...</span>])</div><div class="line">sum = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> all count c <span class="keyword">in</span> [c1, c2,<span class="keyword">...</span>] do</div><div class="line">sum = sum + c</div><div class="line">Emit(term t, count sum)</div></pre></td></tr></table></figure>
+
+<p>应用:<br>Log 分析, 数据查询</p>
+<h3 id="整理归类">整理归类</h3>
+<p>问题陈述:</p>
+<p>有一系列条目，每个条目都有几个属性，要把具有同一属性值的条目都保存在一个文件里，或者把条目按照属性值分组。 最典型的应用是倒排索引。</p>
+<p>解决方案：</p>
+<p>解决方案很简单。 在 Mapper 中以每个条目的所需属性值作为 key，其本身作为值传递给 Reducer。 Reducer 取得按照属性值分组的条目，然后可以处理或者保存。如果是在构建倒排索引，那么 每个条目相当于一个词而属性值就是词所在的文档ID。</p>
+<p>应用:<br>倒排索引， ETL</p>
+<h3 id="过滤_(文本查找)，解析和校验">过滤 (文本查找)，解析和校验</h3>
+<p>问题陈述:</p>
+<p>假设有很多条记录，需要从其中找出满足某个条件的所有记录，或者将每条记录传换成另外一种形式（转换操作相对于各条记录独立，即对一条记录的操作与其他记录无关）。像文本解析、特定值抽取、格式转换等都属于后一种用例。</p>
+<p>解决方案:</p>
+<p>非常简单，在Mapper 里逐条进行操作，输出需要的值或转换后的形式。</p>
+<p>应用:<br>日志分析，数据查询，ETL，数据校验</p>
+<h3 id="分布式任务执行">分布式任务执行</h3>
+<p>问题陈述:</p>
+<p>大型计算可以分解为多个部分分别进行然后合并各个计算的结果以获得最终结果。</p>
+<p>解决方案: 将数据切分成多份作为每个 Mapper 的输入，每个Mapper处理一份数据，执行同样的运算，产生结果，Reducer把多个Mapper的结果组合成一个。</p>
+<p>案例研究： 数字通信系统模拟<br>像 WiMAX 这样的数字通信模拟软件通过系统模型来传输大量的随机数据，然后计算传输中的错误几率。 每个 Mapper 处理样本 1/N 的数据，计算出这部分数据的错误率，然后在 Reducer 里计算平均错误率。</p>
+<p>应用:<br>工程模拟，数字分析，性能测试</p>
+<h3 id="排序">排序</h3>
+<p>问题陈述:</p>
+<p>有许多条记录，需要按照某种规则将所有记录排序或是按照顺序来处理记录。</p>
+<p>解决方案:简单排序很好办 – Mappers 将待排序的属性值为键，整条记录为值输出。 不过实际应用中的排序要更加巧妙一点， 这就是它之所以被称为MapReduce 核心的原因（“核心”是说排序？因为证明Hadoop计算能力的实验是大数据排序？还是说Hadoop的处理过程中对key排序的环节？）。在实践中，常用组合键来实现二次排序和分组。</p>
+<p>MapReduce 最初只能够对键排序， 但是也有技术利用可以利用Hadoop 的特性来实现按值排序。想了解的话可以看这篇博客。</p>
+<p>按照BigTable的概念，使用 MapReduce来对最初数据而非中间数据排序，也即保持数据的有序状态更有好处，必须注意这一点。换句话说，在数据插入时排序一次要比在每次查询数据的时候排序更高效。</p>
+<h2 id="非基本_MapReduce_模式">非基本 MapReduce 模式</h2>
+<h3 id="迭代消息传递_(图处理)">迭代消息传递 (图处理)</h3>
+<p>问题陈述：</p>
+<p>假设一个实体网络，实体之间存在着关系。 需要按照与它比邻的其他实体的属性计算出一个状态。这个状态可以表现为它和其它节点之间的距离， 存在特定属性的邻接点的迹象， 邻域密度特征等等。</p>
+<p>解决方案：</p>
+<p>网络存储为系列节点的结合，每个节点包含有其所有邻接点ID的列表。按照这个概念，MapReduce 迭代进行，每次迭代中每个节点都发消息给它的邻接点。邻接点根据接收到的信息更新自己的状态。当满足了某些条件的时候迭代停止，如达到了最大迭代次数（网络半径）或两次连续的迭代几乎没有状态改变。从技术上来看，Mapper 以每个邻接点的ID为键发出信息，所有的信息都会按照接受节点分组，reducer 就能够重算各节点的状态然后更新那些状态改变了的节点。下面展示了这个算法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(id n, <span class="keyword">object</span> N)</div><div class="line"><span class="type">Emit</span>(id n, <span class="keyword">object</span> N)</div><div class="line"><span class="keyword">for</span> all id m <span class="keyword">in</span> N.<span class="type">OutgoingRelations</span> <span class="keyword">do</span></div><div class="line"><span class="type">Emit</span>(id m, message getMessage(N))</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(id m, [s1, s2,...])</div><div class="line">M = null</div><div class="line">messages = []</div><div class="line"><span class="keyword">for</span> all s <span class="keyword">in</span> [s1, s2,...] <span class="keyword">do</span></div><div class="line"><span class="keyword">if</span> <span class="type">IsObject</span>(s) then</div><div class="line">M = s</div><div class="line"><span class="keyword">else</span>               // s <span class="keyword">is</span> a message</div><div class="line">messages.add(s)</div><div class="line">M.<span class="type">State</span> = calculateState(messages)</div><div class="line"><span class="type">Emit</span>(id m, item M)</div></pre></td></tr></table></figure>
+
+<p>一个节点的状态可以迅速的沿着网络传全网，那些被感染了的节点又去感染它们的邻居，整个过程就像下面的图示一样：<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PU644-.png" alt=""></p>
+<p>案例研究： 沿分类树的有效性传递<br>问题陈述：</p>
+<p>这个问题来自于真实的电子商务应用。将各种货物分类，这些类别可以组成一个树形结构，比较大的分类（像男人、女人、儿童）可以再分出小分类（像男裤或女装），直到不能再分为止（像男式蓝色牛仔裤）。这些不能再分的基层类别可以是有效（这个类别包含有货品）或者已无效的（没有属于这个分类的货品）。如果一个分类至少含有一个有效的子分类那么认为这个分类也是有效的。我们需要在已知一些基层分类有效的情况下找出分类树上所有有效的分类。</p>
+<p>解决方案：</p>
+<p>这个问题可以用上一节提到的框架来解决。我们咋下面定义了名为 getMessage和 calculateState 的方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class N</div><div class="line"><span class="type">State</span> <span class="keyword">in</span> {<span class="type">True</span> = <span class="number">2</span>, <span class="type">False</span> = <span class="number">1</span>, null = <span class="number">0</span>},</div><div class="line">initialized <span class="number">1</span> <span class="keyword">or</span> <span class="number">2</span> <span class="keyword">for</span> <span class="keyword">end</span>-<span class="keyword">of</span>-line categories, <span class="number">0</span> otherwise</div><div class="line"><span class="keyword">method</span> getMessage(<span class="keyword">object</span> N)</div><div class="line"><span class="keyword">return</span> N.<span class="type">State</span></div><div class="line"><span class="keyword">method</span> calculateState(state s, data [d1, d2,...])</div><div class="line"><span class="keyword">return</span> max( [d1, d2,...] )</div></pre></td></tr></table></figure>
+
+<p>案例研究：广度优先搜索<br>问题陈述：需要计算出一个图结构中某一个节点到其它所有节点的距离。</p>
+<p>解决方案：Source源节点给所有邻接点发出值为0的信号，邻接点把收到的信号再转发给自己的邻接点，每转发一次就对信号值加1：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class N</div><div class="line"><span class="type">State</span> <span class="keyword">is</span> distance,</div><div class="line">initialized <span class="number">0</span> <span class="keyword">for</span> source node, <span class="type">INFINITY</span> <span class="keyword">for</span> all other nodes</div><div class="line"><span class="keyword">method</span> getMessage(N)</div><div class="line"><span class="keyword">return</span> N.<span class="type">State</span> + <span class="number">1</span></div><div class="line"><span class="keyword">method</span> calculateState(state s, data [d1, d2,...])</div><div class="line">min( [d1, d2,...] )</div></pre></td></tr></table></figure>
+
+<p>案例研究：网页排名和 Mapper 端数据聚合<br>这个算法由Google提出，使用权威的PageRank算法，通过连接到一个网页的其他网页来计算网页的相关性。真实算法是相当复杂的，但是核心思想是权重可以传播，也即通过一个节点的各联接节点的权重的均值来计算节点自身的权重。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class N</div><div class="line"><span class="type">State</span> <span class="keyword">is</span> <span class="type">PageRank</span></div><div class="line"><span class="keyword">method</span> getMessage(<span class="keyword">object</span> N)</div><div class="line"><span class="keyword">return</span> N.<span class="type">State</span> / N.<span class="type">OutgoingRelations</span>.size()</div><div class="line"><span class="keyword">method</span> calculateState(state s, data [d1, d2,...])</div><div class="line"><span class="keyword">return</span> ( sum([d1, d2,...]) )</div></pre></td></tr></table></figure>
+
+<p>要指出的是上面用一个数值来作为评分实际上是一种简化，在实际情况下，我们需要在Mapper端来进行聚合计算得出这个值。下面的代码片段展示了这个改变后的逻辑 （针对于 PageRank 算法）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Initialize</span></div><div class="line">H = new <span class="type">AssociativeArray</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(id n, <span class="keyword">object</span> N)</div><div class="line">p = N.<span class="type">PageRank</span>  / N.<span class="type">OutgoingRelations</span>.size()</div><div class="line"><span class="type">Emit</span>(id n, <span class="keyword">object</span> N)</div><div class="line"><span class="keyword">for</span> all id m <span class="keyword">in</span> N.<span class="type">OutgoingRelations</span> <span class="keyword">do</span></div><div class="line">H{m} = H{m} + p</div><div class="line"><span class="keyword">method</span> <span class="type">Close</span></div><div class="line"><span class="keyword">for</span> all id n <span class="keyword">in</span> H <span class="keyword">do</span></div><div class="line"><span class="type">Emit</span>(id n, value H{n})</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(id m, [s1, s2,...])</div><div class="line">M = null</div><div class="line">p = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> all s <span class="keyword">in</span> [s1, s2,...] <span class="keyword">do</span></div><div class="line"><span class="keyword">if</span> <span class="type">IsObject</span>(s) then</div><div class="line">M = s</div><div class="line"><span class="keyword">else</span></div><div class="line">p = p + s</div><div class="line">M.<span class="type">PageRank</span> = p</div><div class="line"><span class="type">Emit</span>(id m, item M)</div></pre></td></tr></table></figure>
+
+<p>应用：<br>图分析，网页索引</p>
+<h3 id="值去重_（对唯一项计数）">值去重 （对唯一项计数）</h3>
+<p>问题陈述:记录包含值域F和值域 G，要分别统计相同G值的记录中不同的F值的数目 (相当于按照 G分组).</p>
+<p>这个问题可以推而广之应用于分面搜索（某些电子商务网站称之为Narrow Search）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Record <span class="number">1</span>: <span class="variable">F=</span><span class="number">1</span>, <span class="variable">G=</span>{a, b}</div><div class="line">Record <span class="number">2</span>: <span class="variable">F=</span><span class="number">2</span>, <span class="variable">G=</span>{a, d, e}</div><div class="line">Record <span class="number">3</span>: <span class="variable">F=</span><span class="number">1</span>, <span class="variable">G=</span>{b}</div><div class="line">Record <span class="number">4</span>: <span class="variable">F=</span><span class="number">3</span>, <span class="variable">G=</span>{a, b}</div><div class="line"> </div><div class="line">Result:</div><div class="line">a -&gt; <span class="number">3</span> // <span class="variable">F=</span><span class="number">1</span>, <span class="variable">F=</span><span class="number">2</span>, <span class="variable">F=</span><span class="number">3</span></div><div class="line">b -&gt; <span class="number">2</span> // <span class="variable">F=</span><span class="number">1</span>, <span class="variable">F=</span><span class="number">3</span></div><div class="line">d -&gt; <span class="number">1</span> // <span class="variable">F=</span><span class="number">2</span></div><div class="line">e -&gt; <span class="number">1</span> // <span class="variable">F=</span><span class="number">2</span></div></pre></td></tr></table></figure>
+
+<p>解决方案 I:</p>
+<p>第一种方法是分两个阶段来解决这个问题。第一阶段在Mapper中使用F和G组成一个复合值对，然后在Reducer中输出每个值对，目的是为了保证F值的唯一性。在第二阶段，再将值对按照G值来分组计算每组中的条目数。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">第一阶段：</div><div class="line">class Mapper</div><div class="line">method Map(null, record [value f, categories [g1, g2,<span class="keyword">...</span>]])</div><div class="line"><span class="keyword">for</span> all category g <span class="keyword">in</span> [g1, g2,<span class="keyword">...</span>]</div><div class="line">Emit(record [g, f], count <span class="number">1</span>)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(record [g, f], counts [n1, n2, <span class="keyword">...</span>])</div><div class="line">Emit(record [g, f], null )</div><div class="line">第二阶段：</div><div class="line">class Mapper</div><div class="line">method Map(record [f, g], null)</div><div class="line">Emit(value g, count <span class="number">1</span>)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(value g, counts [n1, n2,<span class="keyword">...</span>])</div><div class="line">Emit(value g, sum( [n1, n2,<span class="keyword">...</span>] ) )</div><div class="line">解决方案 II:</div></pre></td></tr></table></figure>
+
+<p>第二种方法只需要一次MapReduce 即可实现，但扩展性不强。算法很简单-Mapper 输出值和分类，在Reducer里为每个值对应的分类去重然后给每个所属的分类计数加1，最后再在Reducer结束后将所有计数加和。这种方法适用于只有有限个分类，而且拥有相同F值的记录不是很多的情况。例如网络日志处理和用户分类，用户的总数很多，但是每个用户的事件是有限的，以此分类得到的类别也是有限的。值得一提的是在这种模式下可以在数据传输到Reducer之前使用Combiner来去除分类的重复值。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(null, record [value f, categories [g1, g2,<span class="keyword">...</span>] )</div><div class="line"><span class="keyword">for</span> all category g <span class="keyword">in</span> [g1, g2,<span class="keyword">...</span>]</div><div class="line">Emit(value f, category g)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Initialize</div><div class="line">H = new AssociativeArray : category -&gt; count</div><div class="line">method Reduce(value f, categories [g1, g2,<span class="keyword">...</span>])</div><div class="line">[g1<span class="string">', g2'</span>,..] = ExcludeDuplicates( [g1, g2,..] )</div><div class="line"><span class="keyword">for</span> all category g <span class="keyword">in</span> [g1<span class="string">', g2'</span>,<span class="keyword">...</span>]</div><div class="line">H{g} = H{g} + <span class="number">1</span></div><div class="line">method Close</div><div class="line"><span class="keyword">for</span> all category g <span class="keyword">in</span> H do</div><div class="line">Emit(category g, count H{g})</div></pre></td></tr></table></figure>
+
+<p>应用：<br>日志分析，用户计数</p>
+<h3 id="互相关">互相关</h3>
+<p>问题陈述：有多个各由若干项构成的组，计算项两两共同出现于一个组中的次数。假如项数是N，那么应该计算N*N。</p>
+<p>这种情况常见于文本分析（条目是单词而元组是句子），市场分析（购买了此物的客户还可能购买什么）。如果N*N小到可以容纳于一台机器的内存，实现起来就比较简单了。</p>
+<p>配对法</p>
+<p>第一种方法是在Mapper中给所有条目配对，然后在Reducer中将同一条目对的计数加和。但这种做法也有缺点：</p>
+<p>使用 combiners 带来的的好处有限，因为很可能所有项对都是唯一的<br>不能有效利用内存</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(null, items [i1, i2,<span class="keyword">...</span>] )</div><div class="line"><span class="keyword">for</span> all item i <span class="keyword">in</span> [i1, i2,<span class="keyword">...</span>]</div><div class="line"><span class="keyword">for</span> all item j <span class="keyword">in</span> [i1, i2,<span class="keyword">...</span>]</div><div class="line">Emit(pair [i j], count <span class="number">1</span>)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(pair [i j], counts [c1, c2,<span class="keyword">...</span>])</div><div class="line">s = sum([c1, c2,<span class="keyword">...</span>])</div><div class="line">Emit(pair[i j], count s)</div><div class="line">Stripes Approach（条方法？不知道这个名字怎么理解）</div></pre></td></tr></table></figure>
+
+<p>第二种方法是将数据按照pair中的第一项来分组，并维护一个关联数组，数组中存储的是所有关联项的计数。The second approach is to group data by the first item in pair and maintain an associative array (“stripe”) where counters for all adjacent items are accumulated. Reducer receives all stripes for leading item i, merges them, and emits the same result as in the Pairs approach.</p>
+<p>中间结果的键数量相对较少，因此减少了排序消耗。<br>可以有效利用 combiners。<br>可在内存中执行，不过如果没有正确执行的话也会带来问题。<br>实现起来比较复杂。<br>一般来说， “stripes” 比 “pairs” 更快</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(null, items [i1, i2,<span class="keyword">...</span>] )</div><div class="line"><span class="keyword">for</span> all item i <span class="keyword">in</span> [i1, i2,<span class="keyword">...</span>]</div><div class="line">H = new AssociativeArray : item -&gt; counter</div><div class="line"><span class="keyword">for</span> all item j <span class="keyword">in</span> [i1, i2,<span class="keyword">...</span>]</div><div class="line">H{j} = H{j} + <span class="number">1</span></div><div class="line">Emit(item i, stripe H)</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(item i, stripes [H1, H2,<span class="keyword">...</span>])</div><div class="line">H = new AssociativeArray : item -&gt; counter</div><div class="line">H = merge-sum( [H1, H2,<span class="keyword">...</span>] )</div><div class="line"><span class="keyword">for</span> all item j <span class="keyword">in</span> H.keys()</div><div class="line">Emit(pair [i j], H{j})</div></pre></td></tr></table></figure>
+
+<p>应用：<br>文本分析，市场分析</p>
+<h2 id="用MapReduce_表达关系模式">用MapReduce 表达关系模式</h2>
+<p>在这部分我们会讨论一下怎么使用MapReduce来进行主要的关系操作。</p>
+<h3 id="筛选（Selection）">筛选（Selection）</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Mapper</div><div class="line"><span class="function"><span class="keyword">method</span> <span class="title">Map</span><span class="params">(rowkey key, <span class="keyword">tuple</span> t)</span></span></div><div class="line"><span class="title">if</span> <span class="title">t</span> <span class="title">satisfies</span> <span class="title">the</span> <span class="title">predicate</span></div><div class="line"><span class="title">Emit</span><span class="params">(<span class="keyword">tuple</span> t, null)</span></div></pre></td></tr></table></figure>
+
+<h3 id="投影（Projection）">投影（Projection）</h3>
+<p>投影只比筛选稍微复杂一点，在这种情况下我们可以用Reducer来消除可能的重复值。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(rowkey key, <span class="keyword">tuple</span> t)</div><div class="line"><span class="keyword">tuple</span> g = project(t) // extract required fields to <span class="keyword">tuple</span> g</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> g, null)</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(<span class="keyword">tuple</span> t, <span class="type">array</span> n) // n <span class="keyword">is</span> an <span class="type">array</span> <span class="keyword">of</span> nulls</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div></pre></td></tr></table></figure>
+
+<h3 id="合并（Union）">合并（Union）</h3>
+<p>两个数据集中的所有记录都送入Mapper，在Reducer里消重。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(rowkey key, <span class="keyword">tuple</span> t)</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(<span class="keyword">tuple</span> t, <span class="type">array</span> n) // n <span class="keyword">is</span> an <span class="type">array</span> <span class="keyword">of</span> one <span class="keyword">or</span> two nulls</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div></pre></td></tr></table></figure>
+
+<h3 id="交集（Intersection）">交集（Intersection）</h3>
+<p>将两个数据集中需要做交叉的记录输入Mapper，Reducer 输出出现了两次的记录。因为每条记录都有一个主键，在每个数据集中只会出现一次，所以这样做是可行的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(rowkey key, <span class="keyword">tuple</span> t)</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(<span class="keyword">tuple</span> t, <span class="type">array</span> n) // n <span class="keyword">is</span> an <span class="type">array</span> <span class="keyword">of</span> one <span class="keyword">or</span> two nulls</div><div class="line"><span class="keyword">if</span> n.size() = <span class="number">2</span></div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div></pre></td></tr></table></figure>
+
+<h3 id="差异（Difference）">差异（Difference）</h3>
+<p>假设有两个数据集R和S，我们要找出R与S的差异。Mapper将所有的元组做上标记，表明他们来自于R还是S，Reducer只输出那些存在于R中而不在S中的记录。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class <span class="type">Mapper</span></div><div class="line"><span class="keyword">method</span> <span class="type">Map</span>(rowkey key, <span class="keyword">tuple</span> t)</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, <span class="type">string</span> t.<span class="type">SetName</span>) // t.<span class="type">SetName</span> <span class="keyword">is</span> either 'R' <span class="keyword">or</span> 'S'</div><div class="line"> </div><div class="line">class <span class="type">Reducer</span></div><div class="line"><span class="keyword">method</span> <span class="type">Reduce</span>(<span class="keyword">tuple</span> t, <span class="type">array</span> n) // <span class="type">array</span> n can be ['R'], ['S'], ['R' 'S'], <span class="keyword">or</span> ['S', 'R']</div><div class="line"><span class="keyword">if</span> n.size() = <span class="number">1</span> <span class="keyword">and</span> n[<span class="number">1</span>] = 'R'</div><div class="line"><span class="type">Emit</span>(<span class="keyword">tuple</span> t, null)</div></pre></td></tr></table></figure>
+
+<h3 id="分组聚合（GroupBy_and_Aggregation）">分组聚合（GroupBy and Aggregation）</h3>
+<p>分组聚合可以在如下的一个MapReduce中完成。Mapper抽取数据并将之分组聚合，Reducer 中对收到的数据再次聚合。典型的聚合应用比如求和与最值可以以流的方式进行计算，因而不需要同时保有所有的值。但是另外一些情景就必须要两阶段MapReduce，前面提到过的惟一值模式就是一个这种类型的例子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(null, tuple [value GroupBy, value AggregateBy, value <span class="keyword">...</span>])</div><div class="line">Emit(value GroupBy, value AggregateBy)</div><div class="line">class Reducer</div><div class="line">method Reduce(value GroupBy, [v1, v2,<span class="keyword">...</span>])</div><div class="line">Emit(value GroupBy, aggregate( [v1, v2,<span class="keyword">...</span>] ) ) // aggregate() : sum(), max(),<span class="keyword">...</span></div></pre></td></tr></table></figure>
+
+<h3 id="连接（Joining）">连接（Joining）</h3>
+<p>MapperReduce框架可以很好地处理连接，不过在面对不同的数据量和处理效率要求的时候还是有一些技巧。在这部分我们会介绍一些基本方法，在后面的参考文档中还列出了一些关于这方面的专题文章。</p>
+<p>分配后连接 （Reduce端连接,排序-合并连接）<br>这个算法按照键K来连接数据集R和L。Mapper 遍历R和L中的所有元组，以K为键输出每一个标记了来自于R还是L的元组，Reducer把同一个K的数据分装入两个容器（R和L），然后嵌套循环遍历两个容器中的数据以得到交集，最后输出的每一条结果都包含了R中的数据、L中的数据和K。这种方法有以下缺点：</p>
+<p>Mapper要输出所有的数据，即使一些key只会在一个集合中出现。<br>Reducer 要在内存中保有一个key的所有数据，如果数据量打过了内存，那么就要缓存到硬盘上，这就增加了硬盘IO的消耗。<br>尽管如此，再分配连接方式仍然是最通用的方法，特别是其他优化技术都不适用的时候。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Mapper</div><div class="line">method Map(null, tuple [join_key k, value v1, value v2,<span class="keyword">...</span>])</div><div class="line">Emit(join_key k, tagged_tuple [set_name tag, values [v1, v2, <span class="keyword">...</span>] ] )</div><div class="line"> </div><div class="line">class Reducer</div><div class="line">method Reduce(join_key k, tagged_tuples [t1, t2,<span class="keyword">...</span>])</div><div class="line">H = new AssociativeArray : set_name -&gt; values</div><div class="line"><span class="keyword">for</span> all tagged_tuple t <span class="keyword">in</span> [t1, t2,<span class="keyword">...</span>] // separate values into <span class="number">2</span> arrays</div><div class="line">H{t.tag}.add(t.values)</div><div class="line"><span class="keyword">for</span> all values r <span class="keyword">in</span> H{<span class="string">'R'</span>} // produce a cross-join of the two arrays</div><div class="line"><span class="keyword">for</span> all values l <span class="keyword">in</span> H{<span class="string">'L'</span>}</div><div class="line">Emit(null, [k r l] )</div></pre></td></tr></table></figure>
+
+<p>复制链接Replicated Join （Mapper端连接, Hash 连接）<br>在实际应用中，将一个小数据集和一个大数据集连接是很常见的（如用户与日志记录）。假定要连接两个集合R和L，其中R相对较小，这样，可以把R分发给所有的Mapper，每个Mapper都可以载入它并以连接键来索引其中的数据，最常用和有效的索引技术就是哈希表。之后，Mapper遍历L，并将其与存储在哈希表中的R中的相应记录连接，。这种方法非常高效，因为不需要对L中的数据排序，也不需要通过网络传送L中的数据，但是R必须足够小到能够分发给所有的Mapper。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Mapper</div><div class="line"><span class="function"><span class="keyword">method</span> <span class="title">Initialize</span></span></div><div class="line"><span class="title">H</span> = <span class="title">new</span> <span class="title">AssociativeArray</span> : join_key -&gt; <span class="keyword">tuple</span> <span class="keyword">from</span> R</div><div class="line">R = loadR()</div><div class="line"><span class="keyword">for</span> all [ join_key k, <span class="keyword">tuple</span> [r1, r2,...] ] <span class="keyword">in</span> R</div><div class="line">H<span class="comment">{k}</span> = H<span class="comment">{k}</span>.append( [r1, r2,...] )</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">method</span> <span class="title">Map</span><span class="params">(join_key k, <span class="keyword">tuple</span> l)</span></span></div><div class="line"><span class="title">for</span> <span class="title">all</span> <span class="title">tuple</span> <span class="title">r</span> <span class="title">in</span> <span class="title">H</span><span class="comment">{k}</span></div><div class="line"><span class="title">Emit</span><span class="params">(null, <span class="keyword">tuple</span> [k r l] )</span></div></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/"> #Hadoop </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/01/Paganini/">
+                Niccolo Paganini Selected Works
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/Music/">Music</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/Paganini/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/Paganini/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Leonid Kogan - Cantabile, Paganini</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/xsFJS4I_05E" frameborder="0" allowfullscreen></iframe>
+
+<p>Kogan - La Campanella</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/lWaOnqmtr9U" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Jascha Heifetz - Caprice No. 24</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/vPcnGrie__M" frameborder="0" allowfullscreen></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Classical/"> #Classical </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/04/19/4.18/">
                 The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II
               </a>
@@ -295,447 +717,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/18/4.12/">
-                Letter Combinations of a Phone Number, Single Number, Single Number II, Decode Ways, Triangle
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-04-18
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/04/18/4.12/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/18/4.12/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Letter_Combinations_of_a_Phone_Number">Letter Combinations of a Phone Number</h2>
-<blockquote>
-<p>Given a digit string, return all possible letter combinations that the number could represent.<br>A mapping of digit to letters (just like on the telephone buttons) is given below.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt=""><br>Input:Digit string “23”<br>Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/04/18/4.12/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/Bit-Manipulation/"> #Bit Manipulation </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/16/4.10/">
-                Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Tree Zigzag Level Order Traversal, Binary Search Tree Iterator
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-04-16
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/04/16/4.10/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/16/4.10/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
-<blockquote>
-<p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:<br>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than the node’s key.<br>Both the left and right subtrees must also be binary search trees.</p>
-</blockquote>
-<h3 id="Brute_force_Solution">Brute force Solution</h3>
-<p>Inorder traversal, then compare each value…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    LinkedList&lt;Integer&gt; p = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    inorder(root, p);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>;j&lt; p.size() - <span class="number">1</span>;j++) {</div><div class="line">        <span class="keyword">if</span>(p.get(j)&gt;=p.get(j+<span class="number">1</span>))</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode r, LinkedList&lt;Integer&gt; p){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(r.left,p);</div><div class="line">    p.add(r.val);</div><div class="line">    inorder(r.right,p);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Or use static variable to store the previous val:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> pre = Integer.MIN_VALUE; </div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.left)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(root.val&lt;=pre) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    System.out.println(pre);</div><div class="line">    pre=root.val;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.right)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive/MinMax_Solution">Recursive/MinMax Solution</h3>
-<p>At each node we must satisty</p>
-<ul>
-<li>left subtree max value must not exceed cur.val</li>
-<li>right subtree min value must not be lower than cur.val</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">return</span> dfs(root, (<span class="keyword">long</span>)Integer.MIN_VALUE-<span class="number">1</span>,(<span class="keyword">long</span>)Integer.MAX_VALUE+<span class="number">1</span>);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(TreeNode r,<span class="keyword">long</span> minv, <span class="keyword">long</span> maxv){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(r.val&gt;=maxv ||r.val&lt;=minv) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span>  dfs(r.left, minv, r.val) && dfs(r.right, r.val, maxv);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="Unique_Binary_Search_Trees">Unique Binary Search Trees</h2>
-<blockquote>
-<p>Given n, how many structurally unique BST’s (binary search trees) that store values 1…n?<br>For example,<br>Given n = 3, there are a total of 5 unique BST’s.</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
-
-<h3 id="DP_Solution">DP Solution</h3>
-<ul>
-<li>Define c[i] as the number of unique binary tree possibly generated with [0….i]</li>
-<li>A tree with i as its root, left subtree is consist of [1…i-1], right subtree is consist of [i+1…n]</li>
-<li>c[0] = 0 ; c[1]=1 ; c[2] = c[0]<em>c[1] //1 as root + c[1]</em>c[0] //0 as root; c[3] = c[0] <em> c[2] //1 as root + c[1] </em> c[1] //2 as root + c[2] * c[0] //3 as root</li>
-<li>Ct+1 += Ci*Ct-i(0&lt;= i &lt;= t)</li>
-<li>Ct += Ci*t-1-i(0&lt;=i&lt;=t-1, 1&lt;=t&lt;=n)</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>||n == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span>[] C = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        C[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>;t&lt;=n;t++){  </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=t-<span class="number">1</span>;i++){  </div><div class="line">            C[t] += C[i]*C[t-<span class="number">1</span>-i];  </div><div class="line">        }  </div><div class="line">    }</div><div class="line">        <span class="keyword">return</span> C[n];</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Unique_Binary_Search_Trees_II">Unique Binary Search Trees II</h2>
-<blockquote>
-<p>Given n, generate all structurally unique BST’s (binary search trees) that store values 1…n.<br>For example,<br>Given n = 3, your program should return all 5 unique BST’s shown below.</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
-
-<h3 id="DFS_Solution"><a href="http://www.cnblogs.com/springfor/p/3884029.html" target="_blank" rel="external">DFS Solution</a></h3>
-<p>Similar to I, we pick (1…n) as root, recursivly get all left and right subtrees.<br>We pick one from left subtree and one from right subtree, attach them to current root and return all the possibilities.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">generateTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">return</span> buildTrees(<span class="number">1</span>,n);</div><div class="line">    </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">buildTrees</span>(<span class="keyword">int</span> min, <span class="keyword">int</span> max){</div><div class="line">    ArrayList&lt;TreeNode&gt; res = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(min&gt;max){res.add(<span class="keyword">null</span>); <span class="keyword">return</span> res;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=min;i&lt;=max;i++){</div><div class="line">        ArrayList&lt;TreeNode&gt; l = buildTrees(min,i-<span class="number">1</span>);</div><div class="line">        ArrayList&lt;TreeNode&gt; r = buildTrees(i+<span class="number">1</span>,max);</div><div class="line">        <span class="keyword">for</span>(TreeNode j: l){</div><div class="line">            <span class="keyword">for</span>(TreeNode k:r){</div><div class="line">                TreeNode root =  <span class="keyword">new</span> TreeNode(i);</div><div class="line">                root.left = j;</div><div class="line">                root.right = k;</div><div class="line">                res.add(root);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Preorder_Traversal">Binary Tree Preorder Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the preorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    preorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">preorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    res.add(n.val);</div><div class="line">    preorder(n.left,res);</div><div class="line">    preorder(n.right,res);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution">Iterative Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; <span class="comment">//别忘了这句...</span></div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        res.add(tmp.val);</div><div class="line">        <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">        <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Inorder_Traversal">Binary Tree Inorder Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>].</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution-1">Iterative Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; stk=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        stk.push(root);</div><div class="line">        <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">            TreeNode tmp = stk.pop();</div><div class="line">            <span class="keyword">if</span>(tmp == <span class="keyword">null</span>){</div><div class="line">                res.add(stk.pop().val);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){stk.push(tmp.right);}</div><div class="line">                stk.push(tmp);</div><div class="line">                stk.push(<span class="keyword">null</span>);</div><div class="line">                <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>){stk.push(tmp.left);}</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Postorder_Traversal">Binary Tree Postorder Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the postorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>].</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive_Solution-1">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    postorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    postorder(n.left,res);</div><div class="line">    postorder(n.right,res);</div><div class="line">    res.add(n.val);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution-1">Iterative Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; </div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        <span class="keyword">if</span>(tmp==<span class="keyword">null</span>) res.add(stk.pop().val);</div><div class="line">        <span class="keyword">else</span>{</div><div class="line">            stk.push(tmp);</div><div class="line">            stk.push(<span class="keyword">null</span>);</div><div class="line">            <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">            <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">        }</div><div class="line">    }        </div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Zigzag_Level_Order_Traversal">Binary Tree Zigzag Level Order Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the zigzag level order traversal of its nodes’ values. (ie, from left to right, then right to left for the next level and alternate between).<br>For example:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given binary tree {<span class="number">3</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="comment">#,#,15,7},</span></div><div class="line">    <span class="number">3</span></div><div class="line">   / \</div><div class="line">  <span class="number">9</span>  <span class="number">20</span></div><div class="line">    /  \</div><div class="line">   <span class="number">15</span>   <span class="number">7</span></div><div class="line"><span class="command">return</span> <span class="keyword">its</span> zigzag level order traversal <span class="keyword">as</span>:</div><div class="line">[</div><div class="line">  [<span class="number">3</span>],</div><div class="line">  [<span class="number">20</span>,<span class="number">9</span>],</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive_Solution-1">Recursive Solution</h3>
-<ul>
-<li>Simple DFS, check height%2 each level</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;List&lt;Integer&gt;&gt; <span class="title">zigzagLevelOrder</span>(TreeNode root) {</div><div class="line"> ArrayList&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</div><div class="line"> <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line"> dfs(root, res, <span class="number">0</span>);</div><div class="line"> <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(TreeNode r, ArrayList&lt;List&lt;Integer&gt;&gt; res, <span class="keyword">int</span> h){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(h&gt;res.size()-<span class="number">1</span>){</div><div class="line">        res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(h%<span class="number">2</span>==<span class="number">1</span>){</div><div class="line">        res.get(h).add(<span class="number">0</span>,r.val);</div><div class="line">    }  </div><div class="line">    <span class="keyword">else</span>{</div><div class="line">        res.get(h).add(r.val);</div><div class="line">    }</div><div class="line">    dfs(r.left, res, h+<span class="number">1</span>);</div><div class="line">    dfs(r.right,res,h+<span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution-1">Iterative Solution</h3>
-<ul>
-<li>a queue to store nodes in BFS order</li>
-<li>a boolean value to decide insert order in each level list</li>
-<li>each new level, set poopsite direction, clear list and add to result</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;List&lt;Integer&gt;&gt; <span class="title">zigzagLevelOrder</span>(TreeNode root) {</div><div class="line">  ArrayList&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">  Queue&lt;TreeNode&gt; q = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">  List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">  q.offer(root);</div><div class="line">  <span class="keyword">int</span> size = q.size();</div><div class="line">  <span class="keyword">boolean</span> l2r = <span class="keyword">true</span>;</div><div class="line">  <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">      TreeNode cur = q.poll();</div><div class="line">      size--;</div><div class="line">      <span class="keyword">if</span>(l2r){</div><div class="line">         tmp.add(cur.val);</div><div class="line">         }</div><div class="line">      <span class="keyword">else</span>{</div><div class="line">         tmp.add(<span class="number">0</span>,cur.val);</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>) q.offer(cur.left);</div><div class="line">      <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>) q.offer(cur.right);</div><div class="line">      <span class="keyword">if</span>(size==<span class="number">0</span>){</div><div class="line">          res.add(<span class="keyword">new</span> ArrayList(tmp));</div><div class="line">          l2r=!l2r;</div><div class="line">          tmp.clear();</div><div class="line">          size = q.size();</div><div class="line">      }</div><div class="line">  }</div><div class="line">  <span class="keyword">return</span> res;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Search_Tree_Iterator">Binary Search Tree Iterator</h2>
-<blockquote>
-<p>Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.<br>Calling next() will return the next smallest number in the BST.<br>Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<ul>
-<li>Use one Array to store the inorder traversal of nodes </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">ArrayDeque&lt;TreeNode&gt; arr;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    arr = <span class="keyword">new</span> ArrayDeque&lt;TreeNode&gt;();</div><div class="line">    inorder(root, arr);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode root, ArrayDeque&lt;TreeNode&gt; arr){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(root.left, arr);</div><div class="line">    arr.add(root);</div><div class="line">    inorder(root.right,arr);</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !arr.isEmpty();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(hasNext()) <span class="keyword">return</span> arr.poll().val;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="O(1)_Time_O(h)_Memory_Solution">O(1) Time O(h) Memory Solution</h3>
-<ul>
-<li>Dissect inorder into two parts</li>
-<li>push root’s all left children into stack</li>
-<li>upon calling next(), pop one node and push all right child’s left child into stack </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">Stack&lt;TreeNode&gt; stk;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    stk = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">while</span>(root!=<span class="keyword">null</span>){</div><div class="line">        stk.push(root);</div><div class="line">        root=root.left;</div><div class="line">    }</div><div class="line">   </div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !stk.isEmpty();</div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(!stk.isEmpty())</div><div class="line">        {TreeNode tmp = stk.pop();</div><div class="line">         <span class="keyword">int</span> res=tmp.val;</div><div class="line">         <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){</div><div class="line">             TreeNode node = tmp.right;</div><div class="line">             <span class="keyword">while</span>(node!=<span class="keyword">null</span>){</div><div class="line">                 stk.push(node);</div><div class="line">                 node=node.left;</div><div class="line">             }</div><div class="line">         }</div><div class="line">         <span class="keyword">return</span> res;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MYSVMgRr6pw" frameborder="0" allowfullscreen></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Tree/"> #Tree </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/Stack/"> #Stack </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/12/4.6/">
-                Number of Islands
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-04-12
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/04/12/4.6/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/12/4.6/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Update—Leetcode now includes this problem:</p>
-<h2 id="Number_of_Islands">Number of Islands</h2>
-<blockquote>
-<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
-
-<h2 id="Solution">Solution</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
-<blockquote>
-<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
-
-<p>Return 5， 1， 2</p>
-<h3 id="Solution-1">Solution</h3>
-<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
-<ul>
-<li>Mark each node visited to avoid duplicated counting.</li>
-</ul>
-<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
-    <span class="keyword">int</span> one,count;
-    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
-    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
-
-    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
-        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
-
-            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
-                res.add(dfs(i,j, mat, mark));
-            }
-        }
-    }
-    <span class="keyword">return</span> res;
-}
-
-<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
-    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
-        <span class="keyword">return</span> <span class="number">0</span>;
-    mark[i][j] = <span class="number">1</span>;
-    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
-}
-
-<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
-    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
-    countIslands c = <span class="keyword">new</span> countIslands();
-    System.<span class="keyword">out</span>.println(c.countIslands(test));
-}
-</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -776,21 +757,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">categories</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
