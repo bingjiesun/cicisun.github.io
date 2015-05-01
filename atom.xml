@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="sunbingjie.tk/"/>
-  <updated>2015-05-01T22:48:37.095Z</updated>
+  <updated>2015-05-01T22:51:04.772Z</updated>
   <id>sunbingjie.tk/</id>
   
   <author>
@@ -15,73 +15,14 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Web scraping with Scrapy]]></title>
-    <link href="sunbingjie.tk/2015/05/01/scrapy/"/>
-    <id>sunbingjie.tk/2015/05/01/scrapy/</id>
-    <published>2015-05-01T22:48:20.000Z</published>
-    <updated>2015-05-01T22:48:20.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
-</blockquote>
-<ul>
-<li>To write a web crawler, we need at least basic knowledge on XPath and Python, that’s enough! </li>
-</ul>
-<h3 id="Installation">Installation</h3>
-<p>Install using pip</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install Scrapy</div></pre></td></tr></table></figure>
-
-<p>Create project</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy startproject name</div></pre></td></tr></table></figure>
-
-<p>This will create a name dir with the following files</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name/</div><div class="line">    scrapy.cfg</div><div class="line">    tutorial/</div><div class="line">        __init__.py</div><div class="line">        items.py</div><div class="line">        pipelines.py</div><div class="line">        settings.py</div><div class="line">        spiders/</div><div class="line">            __init__.py</div><div class="line">            <span class="keyword">...</span></div></pre></td></tr></table></figure>
-
-<h3 id="Defining_the_Items_you_will_extract">Defining the Items you will extract</h3>
-<p>In items.py, item class which loads our data are declared by creating a scrapy.Item class and defining its attributes as scrapy.Field objects, like you will in an ORM.</p>
-<p>Here’s my Item definition:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    des = scrapy.Field()</div><div class="line">    image_urls = scrapy.Field()</div><div class="line">    images = scrapy.Field()</div></pre></td></tr></table></figure>
-
-<h3 id="Writing_a_spider_to_crawl_a_site_and_extract_Items">Writing a spider to crawl a site and extract Items</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> Rule, CrawlSpider</div><div class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> crawl.items <span class="keyword">import</span> CrawlItem</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line"></div><div class="line">    name = <span class="string">"crawl"</span></div><div class="line">    allowed_domains = [<span class="string">"polyvore.com"</span>]</div><div class="line">    start_urls = [<span class="string">"http://www.polyvore.com/?filter=fashion"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow =[<span class="string">'/.*'</span>]), <span class="string">'parse_crawl'</span>)]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_crawl</span><span class="params">(self, response)</span>:</span></div><div class="line"> </div><div class="line">        item =CrawlItem()</div><div class="line"></div><div class="line">        link_rel = response.xpath(<span class="string">"//img[@class='img_size_l']/@title"</span>).extract()</div><div class="line">        </div><div class="line">        item[<span class="string">'des'</span>] = [x <span class="keyword">for</span> x <span class="keyword">in</span> link_rel]</div><div class="line"> </div><div class="line">        link = response.xpath(<span class="string">"//img[@class='img_size_l']/@src"</span>).extract()</div><div class="line"> </div><div class="line">        item[<span class="string">'image_urls'</span>] = [ x <span class="keyword">for</span> x <span class="keyword">in</span> link]</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-
-<p>Start crawling…</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl crawl</div></pre></td></tr></table></figure>
-
-<h3 id="Writing_an_Item_Pipeline_to_store_the_extracted_Items">Writing an Item Pipeline to store the extracted Items</h3>
-<p>If we are just downloading the images to local<br>Add these two lines in setting.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = {<span class="string">'scrapy.contrib.pipeline.images.ImagesPipeline'</span>: <span class="number">1</span>}</div><div class="line"> </div><div class="line">IMAGES_STORE = <span class="string">"img"</span></div></pre></td></tr></table></figure>
-
-<p>Results: all images are stored under name/img/full directory;)</p>
-<p>If we need to Write items to a JSON file,  by using the Feed exports.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl dmoz -o items.json</div></pre></td></tr></table></figure>
-
-<p>If backendDB is required:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySQLStorePipeline</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self.conn = MySQLdb.connect(user=<span class="string">'user'</span>, <span class="string">'passwd'</span>, <span class="string">'dbname'</span>, <span class="string">'host'</span>, charset=<span class="string">"utf8"</span>, use_unicode=<span class="keyword">True</span>)</div><div class="line">    self.cursor = self.conn.cursor()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span>    </div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        self.cursor.execute(<span class="string">"""INSERT INTO test (des, image_urls)  </span></div><div class="line">                        VALUES (%s, %s)""", </div><div class="line">                       (item[<span class="string">'des'</span>].encode(<span class="string">'utf-8'</span>), </div><div class="line">                        item[<span class="string">'image_urls'</span>].encode(<span class="string">'utf-8'</span>)))</div><div class="line"></div><div class="line">        self.conn.commit()</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">except</span> MySQLdb.Error, e:</div><div class="line">        <span class="keyword">print</span> <span class="string">"Error %d: %s"</span> % (e.args[<span class="number">0</span>], e.args[<span class="number">1</span>])</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-
-<hr>
-<p>recently falling for a bit METAL…ヾ(○´▽｀○)ノ </p>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnuclearblastrecords%2Fnightwish-amaranth&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application fr]]>
-    </summary>
-    
-      <category term="Crawler" scheme="sunbingjie.tk/tags/Crawler/"/>
-    
-      <category term="学习" scheme="sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[MapReduce的模式、算法和用例]]></title>
     <link href="sunbingjie.tk/2015/05/01/mapreduceinonepage/"/>
     <id>sunbingjie.tk/2015/05/01/mapreduceinonepage/</id>
-    <published>2015-05-01T21:02:13.000Z</published>
-    <updated>2015-05-01T21:02:13.000Z</updated>
+    <published>2015-05-01T22:51:00.000Z</published>
+    <updated>2015-05-01T22:51:00.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combiners, Partitioners,和 sorting。如下图所示。<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PQ950-.png" alt=""></p>
+<a id="more"></a>
 <h2 id="基本MapReduce模式">基本MapReduce模式</h2>
 <h3 id="计数与求和">计数与求和</h3>
 <p>问题陈述:有许多文档，每个文档都有一些字段组成。需要计算出每个字段在所有文档中的出现次数或者这些字段的其他什么统计值。例如，给定一个log文件，其中的每条记录都包含一个响应时间，需要计算出平均响应时间。</p>
@@ -209,10 +150,76 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="前言">前言</h2>
-<p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combine]]>
+<p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combiners, Partitioners,和 sorting。如下图所示。<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PQ950-.png" alt=""></p>
+]]>
+    
     </summary>
     
       <category term="Hadoop" scheme="sunbingjie.tk/tags/Hadoop/"/>
+    
+      <category term="学习" scheme="sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Web scraping with Scrapy]]></title>
+    <link href="sunbingjie.tk/2015/05/01/scrapy/"/>
+    <id>sunbingjie.tk/2015/05/01/scrapy/</id>
+    <published>2015-05-01T22:50:53.000Z</published>
+    <updated>2015-05-01T22:50:53.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
+</blockquote>
+<a id="more"></a>
+<ul>
+<li>To write a web crawler, we need at least basic knowledge on XPath and Python, that’s enough! </li>
+</ul>
+<h3 id="Installation">Installation</h3>
+<p>Install using pip</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install Scrapy</div></pre></td></tr></table></figure>
+
+<p>Create project</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy startproject name</div></pre></td></tr></table></figure>
+
+<p>This will create a name dir with the following files</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name/</div><div class="line">    scrapy.cfg</div><div class="line">    tutorial/</div><div class="line">        __init__.py</div><div class="line">        items.py</div><div class="line">        pipelines.py</div><div class="line">        settings.py</div><div class="line">        spiders/</div><div class="line">            __init__.py</div><div class="line">            <span class="keyword">...</span></div></pre></td></tr></table></figure>
+
+<h3 id="Defining_the_Items_you_will_extract">Defining the Items you will extract</h3>
+<p>In items.py, item class which loads our data are declared by creating a scrapy.Item class and defining its attributes as scrapy.Field objects, like you will in an ORM.</p>
+<p>Here’s my Item definition:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    des = scrapy.Field()</div><div class="line">    image_urls = scrapy.Field()</div><div class="line">    images = scrapy.Field()</div></pre></td></tr></table></figure>
+
+<h3 id="Writing_a_spider_to_crawl_a_site_and_extract_Items">Writing a spider to crawl a site and extract Items</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> Rule, CrawlSpider</div><div class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> crawl.items <span class="keyword">import</span> CrawlItem</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line"></div><div class="line">    name = <span class="string">"crawl"</span></div><div class="line">    allowed_domains = [<span class="string">"polyvore.com"</span>]</div><div class="line">    start_urls = [<span class="string">"http://www.polyvore.com/?filter=fashion"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow =[<span class="string">'/.*'</span>]), <span class="string">'parse_crawl'</span>)]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_crawl</span><span class="params">(self, response)</span>:</span></div><div class="line"> </div><div class="line">        item =CrawlItem()</div><div class="line"></div><div class="line">        link_rel = response.xpath(<span class="string">"//img[@class='img_size_l']/@title"</span>).extract()</div><div class="line">        </div><div class="line">        item[<span class="string">'des'</span>] = [x <span class="keyword">for</span> x <span class="keyword">in</span> link_rel]</div><div class="line"> </div><div class="line">        link = response.xpath(<span class="string">"//img[@class='img_size_l']/@src"</span>).extract()</div><div class="line"> </div><div class="line">        item[<span class="string">'image_urls'</span>] = [ x <span class="keyword">for</span> x <span class="keyword">in</span> link]</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+
+<p>Start crawling…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl crawl</div></pre></td></tr></table></figure>
+
+<h3 id="Writing_an_Item_Pipeline_to_store_the_extracted_Items">Writing an Item Pipeline to store the extracted Items</h3>
+<p>If we are just downloading the images to local<br>Add these two lines in setting.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = {<span class="string">'scrapy.contrib.pipeline.images.ImagesPipeline'</span>: <span class="number">1</span>}</div><div class="line"> </div><div class="line">IMAGES_STORE = <span class="string">"img"</span></div></pre></td></tr></table></figure>
+
+<p>Results: all images are stored under name/img/full directory;)</p>
+<p>If we need to Write items to a JSON file,  by using the Feed exports.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl dmoz -o items.json</div></pre></td></tr></table></figure>
+
+<p>If backendDB is required:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySQLStorePipeline</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self.conn = MySQLdb.connect(user=<span class="string">'user'</span>, <span class="string">'passwd'</span>, <span class="string">'dbname'</span>, <span class="string">'host'</span>, charset=<span class="string">"utf8"</span>, use_unicode=<span class="keyword">True</span>)</div><div class="line">    self.cursor = self.conn.cursor()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span>    </div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        self.cursor.execute(<span class="string">"""INSERT INTO test (des, image_urls)  </span></div><div class="line">                        VALUES (%s, %s)""", </div><div class="line">                       (item[<span class="string">'des'</span>].encode(<span class="string">'utf-8'</span>), </div><div class="line">                        item[<span class="string">'image_urls'</span>].encode(<span class="string">'utf-8'</span>)))</div><div class="line"></div><div class="line">        self.conn.commit()</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">except</span> MySQLdb.Error, e:</div><div class="line">        <span class="keyword">print</span> <span class="string">"Error %d: %s"</span> % (e.args[<span class="number">0</span>], e.args[<span class="number">1</span>])</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+
+<hr>
+<p>recently falling for a bit METAL…ヾ(○´▽｀○)ノ </p>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnuclearblastrecords%2Fnightwish-amaranth&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="Crawler" scheme="sunbingjie.tk/tags/Crawler/"/>
     
       <category term="学习" scheme="sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
     
