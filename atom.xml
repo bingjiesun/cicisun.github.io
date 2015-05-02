@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="sunbingjie.tk/"/>
-  <updated>2015-05-02T02:26:33.276Z</updated>
+  <updated>2015-05-02T02:26:48.289Z</updated>
   <id>sunbingjie.tk/</id>
   
   <author>
@@ -18,9 +18,10 @@
     <title><![CDATA[List of piano sheet to learn]]></title>
     <link href="sunbingjie.tk/2015/05/01/pianosheets/"/>
     <id>sunbingjie.tk/2015/05/01/pianosheets/</id>
-    <published>2015-05-02T02:26:19.000Z</published>
-    <updated>2015-05-02T02:26:19.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="Easy">Easy</h3>
+    <published>2015-05-02T02:26:42.000Z</published>
+    <updated>2015-05-02T02:26:42.000Z</updated>
+    <content type="html"><![CDATA[<a id="more"></a>
+<h3 id="Easy">Easy</h3>
 <p>Maksim Mrvica - Claudine   </p>
 <iframe width="420" height="315" src="https://www.youtube.com/embed/Nkgezt05MOE" frameborder="0" allowfullscreen></iframe>
 
@@ -35,9 +36,10 @@
 <p>Liszt - Liebestraum No. 3 in A-flat Major</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XsxDH4HcOWA" frameborder="0" allowfullscreen></iframe><br><iframe width="420" height="315" src="https://www.youtube.com/embed/nkXOrkeZyqQ" frameborder="0" allowfullscreen></iframe>]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="Easy">Easy</h3>
+    <![CDATA[<a id="more"></a>
+<h3 id="Easy">Easy</h3>
 <p>Maksim Mrvica - Claudine   </p>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/Nkgezt05MOE" ]]>
+<iframe width="420" height="315" src="https://www.youtube.com/e]]>
     </summary>
     
       <category term="Classical" scheme="sunbingjie.tk/tags/Classical/"/>
