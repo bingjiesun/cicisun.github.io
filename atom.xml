@@ -3,9 +3,9 @@
   <title><![CDATA[Cici's Blog]]></title>
   
   <link href="//atom.xml" rel="self"/>
-  <link href="sunbingjie.tk/"/>
-  <updated>2015-05-02T02:26:48.289Z</updated>
-  <id>sunbingjie.tk/</id>
+  <link href="http://sunbingjie.tk/"/>
+  <updated>2015-05-04T03:20:26.347Z</updated>
+  <id>http://sunbingjie.tk/</id>
   
   <author>
     <name><![CDATA[Cici Sun]]></name>
@@ -15,9 +15,124 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II]]></title>
+    <link href="http://sunbingjie.tk/2015/05/03/4.18/"/>
+    <id>http://sunbingjie.tk/2015/05/03/4.18/</id>
+    <published>2015-05-04T03:20:10.000Z</published>
+    <updated>2015-05-04T03:20:10.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
+<blockquote>
+<p>Convert a given Binary Tree to Doubly Linked List</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<p>Inorder traversal, then link each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> DListNode pre = <span class="keyword">new</span> DListNode();</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> DListNode dummy = pre;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">btreetolist</span>(TreeNode r){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    btreetolist(r.left);</div><div class="line">    DListNode cur = <span class="keyword">new</span> DListNode(r);</div><div class="line">    cur.prev = pre;</div><div class="line">    pre.next = cur;</div><div class="line">    pre = cur;</div><div class="line">    btreetolist(r.right);</div><div class="line">    }</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">    TreeNode root = <span class="keyword">new</span> TreeNode(<span class="number">2</span>);</div><div class="line">    TreeNode l = <span class="keyword">new</span> TreeNode(<span class="number">1</span>);</div><div class="line">    TreeNode r = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</div><div class="line">    root.left = l; root.right=r;</div><div class="line">    btreetolist(root);</div><div class="line">    System.out.println(dummy.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.next.val.val);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="The_Great_Tree-List_Recursion_Problem"><a href="http://cslibrary.stanford.edu/109/TreeListRecursion.html" target="_blank" rel="external">The Great Tree-List Recursion Problem</a></h2>
+<blockquote>
+<p>Here’s the formal problem statement: Write a recursive function treeToList(Node root) that takes an ordered binary tree and rearranges the internal pointers to make a circular doubly linked list out of the tree nodes. The “previous” pointers should be stored in the “small” field and the “next” pointers should be stored in the “large” field. The list should be arranged so that the nodes are in increasing order. Return the head pointer to the new list. The operation can be done in O(n) time — essentially operating on each node once. Basically take figure-1 as input and rearrange the pointers to make figure-2.</p>
+</blockquote>
+<p><img src="http://cslibrary.stanford.edu/109/tree.gif" alt=""><br><img src="http://cslibrary.stanford.edu/109/list.gif" alt=""></p>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">This is the simple Node class from which the tree and list</div><div class="line">are built. This does not have any methods -- it's just used</div><div class="line">as dumb storage by TreeList.</div><div class="line">The code below tries to be clear where it treats a Node pointer</div><div class="line">as a tree vs. where it is treated as a list.</div><div class="line"> */</div><div class="line">class Node {</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">    Node small;</div><div class="line">    Node large;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">Node</span>(<span class="keyword">int</span> data) {</div><div class="line">        <span class="keyword">this</span>.data = data;</div><div class="line">        small = <span class="keyword">null</span>;</div><div class="line">        large = <span class="keyword">null</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">TreeList main methods:</div><div class="line">-join() -- utility to connect two list nodes</div><div class="line">-append() -- utility to append two lists</div><div class="line">-treeToList() -- the core recursive function</div><div class="line">-treeInsert() -- used to build the tree</div><div class="line"> */</div><div class="line">class TreeList {</div><div class="line">    <span class="comment">/*</span></div><div class="line">  helper function -- given two list nodes, join them</div><div class="line">  together so the second immediately follow the first.</div><div class="line">  Sets the .next of the first and the .previous of the second.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">join</span>(Node a, Node b) {</div><div class="line">        a.large = b;</div><div class="line">        b.small = a;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  helper function -- given two circular doubly linked</div><div class="line">  lists, append them and return the new list.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">append</span>(Node a, Node b) {</div><div class="line">        <span class="comment">// if either is null, return the other</span></div><div class="line">        <span class="keyword">if</span> (a==<span class="keyword">null</span>) <span class="keyword">return</span>(b);</div><div class="line">        <span class="keyword">if</span> (b==<span class="keyword">null</span>) <span class="keyword">return</span>(a);</div><div class="line"></div><div class="line">        <span class="comment">// find the last node in each using the .previous pointer</span></div><div class="line">        Node aLast = a.small;</div><div class="line">        Node bLast = b.small;</div><div class="line"></div><div class="line">        <span class="comment">// join the two together to make it connected and circular</span></div><div class="line">        join(aLast, b);</div><div class="line">        join(bLast, a);</div><div class="line"></div><div class="line">        <span class="keyword">return</span>(a);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  --Recursion--</div><div class="line">  Given an ordered binary tree, recursively change it into</div><div class="line">  a circular doubly linked list which is returned.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">treeToList</span>(Node root) {</div><div class="line">        <span class="comment">// base case: empty tree -&gt; empty list</span></div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>) <span class="keyword">return</span>(<span class="keyword">null</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Recursively do the subtrees (leap of faith!)</span></div><div class="line">        Node aList = treeToList(root.small);</div><div class="line">        Node bList = treeToList(root.large);</div><div class="line"></div><div class="line">        <span class="comment">// Make the single root node into a list length-1</span></div><div class="line">        <span class="comment">// in preparation for the appending</span></div><div class="line">        root.small = root;</div><div class="line">        root.large = root;</div><div class="line"></div><div class="line">        <span class="comment">// At this point we have three lists, and it's</span></div><div class="line">        <span class="comment">// just a matter of appending them together</span></div><div class="line">        <span class="comment">// in the right order (aList, root, bList)</span></div><div class="line">        aList = append(aList, root);</div><div class="line">        aList = append(aList, bList);</div><div class="line"></div><div class="line">        <span class="keyword">return</span>(aList);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  Given a non-empty tree, insert a new node in the proper</div><div class="line">  place. The tree must be non-empty because Java's lack</div><div class="line">  of reference variables makes that case and this</div><div class="line">  method messier than they should be.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">treeInsert</span>(Node root, <span class="keyword">int</span> newData) {</div><div class="line">        <span class="keyword">if</span> (newData&lt;=root.data) {</div><div class="line">            <span class="keyword">if</span> (root.small!=<span class="keyword">null</span>) treeInsert(root.small, newData);</div><div class="line">            <span class="keyword">else</span> root.small = <span class="keyword">new</span> Node(newData);</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> {</div><div class="line">            <span class="keyword">if</span> (root.large!=<span class="keyword">null</span>) treeInsert(root.large, newData);</div><div class="line">            <span class="keyword">else</span> root.large = <span class="keyword">new</span> Node(newData);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Do an inorder traversal to print a tree</span></div><div class="line">    <span class="comment">// Does not print the ending "\n"</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printTree</span>(Node root) {</div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">        printTree(root.small);</div><div class="line">        System.out.print(Integer.toString(root.data) + <span class="string">" "</span>);</div><div class="line">        printTree(root.large);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Do a traversal of the list and print it out</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printList</span>(Node head) {</div><div class="line">        Node current = head;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (current != <span class="keyword">null</span>) {</div><div class="line">            System.out.print(Integer.toString(current.data) + <span class="string">" "</span>);</div><div class="line">            current = current.large;</div><div class="line">            <span class="keyword">if</span> (current == head) <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Demonstrate tree-&gt;list with the list 1..5</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line"></div><div class="line">        <span class="comment">// first build the tree shown in the problem document</span></div><div class="line">        <span class="comment">// http://cslibrary.stanford.edu/109/</span></div><div class="line">        Node root = <span class="keyword">new</span> Node(<span class="number">4</span>);</div><div class="line">        treeInsert(root, <span class="number">2</span>);</div><div class="line">        treeInsert(root, <span class="number">1</span>);</div><div class="line">        treeInsert(root, <span class="number">3</span>);</div><div class="line">        treeInsert(root, <span class="number">5</span>);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"tree:"</span>);</div><div class="line">        printTree(root);   <span class="comment">// 1 2 3 4 5</span></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"list:"</span>);</div><div class="line">        Node head = treeToList(root);</div><div class="line">        printList(head);   <span class="comment">// 1 2 3 4 5   yay!</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="LRU_Cache">LRU Cache</h2>
+<blockquote>
+<p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.<br>get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br>set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
+</blockquote>
+<h3 id="LinkedHashMap_Solution">LinkedHashMap Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> java.util.LinkedHashMap&lt;Integer,Integer&gt; self = <span class="keyword">new</span> java.util.LinkedHashMap&lt;Integer,Integer&gt;();</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> capacity;</div><div class="line"><span class="keyword">public</span> <span class="title">LRUCache</span>(<span class="keyword">int</span> capacity) {</div><div class="line">    <span class="keyword">this</span>.capacity = capacity;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span>(<span class="keyword">int</span> key) {</div><div class="line">    Integer val = self.get(key);</div><div class="line">    <span class="keyword">if</span>(val==<span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    self.remove(key);</div><div class="line">    self.put(key,val);</div><div class="line">    <span class="keyword">return</span> val;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span>(<span class="keyword">int</span> key, <span class="keyword">int</span> value) {</div><div class="line">    Integer val = self.get(key);</div><div class="line">    <span class="keyword">if</span>(val==<span class="keyword">null</span> && self.size() == capacity){</div><div class="line">        self.remove(self.keySet().iterator().next());</div><div class="line">    }</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(val!=<span class="keyword">null</span>) self.remove(key);</div><div class="line">    self.put(key,value);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Map_+_List_Solution">Map + List Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> HashMap&lt;Integer,Integer&gt; map;</div><div class="line"><span class="keyword">private</span> ArrayList&lt;Integer&gt; list;</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cap;</div><div class="line"><span class="keyword">public</span> <span class="title">LRUCache</span>(<span class="keyword">int</span> cap){</div><div class="line">    map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line">    list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">this</span>.cap = cap; </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span>(<span class="keyword">int</span> key){</div><div class="line">    <span class="keyword">if</span>(!map.containsKey(key)) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> var = map.get(key);</div><div class="line">    list.remove(list.indexOf(key));</div><div class="line">    list.add(key);</div><div class="line">    <span class="keyword">return</span> var;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span>(<span class="keyword">int</span> key, <span class="keyword">int</span> value){</div><div class="line">    <span class="keyword">int</span> val = get(key);</div><div class="line">    map.put(key, value);</div><div class="line">    <span class="keyword">if</span>(val == -<span class="number">1</span>){</div><div class="line">        list.add(key);</div><div class="line">        <span class="keyword">if</span>(map.size()&gt; cap){</div><div class="line">            map.remove(list.get(<span class="number">0</span>));</div><div class="line">            list.remove(<span class="number">0</span>);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Generate_Parentheses">Generate Parentheses</h2>
+<blockquote>
+<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br>“((()))”, “(()())”, “(())()”, “()(())”, “()()()”</p>
+</blockquote>
+<h3 id="DFS_+_Backtracking_Solution">DFS + Backtracking Solution</h3>
+<ul>
+<li>left/right represents how many l/r brackets left for use</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder(); </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, sb, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, StringBuilder sb,<span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(sb.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">'('</span>), left-<span class="number">1</span>, right);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">')'</span>), left, right-<span class="number">1</span>);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>If we use String here, no need to delete when backtracking</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    String tmp = <span class="string">""</span>; </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, tmp, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, String tmp, <span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(<span class="keyword">new</span> String(tmp));</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">"("</span>, left-<span class="number">1</span>, right);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">")"</span>, left, right-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_Insert_Position">Search Insert Position</h2>
+<blockquote>
+<p>Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.<br>You may assume no duplicates in the array.<br>Here are few examples.<br>[1,3,5,6], 5 → 2<br>[1,3,5,6], 2 → 1<br>[1,3,5,6], 7 → 4<br>[1,3,5,6], 0 → 0</p>
+</blockquote>
+<h3 id="Binary_Search_Solution">Binary Search Solution</h3>
+<ul>
+<li>Aside form the obvious scan solution..</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">searchInsert</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> target) {</div><div class="line">    <span class="keyword">int</span> index = bsearch(A, target, <span class="number">0</span>, A.length-<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> index;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">bsearch</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> target, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">    <span class="keyword">int</span> mid = (l+r) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span>(l&gt;=r) </div><div class="line">    {<span class="keyword">if</span>(A[l]&lt;target) <span class="keyword">return</span> l+<span class="number">1</span>;</div><div class="line">     <span class="keyword">if</span>(A[l]&gt;target) <span class="keyword">return</span> l;}</div><div class="line">    <span class="keyword">if</span>(target == A[mid]) <span class="keyword">return</span> mid;</div><div class="line">    <span class="keyword">if</span>(target &gt; A[mid]) <span class="keyword">return</span> bsearch(A,target,mid+<span class="number">1</span>,r);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> bsearch(A,target,l,mid-<span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Longest_Common_Prefix">Longest Common Prefix</h2>
+<blockquote>
+<p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestCommonPrefix</span>(String[] strs) {</div><div class="line">    <span class="keyword">int</span> n = strs.length;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder(); </div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;strs[<span class="number">0</span>].length();i++){</div><div class="line">        <span class="keyword">char</span> tmp = strs[<span class="number">0</span>].charAt(i);</div><div class="line">        <span class="keyword">for</span>(String s: strs){</div><div class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;s.length() || s.charAt(i)!=tmp) <span class="keyword">return</span> sb.toString();</div><div class="line">        }</div><div class="line">        sb.append(tmp);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> sb.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Linked_List_Cycle">Linked List Cycle</h2>
+<blockquote>
+<p>Given a linked list, determine if it has a cycle in it.<br>Follow up:<br>Can you solve it without using extra space?</p>
+</blockquote>
+<h3 id="Fast_Slow_Pointer_Solution">Fast Slow Pointer Solution</h3>
+<ul>
+<li>Edge case one: input &lt;=1 element</li>
+<li>Edge case two: fast==null || fast.next==null</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span>(ListNode head) {</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    ListNode a = head;</div><div class="line">    ListNode b = head;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="keyword">null</span> && b.next!=<span class="keyword">null</span>){</div><div class="line">        a = a.next;</div><div class="line">        b = b.next.next;</div><div class="line">        <span class="keyword">if</span>(a==b) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Linked_List_Cycle_II">Linked List Cycle II</h2>
+<blockquote>
+<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.<br>Follow up:<br>Can you solve it without using extra space?</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<ul>
+<li>fast dis = a+b+c+b = 2 X slow dis = 2 * (a+b) -&gt; a=c</li>
+</ul>
+<p><img src="http://images.cnitblog.com/blog/354747/201311/05171805-64db9f059a1641e7afaf3dd8223c4fe7.jpg" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span>(ListNode head) {</div><div class="line">    ListNode a = head;</div><div class="line">    ListNode b = head;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="keyword">null</span> && b.next!=<span class="keyword">null</span>){</div><div class="line">        a = a.next;</div><div class="line">        b = b.next.next;</div><div class="line">        <span class="keyword">if</span>(a==b){</div><div class="line">            a=head;</div><div class="line">            <span class="keyword">while</span>(a!=b){</div><div class="line">                a=a.next;</div><div class="line">                b=b.next;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> a;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falice-jemima%2Fno-diggity-1%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
+<blockquote>
+<p>Convert a given Binary Tree to Doubly Linked List</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="Tree" scheme="http://sunbingjie.tk/tags/Tree/"/>
+    
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
+    
+      <category term="LinkedList" scheme="http://sunbingjie.tk/tags/LinkedList/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[List of piano sheet to learn]]></title>
-    <link href="sunbingjie.tk/2015/05/01/pianosheets/"/>
-    <id>sunbingjie.tk/2015/05/01/pianosheets/</id>
+    <link href="http://sunbingjie.tk/2015/05/01/pianosheets/"/>
+    <id>http://sunbingjie.tk/2015/05/01/pianosheets/</id>
     <published>2015-05-02T02:26:42.000Z</published>
     <updated>2015-05-02T02:26:42.000Z</updated>
     <content type="html"><![CDATA[<a id="more"></a>
@@ -42,16 +157,16 @@
 <iframe width="420" height="315" src="https://www.youtube.com/e]]>
     </summary>
     
-      <category term="Classical" scheme="sunbingjie.tk/tags/Classical/"/>
+      <category term="Classical" scheme="http://sunbingjie.tk/tags/Classical/"/>
     
-      <category term="Music" scheme="sunbingjie.tk/categories/Music/"/>
+      <category term="Music" scheme="http://sunbingjie.tk/categories/Music/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[MapReduce的模式、算法和用例]]></title>
-    <link href="sunbingjie.tk/2015/05/01/mapreduceinonepage/"/>
-    <id>sunbingjie.tk/2015/05/01/mapreduceinonepage/</id>
+    <link href="http://sunbingjie.tk/2015/05/01/mapreduceinonepage/"/>
+    <id>http://sunbingjie.tk/2015/05/01/mapreduceinonepage/</id>
     <published>2015-05-01T22:51:54.000Z</published>
     <updated>2015-05-01T22:51:54.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
@@ -189,16 +304,16 @@
     
     </summary>
     
-      <category term="Hadoop" scheme="sunbingjie.tk/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://sunbingjie.tk/tags/Hadoop/"/>
     
-      <category term="学习" scheme="sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Web scraping with Scrapy]]></title>
-    <link href="sunbingjie.tk/2015/05/01/scrapy/"/>
-    <id>sunbingjie.tk/2015/05/01/scrapy/</id>
+    <link href="http://sunbingjie.tk/2015/05/01/scrapy/"/>
+    <id>http://sunbingjie.tk/2015/05/01/scrapy/</id>
     <published>2015-05-01T22:50:53.000Z</published>
     <updated>2015-05-01T22:50:53.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
@@ -253,16 +368,16 @@
     
     </summary>
     
-      <category term="Crawler" scheme="sunbingjie.tk/tags/Crawler/"/>
+      <category term="Crawler" scheme="http://sunbingjie.tk/tags/Crawler/"/>
     
-      <category term="学习" scheme="sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Niccolo Paganini Selected Works]]></title>
-    <link href="sunbingjie.tk/2015/05/01/Paganini/"/>
-    <id>sunbingjie.tk/2015/05/01/Paganini/</id>
+    <link href="http://sunbingjie.tk/2015/05/01/Paganini/"/>
+    <id>http://sunbingjie.tk/2015/05/01/Paganini/</id>
     <published>2015-05-01T21:01:59.000Z</published>
     <updated>2015-05-01T21:01:59.000Z</updated>
     <content type="html"><![CDATA[<p>Leonid Kogan - Cantabile, Paganini</p>
@@ -279,131 +394,16 @@
 <iframe width="420" height="315" src="https://www.youtube.com/embed/xsFJS4I_05E" frameborder="0" a]]>
     </summary>
     
-      <category term="Classical" scheme="sunbingjie.tk/tags/Classical/"/>
+      <category term="Classical" scheme="http://sunbingjie.tk/tags/Classical/"/>
     
-      <category term="Music" scheme="sunbingjie.tk/categories/Music/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II]]></title>
-    <link href="sunbingjie.tk/2015/04/19/4.18/"/>
-    <id>sunbingjie.tk/2015/04/19/4.18/</id>
-    <published>2015-04-20T02:33:14.000Z</published>
-    <updated>2015-04-20T02:33:14.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
-<blockquote>
-<p>Convert a given Binary Tree to Doubly Linked List</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="Solution">Solution</h3>
-<p>Inorder traversal, then link each value…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> DListNode pre = <span class="keyword">new</span> DListNode();</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> DListNode dummy = pre;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">btreetolist</span>(TreeNode r){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    btreetolist(r.left);</div><div class="line">    DListNode cur = <span class="keyword">new</span> DListNode(r);</div><div class="line">    cur.prev = pre;</div><div class="line">    pre.next = cur;</div><div class="line">    pre = cur;</div><div class="line">    btreetolist(r.right);</div><div class="line">    }</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">    TreeNode root = <span class="keyword">new</span> TreeNode(<span class="number">2</span>);</div><div class="line">    TreeNode l = <span class="keyword">new</span> TreeNode(<span class="number">1</span>);</div><div class="line">    TreeNode r = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</div><div class="line">    root.left = l; root.right=r;</div><div class="line">    btreetolist(root);</div><div class="line">    System.out.println(dummy.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.val.val);</div><div class="line">    System.out.println(dummy.next.next.next.val.val);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="The_Great_Tree-List_Recursion_Problem"><a href="http://cslibrary.stanford.edu/109/TreeListRecursion.html" target="_blank" rel="external">The Great Tree-List Recursion Problem</a></h2>
-<blockquote>
-<p>Here’s the formal problem statement: Write a recursive function treeToList(Node root) that takes an ordered binary tree and rearranges the internal pointers to make a circular doubly linked list out of the tree nodes. The “previous” pointers should be stored in the “small” field and the “next” pointers should be stored in the “large” field. The list should be arranged so that the nodes are in increasing order. Return the head pointer to the new list. The operation can be done in O(n) time — essentially operating on each node once. Basically take figure-1 as input and rearrange the pointers to make figure-2.</p>
-</blockquote>
-<p><img src="http://cslibrary.stanford.edu/109/tree.gif" alt=""><br><img src="http://cslibrary.stanford.edu/109/list.gif" alt=""></p>
-<h3 id="Solution-1">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">This is the simple Node class from which the tree and list</div><div class="line">are built. This does not have any methods -- it's just used</div><div class="line">as dumb storage by TreeList.</div><div class="line">The code below tries to be clear where it treats a Node pointer</div><div class="line">as a tree vs. where it is treated as a list.</div><div class="line"> */</div><div class="line">class Node {</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">    Node small;</div><div class="line">    Node large;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">Node</span>(<span class="keyword">int</span> data) {</div><div class="line">        <span class="keyword">this</span>.data = data;</div><div class="line">        small = <span class="keyword">null</span>;</div><div class="line">        large = <span class="keyword">null</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">TreeList main methods:</div><div class="line">-join() -- utility to connect two list nodes</div><div class="line">-append() -- utility to append two lists</div><div class="line">-treeToList() -- the core recursive function</div><div class="line">-treeInsert() -- used to build the tree</div><div class="line"> */</div><div class="line">class TreeList {</div><div class="line">    <span class="comment">/*</span></div><div class="line">  helper function -- given two list nodes, join them</div><div class="line">  together so the second immediately follow the first.</div><div class="line">  Sets the .next of the first and the .previous of the second.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">join</span>(Node a, Node b) {</div><div class="line">        a.large = b;</div><div class="line">        b.small = a;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  helper function -- given two circular doubly linked</div><div class="line">  lists, append them and return the new list.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">append</span>(Node a, Node b) {</div><div class="line">        <span class="comment">// if either is null, return the other</span></div><div class="line">        <span class="keyword">if</span> (a==<span class="keyword">null</span>) <span class="keyword">return</span>(b);</div><div class="line">        <span class="keyword">if</span> (b==<span class="keyword">null</span>) <span class="keyword">return</span>(a);</div><div class="line"></div><div class="line">        <span class="comment">// find the last node in each using the .previous pointer</span></div><div class="line">        Node aLast = a.small;</div><div class="line">        Node bLast = b.small;</div><div class="line"></div><div class="line">        <span class="comment">// join the two together to make it connected and circular</span></div><div class="line">        join(aLast, b);</div><div class="line">        join(bLast, a);</div><div class="line"></div><div class="line">        <span class="keyword">return</span>(a);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  --Recursion--</div><div class="line">  Given an ordered binary tree, recursively change it into</div><div class="line">  a circular doubly linked list which is returned.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">treeToList</span>(Node root) {</div><div class="line">        <span class="comment">// base case: empty tree -&gt; empty list</span></div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>) <span class="keyword">return</span>(<span class="keyword">null</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Recursively do the subtrees (leap of faith!)</span></div><div class="line">        Node aList = treeToList(root.small);</div><div class="line">        Node bList = treeToList(root.large);</div><div class="line"></div><div class="line">        <span class="comment">// Make the single root node into a list length-1</span></div><div class="line">        <span class="comment">// in preparation for the appending</span></div><div class="line">        root.small = root;</div><div class="line">        root.large = root;</div><div class="line"></div><div class="line">        <span class="comment">// At this point we have three lists, and it's</span></div><div class="line">        <span class="comment">// just a matter of appending them together</span></div><div class="line">        <span class="comment">// in the right order (aList, root, bList)</span></div><div class="line">        aList = append(aList, root);</div><div class="line">        aList = append(aList, bList);</div><div class="line"></div><div class="line">        <span class="keyword">return</span>(aList);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">  Given a non-empty tree, insert a new node in the proper</div><div class="line">  place. The tree must be non-empty because Java's lack</div><div class="line">  of reference variables makes that case and this</div><div class="line">  method messier than they should be.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">treeInsert</span>(Node root, <span class="keyword">int</span> newData) {</div><div class="line">        <span class="keyword">if</span> (newData&lt;=root.data) {</div><div class="line">            <span class="keyword">if</span> (root.small!=<span class="keyword">null</span>) treeInsert(root.small, newData);</div><div class="line">            <span class="keyword">else</span> root.small = <span class="keyword">new</span> Node(newData);</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> {</div><div class="line">            <span class="keyword">if</span> (root.large!=<span class="keyword">null</span>) treeInsert(root.large, newData);</div><div class="line">            <span class="keyword">else</span> root.large = <span class="keyword">new</span> Node(newData);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Do an inorder traversal to print a tree</span></div><div class="line">    <span class="comment">// Does not print the ending "\n"</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printTree</span>(Node root) {</div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">        printTree(root.small);</div><div class="line">        System.out.print(Integer.toString(root.data) + <span class="string">" "</span>);</div><div class="line">        printTree(root.large);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Do a traversal of the list and print it out</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printList</span>(Node head) {</div><div class="line">        Node current = head;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (current != <span class="keyword">null</span>) {</div><div class="line">            System.out.print(Integer.toString(current.data) + <span class="string">" "</span>);</div><div class="line">            current = current.large;</div><div class="line">            <span class="keyword">if</span> (current == head) <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Demonstrate tree-&gt;list with the list 1..5</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line"></div><div class="line">        <span class="comment">// first build the tree shown in the problem document</span></div><div class="line">        <span class="comment">// http://cslibrary.stanford.edu/109/</span></div><div class="line">        Node root = <span class="keyword">new</span> Node(<span class="number">4</span>);</div><div class="line">        treeInsert(root, <span class="number">2</span>);</div><div class="line">        treeInsert(root, <span class="number">1</span>);</div><div class="line">        treeInsert(root, <span class="number">3</span>);</div><div class="line">        treeInsert(root, <span class="number">5</span>);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"tree:"</span>);</div><div class="line">        printTree(root);   <span class="comment">// 1 2 3 4 5</span></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"list:"</span>);</div><div class="line">        Node head = treeToList(root);</div><div class="line">        printList(head);   <span class="comment">// 1 2 3 4 5   yay!</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="LRU_Cache">LRU Cache</h2>
-<blockquote>
-<p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.<br>get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br>set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
-</blockquote>
-<h3 id="LinkedHashMap_Solution">LinkedHashMap Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> java.util.LinkedHashMap&lt;Integer,Integer&gt; self = <span class="keyword">new</span> java.util.LinkedHashMap&lt;Integer,Integer&gt;();</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> capacity;</div><div class="line"><span class="keyword">public</span> <span class="title">LRUCache</span>(<span class="keyword">int</span> capacity) {</div><div class="line">    <span class="keyword">this</span>.capacity = capacity;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span>(<span class="keyword">int</span> key) {</div><div class="line">    Integer val = self.get(key);</div><div class="line">    <span class="keyword">if</span>(val==<span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    self.remove(key);</div><div class="line">    self.put(key,val);</div><div class="line">    <span class="keyword">return</span> val;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span>(<span class="keyword">int</span> key, <span class="keyword">int</span> value) {</div><div class="line">    Integer val = self.get(key);</div><div class="line">    <span class="keyword">if</span>(val==<span class="keyword">null</span> && self.size() == capacity){</div><div class="line">        self.remove(self.keySet().iterator().next());</div><div class="line">    }</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(val!=<span class="keyword">null</span>) self.remove(key);</div><div class="line">    self.put(key,value);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Map_+_List_Solution">Map + List Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> HashMap&lt;Integer,Integer&gt; map;</div><div class="line"><span class="keyword">private</span> ArrayList&lt;Integer&gt; list;</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cap;</div><div class="line"><span class="keyword">public</span> <span class="title">LRUCache</span>(<span class="keyword">int</span> cap){</div><div class="line">    map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line">    list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">this</span>.cap = cap; </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span>(<span class="keyword">int</span> key){</div><div class="line">    <span class="keyword">if</span>(!map.containsKey(key)) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> var = map.get(key);</div><div class="line">    list.remove(list.indexOf(key));</div><div class="line">    list.add(key);</div><div class="line">    <span class="keyword">return</span> var;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span>(<span class="keyword">int</span> key, <span class="keyword">int</span> value){</div><div class="line">    <span class="keyword">int</span> val = get(key);</div><div class="line">    map.put(key, value);</div><div class="line">    <span class="keyword">if</span>(val == -<span class="number">1</span>){</div><div class="line">        list.add(key);</div><div class="line">        <span class="keyword">if</span>(map.size()&gt; cap){</div><div class="line">            map.remove(list.get(<span class="number">0</span>));</div><div class="line">            list.remove(<span class="number">0</span>);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Generate_Parentheses">Generate Parentheses</h2>
-<blockquote>
-<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br>“((()))”, “(()())”, “(())()”, “()(())”, “()()()”</p>
-</blockquote>
-<h3 id="DFS_+_Backtracking_Solution">DFS + Backtracking Solution</h3>
-<ul>
-<li>left/right represents how many l/r brackets left for use</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder(); </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, sb, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, StringBuilder sb,<span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(sb.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">'('</span>), left-<span class="number">1</span>, right);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">')'</span>), left, right-<span class="number">1</span>);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<ul>
-<li>If we use String here, no need to delete when backtracking</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    String tmp = <span class="string">""</span>; </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, tmp, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, String tmp, <span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(<span class="keyword">new</span> String(tmp));</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">"("</span>, left-<span class="number">1</span>, right);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">")"</span>, left, right-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Search_Insert_Position">Search Insert Position</h2>
-<blockquote>
-<p>Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.<br>You may assume no duplicates in the array.<br>Here are few examples.<br>[1,3,5,6], 5 → 2<br>[1,3,5,6], 2 → 1<br>[1,3,5,6], 7 → 4<br>[1,3,5,6], 0 → 0</p>
-</blockquote>
-<h3 id="Binary_Search_Solution">Binary Search Solution</h3>
-<ul>
-<li>Aside form the obvious scan solution..</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">searchInsert</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> target) {</div><div class="line">    <span class="keyword">int</span> index = bsearch(A, target, <span class="number">0</span>, A.length-<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> index;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">bsearch</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> target, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">    <span class="keyword">int</span> mid = (l+r) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span>(l&gt;=r) </div><div class="line">    {<span class="keyword">if</span>(A[l]&lt;target) <span class="keyword">return</span> l+<span class="number">1</span>;</div><div class="line">     <span class="keyword">if</span>(A[l]&gt;target) <span class="keyword">return</span> l;}</div><div class="line">    <span class="keyword">if</span>(target == A[mid]) <span class="keyword">return</span> mid;</div><div class="line">    <span class="keyword">if</span>(target &gt; A[mid]) <span class="keyword">return</span> bsearch(A,target,mid+<span class="number">1</span>,r);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> bsearch(A,target,l,mid-<span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Longest_Common_Prefix">Longest Common Prefix</h2>
-<blockquote>
-<p>Write a function to find the longest common prefix string amongst an array of strings.</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestCommonPrefix</span>(String[] strs) {</div><div class="line">    <span class="keyword">int</span> n = strs.length;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder(); </div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;strs[<span class="number">0</span>].length();i++){</div><div class="line">        <span class="keyword">char</span> tmp = strs[<span class="number">0</span>].charAt(i);</div><div class="line">        <span class="keyword">for</span>(String s: strs){</div><div class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;s.length() || s.charAt(i)!=tmp) <span class="keyword">return</span> sb.toString();</div><div class="line">        }</div><div class="line">        sb.append(tmp);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> sb.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Linked_List_Cycle">Linked List Cycle</h2>
-<blockquote>
-<p>Given a linked list, determine if it has a cycle in it.<br>Follow up:<br>Can you solve it without using extra space?</p>
-</blockquote>
-<h3 id="Fast_Slow_Pointer_Solution">Fast Slow Pointer Solution</h3>
-<ul>
-<li>Edge case one: input &lt;=1 element</li>
-<li>Edge case two: fast==null || fast.next==null</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span>(ListNode head) {</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    ListNode a = head;</div><div class="line">    ListNode b = head;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="keyword">null</span> && b.next!=<span class="keyword">null</span>){</div><div class="line">        a = a.next;</div><div class="line">        b = b.next.next;</div><div class="line">        <span class="keyword">if</span>(a==b) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Linked_List_Cycle_II">Linked List Cycle II</h2>
-<blockquote>
-<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.<br>Follow up:<br>Can you solve it without using extra space?</p>
-</blockquote>
-<h3 id="Solution-3">Solution</h3>
-<ul>
-<li>fast dis = a+b+c+b = 2 X slow dis = 2 * (a+b) -&gt; a=c</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/354747/201311/05171805-64db9f059a1641e7afaf3dd8223c4fe7.jpg" alt=""></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span>(ListNode head) {</div><div class="line">    ListNode a = head;</div><div class="line">    ListNode b = head;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="keyword">null</span> && b.next!=<span class="keyword">null</span>){</div><div class="line">        a = a.next;</div><div class="line">        b = b.next.next;</div><div class="line">        <span class="keyword">if</span>(a==b){</div><div class="line">            a=head;</div><div class="line">            <span class="keyword">while</span>(a!=b){</div><div class="line">                a=a.next;</div><div class="line">                b=b.next;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> a;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falice-jemima%2Fno-diggity-1%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
-<blockquote>
-<p>Convert a given Binary Tree to Doubly Linked List</p>
-</blockquote>
-]]>
-    
-    </summary>
-    
-      <category term="Tree" scheme="sunbingjie.tk/tags/Tree/"/>
-    
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
-    
-      <category term="LinkedList" scheme="sunbingjie.tk/tags/LinkedList/"/>
-    
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="Music" scheme="http://sunbingjie.tk/categories/Music/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum]]></title>
-    <link href="sunbingjie.tk/2015/04/18/4.11/"/>
-    <id>sunbingjie.tk/2015/04/18/4.11/</id>
+    <link href="http://sunbingjie.tk/2015/04/18/4.11/"/>
+    <id>http://sunbingjie.tk/2015/04/18/4.11/</id>
     <published>2015-04-18T21:57:43.000Z</published>
     <updated>2015-04-18T21:57:43.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Path_Sum">Path Sum</h2>
@@ -470,20 +470,20 @@
     
     </summary>
     
-      <category term="Tree" scheme="sunbingjie.tk/tags/Tree/"/>
+      <category term="Tree" scheme="http://sunbingjie.tk/tags/Tree/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="DP" scheme="sunbingjie.tk/tags/DP/"/>
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Letter Combinations of a Phone Number, Single Number, Single Number II, Decode Ways, Triangle]]></title>
-    <link href="sunbingjie.tk/2015/04/18/4.12/"/>
-    <id>sunbingjie.tk/2015/04/18/4.12/</id>
+    <link href="http://sunbingjie.tk/2015/04/18/4.12/"/>
+    <id>http://sunbingjie.tk/2015/04/18/4.12/</id>
     <published>2015-04-18T21:55:48.000Z</published>
     <updated>2015-04-18T21:55:48.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Letter_Combinations_of_a_Phone_Number">Letter Combinations of a Phone Number</h2>
@@ -593,20 +593,20 @@
     
     </summary>
     
-      <category term="DFS" scheme="sunbingjie.tk/tags/DFS/"/>
+      <category term="DFS" scheme="http://sunbingjie.tk/tags/DFS/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="Bit Manipulation" scheme="sunbingjie.tk/tags/Bit-Manipulation/"/>
+      <category term="Bit Manipulation" scheme="http://sunbingjie.tk/tags/Bit-Manipulation/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Tree Zigzag Level Order Traversal, Binary Search Tree Iterator]]></title>
-    <link href="sunbingjie.tk/2015/04/16/4.10/"/>
-    <id>sunbingjie.tk/2015/04/16/4.10/</id>
+    <link href="http://sunbingjie.tk/2015/04/16/4.10/"/>
+    <id>http://sunbingjie.tk/2015/04/16/4.10/</id>
     <published>2015-04-16T05:07:47.000Z</published>
     <updated>2015-04-16T05:07:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
@@ -737,20 +737,20 @@
 <p>Given a binary tree, determine if it is a valid binary]]>
     </summary>
     
-      <category term="Tree" scheme="sunbingjie.tk/tags/Tree/"/>
+      <category term="Tree" scheme="http://sunbingjie.tk/tags/Tree/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="Stack" scheme="sunbingjie.tk/tags/Stack/"/>
+      <category term="Stack" scheme="http://sunbingjie.tk/tags/Stack/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Number of Islands]]></title>
-    <link href="sunbingjie.tk/2015/04/12/4.6/"/>
-    <id>sunbingjie.tk/2015/04/12/4.6/</id>
+    <link href="http://sunbingjie.tk/2015/04/12/4.6/"/>
+    <id>http://sunbingjie.tk/2015/04/12/4.6/</id>
     <published>2015-04-12T06:23:51.000Z</published>
     <updated>2015-04-12T06:23:51.000Z</updated>
     <content type="html"><![CDATA[<p>Update—Leetcode now includes this problem:</p>
@@ -816,18 +816,18 @@
 <p>Given a 2d grid map of ‘]]>
     </summary>
     
-      <category term="DFS" scheme="sunbingjie.tk/tags/DFS/"/>
+      <category term="DFS" scheme="http://sunbingjie.tk/tags/DFS/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Maximum Subarray, Maximum Product Subarray]]></title>
-    <link href="sunbingjie.tk/2015/04/11/4.9/"/>
-    <id>sunbingjie.tk/2015/04/11/4.9/</id>
+    <link href="http://sunbingjie.tk/2015/04/11/4.9/"/>
+    <id>http://sunbingjie.tk/2015/04/11/4.9/</id>
     <published>2015-04-11T04:37:25.000Z</published>
     <updated>2015-04-11T04:37:25.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Maximum_Subarray">Maximum Subarray</h2>
@@ -879,18 +879,18 @@
 <p>Find the contiguous subarray within an array (containing at least one number]]>
     </summary>
     
-      <category term="Array" scheme="sunbingjie.tk/tags/Array/"/>
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
     
-      <category term="DP" scheme="sunbingjie.tk/tags/DP/"/>
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[StringtoLong, Implement Trinary Tree]]></title>
-    <link href="sunbingjie.tk/2015/04/02/4.1/"/>
-    <id>sunbingjie.tk/2015/04/02/4.1/</id>
+    <link href="http://sunbingjie.tk/2015/04/02/4.1/"/>
+    <id>http://sunbingjie.tk/2015/04/02/4.1/</id>
     <published>2015-04-02T05:24:47.000Z</published>
     <updated>2015-04-02T05:24:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="StringtoLong">StringtoLong</h2>
@@ -930,22 +930,22 @@
 <ul>]]>
     </summary>
     
-      <category term="Math" scheme="sunbingjie.tk/tags/Math/"/>
+      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="String" scheme="sunbingjie.tk/tags/String/"/>
+      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
     
-      <category term="Tree" scheme="sunbingjie.tk/tags/Tree/"/>
+      <category term="Tree" scheme="http://sunbingjie.tk/tags/Tree/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Unique Combination of Factors, Factorial Trailing Zeroes]]></title>
-    <link href="sunbingjie.tk/2015/03/24/3.19/"/>
-    <id>sunbingjie.tk/2015/03/24/3.19/</id>
+    <link href="http://sunbingjie.tk/2015/03/24/3.19/"/>
+    <id>http://sunbingjie.tk/2015/03/24/3.19/</id>
     <published>2015-03-24T06:58:20.000Z</published>
     <updated>2015-03-24T06:58:20.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Unique_Combination_of_Factors">Unique Combination of Factors</h2>
@@ -979,18 +979,18 @@
 <p>Print all unique combinations of factors of a posi]]>
     </summary>
     
-      <category term="Math" scheme="sunbingjie.tk/tags/Math/"/>
+      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
     
-      <category term="Recursion" scheme="sunbingjie.tk/tags/Recursion/"/>
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Stack and Heap]]></title>
-    <link href="sunbingjie.tk/2015/03/20/3.19.3/"/>
-    <id>sunbingjie.tk/2015/03/20/3.19.3/</id>
+    <link href="http://sunbingjie.tk/2015/03/20/3.19.3/"/>
+    <id>http://sunbingjie.tk/2015/03/20/3.19.3/</id>
     <published>2015-03-20T07:17:01.000Z</published>
     <updated>2015-03-20T07:17:01.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Overview">Overview</h2>
@@ -1021,16 +1021,16 @@
 <p>Both are stored]]>
     </summary>
     
-      <category term="Design" scheme="sunbingjie.tk/tags/Design/"/>
+      <category term="Design" scheme="http://sunbingjie.tk/tags/Design/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Basic Data Structure]]></title>
-    <link href="sunbingjie.tk/2015/03/13/2.12-2/"/>
-    <id>sunbingjie.tk/2015/03/13/2.12-2/</id>
+    <link href="http://sunbingjie.tk/2015/03/13/2.12-2/"/>
+    <id>http://sunbingjie.tk/2015/03/13/2.12-2/</id>
     <published>2015-03-13T08:50:14.000Z</published>
     <updated>2015-03-13T08:50:14.000Z</updated>
     <content type="html"><![CDATA[<h1 id="List">List</h1>
@@ -1414,16 +1414,16 @@
 <li>if structural change is made(add, remove, clear), iterator is no longer val]]>
     </summary>
     
-      <category term="Concepts" scheme="sunbingjie.tk/tags/Concepts/"/>
+      <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
     
-      <category term="CC" scheme="sunbingjie.tk/categories/CC/"/>
+      <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Basic Comparisons]]></title>
-    <link href="sunbingjie.tk/2015/03/13/2.12/"/>
-    <id>sunbingjie.tk/2015/03/13/2.12/</id>
+    <link href="http://sunbingjie.tk/2015/03/13/2.12/"/>
+    <id>http://sunbingjie.tk/2015/03/13/2.12/</id>
     <published>2015-03-13T08:49:48.000Z</published>
     <updated>2015-03-13T08:49:48.000Z</updated>
     <content type="html"><![CDATA[<ul>
@@ -1689,16 +1689,16 @@
 <l]]>
     </summary>
     
-      <category term="Concepts" scheme="sunbingjie.tk/tags/Concepts/"/>
+      <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
     
-      <category term="CC" scheme="sunbingjie.tk/categories/CC/"/>
+      <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Java Related Questions]]></title>
-    <link href="sunbingjie.tk/2015/03/13/2.12-3/"/>
-    <id>sunbingjie.tk/2015/03/13/2.12-3/</id>
+    <link href="http://sunbingjie.tk/2015/03/13/2.12-3/"/>
+    <id>http://sunbingjie.tk/2015/03/13/2.12-3/</id>
     <published>2015-03-13T08:49:13.000Z</published>
     <updated>2015-03-13T08:49:13.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Java_Questions">Java Questions</h1>
@@ -2090,16 +2090,16 @@
 <li><a href="#Concepts">Concepts]]>
     </summary>
     
-      <category term="Concepts" scheme="sunbingjie.tk/tags/Concepts/"/>
+      <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
     
-      <category term="CC" scheme="sunbingjie.tk/categories/CC/"/>
+      <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Shortest word in Dictionary]]></title>
-    <link href="sunbingjie.tk/2015/02/27/1.3/"/>
-    <id>sunbingjie.tk/2015/02/27/1.3/</id>
+    <link href="http://sunbingjie.tk/2015/02/27/1.3/"/>
+    <id>http://sunbingjie.tk/2015/02/27/1.3/</id>
     <published>2015-02-27T09:56:12.000Z</published>
     <updated>2015-02-27T09:56:12.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
@@ -2115,14 +2115,14 @@
 <p>有一个输入字符，然后我有一个英文字典，说白了就是字符串数组，然后写一个function返回字典里拥有输入字符串里所有字母(非数字或者空格等符号，就是纯字母)的最短的那个字符串。举个例子：<br>输入字符串”SR 456 T”，字符串数组里有”SOR]]>
     </summary>
     
-      <category term="String" scheme="sunbingjie.tk/tags/String/"/>
+      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[把《编程珠玑》读薄]]></title>
-    <link href="sunbingjie.tk/2015/02/25/1.28/"/>
-    <id>sunbingjie.tk/2015/02/25/1.28/</id>
+    <link href="http://sunbingjie.tk/2015/02/25/1.28/"/>
+    <id>http://sunbingjie.tk/2015/02/25/1.28/</id>
     <published>2015-02-26T03:54:11.000Z</published>
     <updated>2015-02-26T03:54:11.000Z</updated>
     <content type="html"><![CDATA[<p>出处：<a href="http://hawstein.com/posts/make-thiner-programming-pearls.html" target="_blank" rel="external">http://hawstein.com/posts/make-thiner-programming-pearls.html</a></p>
@@ -2529,16 +2529,16 @@ nana
     <![CDATA[<p>出处：<a href="http://hawstein.com/posts/make-thiner-programming-pearls.html" target="_blank" rel="external">http://hawstein.com/posts/make-]]>
     </summary>
     
-      <category term="Reading" scheme="sunbingjie.tk/tags/Reading/"/>
+      <category term="Reading" scheme="http://sunbingjie.tk/tags/Reading/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Black Mirror Christmas Special]]></title>
-    <link href="sunbingjie.tk/2015/02/25/blackmirror/"/>
-    <id>sunbingjie.tk/2015/02/25/blackmirror/</id>
+    <link href="http://sunbingjie.tk/2015/02/25/blackmirror/"/>
+    <id>http://sunbingjie.tk/2015/02/25/blackmirror/</id>
     <published>2015-02-26T03:53:16.000Z</published>
     <updated>2015-02-26T03:53:16.000Z</updated>
     <content type="html"><![CDATA[<object width="1140" height="880"><param name="movie" value="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page"><param name="allowFullScreen" value="true"><param name="allowscriptaccess" value="always"><param name="wmode" value="Transparent"><embed width="1140" height="488" wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page" type="application/x-shockwave-flash"></object>]]></content>
@@ -2546,14 +2546,14 @@ nana
     <![CDATA[<object width="1140" height="880"><param name="movie" value="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pu]]>
     </summary>
     
-      <category term="追剧" scheme="sunbingjie.tk/categories/%E8%BF%BD%E5%89%A7/"/>
+      <category term="追剧" scheme="http://sunbingjie.tk/categories/%E8%BF%BD%E5%89%A7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Roman to Integer, Integer to Roman, ZigZag Conversion]]></title>
-    <link href="sunbingjie.tk/2015/02/25/2.5/"/>
-    <id>sunbingjie.tk/2015/02/25/2.5/</id>
+    <link href="http://sunbingjie.tk/2015/02/25/2.5/"/>
+    <id>http://sunbingjie.tk/2015/02/25/2.5/</id>
     <published>2015-02-26T03:40:54.000Z</published>
     <updated>2015-02-26T03:40:54.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Roman_to_Integer">Roman to Integer</h2>
@@ -2597,11 +2597,11 @@ nana
 <p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to b]]>
     </summary>
     
-      <category term="String" scheme="sunbingjie.tk/tags/String/"/>
+      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
     
-      <category term="Math" scheme="sunbingjie.tk/tags/Math/"/>
+      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
     
-      <category term="刷题" scheme="sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
