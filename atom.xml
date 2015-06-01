@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-05-04T03:20:26.347Z</updated>
+  <updated>2015-06-01T04:45:30.393Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,45 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Jump Game, Jump Game II]]></title>
+    <link href="http://sunbingjie.tk/2015/06/01/5.30/"/>
+    <id>http://sunbingjie.tk/2015/06/01/5.30/</id>
+    <published>2015-06-01T04:44:32.000Z</published>
+    <updated>2015-06-01T04:44:32.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Jump_Game">Jump Game</h2>
+<blockquote>
+<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Determine if you are able to reach the last index.<br>For example:<br>A = [2,3,1,1,4], return true.<br>A = [3,2,1,0,4], return false.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<p>Inorder traversal, then link each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canJump</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span> || nums.length==<span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">int</span> maxjump = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++){</div><div class="line">        <span class="keyword">if</span>(i &gt; maxjump) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">if</span>(nums[i]+i &gt; maxjump){</div><div class="line">            maxjump = nums[i]+i;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(maxjump &gt;= nums.length-<span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Jump_Game_II">Jump Game II</h2>
+<blockquote>
+<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Your goal is to reach the last index in the minimum number of jumps.<br>For example:<br>Given array A = [2,3,1,1,4]<br>The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)</p>
+</blockquote>
+<p>Thinking…</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Jump_Game">Jump Game</h2>
+<blockquote>
+<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Determine if you are able to reach the last index.<br>For example:<br>A = [2,3,1,1,4], return true.<br>A = [3,2,1,0,4], return false.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II]]></title>
@@ -2547,61 +2586,6 @@ nana
     </summary>
     
       <category term="追剧" scheme="http://sunbingjie.tk/categories/%E8%BF%BD%E5%89%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Roman to Integer, Integer to Roman, ZigZag Conversion]]></title>
-    <link href="http://sunbingjie.tk/2015/02/25/2.5/"/>
-    <id>http://sunbingjie.tk/2015/02/25/2.5/</id>
-    <published>2015-02-26T03:40:54.000Z</published>
-    <updated>2015-02-26T03:40:54.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Roman_to_Integer">Roman to Integer</h2>
-<blockquote>
-<p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>How roman numbers work:</p>
-<p>M | D | C | L | X | V | I |</p>
-<p>1000 | 500 | 100 | 50 | 10 | 5 | 1 |</p>
-<p>If the current character is larger than previous one, then we substract previous form current, otherwise add up all digits.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span>(String s) {</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n=s.length(),res=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i&lt; n;i++){</div><div class="line">    </div><div class="line">            <span class="keyword">switch</span>(s.charAt(i)){</div><div class="line">            </div><div class="line">                <span class="keyword">case</span> <span class="string">'I'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">1</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span>{res+=<span class="number">1</span>; <span class="keyword">break</span>;}</div><div class="line">                </div><div class="line">                <span class="keyword">case</span> <span class="string">'V'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">5</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">5</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'X'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'L'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">10</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">10</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'L'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">50</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">50</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'C'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">100</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">100</span>;<span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'D'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>) {res-=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'M'</span>: res+=<span class="number">1000</span>; <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Integer_to_Roman">Integer to Roman</h2>
-<blockquote>
-<p>Given an integer, convert it to a roman numeral.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> String <span class="title">intToRoman</span>(<span class="keyword">int</span> num) {</div><div class="line">     <span class="keyword">int</span>[] numbers={<span class="number">1000</span>, <span class="number">900</span>, <span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">90</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>};</div><div class="line">     String[] tokens={<span class="string">"M"</span>,<span class="string">"CM"</span>,<span class="string">"D"</span>,<span class="string">"CD"</span>,<span class="string">"C"</span>,<span class="string">"XC"</span>,<span class="string">"L"</span>,<span class="string">"XL"</span>,<span class="string">"X"</span>,<span class="string">"IX"</span>,<span class="string">"V"</span>,<span class="string">"IV"</span>,<span class="string">"I"</span>};</div><div class="line">     StringBuilder sb=<span class="keyword">new</span> StringBuilder();</div><div class="line">     <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">     <span class="keyword">while</span>(num&gt;<span class="number">0</span>){</div><div class="line">         <span class="keyword">int</span> tmp=num/numbers[i];</div><div class="line">         num=num-tmp*numbers[i];</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> k=tmp;k&gt;=<span class="number">1</span>;k--){</div><div class="line">             sb.append(tokens[i]);</div><div class="line">         }</div><div class="line">         i++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> sb.toString();</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="ZigZag_Conversion">ZigZag Conversion</h2>
-<blockquote>
-<p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">P   A   H   <span class="keyword">N</span></div><div class="line">A P L S <span class="keyword">I</span> <span class="keyword">I</span> G</div><div class="line">Y   <span class="keyword">I</span>   R</div></pre></td></tr></table></figure>
-
-<p>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:<br>string convert(string text, int nRows);<br>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
-<h3 id="Solution-2">Solution</h3>
-<p>Each group of words are 2*nRows-2, we add the String row by row. Be careful about first and last row:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">convert</span>(String s, <span class="keyword">int</span> nRows) {</div><div class="line">        <span class="keyword">int</span> nCol=<span class="number">0</span>,size=<span class="number">2</span>*nRows-<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span> || nRows==<span class="number">1</span>) <span class="keyword">return</span> s; </div><div class="line">        StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="comment">//add char to stringbuilder row by row</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nRows;i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;s.length();j+=size){</div><div class="line">                res.append(s.charAt(j));</div><div class="line">                <span class="keyword">if</span>(i!=<span class="number">0</span> && i!=nRows-<span class="number">1</span> && j+size-<span class="number">2</span>*i&lt;s.length())</div><div class="line">                res.append(s.charAt(j+size-<span class="number">2</span>*i));</div><div class="line">            }    </div><div class="line">        }</div><div class="line">         <span class="keyword">return</span> res.toString();</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fbrightlights333%2Fhow-you-love-me-feat-bright&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Roman_to_Integer">Roman to Integer</h2>
-<blockquote>
-<p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to b]]>
-    </summary>
-    
-      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
-    
-      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   

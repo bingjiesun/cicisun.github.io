@@ -120,6 +120,124 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/2.5/">
+                Roman to Integer, Integer to Roman, ZigZag Conversion
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/2.5/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/2.5/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Roman_to_Integer">Roman to Integer</h2>
+<blockquote>
+<p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>How roman numbers work:</p>
+<p>M | D | C | L | X | V | I |</p>
+<p>1000 | 500 | 100 | 50 | 10 | 5 | 1 |</p>
+<p>If the current character is larger than previous one, then we substract previous form current, otherwise add up all digits.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span>(String s) {</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n=s.length(),res=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i&lt; n;i++){</div><div class="line">    </div><div class="line">            <span class="keyword">switch</span>(s.charAt(i)){</div><div class="line">            </div><div class="line">                <span class="keyword">case</span> <span class="string">'I'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">1</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span>{res+=<span class="number">1</span>; <span class="keyword">break</span>;}</div><div class="line">                </div><div class="line">                <span class="keyword">case</span> <span class="string">'V'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)!=<span class="string">'I'</span>){res-=<span class="number">5</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">5</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'X'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'L'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">10</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">10</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'L'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'C'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">50</span>;<span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">50</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'C'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && (s.charAt(i+<span class="number">1</span>)==<span class="string">'D'</span>||s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>)){res-=<span class="number">100</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">100</span>;<span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'D'</span>: </div><div class="line">                    <span class="keyword">if</span>(i&lt;n-<span class="number">1</span> && s.charAt(i+<span class="number">1</span>)==<span class="string">'M'</span>) {res-=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                    <span class="keyword">else</span> {res+=<span class="number">500</span>; <span class="keyword">break</span>;}</div><div class="line">                <span class="keyword">case</span> <span class="string">'M'</span>: res+=<span class="number">1000</span>; <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Integer_to_Roman">Integer to Roman</h2>
+<blockquote>
+<p>Given an integer, convert it to a roman numeral.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> String <span class="title">intToRoman</span>(<span class="keyword">int</span> num) {</div><div class="line">     <span class="keyword">int</span>[] numbers={<span class="number">1000</span>, <span class="number">900</span>, <span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">90</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>};</div><div class="line">     String[] tokens={<span class="string">"M"</span>,<span class="string">"CM"</span>,<span class="string">"D"</span>,<span class="string">"CD"</span>,<span class="string">"C"</span>,<span class="string">"XC"</span>,<span class="string">"L"</span>,<span class="string">"XL"</span>,<span class="string">"X"</span>,<span class="string">"IX"</span>,<span class="string">"V"</span>,<span class="string">"IV"</span>,<span class="string">"I"</span>};</div><div class="line">     StringBuilder sb=<span class="keyword">new</span> StringBuilder();</div><div class="line">     <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">     <span class="keyword">while</span>(num&gt;<span class="number">0</span>){</div><div class="line">         <span class="keyword">int</span> tmp=num/numbers[i];</div><div class="line">         num=num-tmp*numbers[i];</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> k=tmp;k&gt;=<span class="number">1</span>;k--){</div><div class="line">             sb.append(tokens[i]);</div><div class="line">         }</div><div class="line">         i++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> sb.toString();</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="ZigZag_Conversion">ZigZag Conversion</h2>
+<blockquote>
+<p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">P   A   H   <span class="keyword">N</span></div><div class="line">A P L S <span class="keyword">I</span> <span class="keyword">I</span> G</div><div class="line">Y   <span class="keyword">I</span>   R</div></pre></td></tr></table></figure>
+
+<p>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:<br>string convert(string text, int nRows);<br>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
+<h3 id="Solution-2">Solution</h3>
+<p>Each group of words are 2*nRows-2, we add the String row by row. Be careful about first and last row:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">convert</span>(String s, <span class="keyword">int</span> nRows) {</div><div class="line">        <span class="keyword">int</span> nCol=<span class="number">0</span>,size=<span class="number">2</span>*nRows-<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span> || nRows==<span class="number">1</span>) <span class="keyword">return</span> s; </div><div class="line">        StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="comment">//add char to stringbuilder row by row</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nRows;i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;s.length();j+=size){</div><div class="line">                res.append(s.charAt(j));</div><div class="line">                <span class="keyword">if</span>(i!=<span class="number">0</span> && i!=nRows-<span class="number">1</span> && j+size-<span class="number">2</span>*i&lt;s.length())</div><div class="line">                res.append(s.charAt(j+size-<span class="number">2</span>*i));</div><div class="line">            }    </div><div class="line">        }</div><div class="line">         <span class="keyword">return</span> res.toString();</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fbrightlights333%2Fhow-you-love-me-feat-bright&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/String/"> #String </a>
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/2.3/">
                 Majority Element, Gray Code
               </a>
@@ -683,128 +801,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.5/">
-                Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.5/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.5/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Remove_Duplicates_from_Sorted_List_I">Remove Duplicates from Sorted List I</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all duplicates such that each element appear only once.<br>For example,<br>Given 1-&gt;1-&gt;2, return 1-&gt;2.<br>Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Two loops One pointer solution, only move cursor to next when we confirmed cur.next.val!==cur.val.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">    ListNode h = head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur= head;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.next.val==cur.val)</div><div class="line">        cur.next=cur.next.next;</div><div class="line">        cur=cur.next;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Or we can use only one loop:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">      ListNode h = head;</div><div class="line">      <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">      ListNode cur= head;</div><div class="line">      <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">          ListNode tmp=cur.next;</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="keyword">null</span>&&tmp.val==cur.val){</div><div class="line">              cur.next=tmp.next;}</div><div class="line">          <span class="keyword">else</span> cur=cur.next;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> h;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_List_II">Remove Duplicates from Sorted List II</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.<br>Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Similar to how we deleted duplicates in I, now we add a pre pointer to record the last non-duplicate element, and a dummy head to deal with cases where head needs to be removed. Note: we can only move pre to next when we confirmed now cur is pointing to a unique element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">       ListNode dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next=head;</div><div class="line">       ListNode cur=head, pre=dummy;</div><div class="line">       <span class="keyword">while</span>(cur!=<span class="keyword">null</span>&& cur.next!=<span class="keyword">null</span>){</div><div class="line">           <span class="comment">//if dup found, keep cur at last dup element</span></div><div class="line">           <span class="keyword">if</span>(cur.val==cur.next.val){</div><div class="line">           <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.val==cur.next.val){cur=cur.next;}</div><div class="line">           <span class="comment">//remove the dups, remember to move the cur for detecting more dups</span></div><div class="line">           pre.next=cur.next;</div><div class="line">           cur=cur.next;}</div><div class="line">           <span class="comment">//move the two pointers next when no dup found</span></div><div class="line">           <span class="keyword">else</span> {pre=pre.next; cur=cur.next;}     </div><div class="line">       }       </div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array">Remove Duplicates from Sorted Array</h2>
-<blockquote>
-<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = [1,1,2],<br>Your function should return length = 2, and A is now [1,2].</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<p>Just replace current element with the first non-duplicate, in other words, non-equal-to-current element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">          <span class="keyword">int</span> n=A.length;</div><div class="line">          <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">          <span class="keyword">if</span>(A.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">              <span class="comment">//count points to the last element of our new array, i pointer finds the next non-dup element</span></div><div class="line">              <span class="keyword">if</span>(A[i]!=A[count]){A[++count]=A[i];}</div><div class="line">          }<span class="keyword">return</span> count+<span class="number">1</span>;</div><div class="line">      }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array_II">Remove Duplicates from Sorted Array II</h2>
-<blockquote>
-<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = [1,1,1,2,2,3],<br>Your function should return length = 5, and A is now [1,1,2,2,3].</p>
-</blockquote>
-<h3 id="Solution-3">Solution</h3>
-<p>The solution is a bit tricky. We use two pointers, pre to keep the second duplicate element, and cur to keep the first element different from current duplicate element. Then we replcace the next element of pre, to whatever next element cur is pointing at.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       <span class="keyword">int</span> n = A.length;</div><div class="line">       <span class="keyword">int</span> pre=<span class="number">1</span>,cur=<span class="number">2</span>;</div><div class="line">       <span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>||n==<span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">       <span class="keyword">while</span>(cur&lt;n){</div><div class="line">           <span class="comment">//confirm no three dups in new array  </span></div><div class="line">           <span class="keyword">if</span>(A[cur]==A[pre-<span class="number">1</span>]){</div><div class="line">               <span class="comment">//cur points to the first element different from current dups</span></div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> {</div><div class="line">               <span class="comment">//move pre to the third dup element</span></div><div class="line">               pre++;</div><div class="line">               <span class="comment">//replace the third dup with the next element </span></div><div class="line">               A[pre]=A[cur];</div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> pre+<span class="number">1</span>;</div><div class="line">       </div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -845,7 +841,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

@@ -120,6 +120,111 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/1.14/">
+                Container With Most Water, Trapping Rain Water
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.14/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.14/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Container_With_Most_Water">Container With Most Water</h2>
+<blockquote>
+<p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Two Pointers l and r:</p>
+<li>start from two ends, keep updating maxsofar area</li>
+
+<li>changing rule: if left’&lt;’right then we know moving right makes no change(width decreases and min board is still left), so we need to move left pointer, vise versa</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span>(<span class="keyword">int</span>[] height) {</div><div class="line">     <span class="keyword">if</span>(height==<span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">     <span class="keyword">int</span> curmax=-<span class="number">1</span>, maxsofar=-<span class="number">1</span>, l=<span class="number">0</span>,r=height.length-<span class="number">1</span>;</div><div class="line">     <span class="keyword">while</span>(l&lt;r){</div><div class="line">      curmax=(r-l)*Math.min(height[l],height[r]);</div><div class="line">      <span class="keyword">if</span>(curmax&gt;maxsofar){</div><div class="line">        maxsofar=curmax;</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(height[l]&lt;height[r]){</div><div class="line">        <span class="comment">//move r-- would never increase area with same l</span></div><div class="line">        <span class="keyword">int</span> tmp=height[l];</div><div class="line">        <span class="keyword">while</span>(l&lt;r && height[l]&lt;=tmp)</div><div class="line">        l++;</div><div class="line">      }</div><div class="line">      <span class="keyword">else</span>{</div><div class="line">        <span class="keyword">int</span> tmp=height[r];</div><div class="line">        <span class="keyword">while</span>(l&lt;r && height[r]&lt;=tmp)</div><div class="line">        r--;</div><div class="line">      }</div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> maxsofar;</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Trapping_Rain_Water">Trapping Rain Water</h2>
+<blockquote>
+<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.<br>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/08/rainwatertrap.png" alt="eg"></p>
+</blockquote>
+<h3 id="Crazy_Smart_Solution">Crazy Smart Solution</h3>
+<p>left[i] to store the largest to the left of i; right[i] to store the largest to the right of i. The min of these two, subtracted by A[i], determines how much water A[i] can hold<br>remember to add up volume from 1 to n-2, since two sides cannot hold water.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span>(<span class="keyword">int</span>[] A) {</div><div class="line">      <span class="keyword">if</span> (A == <span class="keyword">null</span> || A.length == <span class="number">0</span>) {  </div><div class="line">          <span class="keyword">return</span> <span class="number">0</span>;  </div><div class="line">      }  </div><div class="line">      <span class="keyword">int</span> i, n=A.length,vol=<span class="number">0</span>,max=<span class="number">0</span>,left[]=<span class="keyword">new</span> <span class="keyword">int</span>[n],right[]=<span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">      <span class="comment">//left to right</span></div><div class="line">      <span class="keyword">for</span>(i=<span class="number">1</span>, max=A[<span class="number">0</span>], left[<span class="number">0</span>]=A[<span class="number">0</span>]; i&lt;n;i++ ){</div><div class="line">          <span class="keyword">if</span>(A[i]&gt;max) {max=A[i]; left[i]=A[i];}</div><div class="line">          <span class="keyword">else</span> left[i]=max;</div><div class="line">      }</div><div class="line">      <span class="comment">//right to left</span></div><div class="line">      <span class="keyword">for</span>(i = n-<span class="number">2</span>, max=A[n-<span class="number">1</span>],right[n-<span class="number">1</span>]=A[n-<span class="number">1</span>];i&gt;=<span class="number">0</span>;i--){</div><div class="line">          <span class="keyword">if</span>(A[i]&gt;max){max=A[i]; right[i]=max;}</div><div class="line">          <span class="keyword">else</span> right[i]=max;</div><div class="line">      }</div><div class="line">      <span class="keyword">for</span>(i =<span class="number">1</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">          <span class="keyword">int</span> tmp= <span class="number">1</span> * (Math.min(left[i],right[i])-A[i]);</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="number">0</span>) vol+=tmp;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> vol;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnettwerkmusicgroup%2Fthe-paper-kites-bloom-bonus&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/1.14-2/">
                 Valid Palindrome, Palindrome Number, Scramble String, Reverse Binary, Interleaving String
               </a>
@@ -642,8 +747,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
     </div>
   </div>
 
@@ -684,7 +787,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
