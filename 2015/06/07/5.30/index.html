@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-06-01
+          Posted on 2015-06-07
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/01/5.30/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/01/5.30/"></span>
+            <a href="/2015/06/07/5.30/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/5.30/"></span>
             </a>
           </span>
           
@@ -167,7 +167,7 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="Solution">Solution</h3>
-<p>Simple 1D DP</p>
+<p>Simple 1D DP, update maxjump on each step, when we are at a place even maxjump cannot reach, return false.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canJump</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span> || nums.length==<span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">int</span> maxjump = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++){</div><div class="line">        <span class="keyword">if</span>(i &gt; maxjump) <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// max jump streak cannot reach i</span></div><div class="line">        <span class="keyword">if</span>(nums[i]+i &gt; maxjump){</div><div class="line">            maxjump = nums[i]+i;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(maxjump &gt;= nums.length-<span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <hr>
@@ -175,8 +175,11 @@
 <blockquote>
 <p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Your goal is to reach the last index in the minimum number of jumps.<br>For example:<br>Given array A = [2,3,1,1,4]<br>The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)</p>
 </blockquote>
-<p>Thinking…</p>
+<h3 id="Solution-1">Solution</h3>
+<p>Similar to one, we record a lastjump var. Whenver we have to take a step(i&gt;lastjump), update lastjump to maxjump(which is update on each index), as a simple greedy process.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">jump</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">        <span class="keyword">int</span> maxjump=<span class="number">0</span>, lastjump=<span class="number">0</span>, step=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++){</div><div class="line">            <span class="keyword">if</span>(i&gt;lastjump){</div><div class="line">                step++;</div><div class="line">                lastjump=maxjump;</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(nums[i]+i&gt;maxjump){</div><div class="line">                maxjump=nums[i]+i;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(maxjump&gt;=nums.length-<span class="number">1</span>) <span class="keyword">return</span> step;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
 
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Ftijn-speets%2Flo-fang-youre-the-one-that-i-want-chanel-5%3Fin%3Dcici-42%2Fsets%2Fsummer-vibes&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
       
     </div>
 
@@ -199,7 +202,7 @@
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/03/4.18/">The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II</a>
+              <a href="/2015/06/07/angular/">Learning AngularJS day by day</a>
             
           </div>
         </div>
@@ -260,7 +263,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -274,7 +277,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
@@ -319,7 +322,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jump_Game"><span class="nav-number">1.</span> <span class="nav-text">Jump Game</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jump_Game_II"><span class="nav-number">2.</span> <span class="nav-text">Jump Game II</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jump_Game"><span class="nav-number">1.</span> <span class="nav-text">Jump Game</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jump_Game_II"><span class="nav-number">2.</span> <span class="nav-text">Jump Game II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -892,8 +895,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/06/01/5.30/';
-      var disqus_url = 'http://sunbingjie.tk/2015/06/01/5.30/';
+      var disqus_identifier = '2015/06/07/5.30/';
+      var disqus_url = 'http://sunbingjie.tk/2015/06/07/5.30/';
 
       (function(){
         var dsq = document.createElement('script');
