@@ -120,7 +120,100 @@
           
           
             
-              <a class="post-title-link" href="/2015/07/05/angular/">
+              <a class="post-title-link" href="/2015/07/29/7.23/">
+                Find Median of two Sorted Arrays
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-07-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/29/7.23/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/29/7.23/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+<h3 id="Solution"><a href="http://www.lifeincode.net/programming/leetcode-median-of-two-sorted-arrays-java/" target="_blank" rel="external">Solution</a></h3>
+<ul>
+<li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
+<li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> B[]) {</div><div class="line">		<span class="keyword">int</span> m = A.length;</div><div class="line">		<span class="keyword">int</span> n = B.length;</div><div class="line">		<span class="keyword">int</span> k = m + n;</div><div class="line">		<span class="keyword">if</span> (k % <span class="number">2</span> != <span class="number">0</span>) {</div><div class="line">			<span class="keyword">return</span> findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> (findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span>) + findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findKth</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> a, <span class="keyword">int</span> B[], <span class="keyword">int</span> b, <span class="keyword">int</span> k) {</div><div class="line">		<span class="comment">//put the shorter array up-front</span></div><div class="line">		<span class="keyword">if</span> (A.length - a &gt; B.length - b) {</div><div class="line">			<span class="keyword">return</span> findKth(B, b, A, a, k);</div><div class="line">		}</div><div class="line">		<span class="comment">//if the short array overflows, just find in B</span></div><div class="line">		<span class="keyword">if</span> (a &gt;= A.length) {</div><div class="line">			<span class="keyword">return</span> B[b + k - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">		<span class="comment">//if k is down to 1, just return the smallest current</span></div><div class="line">		<span class="keyword">if</span> (k == <span class="number">1</span>) {</div><div class="line">			<span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">		}</div><div class="line">		<span class="comment">//compare two medians, cut the smaller parts</span></div><div class="line">		<span class="keyword">int</span> midA = Math.min(k / <span class="number">2</span>, A.length - a);</div><div class="line">		<span class="keyword">int</span> midB = k - midA;</div><div class="line">		<span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &lt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a + midA, B, b, k - midA);</div><div class="line">		} <span class="keyword">else</span> <span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &gt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a, B, b + midB, k - midB);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> A[a + midA - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/18/angular/">
                 Learning AngularJS day by day
               </a>
             
@@ -130,7 +223,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-07-06
+          Posted on 2015-07-19
         </span>
 
         
@@ -150,8 +243,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/05/angular/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/05/angular/"></span>
+            <a href="/2015/07/18/angular/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/18/angular/"></span>
             </a>
           </span>
           
@@ -169,7 +262,7 @@
           <p>I’ll be using AngularJS for a project at work, mainly using <a href="http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821" target="_blank" rel="external">Mastering Web Application Development with AngularJS</a> and <a href="http://henriquat.re/" target="_blank" rel="external">This ebook</a>.</p>
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/05/angular/#more">
+            <a class="btn" href="/2015/07/18/angular/#more">
               Read more &raquo;
             </a>
           </div>
@@ -474,95 +567,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/01/mapreduceinonepage/">
-                MapReduce的模式、算法和用例
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-05-01
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/学习/">学习</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/01/mapreduceinonepage/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/mapreduceinonepage/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="前言">前言</h2>
-<p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combiners, Partitioners,和 sorting。如下图所示。<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PQ950-.png" alt=""></p>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/01/mapreduceinonepage/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Hadoop/"> #Hadoop </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -603,7 +607,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">41</span>
+              <span class="site-state-item-count">42</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
