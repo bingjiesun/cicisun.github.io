@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-07-19
+          Posted on 2015-08-08
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/18/angular/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/18/angular/"></span>
+            <a href="/2015/08/07/angular/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/07/angular/"></span>
             </a>
           </span>
           
@@ -165,8 +165,72 @@
 <a id="more"></a>
 <h1 id="Basic_Concepts">Basic Concepts</h1>
 <h2 id="Model">Model</h2>
+<p>AngularJS models are plain, old JS objects. Models properties are not limited to be represented by primitive values(any valid JS object or array can be used).  To expose a model to AngularJS you simply assign it to a $scope.</p>
 <h2 id="Controller">Controller</h2>
+<p>In AngularJS, a controller is just a regular JavaScript constructor which accepts a magic $scope parameter.<br>The primary responsibility of a controller is to initialize scope objects. </p>
+<ul>
+<li>Providing initial model values</li>
+<li>Augmenting $scope with UI-specific behavior/functions</li>
+<li>A controller does the same job as the ng-init directive, but doing so in JS not HTML, when it comes to setting up initial model values.</li>
+</ul>
 <h2 id="Service_&amp;_Dependency_Injection">Service &amp; Dependency Injection</h2>
+<p><a href="https://www.airpair.com/javascript/posts/services-in-angularjs-simplified-with-examples" target="_blank" rel="external">What are services</a>:</p>
+<ul>
+<li>Think of Service as the method of registering a constructor function/any singleton object that is created and managed by angular DI, with service dependency injection we can eliminate the new keyword</li>
+<li>Services are singleton. All components of application works with single instance of the service.</li>
+<li>Service instance gets created when application components need it.</li>
+<li>Provides organization of shared data and functions across the application.</li>
+</ul>
+<p>Service can be created in four different ways:</p>
+<ul>
+<li>Using the service() method</li>
+<li>Using the factory() method</li>
+<li>Using the provider() method</li>
+<li>Using the value() method</li>
+<li>Using the constant() method</li>
+</ul>
+<h2 id="Using_ervice()">Using ervice()</h2>
+<p>Using the service() method uses the function constructor and it returns the object or instance of the function to work with<br>creating a calculator service</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> CalculatorService = angular.module(<span class="string">'CalculatorService'</span>, []).service(<span class="string">'Calculator'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">     <span class="keyword">this</span>.square = <span class="function"><span class="keyword">function</span> <span class="params">(a)</span> </span>{ <span class="keyword">return</span> a*a}; </div><div class="line">     });</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myApp = angular.module(<span class="string">'myApp'</span>, [<span class="string">'CalculatorService'</span>]);</div><div class="line">     myApp.controller(<span class="string">'CalculatorController'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$scope</span>, Calculator)</span> </span>{ </div><div class="line">          <span class="variable">$scope</span>.findSquare = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">                   <span class="variable">$scope</span>.answer = Calculator.square(<span class="variable">$scope</span>.number); </div><div class="line">                    }});</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"CalculatorController"</span>&gt;</span></div><div class="line">                Enter a number:</div><div class="line">                <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"number"</span> <span class="attribute">ng-model</span>=<span class="value">"number"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">button</span>  <span class="attribute">ng-click</span>=<span class="value">"findSquare()"</span>&gt;</span>Square<span class="tag">&lt;/<span class="title">button</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">div</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<h2 id="Using_factory()">Using factory()</h2>
+<p>create factory object and assign the methods to it.<br>Using the factory() method uses the returned value of the function. It returns the value of the function returned after the execution<br>Creating the service to reverse the string.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">CalculatorService.factory(<span class="string">'StringManipulation'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">     <span class="keyword">var</span> r= <span class="function"><span class="keyword">function</span> <span class="title">reverse</span><span class="params">(s)</span> </span>{ </div><div class="line">          <span class="keyword">var</span> o = <span class="string">''</span>; </div><div class="line">          <span class="keyword">for</span> (<span class="keyword">var</span> i = s.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) </div><div class="line">               o += s[i]; </div><div class="line">               <span class="keyword">return</span> o; </div><div class="line">          } </div><div class="line">     <span class="keyword">return</span>{ </div><div class="line">          reverseString: <span class="function"><span class="keyword">function</span> <span class="title">reverseString</span><span class="params">(name)</span> </span>{ </div><div class="line">               <span class="keyword">return</span> r(name); </div><div class="line">               } } });</div><div class="line"></div><div class="line">myApp.controller(<span class="string">'CalculatorController'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$scope</span>, StringManipulation)</span> </span>{ </div><div class="line">     <span class="variable">$scope</span>.findReverse =  <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{<span class="variable">$scope</span>.reversename = StringManipulation.reverseString(<span class="variable">$scope</span>.name);}</div><div class="line">});</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"StringController"</span>&gt;</span></div><div class="line">              Enter Name:</div><div class="line">              <span class="tag">&lt;<span class="title">input</span> <span class="attribute">ng-model</span>=<span class="value">"name"</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="title">button</span>  <span class="attribute">ng-click</span>=<span class="value">"findReverse()"</span>&gt;</span>Reverse Name<span class="tag">&lt;/<span class="title">button</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="title">div</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>The difference between creating a service using the service() method and the factory() method:</p>
+<ul>
+<li>Using the service() method uses the function constructor and it returns the object or instance of the function to work with</li>
+<li>Using the factory() method uses the returned value of the function. It returns the value of the function returned after the execution</li>
+</ul>
+<p>(<a href="http://stackoverflow.com/questions/13762228/confused-about-service-vs-factory" target="_blank" rel="external">http://stackoverflow.com/questions/13762228/confused-about-service-vs-factory</a>)</p>
+<h2 id="Well_known_services">Well known services</h2>
+<h3 id="$http_and_$q">$http and $q</h3>
+<p>$http in AngularJS is a core service for reading data from web servers. $http.get(url) is the function to use for reading server data.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</div><div class="line">app.controller(<span class="string">'planetController'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$http</span>)</span> </span>{</div><div class="line">  <span class="variable">$http</span>.get(<span class="string">"http://www.bogotobogo.com/AngularJS/files/httpRequest/planet.json"</span>)</div><div class="line">  .success(<span class="function"><span class="keyword">function</span><span class="params">(response)</span> </span>{<span class="variable">$scope</span>.names = response;});</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<h3 id="$resource">$resource</h3>
+<h3 id="$document">$document</h3>
+<h3 id="$window">$window</h3>
+<h3 id="$timeout_&amp;_$interval">$timeout &amp; $interval</h3>
+<p>(<a href="http://stackoverflow.com/questions/14237070/using-setinterval-in-angularjs-factory" target="_blank" rel="external">http://stackoverflow.com/questions/14237070/using-setinterval-in-angularjs-factory</a>)<br>(<a href="http://tutorials.jenkov.com/angularjs/timeout-interval.html#injecting-interval" target="_blank" rel="external">http://tutorials.jenkov.com/angularjs/timeout-interval.html#injecting-interval</a>)<br>(<a href="http://plnkr.co/edit/?p=preview" target="_blank" rel="external">http://plnkr.co/edit/?p=preview</a>)</p>
+<h3 id="$parse">$parse</h3>
+<h3 id="$cacheFactory">$cacheFactory</h3>
+<h3 id="$filter">$filter</h3>
+<h3 id="$apply">$apply</h3>
+<h3 id="$watch_&amp;_$watchcollection">$watch &amp; $watchcollection</h3>
+<p>(<a href="http://jsfiddle.net/TheSharpieOne/RA2j7/2/" target="_blank" rel="external">http://jsfiddle.net/TheSharpieOne/RA2j7/2/</a>)</p>
 <h2 id="Directive">Directive</h2>
 <h1 id="Simple_program">Simple program</h1>
 <p>I’ve build a simple one-page website using angular-ui and .NET framework.</p>
@@ -207,13 +271,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/29/7.23/">Find Median of two Sorted Arrays</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/07/5.30/">Jump Game, Jump Game II</a>
+              <a href="/2015/07/29/7.23/">Find Median of two Sorted Arrays</a>
             
           </div>
         </div>
@@ -333,7 +395,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic_Concepts"><span class="nav-number">1.</span> <span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">1.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller"><span class="nav-number">1.2.</span> <span class="nav-text">Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service_&_Dependency_Injection"><span class="nav-number">1.3.</span> <span class="nav-text">Service & Dependency Injection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directive"><span class="nav-number">1.4.</span> <span class="nav-text">Directive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple_program"><span class="nav-number">2.</span> <span class="nav-text">Simple program</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#studentCtrl-js"><span class="nav-number">2.1.</span> <span class="nav-text">studentCtrl.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Default-aspx"><span class="nav-number">2.2.</span> <span class="nav-text">Default.aspx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Site-Master"><span class="nav-number">2.3.</span> <span class="nav-text">Site.Master</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Useful_Plugins"><span class="nav-number">3.</span> <span class="nav-text">Useful Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UI-Router"><span class="nav-number">3.1.</span> <span class="nav-text">UI-Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular-UI"><span class="nav-number">3.2.</span> <span class="nav-text">Angular-UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datatables"><span class="nav-number">3.3.</span> <span class="nav-text">Datatables</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic_Concepts"><span class="nav-number">1.</span> <span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">1.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller"><span class="nav-number">1.2.</span> <span class="nav-text">Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service_&_Dependency_Injection"><span class="nav-number">1.3.</span> <span class="nav-text">Service & Dependency Injection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using_ervice()"><span class="nav-number">1.4.</span> <span class="nav-text">Using ervice()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using_factory()"><span class="nav-number">1.5.</span> <span class="nav-text">Using factory()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Well_known_services"><span class="nav-number">1.6.</span> <span class="nav-text">Well known services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#$http_and_$q"><span class="nav-number">1.6.1.</span> <span class="nav-text">$http and $q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$resource"><span class="nav-number">1.6.2.</span> <span class="nav-text">$resource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$document"><span class="nav-number">1.6.3.</span> <span class="nav-text">$document</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$window"><span class="nav-number">1.6.4.</span> <span class="nav-text">$window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$timeout_&_$interval"><span class="nav-number">1.6.5.</span> <span class="nav-text">$timeout & $interval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$parse"><span class="nav-number">1.6.6.</span> <span class="nav-text">$parse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$cacheFactory"><span class="nav-number">1.6.7.</span> <span class="nav-text">$cacheFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$filter"><span class="nav-number">1.6.8.</span> <span class="nav-text">$filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$apply"><span class="nav-number">1.6.9.</span> <span class="nav-text">$apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#$watch_&_$watchcollection"><span class="nav-number">1.6.10.</span> <span class="nav-text">$watch & $watchcollection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directive"><span class="nav-number">1.7.</span> <span class="nav-text">Directive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple_program"><span class="nav-number">2.</span> <span class="nav-text">Simple program</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#studentCtrl-js"><span class="nav-number">2.1.</span> <span class="nav-text">studentCtrl.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Default-aspx"><span class="nav-number">2.2.</span> <span class="nav-text">Default.aspx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Site-Master"><span class="nav-number">2.3.</span> <span class="nav-text">Site.Master</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Useful_Plugins"><span class="nav-number">3.</span> <span class="nav-text">Useful Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UI-Router"><span class="nav-number">3.1.</span> <span class="nav-text">UI-Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular-UI"><span class="nav-number">3.2.</span> <span class="nav-text">Angular-UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datatables"><span class="nav-number">3.3.</span> <span class="nav-text">Datatables</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -906,8 +968,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/07/18/angular/';
-      var disqus_url = 'http://sunbingjie.tk/2015/07/18/angular/';
+      var disqus_identifier = '2015/08/07/angular/';
+      var disqus_url = 'http://sunbingjie.tk/2015/08/07/angular/';
 
       (function(){
         var dsq = document.createElement('script');

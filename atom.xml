@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-07-29T05:12:51.194Z</updated>
+  <updated>2015-08-08T02:20:29.859Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -15,47 +15,81 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Find Median of two Sorted Arrays]]></title>
-    <link href="http://sunbingjie.tk/2015/07/29/7.23/"/>
-    <id>http://sunbingjie.tk/2015/07/29/7.23/</id>
-    <published>2015-07-29T05:12:26.000Z</published>
-    <updated>2015-07-29T05:12:26.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
-<blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-</blockquote>
-<h3 id="Solution"><a href="http://www.lifeincode.net/programming/leetcode-median-of-two-sorted-arrays-java/" target="_blank" rel="external">Solution</a></h3>
-<ul>
-<li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
-<li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> B[]) {</div><div class="line">		<span class="keyword">int</span> m = A.length;</div><div class="line">		<span class="keyword">int</span> n = B.length;</div><div class="line">		<span class="keyword">int</span> k = m + n;</div><div class="line">		<span class="keyword">if</span> (k % <span class="number">2</span> != <span class="number">0</span>) {</div><div class="line">			<span class="keyword">return</span> findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> (findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span>) + findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findKth</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> a, <span class="keyword">int</span> B[], <span class="keyword">int</span> b, <span class="keyword">int</span> k) {</div><div class="line">		<span class="comment">//put the shorter array up-front</span></div><div class="line">		<span class="keyword">if</span> (A.length - a &gt; B.length - b) {</div><div class="line">			<span class="keyword">return</span> findKth(B, b, A, a, k);</div><div class="line">		}</div><div class="line">		<span class="comment">//if the short array overflows, just find in B</span></div><div class="line">		<span class="keyword">if</span> (a &gt;= A.length) {</div><div class="line">			<span class="keyword">return</span> B[b + k - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">		<span class="comment">//if k is down to 1, just return the smallest current</span></div><div class="line">		<span class="keyword">if</span> (k == <span class="number">1</span>) {</div><div class="line">			<span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">		}</div><div class="line">		<span class="comment">//compare two medians, cut the smaller parts</span></div><div class="line">		<span class="keyword">int</span> midA = Math.min(k / <span class="number">2</span>, A.length - a);</div><div class="line">		<span class="keyword">int</span> midB = k - midA;</div><div class="line">		<span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &lt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a + midA, B, b, k - midA);</div><div class="line">		} <span class="keyword">else</span> <span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &gt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a, B, b + midB, k - midB);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> A[a + midA - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
-<blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m ]]>
-    </summary>
-    
-      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[Learning AngularJS day by day]]></title>
-    <link href="http://sunbingjie.tk/2015/07/18/angular/"/>
-    <id>http://sunbingjie.tk/2015/07/18/angular/</id>
-    <published>2015-07-19T02:04:20.000Z</published>
-    <updated>2015-07-19T02:04:20.000Z</updated>
+    <link href="http://sunbingjie.tk/2015/08/07/angular/"/>
+    <id>http://sunbingjie.tk/2015/08/07/angular/</id>
+    <published>2015-08-08T02:19:56.000Z</published>
+    <updated>2015-08-08T02:19:56.000Z</updated>
     <content type="html"><![CDATA[<p>I’ll be using AngularJS for a project at work, mainly using <a href="http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821" target="_blank" rel="external">Mastering Web Application Development with AngularJS</a> and <a href="http://henriquat.re/" target="_blank" rel="external">This ebook</a>.</p>
 <a id="more"></a>
 <h1 id="Basic_Concepts">Basic Concepts</h1>
 <h2 id="Model">Model</h2>
+<p>AngularJS models are plain, old JS objects. Models properties are not limited to be represented by primitive values(any valid JS object or array can be used).  To expose a model to AngularJS you simply assign it to a $scope.</p>
 <h2 id="Controller">Controller</h2>
+<p>In AngularJS, a controller is just a regular JavaScript constructor which accepts a magic $scope parameter.<br>The primary responsibility of a controller is to initialize scope objects. </p>
+<ul>
+<li>Providing initial model values</li>
+<li>Augmenting $scope with UI-specific behavior/functions</li>
+<li>A controller does the same job as the ng-init directive, but doing so in JS not HTML, when it comes to setting up initial model values.</li>
+</ul>
 <h2 id="Service_&amp;_Dependency_Injection">Service &amp; Dependency Injection</h2>
+<p><a href="https://www.airpair.com/javascript/posts/services-in-angularjs-simplified-with-examples" target="_blank" rel="external">What are services</a>:</p>
+<ul>
+<li>Think of Service as the method of registering a constructor function/any singleton object that is created and managed by angular DI, with service dependency injection we can eliminate the new keyword</li>
+<li>Services are singleton. All components of application works with single instance of the service.</li>
+<li>Service instance gets created when application components need it.</li>
+<li>Provides organization of shared data and functions across the application.</li>
+</ul>
+<p>Service can be created in four different ways:</p>
+<ul>
+<li>Using the service() method</li>
+<li>Using the factory() method</li>
+<li>Using the provider() method</li>
+<li>Using the value() method</li>
+<li>Using the constant() method</li>
+</ul>
+<h2 id="Using_ervice()">Using ervice()</h2>
+<p>Using the service() method uses the function constructor and it returns the object or instance of the function to work with<br>creating a calculator service</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> CalculatorService = angular.module(<span class="string">'CalculatorService'</span>, []).service(<span class="string">'Calculator'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">     <span class="keyword">this</span>.square = <span class="function"><span class="keyword">function</span> <span class="params">(a)</span> </span>{ <span class="keyword">return</span> a*a}; </div><div class="line">     });</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myApp = angular.module(<span class="string">'myApp'</span>, [<span class="string">'CalculatorService'</span>]);</div><div class="line">     myApp.controller(<span class="string">'CalculatorController'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$scope</span>, Calculator)</span> </span>{ </div><div class="line">          <span class="variable">$scope</span>.findSquare = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">                   <span class="variable">$scope</span>.answer = Calculator.square(<span class="variable">$scope</span>.number); </div><div class="line">                    }});</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"CalculatorController"</span>&gt;</span></div><div class="line">                Enter a number:</div><div class="line">                <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"number"</span> <span class="attribute">ng-model</span>=<span class="value">"number"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">button</span>  <span class="attribute">ng-click</span>=<span class="value">"findSquare()"</span>&gt;</span>Square<span class="tag">&lt;/<span class="title">button</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">div</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<h2 id="Using_factory()">Using factory()</h2>
+<p>create factory object and assign the methods to it.<br>Using the factory() method uses the returned value of the function. It returns the value of the function returned after the execution<br>Creating the service to reverse the string.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">CalculatorService.factory(<span class="string">'StringManipulation'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">     <span class="keyword">var</span> r= <span class="function"><span class="keyword">function</span> <span class="title">reverse</span><span class="params">(s)</span> </span>{ </div><div class="line">          <span class="keyword">var</span> o = <span class="string">''</span>; </div><div class="line">          <span class="keyword">for</span> (<span class="keyword">var</span> i = s.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) </div><div class="line">               o += s[i]; </div><div class="line">               <span class="keyword">return</span> o; </div><div class="line">          } </div><div class="line">     <span class="keyword">return</span>{ </div><div class="line">          reverseString: <span class="function"><span class="keyword">function</span> <span class="title">reverseString</span><span class="params">(name)</span> </span>{ </div><div class="line">               <span class="keyword">return</span> r(name); </div><div class="line">               } } });</div><div class="line"></div><div class="line">myApp.controller(<span class="string">'CalculatorController'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(<span class="variable">$scope</span>, StringManipulation)</span> </span>{ </div><div class="line">     <span class="variable">$scope</span>.findReverse =  <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{<span class="variable">$scope</span>.reversename = StringManipulation.reverseString(<span class="variable">$scope</span>.name);}</div><div class="line">});</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"StringController"</span>&gt;</span></div><div class="line">              Enter Name:</div><div class="line">              <span class="tag">&lt;<span class="title">input</span> <span class="attribute">ng-model</span>=<span class="value">"name"</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="title">button</span>  <span class="attribute">ng-click</span>=<span class="value">"findReverse()"</span>&gt;</span>Reverse Name<span class="tag">&lt;/<span class="title">button</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="title">div</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>The difference between creating a service using the service() method and the factory() method:</p>
+<ul>
+<li>Using the service() method uses the function constructor and it returns the object or instance of the function to work with</li>
+<li>Using the factory() method uses the returned value of the function. It returns the value of the function returned after the execution</li>
+</ul>
+<p>(<a href="http://stackoverflow.com/questions/13762228/confused-about-service-vs-factory" target="_blank" rel="external">http://stackoverflow.com/questions/13762228/confused-about-service-vs-factory</a>)</p>
+<h2 id="Well_known_services">Well known services</h2>
+<h3 id="$http_and_$q">$http and $q</h3>
+<p>$http in AngularJS is a core service for reading data from web servers. $http.get(url) is the function to use for reading server data.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</div><div class="line">app.controller(<span class="string">'planetController'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$http</span>)</span> </span>{</div><div class="line">  <span class="variable">$http</span>.get(<span class="string">"http://www.bogotobogo.com/AngularJS/files/httpRequest/planet.json"</span>)</div><div class="line">  .success(<span class="function"><span class="keyword">function</span><span class="params">(response)</span> </span>{<span class="variable">$scope</span>.names = response;});</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<h3 id="$resource">$resource</h3>
+<h3 id="$document">$document</h3>
+<h3 id="$window">$window</h3>
+<h3 id="$timeout_&amp;_$interval">$timeout &amp; $interval</h3>
+<p>(<a href="http://stackoverflow.com/questions/14237070/using-setinterval-in-angularjs-factory" target="_blank" rel="external">http://stackoverflow.com/questions/14237070/using-setinterval-in-angularjs-factory</a>)<br>(<a href="http://tutorials.jenkov.com/angularjs/timeout-interval.html#injecting-interval" target="_blank" rel="external">http://tutorials.jenkov.com/angularjs/timeout-interval.html#injecting-interval</a>)<br>(<a href="http://plnkr.co/edit/?p=preview" target="_blank" rel="external">http://plnkr.co/edit/?p=preview</a>)</p>
+<h3 id="$parse">$parse</h3>
+<h3 id="$cacheFactory">$cacheFactory</h3>
+<h3 id="$filter">$filter</h3>
+<h3 id="$apply">$apply</h3>
+<h3 id="$watch_&amp;_$watchcollection">$watch &amp; $watchcollection</h3>
+<p>(<a href="http://jsfiddle.net/TheSharpieOne/RA2j7/2/" target="_blank" rel="external">http://jsfiddle.net/TheSharpieOne/RA2j7/2/</a>)</p>
 <h2 id="Directive">Directive</h2>
 <h1 id="Simple_program">Simple program</h1>
 <p>I’ve build a simple one-page website using angular-ui and .NET framework.</p>
@@ -89,6 +123,40 @@
       <category term="AngularJS" scheme="http://sunbingjie.tk/tags/AngularJS/"/>
     
       <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Find Median of two Sorted Arrays]]></title>
+    <link href="http://sunbingjie.tk/2015/07/29/7.23/"/>
+    <id>http://sunbingjie.tk/2015/07/29/7.23/</id>
+    <published>2015-07-29T05:13:42.000Z</published>
+    <updated>2015-07-29T05:13:42.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution"><a href="http://www.lifeincode.net/programming/leetcode-median-of-two-sorted-arrays-java/" target="_blank" rel="external">Solution</a></h3>
+<ul>
+<li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
+<li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> B[]) {</div><div class="line">		<span class="keyword">int</span> m = A.length;</div><div class="line">		<span class="keyword">int</span> n = B.length;</div><div class="line">		<span class="keyword">int</span> k = m + n;</div><div class="line">		<span class="keyword">if</span> (k % <span class="number">2</span> != <span class="number">0</span>) {</div><div class="line">			<span class="keyword">return</span> findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> (findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span>) + findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findKth</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> a, <span class="keyword">int</span> B[], <span class="keyword">int</span> b, <span class="keyword">int</span> k) {</div><div class="line">		<span class="comment">//put the shorter array up-front</span></div><div class="line">		<span class="keyword">if</span> (A.length - a &gt; B.length - b) {</div><div class="line">			<span class="keyword">return</span> findKth(B, b, A, a, k);</div><div class="line">		}</div><div class="line">		<span class="comment">//if the short array overflows, just find in B</span></div><div class="line">		<span class="keyword">if</span> (a &gt;= A.length) {</div><div class="line">			<span class="keyword">return</span> B[b + k - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">		<span class="comment">//if k is down to 1, just return the smallest current</span></div><div class="line">		<span class="keyword">if</span> (k == <span class="number">1</span>) {</div><div class="line">			<span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">		}</div><div class="line">		<span class="comment">//compare two medians, cut the smaller parts</span></div><div class="line">		<span class="keyword">int</span> midA = Math.min(k / <span class="number">2</span>, A.length - a);</div><div class="line">		<span class="keyword">int</span> midB = k - midA;</div><div class="line">		<span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &lt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a + midA, B, b, k - midA);</div><div class="line">		} <span class="keyword">else</span> <span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &gt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a, B, b + midB, k - midB);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> A[a + midA - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
