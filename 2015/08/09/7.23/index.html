@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-07-29
+          Posted on 2015-08-09
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/29/7.23/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/29/7.23/"></span>
+            <a href="/2015/08/09/7.23/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/7.23/"></span>
             </a>
           </span>
           
@@ -171,7 +171,7 @@
 <li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
 <li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> B[]) {</div><div class="line">		<span class="keyword">int</span> m = A.length;</div><div class="line">		<span class="keyword">int</span> n = B.length;</div><div class="line">		<span class="keyword">int</span> k = m + n;</div><div class="line">		<span class="keyword">if</span> (k % <span class="number">2</span> != <span class="number">0</span>) {</div><div class="line">			<span class="keyword">return</span> findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> (findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span>) + findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findKth</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> a, <span class="keyword">int</span> B[], <span class="keyword">int</span> b, <span class="keyword">int</span> k) {</div><div class="line">		<span class="comment">//put the shorter array up-front</span></div><div class="line">		<span class="keyword">if</span> (A.length - a &gt; B.length - b) {</div><div class="line">			<span class="keyword">return</span> findKth(B, b, A, a, k);</div><div class="line">		}</div><div class="line">		<span class="comment">//if the short array overflows, just find in B</span></div><div class="line">		<span class="keyword">if</span> (a &gt;= A.length) {</div><div class="line">			<span class="keyword">return</span> B[b + k - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">		<span class="comment">//if k is down to 1, just return the smallest current</span></div><div class="line">		<span class="keyword">if</span> (k == <span class="number">1</span>) {</div><div class="line">			<span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">		}</div><div class="line">		<span class="comment">//compare two medians, cut the smaller parts</span></div><div class="line">		<span class="keyword">int</span> midA = Math.min(k / <span class="number">2</span>, A.length - a);</div><div class="line">		<span class="keyword">int</span> midB = k - midA;</div><div class="line">		<span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &lt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a + midA, B, b, k - midA);</div><div class="line">		} <span class="keyword">else</span> <span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &gt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a, B, b + midB, k - midB);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> A[a + midA - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) {</div><div class="line">     <span class="keyword">int</span> len = nums1.length + nums2.length;</div><div class="line">     <span class="keyword">if</span>(nums1.length == <span class="number">0</span>) <span class="keyword">return</span> len % <span class="number">2</span> == <span class="number">0</span> ? (nums2[len/<span class="number">2</span>] + nums2[len/<span class="number">2</span> - <span class="number">1</span>]) / <span class="number">2.0</span> : nums2[len/<span class="number">2</span>];</div><div class="line">     <span class="keyword">if</span>(nums2.length == <span class="number">0</span>) <span class="keyword">return</span> len % <span class="number">2</span> == <span class="number">0</span> ? (nums1[len/<span class="number">2</span>] + nums1[len/<span class="number">2</span> - <span class="number">1</span>]) / <span class="number">2.0</span> : nums1[len/<span class="number">2</span>];</div><div class="line">     <span class="keyword">if</span>(len % <span class="number">2</span> != <span class="number">0</span>){ <span class="keyword">return</span> findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span> + <span class="number">1</span>);}</div><div class="line">     <span class="keyword">else</span> <span class="keyword">return</span> (findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span>) + findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findkth</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> a, <span class="keyword">int</span>[] B, <span class="keyword">int</span> b, <span class="keyword">int</span> k){</div><div class="line">     <span class="comment">//first, put the shorter array up-front</span></div><div class="line">     <span class="keyword">if</span>(A.length-a &gt; B.length-b) <span class="keyword">return</span> findkth(B, b, A, a, k);</div><div class="line">     <span class="comment">//second, if the smaller array overflows, find the k-1 th in B</span></div><div class="line">     <span class="keyword">if</span>(a &gt;= A.length) <span class="keyword">return</span> B[b+k-<span class="number">1</span>];</div><div class="line">     <span class="comment">//third, if k is down to 1, return the smaller one in current two arrays</span></div><div class="line">     <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">     <span class="comment">//else, compare two medians and cut off the smaller portion</span></div><div class="line">     <span class="keyword">int</span> mida = Math.min(k/<span class="number">2</span>, A.length-a);</div><div class="line">     <span class="keyword">int</span> midb = k - mida;</div><div class="line">     <span class="keyword">if</span>(A[a+mida-<span class="number">1</span>] &lt; B[b+midb-<span class="number">1</span>]){</div><div class="line">         <span class="comment">//if mida is smaller, find k-mida in</span></div><div class="line">         <span class="keyword">return</span> findkth(A , mida+a, B, b, k-mida);</div><div class="line">     }</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(A[a+mida-<span class="number">1</span>] &gt; B[b+midb-<span class="number">1</span>]){</div><div class="line">         <span class="comment">//if mida is bigger, find k-mid</span></div><div class="line">         <span class="keyword">return</span> findkth(A, a, B, midb+b, k-midb);</div><div class="line">     }</div><div class="line">     <span class="keyword">else</span>{</div><div class="line">         <span class="comment">//mida equals to midb, return anyone of them</span></div><div class="line">         <span class="keyword">return</span> A[a+mida-<span class="number">1</span>];</div><div class="line">     }</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
 
 
       
@@ -190,13 +190,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/07/angular/">Learning AngularJS day by day</a>
+              <a href="/2015/08/16/8.15/">Swap Nodes in Pairs</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/07/5.30/">Jump Game, Jump Game II</a>
+              <a href="/2015/08/07/angular/">Learning AngularJS day by day</a>
             
           </div>
         </div>
@@ -257,7 +257,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -889,8 +889,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/07/29/7.23/';
-      var disqus_url = 'http://sunbingjie.tk/2015/07/29/7.23/';
+      var disqus_identifier = '2015/08/09/7.23/';
+      var disqus_url = 'http://sunbingjie.tk/2015/08/09/7.23/';
 
       (function(){
         var dsq = document.createElement('script');

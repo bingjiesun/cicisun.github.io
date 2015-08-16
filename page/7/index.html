@@ -120,6 +120,184 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/1.24/">
+                Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Valid Parentheses, Valid Sudoku, Word Ladder, Word Ladder II
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.24/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.24/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Plus_One">Plus One</h2>
+<blockquote>
+<p>Given a non-negative number represented as an array of digits, plus one to the number.<br>The digits are stored such that the most significant digit is at the head of the list.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Just find the last 9…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">plusOne</span>(<span class="keyword">int</span>[] digits) {</div><div class="line">          <span class="keyword">int</span> i=digits.length-<span class="number">1</span>;</div><div class="line">          <span class="keyword">for</span>(;i&gt;=<span class="number">0</span>;i--){</div><div class="line">              <span class="keyword">if</span>(digits[i]!=<span class="number">9</span>) <span class="keyword">break</span>;</div><div class="line">          }</div><div class="line">            </div><div class="line">          <span class="keyword">if</span>(i==-<span class="number">1</span>){</div><div class="line">              <span class="keyword">int</span>[] res=<span class="keyword">new</span> <span class="keyword">int</span>[digits.length+<span class="number">1</span>];</div><div class="line">                      res[<span class="number">0</span>]=<span class="number">1</span>;</div><div class="line">                      <span class="keyword">return</span> res;</div><div class="line">          }   </div><div class="line">           </div><div class="line">          <span class="keyword">else</span>{</div><div class="line">             <span class="keyword">int</span>[] res=<span class="keyword">new</span> <span class="keyword">int</span>[digits.length];</div><div class="line">             <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=i;j++){</div><div class="line">                 res[j]=digits[j];</div><div class="line">             }</div><div class="line">             res[i]+=<span class="number">1</span>;</div><div class="line">             <span class="keyword">return</span> res;</div><div class="line">          } </div><div class="line"> </div><div class="line">      }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Largest_Number">Largest Number</h2>
+<blockquote>
+<p>Given a list of non negative integers, arrange them such that they form the largest number.<br>For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.<br>Note: The result may be very large, so you need to return a string instead of an integer.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Rewirte comparator (to desc), sort and add.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">StringComparator</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">String</span>&gt; </span>{</div><div class="line">       <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span>(String x, String y) {</div><div class="line">           <span class="keyword">if</span> (x.equals(y)) <span class="keyword">return</span> <span class="number">0</span>;            </div><div class="line">           <span class="keyword">return</span> -(x+y).compareTo(y+x);</div><div class="line">       }</div><div class="line">   }</div><div class="line"><span class="keyword">public</span> String <span class="title">largestNumber</span>(<span class="keyword">int</span>[] num){</div><div class="line">  String[] nums = <span class="keyword">new</span> String[num.length];</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span> ;i&lt;num.length;i++){</div><div class="line">    nums[i]=String.valueOf(num[i]);</div><div class="line">  }</div><div class="line">  Comparator&lt;String&gt; comparator = <span class="keyword">new</span> StringComparator();</div><div class="line">  Arrays.sort(nums,comparator);</div><div class="line">  StringBuilder str = <span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">for</span>(String n:nums){</div><div class="line">    str.append(n);</div><div class="line">  }</div><div class="line">  <span class="keyword">return</span> str.charAt(<span class="number">0</span>)==<span class="string">'0'</span>?<span class="string">"0"</span>:str.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Pow(x,_n)">Pow(x, n)</h2>
+<blockquote>
+<p>Implement pow(x, n).</p>
+</blockquote>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">pow</span>(<span class="keyword">double</span> x, <span class="keyword">int</span> n) {</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(n&lt;<span class="number">0</span>)</div><div class="line">    {</div><div class="line">        n=-n;</div><div class="line">        x=<span class="number">1</span>/x;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> n%<span class="number">2</span>==<span class="number">0</span> ? pow(x*x,n/<span class="number">2</span>) : x*pow(x*x,n/<span class="number">2</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Sqrt(x)">Sqrt(x)</h2>
+<blockquote>
+<p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
+</blockquote>
+<h3 id="Solution-2"><a href="http://www.cnblogs.com/pkuoliver/archive/2010/10/06/1844725.html" target="_blank" rel="external">Solution</a></h3>
+<p>Beware of overflow problems…<br>mid*mid could overflow, instead of using long, compare mid with x/mid<br>but now we have to treat 0 and 1 as special cases…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sqrt</span>(<span class="keyword">int</span> x) {     </div><div class="line">       <span class="keyword">int</span> l=<span class="number">0</span>,r=x;</div><div class="line">       <span class="keyword">if</span>(x==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       <span class="keyword">if</span>(x==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">       <span class="keyword">while</span>(l&lt;=r){</div><div class="line">        <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(x/mid==mid) <span class="keyword">return</span> mid;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(mid&gt;x/mid){r=mid-<span class="number">1</span>;}</div><div class="line">        <span class="keyword">else</span> {l=mid+<span class="number">1</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> r;      </div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Min_Stack">Min Stack</h2>
+<blockquote>
+<p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.<br>push(x) — Push element x onto stack.<br>pop() — Removes the element on top of the stack.<br>top() — Get the top element.<br>getMin() — Retrieve the minimum element in the stack.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<p>Just use an extra stack to keep track of the min values…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Stack&lt;Integer&gt; stk=<span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">   Stack&lt;Integer&gt; minstk=<span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">   </div><div class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span>(<span class="keyword">int</span> x) {</div><div class="line">       stk.push(x);</div><div class="line">       <span class="keyword">if</span>(minstk.isEmpty() || x&lt;=minstk.peek()){minstk.push(x);}</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span>() {</div><div class="line">    <span class="keyword">if</span>(stk.isEmpty()) <span class="keyword">return</span>;     </div><div class="line">       <span class="keyword">int</span> tmp=stk.pop();</div><div class="line">       <span class="keyword">if</span>(!minstk.isEmpty() && tmp==minstk.peek()){minstk.pop();}</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span>() {</div><div class="line">    <span class="keyword">if</span>(stk.isEmpty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> stk.peek();</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMin</span>() {</div><div class="line">       <span class="keyword">if</span>(!minstk.isEmpty()) <span class="keyword">return</span> minstk.peek();</div><div class="line">       <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Valid_Parentheses">Valid Parentheses</h2>
+<blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<p>Just use a stack, push when empty, or left parenthese found; pop when found a match.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span>(String s) {</div><div class="line">    Stack&lt;Character&gt; stk=<span class="keyword">new</span> Stack&lt;Character&gt;();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">        Character tmp=s.charAt(i);</div><div class="line">        <span class="keyword">if</span>(stk.isEmpty() && (tmp==<span class="string">')'</span> || tmp==<span class="string">']'</span> || tmp==<span class="string">'}'</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">if</span>(!stk.isEmpty() && isMatch(stk.peek(), tmp)) </div><div class="line">            stk.pop();</div><div class="line">        <span class="keyword">else</span> stk.push(tmp);</div><div class="line">    } <span class="keyword">return</span> stk.isEmpty();</div><div class="line">}</div><div class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(Character a, Character b){</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'('</span> && b==<span class="string">')'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'['</span> && b==<span class="string">']'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'{'</span> && b==<span class="string">'}'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Valid_Sudoku">Valid Sudoku</h2>
+<blockquote>
+<p>Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.<br>The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="pic"><br>A partially filled sudoku which is valid.<br>Note:<br>A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.</p>
+</blockquote>
+<h3 id="Solution-4">Solution</h3>
+<p>Three HashSets, return false when add failure.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidSudoku</span>(<span class="keyword">char</span>[][] board) {</div><div class="line">    <span class="keyword">int</span> len=board[<span class="number">0</span>].length;</div><div class="line">    <span class="comment">//column</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len;i++){</div><div class="line">        HashSet&lt;Character&gt; col=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span> ;j&lt;len;j++){</div><div class="line">        <span class="keyword">if</span>(board[j][i]!=<span class="string">'.'</span> && !col.add(board[j][i])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    }</div><div class="line">    <span class="comment">//row</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len;i++){</div><div class="line">        HashSet&lt;Character&gt; row=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span> ;j&lt;len;j++){</div><div class="line">        <span class="keyword">if</span>(board[i][j]!=<span class="string">'.'</span> && !row.add(board[i][j])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    }</div><div class="line">    <span class="comment">//tuple</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">3</span>;j++){</div><div class="line">            HashSet&lt;Character&gt; tup=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> m=i*<span class="number">3</span>;m&lt;<span class="number">3</span>+i*<span class="number">3</span>;m++){</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> n=j*<span class="number">3</span>;n&lt;<span class="number">3</span>+j*<span class="number">3</span>;n++){</div><div class="line">                    <span class="keyword">if</span>(board[m][n]!=<span class="string">'.'</span> && !tup.add(board[m][n])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Ladder">Word Ladder</h2>
+<blockquote>
+<p>Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:<br>Only one letter can be changed at a time<br>Each intermediate word must exist in the dictionary<br>For example,<br>Given:<br>start = “hit”<br>end = “cog”<br>dict = [“hot”,”dot”,”dog”,”lot”,”log”]<br>As one shortest transformation is “hit” -&gt; “hot” -&gt; “dot” -&gt; “dog” -&gt; “cog”,<br>return its length 5.<br>Note:<br>Return 0 if there is no such transformation sequence.<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.</p>
+</blockquote>
+<h3 id="BFS_Search_Solution">BFS Search Solution</h3>
+<p>Naive approach might not give the shortest length, this problem is equavlent to finding the shortes path between start and end characters, in a graph where chars in dict are vertexes and vertexes with one char difference are connected.</p>
+<p>Few more details to attend to:</p>
+<p>length should start at 1, and return length+1<br>queue.size() and q.poll() is changing within each loop, so keep track of them</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ladderLength</span>(String start, String end, HashSet&lt;String&gt; dict) {</div><div class="line">    LinkedList&lt;String&gt; q=<span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">    <span class="keyword">if</span>(start==<span class="keyword">null</span> || end==<span class="keyword">null</span> || dict==<span class="keyword">null</span> || dict.size()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> length=<span class="number">1</span>;</div><div class="line">    q.offer(start);</div><div class="line">    dict.remove(start);</div><div class="line">    <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">        <span class="keyword">int</span> count_level=q.size();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;count_level;i++){</div><div class="line">            String cur=q.poll();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;cur.length();j++){</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>; c&lt;=<span class="string">'z'</span>;c++){</div><div class="line">                    String tmp=reorg(cur, j, c);</div><div class="line">                    <span class="keyword">if</span>(tmp.equals(end)) <span class="keyword">return</span> length+<span class="number">1</span>;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(dict.contains(tmp)){dict.remove(tmp); q.offer(tmp);}</div><div class="line">                } </div><div class="line">            }</div><div class="line">        } length++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> String <span class="title">reorg</span>(String s, <span class="keyword">int</span> i, <span class="keyword">char</span> c)</div><div class="line">{</div><div class="line">    <span class="keyword">char</span>[] tmparr=s.toCharArray();</div><div class="line">    tmparr[i]=c;</div><div class="line">    String res=<span class="keyword">new</span> String(tmparr);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Ladder_II">Word Ladder II</h2>
+<blockquote>
+<p>Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:<br>Only one letter can be changed at a time<br>Each intermediate word must exist in the dictionary<br>For example,<br>Given:<br>start = “hit”<br>end = “cog”<br>dict = [“hot”,”dot”,”dog”,”lot”,”log”]<br>Return</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="string">"hit"</span>,<span class="string">"hot"</span>,<span class="string">"dot"</span>,<span class="string">"dog"</span>,<span class="string">"cog"</span>],</div><div class="line">  [<span class="string">"hit"</span>,<span class="string">"hot"</span>,<span class="string">"lot"</span>,<span class="string">"log"</span>,<span class="string">"cog"</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>Note:<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.</p>
+<p>人家的解法都看晕了…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</div><div class="line">    <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;String&gt;&gt; <span class="title">findLadders</span>(String start, String end, HashSet&lt;String&gt; dict) {</div><div class="line">        </div><div class="line">        <span class="comment">// Start typing your Java solution below</span></div><div class="line">        <span class="comment">// DO NOT write main() function              </span></div><div class="line">        </div><div class="line">        HashMap&lt;String, HashSet&lt;String&gt;&gt; neighbours = <span class="keyword">new</span> HashMap&lt;String, HashSet&lt;String&gt;&gt;();</div><div class="line">        </div><div class="line">        dict.add(start);</div><div class="line">        dict.add(end);</div><div class="line">        </div><div class="line">        <span class="comment">// init adjacent graph        </span></div><div class="line">        <span class="keyword">for</span>(String str : dict){</div><div class="line">            calcNeighbours(neighbours, str, dict);</div><div class="line">        }</div><div class="line">        </div><div class="line">        ArrayList&lt;ArrayList&lt;String&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;String&gt;&gt;();</div><div class="line">        </div><div class="line">        <span class="comment">// BFS search queue</span></div><div class="line">        LinkedList&lt;Node&gt; queue = <span class="keyword">new</span> LinkedList&lt;Node&gt;();</div><div class="line">        queue.add(<span class="keyword">new</span> Node(<span class="keyword">null</span>, start, <span class="number">1</span>));</div><div class="line">        </div><div class="line">        <span class="comment">// BFS level</span></div><div class="line">        <span class="keyword">int</span> previousLevel = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="comment">// mark which nodes have been visited, to break infinite loop</span></div><div class="line">        HashMap&lt;String, Integer&gt; visited = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;(); </div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty()){</div><div class="line">            Node n = queue.pollFirst();            </div><div class="line">            <span class="keyword">if</span>(end.equals(n.str)){ </div><div class="line">                <span class="comment">// fine one path, check its length, if longer than previous path it's valid</span></div><div class="line">                <span class="comment">// otherwise all possible short path have been found, should stop</span></div><div class="line">                <span class="keyword">if</span>(previousLevel == <span class="number">0</span> || n.level == previousLevel){</div><div class="line">                    previousLevel = n.level;</div><div class="line">                    findPath(n, result);                    </div><div class="line">                }<span class="keyword">else</span> {</div><div class="line">                    <span class="comment">// all path with length *previousLevel* have been found</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                }                </div><div class="line">            }<span class="keyword">else</span> {</div><div class="line">                HashSet&lt;String&gt; set = neighbours.get(n.str);                 </div><div class="line">                </div><div class="line">                <span class="keyword">if</span>(set == <span class="keyword">null</span> || set.isEmpty()) <span class="keyword">continue</span>;</div><div class="line">                <span class="comment">// note: I'm not using simple for(String s: set) here. This is to avoid hashset's</span></div><div class="line">                <span class="comment">// current modification exception.</span></div><div class="line">                ArrayList&lt;String&gt; toRemove = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">                <span class="keyword">for</span> (String s : set) {</div><div class="line">                    </div><div class="line">                    <span class="comment">// if s has been visited before at a smaller level, there is already a shorter </span></div><div class="line">                    <span class="comment">// path from start to s thus we should ignore s so as to break infinite loop; if </span></div><div class="line">                    <span class="comment">// on the same level, we still need to put it into queue.</span></div><div class="line">                    <span class="keyword">if</span>(visited.containsKey(s)){</div><div class="line">                        Integer occurLevel = visited.get(s);</div><div class="line">                        <span class="keyword">if</span>(n.level+<span class="number">1</span> &gt; occurLevel){</div><div class="line">                            neighbours.get(s).remove(n.str);</div><div class="line">                            toRemove.add(s);</div><div class="line">                            <span class="keyword">continue</span>;</div><div class="line">                        }</div><div class="line">                    }</div><div class="line">                    visited.put(s,  n.level+<span class="number">1</span>);</div><div class="line">                    queue.add(<span class="keyword">new</span> Node(n, s, n.level + <span class="number">1</span>));</div><div class="line">                    <span class="keyword">if</span>(neighbours.containsKey(s))</div><div class="line">                        neighbours.get(s).remove(n.str);</div><div class="line">                }</div><div class="line">                <span class="keyword">for</span>(String s: toRemove){</div><div class="line">                    set.remove(s);</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findPath</span>(Node n, ArrayList&lt;ArrayList&lt;String&gt;&gt; result){</div><div class="line">        ArrayList&lt;String&gt; path = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        Node p = n;</div><div class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>){</div><div class="line">            path.add(<span class="number">0</span>, p.str);</div><div class="line">            p = p.parent; </div><div class="line">        }</div><div class="line">        result.add(path);</div><div class="line">    }</div><div class="line">    <span class="comment">/*</span></div><div class="line">     * complexity: O(26*str.length*dict.size)=O(L*N)</div><div class="line">     */</div><div class="line">    <span class="keyword">void</span> calcNeighbours(HashMap&lt;String, HashSet&lt;String&gt;&gt; neighbours, String str, HashSet&lt;String&gt; dict) {</div><div class="line">        <span class="keyword">int</span> length = str.length();</div><div class="line">        <span class="keyword">char</span> [] chars = str.toCharArray();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) {</div><div class="line">            </div><div class="line">            <span class="keyword">char</span> old = chars[i]; </div><div class="line">            <span class="keyword">for</span> (<span class="keyword">char</span> c = <span class="string">'a'</span>; c &lt;= <span class="string">'z'</span>; c++) {</div><div class="line">                <span class="keyword">if</span> (c == old)  <span class="keyword">continue</span>;</div><div class="line">                chars[i] = c;</div><div class="line">                String newstr = <span class="keyword">new</span> String(chars);                </div><div class="line">                </div><div class="line">                <span class="keyword">if</span> (dict.contains(newstr)) {</div><div class="line">                    HashSet&lt;String&gt; set = neighbours.get(str);</div><div class="line">                    <span class="keyword">if</span> (set != <span class="keyword">null</span>) {</div><div class="line">                        set.add(newstr);</div><div class="line">                    } <span class="keyword">else</span> {</div><div class="line">                        HashSet&lt;String&gt; newset = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">                        newset.add(newstr);</div><div class="line">                        neighbours.put(str, newset);</div><div class="line">                    }</div><div class="line">                }                </div><div class="line">            }</div><div class="line">            chars[i] = old;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>{</div><div class="line">        <span class="keyword">public</span> Node parent;</div><div class="line">        <span class="keyword">public</span> String str;</div><div class="line">        <span class="keyword">public</span> <span class="keyword">int</span> level;</div><div class="line">        <span class="keyword">public</span> <span class="title">Node</span>(Node p, String s, <span class="keyword">int</span> l){</div><div class="line">            parent = p;</div><div class="line">            str = s;</div><div class="line">            level = l;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fsnow-man-4%2Fthe-xx-intro-themmmixx-long&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/String/"> #String </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/1.23/">
                 Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree
               </a>
@@ -709,117 +887,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.2－2/">
-                First Missing Positive, Sort Colors
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.2－2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.2－2/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="First_Missing_Positive">First Missing Positive</h2>
-<blockquote>
-<p>Given an unsorted integer array, find the first missing positive integer.<br>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.<br>Your algorithm should run in O(n) time and uses constant space.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>First solution I thought of is simply sort the array, then find the fist missing positive by comparing each positive element with index. However, even though this passed the OJ, it’s still O(logn) time.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstMissingPositive</span>(<span class="keyword">int</span> A[]) {</div><div class="line">    <span class="keyword">int</span> n= A.length;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> index=<span class="number">0</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    Arrays.sort(A);</div><div class="line">    <span class="keyword">while</span>(i&lt;n && A[i]&lt;=<span class="number">0</span>) i++;</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span>&&A[i]==A[i-<span class="number">1</span>]) <span class="keyword">continue</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(A[i]-index!=<span class="number">1</span>) <span class="keyword">return</span> index+<span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span> index=A[i];</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> index+<span class="number">1</span>;  </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Second solution sorts every number corresponding with index, index i holds number i+1, if i+1 is not in the array then we return the smallest mismatch. The runtime is O(n).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstMissingPositive</span>(<span class="keyword">int</span> A[]) {</div><div class="line">    <span class="keyword">int</span> n= A.length;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> tmp=<span class="number">0</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">while</span>(i&lt;n){</div><div class="line">        <span class="keyword">if</span>(A[i]&gt;<span class="number">0</span> && A[i]&lt;n && A[i]!=A[A[i]-<span class="number">1</span>])</div><div class="line">        {</div><div class="line">            tmp=A[A[i]-<span class="number">1</span>];</div><div class="line">            A[A[i]-<span class="number">1</span>]=A[i];</div><div class="line">            A[i]=tmp;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> i++;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(A[i]!=i+<span class="number">1</span>) <span class="keyword">return</span> i+<span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> n+<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Sort_Colors">Sort Colors</h2>
-<blockquote>
-<p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.<br>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.<br>Note:<br>You are not suppose to use the library’s sort function for this problem.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>First solution is counting sort, two pass algorithm.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span>(<span class="keyword">int</span>[] A) {     </div><div class="line">      <span class="keyword">int</span> n=A.length;</div><div class="line">      <span class="keyword">int</span>[] B=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">        B[A[i]]++;</div><div class="line">      }</div><div class="line">      <span class="keyword">int</span> p=<span class="number">0</span>;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;B.length;j++){</div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;B[j];k++)</div><div class="line">              A[p++]=j;</div><div class="line">      }          </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>Second Solution is one pass three way partition, using three pointers: pr for the first not red, pb for first not blue and i for current.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       </div><div class="line">       <span class="keyword">int</span> n=A.length;</div><div class="line">       <span class="keyword">int</span> pr=<span class="number">0</span>,pb=n-<span class="number">1</span>,i=<span class="number">0</span>;</div><div class="line">       <span class="keyword">while</span>(pr&lt;n&&A[pr]==<span class="number">0</span>) pr++;</div><div class="line">       <span class="keyword">while</span>(pb&gt;<span class="number">0</span>&&A[pb]==<span class="number">2</span>) pb--;</div><div class="line">       i=pr;</div><div class="line">       <span class="keyword">while</span>(i&lt;=pb){</div><div class="line">           </div><div class="line">           <span class="keyword">if</span>(A[i]==<span class="number">0</span>) {swap(A,i,pr); pr++;}</div><div class="line">           <span class="keyword">if</span>(A[i]==<span class="number">2</span>) {swap(A,i,pb); pb--;}</div><div class="line">           <span class="keyword">else</span> i++;</div><div class="line">       }</div><div class="line">         </div><div class="line">     }</div><div class="line">   </div><div class="line">   <span class="keyword">void</span> swap(<span class="keyword">int</span>[] A,<span class="keyword">int</span> a, <span class="keyword">int</span> b){</div><div class="line">       <span class="keyword">int</span> tmp=A[a];</div><div class="line">       A[a]=A[b];</div><div class="line">       A[b]=tmp;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Ffoundations%2F06-sleepyhead&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Sort/"> #Sort </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -860,7 +927,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

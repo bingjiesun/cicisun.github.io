@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-08-08T02:23:02.467Z</updated>
+  <updated>2015-08-16T21:43:39.804Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,75 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Swap Nodes in Pairs]]></title>
+    <link href="http://sunbingjie.tk/2015/08/16/8.15/"/>
+    <id>http://sunbingjie.tk/2015/08/16/8.15/</id>
+    <published>2015-08-16T21:43:29.000Z</published>
+    <updated>2015-08-16T21:43:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
+<blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution_In-Place">Solution In-Place</h3>
+<ul>
+<li>Use a dummyhead to avoid dealin with null cases, as usual</li>
+<li>Keep track of the first node in next pair</li>
+<li>Termination conditions: take care of odd and even node number cases</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">swapPairs</span>(ListNode head) {</div><div class="line">	ListNode dummyhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	dummyhead.next = head; <span class="comment">//use dummyhead to deal with null case</span></div><div class="line">	ListNode first = dummyhead;</div><div class="line">	ListNode second =head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(second!=<span class="keyword">null</span> && second.next!=<span class="keyword">null</span>){<span class="comment">//when second is null (odd), or second next is null(even)</span></div><div class="line">	ListNode tmp = second.next.next; <span class="comment">//record next start</span></div><div class="line">	second.next.next = second; <span class="comment">//reverse</span></div><div class="line">	first.next = second.next; <span class="comment">// link to second</span></div><div class="line">	second.next = tmp; <span class="comment">// link to next start</span></div><div class="line">	first=second; <span class="comment">// move to next</span></div><div class="line">	second = second.next; <span class="comment">//move to next</span></div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dummyhead.next;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
+<blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="LinkedList" scheme="http://sunbingjie.tk/tags/LinkedList/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Find Median of two Sorted Arrays]]></title>
+    <link href="http://sunbingjie.tk/2015/08/09/7.23/"/>
+    <id>http://sunbingjie.tk/2015/08/09/7.23/</id>
+    <published>2015-08-09T22:17:48.000Z</published>
+    <updated>2015-08-09T22:17:48.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution"><a href="http://www.lifeincode.net/programming/leetcode-median-of-two-sorted-arrays-java/" target="_blank" rel="external">Solution</a></h3>
+<ul>
+<li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
+<li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) {</div><div class="line">     <span class="keyword">int</span> len = nums1.length + nums2.length;</div><div class="line">     <span class="keyword">if</span>(nums1.length == <span class="number">0</span>) <span class="keyword">return</span> len % <span class="number">2</span> == <span class="number">0</span> ? (nums2[len/<span class="number">2</span>] + nums2[len/<span class="number">2</span> - <span class="number">1</span>]) / <span class="number">2.0</span> : nums2[len/<span class="number">2</span>];</div><div class="line">     <span class="keyword">if</span>(nums2.length == <span class="number">0</span>) <span class="keyword">return</span> len % <span class="number">2</span> == <span class="number">0</span> ? (nums1[len/<span class="number">2</span>] + nums1[len/<span class="number">2</span> - <span class="number">1</span>]) / <span class="number">2.0</span> : nums1[len/<span class="number">2</span>];</div><div class="line">     <span class="keyword">if</span>(len % <span class="number">2</span> != <span class="number">0</span>){ <span class="keyword">return</span> findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span> + <span class="number">1</span>);}</div><div class="line">     <span class="keyword">else</span> <span class="keyword">return</span> (findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span>) + findkth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, len/<span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findkth</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> a, <span class="keyword">int</span>[] B, <span class="keyword">int</span> b, <span class="keyword">int</span> k){</div><div class="line">     <span class="comment">//first, put the shorter array up-front</span></div><div class="line">     <span class="keyword">if</span>(A.length-a &gt; B.length-b) <span class="keyword">return</span> findkth(B, b, A, a, k);</div><div class="line">     <span class="comment">//second, if the smaller array overflows, find the k-1 th in B</span></div><div class="line">     <span class="keyword">if</span>(a &gt;= A.length) <span class="keyword">return</span> B[b+k-<span class="number">1</span>];</div><div class="line">     <span class="comment">//third, if k is down to 1, return the smaller one in current two arrays</span></div><div class="line">     <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">     <span class="comment">//else, compare two medians and cut off the smaller portion</span></div><div class="line">     <span class="keyword">int</span> mida = Math.min(k/<span class="number">2</span>, A.length-a);</div><div class="line">     <span class="keyword">int</span> midb = k - mida;</div><div class="line">     <span class="keyword">if</span>(A[a+mida-<span class="number">1</span>] &lt; B[b+midb-<span class="number">1</span>]){</div><div class="line">         <span class="comment">//if mida is smaller, find k-mida in</span></div><div class="line">         <span class="keyword">return</span> findkth(A , mida+a, B, b, k-mida);</div><div class="line">     }</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(A[a+mida-<span class="number">1</span>] &gt; B[b+midb-<span class="number">1</span>]){</div><div class="line">         <span class="comment">//if mida is bigger, find k-mid</span></div><div class="line">         <span class="keyword">return</span> findkth(A, a, B, midb+b, k-midb);</div><div class="line">     }</div><div class="line">     <span class="keyword">else</span>{</div><div class="line">         <span class="comment">//mida equals to midb, return anyone of them</span></div><div class="line">         <span class="keyword">return</span> A[a+mida-<span class="number">1</span>];</div><div class="line">     }</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Learning AngularJS day by day]]></title>
@@ -123,40 +192,6 @@
       <category term="AngularJS" scheme="http://sunbingjie.tk/tags/AngularJS/"/>
     
       <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Find Median of two Sorted Arrays]]></title>
-    <link href="http://sunbingjie.tk/2015/07/29/7.23/"/>
-    <id>http://sunbingjie.tk/2015/07/29/7.23/</id>
-    <published>2015-07-29T05:13:42.000Z</published>
-    <updated>2015-07-29T05:13:42.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
-<blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="Solution"><a href="http://www.lifeincode.net/programming/leetcode-median-of-two-sorted-arrays-java/" target="_blank" rel="external">Solution</a></h3>
-<ul>
-<li>O(n+m) solution is easy to think of, just use merge sort and find kth smallest element</li>
-<li>Similar to binary search, we compare the median of two arrays each time and cut off the smaller, therefore safer, portion of that array, until we find the kth smallest element</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> B[]) {</div><div class="line">		<span class="keyword">int</span> m = A.length;</div><div class="line">		<span class="keyword">int</span> n = B.length;</div><div class="line">		<span class="keyword">int</span> k = m + n;</div><div class="line">		<span class="keyword">if</span> (k % <span class="number">2</span> != <span class="number">0</span>) {</div><div class="line">			<span class="keyword">return</span> findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> (findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span>) + findKth(A, <span class="number">0</span>, B, <span class="number">0</span>, k / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findKth</span>(<span class="keyword">int</span> A[], <span class="keyword">int</span> a, <span class="keyword">int</span> B[], <span class="keyword">int</span> b, <span class="keyword">int</span> k) {</div><div class="line">		<span class="comment">//put the shorter array up-front</span></div><div class="line">		<span class="keyword">if</span> (A.length - a &gt; B.length - b) {</div><div class="line">			<span class="keyword">return</span> findKth(B, b, A, a, k);</div><div class="line">		}</div><div class="line">		<span class="comment">//if the short array overflows, just find in B</span></div><div class="line">		<span class="keyword">if</span> (a &gt;= A.length) {</div><div class="line">			<span class="keyword">return</span> B[b + k - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">		<span class="comment">//if k is down to 1, just return the smallest current</span></div><div class="line">		<span class="keyword">if</span> (k == <span class="number">1</span>) {</div><div class="line">			<span class="keyword">return</span> Math.min(A[a], B[b]);</div><div class="line">		}</div><div class="line">		<span class="comment">//compare two medians, cut the smaller parts</span></div><div class="line">		<span class="keyword">int</span> midA = Math.min(k / <span class="number">2</span>, A.length - a);</div><div class="line">		<span class="keyword">int</span> midB = k - midA;</div><div class="line">		<span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &lt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a + midA, B, b, k - midA);</div><div class="line">		} <span class="keyword">else</span> <span class="keyword">if</span> (A[a + midA - <span class="number">1</span>] &gt; B[b + midB - <span class="number">1</span>]) {</div><div class="line">			<span class="keyword">return</span> findKth(A, a, B, b + midB, k - midB);</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">			<span class="keyword">return</span> A[a + midA - <span class="number">1</span>];</div><div class="line">		}</div><div class="line">	}</div></pre></td></tr></table></figure>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
-<blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-</blockquote>
-]]>
-    
-    </summary>
-    
-      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
@@ -2281,29 +2316,6 @@
       <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
     
       <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Shortest word in Dictionary]]></title>
-    <link href="http://sunbingjie.tk/2015/02/27/1.3/"/>
-    <id>http://sunbingjie.tk/2015/02/27/1.3/</id>
-    <published>2015-02-27T09:56:12.000Z</published>
-    <updated>2015-02-27T09:56:12.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>有一个输入字符，然后我有一个英文字典，说白了就是字符串数组，然后写一个function返回字典里拥有输入字符串里所有字母(非数字或者空格等符号，就是纯字母)的最短的那个字符串。举个例子：<br>输入字符串”SR 456 T”，字符串数组里有”SORT”，而且是最短的，那么就返回它</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShortestDict</span> </span>{</div><div class="line"></div><div class="line">	<span class="keyword">private</span> List&lt;String&gt; wordList;</div><div class="line">	<span class="keyword">private</span> List&lt;Integer&gt; maskList;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="title">ShortestDict</span>(String[] words) {</div><div class="line">		wordList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		maskList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		<span class="comment">//rewrite comparator to compare string length</span></div><div class="line">		Arrays.sort(words, <span class="keyword">new</span> Comparator&lt;String&gt;(){</div><div class="line">			<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span>(String s1, String s2) {</div><div class="line">				<span class="keyword">return</span> s1.length() - s2.length();</div><div class="line">			}</div><div class="line">		});</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (String word : words) {</div><div class="line">			wordList.add(word);</div><div class="line">			maskList.add(getMask(word));</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> String <span class="title">getShortest</span>(String inputWord) {</div><div class="line">		<span class="keyword">int</span> inputMask = getMask(inputWord);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maskList.size(); i++) {</div><div class="line">			<span class="keyword">if</span> (inputMask == (inputMask & maskList.get(i))) {</div><div class="line">				<span class="keyword">return</span> wordList.get(i);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMask</span>(String word) { </div><div class="line">		<span class="keyword">int</span> mask = <span class="number">0</span>;</div><div class="line">		word = word.toLowerCase();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c : word.toCharArray()) {</div><div class="line">			<span class="keyword">if</span> (<span class="string">'a'</span> &lt;= c && c &lt;= <span class="string">'z'</span>) {</div><div class="line">				mask |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</div><div class="line">			} </div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> mask;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">		String[] words = <span class="keyword">new</span> String[]{<span class="string">"so99ort"</span>, <span class="string">"so1rt"</span>, <span class="string">"skype"</span>, <span class="string">"so11rt"</span>, <span class="string">"apppples"</span>};</div><div class="line">		ShortestDict d = <span class="keyword">new</span> ShortestDict(words);</div><div class="line">		System.out.println(d.getShortest(<span class="string">"SR 456 T"</span>));</div><div class="line"></div><div class="line">	} </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fitsdimmi%2Fet-voila-dimmi&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p>有一个输入字符，然后我有一个英文字典，说白了就是字符串数组，然后写一个function返回字典里拥有输入字符串里所有字母(非数字或者空格等符号，就是纯字母)的最短的那个字符串。举个例子：<br>输入字符串”SR 456 T”，字符串数组里有”SOR]]>
-    </summary>
-    
-      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
     
   </entry>
   

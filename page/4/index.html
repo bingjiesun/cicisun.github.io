@@ -120,6 +120,114 @@
           
           
             
+              <a class="post-title-link" href="/2015/03/24/3.19/">
+                Unique Combination of Factors, Factorial Trailing Zeroes
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-03-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/24/3.19/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/24/3.19/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Unique_Combination_of_Factors">Unique Combination of Factors</h2>
+<blockquote>
+<p>Print all unique combinations of factors of a positive integer. For example given 24:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">24<span class="keyword">*</span>1</div><div class="line">12<span class="keyword">*</span>2</div><div class="line">8<span class="keyword">*</span>3</div><div class="line">6<span class="keyword">*</span>4</div><div class="line">6<span class="keyword">*</span>2<span class="keyword">*</span>2</div><div class="line">4<span class="keyword">*</span>3<span class="keyword">*</span>2</div><div class="line">3<span class="keyword">*</span>2<span class="keyword">*</span>2<span class="keyword">*</span>2</div></pre></td></tr></table></figure>
+
+<h3 id="Solution">Solution</h3>
+<p>Reverse DFS all possible division combinations. Keep track of current dividend, try all divisors. Use backtracking to gather all all possible division combinations.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">     24</div><div class="line">  /   |  <span class="command">\</span></div><div class="line"> 1    6    24</div><div class="line">/ <span class="command">\ </span>/ | <span class="command">\ </span> / <span class="command">\</span></div><div class="line">....  2  4 ....</div><div class="line">	   |</div><div class="line">	  / <span class="command">\</span></div><div class="line">    1   2</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">factorCombinations</span>(<span class="keyword">int</span> n){</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; first=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		first.add(n);first.add(<span class="number">1</span>);</div><div class="line">		res.add(first);</div><div class="line">		res=dfs(res, n, n/<span class="number">2</span>, tmp);</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">dfs</span>(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, <span class="keyword">int</span> Curdividend, <span class="keyword">int</span> Largestdivisor, ArrayList&lt;Integer&gt; tmp){</div><div class="line">		<span class="keyword">if</span>(Curdividend==<span class="number">1</span>){</div><div class="line">			res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=Largestdivisor; i&gt;<span class="number">1</span>;i--){</div><div class="line">			<span class="keyword">if</span>(Curdividend%i==<span class="number">0</span>){</div><div class="line">				tmp.add(i);</div><div class="line">				dfs(res,Curdividend/i, i,tmp);</div><div class="line">				tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<h2 id="Factorial_Trailing_Zeroes">Factorial Trailing Zeroes</h2>
+<blockquote>
+<p>Given an integer n, return the number of trailing zeroes in n!.</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trailingZeroes</span>(<span class="keyword">int</span> n) {</div><div class="line">       <span class="keyword">if</span>(n&lt;<span class="number">5</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       <span class="keyword">int</span> count_of_five=<span class="number">0</span>;</div><div class="line">       <span class="keyword">while</span>(n&gt;<span class="number">1</span>){</div><div class="line">           n=n/<span class="number">5</span>;</div><div class="line">           count_of_five+=n;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> count_of_five;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+
+
+
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flevvis%2Flewis-watson-into-the-wild-the%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/03/20/3.19.3/">
                 Stack and Heap
               </a>
@@ -1459,84 +1567,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/27/1.3/">
-                Shortest word in Dictionary
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-27
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/27/1.3/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/27/1.3/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>有一个输入字符，然后我有一个英文字典，说白了就是字符串数组，然后写一个function返回字典里拥有输入字符串里所有字母(非数字或者空格等符号，就是纯字母)的最短的那个字符串。举个例子：<br>输入字符串”SR 456 T”，字符串数组里有”SORT”，而且是最短的，那么就返回它</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShortestDict</span> </span>{</div><div class="line"></div><div class="line">	<span class="keyword">private</span> List&lt;String&gt; wordList;</div><div class="line">	<span class="keyword">private</span> List&lt;Integer&gt; maskList;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="title">ShortestDict</span>(String[] words) {</div><div class="line">		wordList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		maskList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		<span class="comment">//rewrite comparator to compare string length</span></div><div class="line">		Arrays.sort(words, <span class="keyword">new</span> Comparator&lt;String&gt;(){</div><div class="line">			<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span>(String s1, String s2) {</div><div class="line">				<span class="keyword">return</span> s1.length() - s2.length();</div><div class="line">			}</div><div class="line">		});</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (String word : words) {</div><div class="line">			wordList.add(word);</div><div class="line">			maskList.add(getMask(word));</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> String <span class="title">getShortest</span>(String inputWord) {</div><div class="line">		<span class="keyword">int</span> inputMask = getMask(inputWord);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maskList.size(); i++) {</div><div class="line">			<span class="keyword">if</span> (inputMask == (inputMask & maskList.get(i))) {</div><div class="line">				<span class="keyword">return</span> wordList.get(i);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMask</span>(String word) { </div><div class="line">		<span class="keyword">int</span> mask = <span class="number">0</span>;</div><div class="line">		word = word.toLowerCase();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c : word.toCharArray()) {</div><div class="line">			<span class="keyword">if</span> (<span class="string">'a'</span> &lt;= c && c &lt;= <span class="string">'z'</span>) {</div><div class="line">				mask |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</div><div class="line">			} </div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> mask;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">		String[] words = <span class="keyword">new</span> String[]{<span class="string">"so99ort"</span>, <span class="string">"so1rt"</span>, <span class="string">"skype"</span>, <span class="string">"so11rt"</span>, <span class="string">"apppples"</span>};</div><div class="line">		ShortestDict d = <span class="keyword">new</span> ShortestDict(words);</div><div class="line">		System.out.println(d.getShortest(<span class="string">"SR 456 T"</span>));</div><div class="line"></div><div class="line">	} </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fitsdimmi%2Fet-voila-dimmi&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/String/"> #String </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1577,7 +1607,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
