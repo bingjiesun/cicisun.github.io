@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-08-16T21:43:39.804Z</updated>
+  <updated>2015-08-22T20:53:15.291Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,82 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[2Sum, 3Sum, 3Sum Closest, 4Sum]]></title>
+    <link href="http://sunbingjie.tk/2015/08/22/1.7/"/>
+    <id>http://sunbingjie.tk/2015/08/22/1.7/</id>
+    <published>2015-08-22T20:53:03.000Z</published>
+    <updated>2015-08-22T20:53:03.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="2Sum">2Sum</h2>
+<blockquote>
+<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Two Pointer Solution:<br>First copy numbers[] into old[] and sort old[]. Then we use two pointers to scan for the target sum. At last, we recover the indexes of these two elements in the unsorted array. This takes O(nlogn) time.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">twoSum</span>(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) {</div><div class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">        <span class="keyword">int</span>[] old = <span class="keyword">new</span> <span class="keyword">int</span>[numbers.length];</div><div class="line">        System.arraycopy(numbers, <span class="number">0</span>, old, <span class="number">0</span>, numbers.length);  </div><div class="line">        Arrays.sort(old);  </div><div class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j=numbers.length-<span class="number">1</span>;</div><div class="line">        <span class="comment">//use i, j to scan the whole array</span></div><div class="line">        <span class="keyword">while</span>(i&lt;j)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span>(old[i]+old[j]&gt;target)</div><div class="line">                {j--;</div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(old[i]+old[j]&lt;target)</div><div class="line">                {</div><div class="line">                i++;    </div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> n1=old[i];</div><div class="line">        <span class="keyword">int</span> n2=old[j];</div><div class="line">        <span class="keyword">int</span> a = -<span class="number">1</span>,b=-<span class="number">1</span>;</div><div class="line">        <span class="comment">//recover indexes of the original array</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ii=<span class="number">0</span>; ii&lt;numbers.length;ii++){</div><div class="line">            <span class="keyword">if</span>(numbers[ii]==n1 || numbers[ii]==n2){</div><div class="line">                <span class="keyword">if</span>(a==-<span class="number">1</span>){a=ii+<span class="number">1</span>;}</div><div class="line">                <span class="keyword">else</span> b=ii+<span class="number">1</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        result[<span class="number">0</span>]=a;</div><div class="line">        result[<span class="number">1</span>]=b;</div><div class="line">        Arrays.sort(result);</div><div class="line">        <span class="keyword">return</span> result;    </div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="HashTable_Solution:">HashTable Solution:</h3>
+<p>During one pass, we put element and index (as key, value) into the map, meanwhile we search for target-num[i] in our map. If found, get the two indexes. This takes O(n) time.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">twoSum</span>(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) {  </div><div class="line">    </div><div class="line">       HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;(); </div><div class="line">       </div><div class="line">       <span class="keyword">int</span> n = numbers.length;  </div><div class="line">       <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];  </div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length; i++)  </div><div class="line">       {  </div><div class="line">           <span class="keyword">if</span> (map.containsKey(target - numbers[i]))  </div><div class="line">           {  </div><div class="line">               result[<span class="number">0</span>] = map.get(target-numbers[i]) + <span class="number">1</span>;  </div><div class="line">               result[<span class="number">1</span>] = i + <span class="number">1</span>;  </div><div class="line">               <span class="keyword">break</span>;  </div><div class="line">           }  </div><div class="line">           <span class="keyword">else</span>  </div><div class="line">           {  </div><div class="line">               map.put(numbers[i], i);  </div><div class="line">           }  </div><div class="line">       }  </div><div class="line">       <span class="keyword">return</span> result;  </div><div class="line">         </div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3Sum">3Sum</h2>
+<blockquote>
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.<br>Note:<br>Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)<br>The solution set must not contain duplicate triplets.<br>For example, given array S = {-1 0 1 2 -1 -4},<br>A solution set is:<br>(-1, 0, 1)<br>(-1, -1, 2)</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Brute force method.<br>Use three loops, for each i,j,k indexes check if 3 sum equals to 0. In order to avoid duplicate sets, we make the following obeservations:</p>
+<li>The first element must be non-positive</li>
+
+<li>Given the first element, the first two element must sum to non-positive</li>
+
+<p>Note: the Solution doesn’t handle duplicates, and O(N^3) exceeded limited time.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">threeSum</span>(<span class="keyword">int</span>[] num) {</div><div class="line">Arrays.sort(num);</div><div class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">ArrayList&lt;Integer&gt; each=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length;i++){</div><div class="line">   <span class="keyword">if</span>(num[i]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> j=i;j&lt;num.length;j++){</div><div class="line">       <span class="keyword">if</span>(num[i]+num[j]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> k=j;k&lt;num.length;k++){</div><div class="line">           <span class="keyword">if</span>(num[i]+num[j]+num[k]==<span class="number">0</span>){</div><div class="line">               each.add(num[i]);</div><div class="line">               each.add(num[j]);</div><div class="line">               each.add(num[k]);</div><div class="line">               res.add(each);</div><div class="line">               each.clear();                </div><div class="line">           }</div><div class="line">       }</div><div class="line">   }</div><div class="line">}</div><div class="line">   <span class="keyword">return</span> res;</div><div class="line">   </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Better_Solution:">Better Solution:</h3>
+<p>Similar to how we used 2 pointers in 2Sum, we now use three pointers to solve 3Sum. For removing duplicate sets, we first sort input.</p>
+<li>For the first element, we only run checking process for the first of duplicate elements.</li>
+
+<li>We use two pointers to check for cases such that num[i]+num[l]+num[r]==0. If found, move both pointers closer (don’t forget to skip duplicates), if not found, move only one pointer.</li>
+
+<p>Overall runtime is O(N^2) and we can guarantee no duplicate sets.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">threeSum</span>(<span class="keyword">int</span>[] num) {</div><div class="line">    Arrays.sort(num);</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length-<span class="number">2</span>;i++){</div><div class="line">       <span class="keyword">if</span>(num[i]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">       <span class="comment">//skip the duplicated first element</span></div><div class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(i&gt;<span class="number">0</span> && num[i]==num[i-<span class="number">1</span>]) <span class="keyword">continue</span>;</div><div class="line">       l=i+<span class="number">1</span>;</div><div class="line">       r=num.length-<span class="number">1</span>;</div><div class="line">       <span class="comment">//use left and right pointer to scan the rest </span></div><div class="line">       <span class="keyword">while</span>(l&lt;r){</div><div class="line">           <span class="keyword">if</span>(num[i]+num[l]+num[r]==<span class="number">0</span>){</div><div class="line">               ArrayList&lt;Integer&gt; tmp=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                    tmp.add(num[i]);</div><div class="line">                    tmp.add(num[l]);</div><div class="line">                    tmp.add(num[r]);</div><div class="line">                    res.add(tmp);</div><div class="line">                    l++;</div><div class="line">                    r--;</div><div class="line">                    <span class="comment">//skip duplicates</span></div><div class="line">                    <span class="keyword">while</span>(l&lt;r && num[l]==num[l-<span class="number">1</span>]) l++;</div><div class="line">                    <span class="keyword">while</span>(l&lt;r && num[r]==num[r+<span class="number">1</span>]) r--;</div><div class="line">           }</div><div class="line">           <span class="comment">//scan the rest starting with num[i]</span></div><div class="line">           <span class="keyword">else</span> <span class="keyword">if</span>(num[i]+num[l]+num[r]&lt;<span class="number">0</span>) l++;</div><div class="line">           <span class="keyword">else</span> r--;</div><div class="line">           </div><div class="line">       }</div><div class="line"> </div><div class="line">       </div><div class="line">        </div><div class="line">    }</div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3Sum_Closest">3Sum Closest</h2>
+<blockquote>
+<p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.<br>For example, given array S = {-1 2 1 -4}, and target = 1.<br>The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).</p>
+</blockquote>
+<p>Similar to 3Sum, first sort the array and then we use three pointers to scan for the closest sum:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span>(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target) {</div><div class="line">     <span class="keyword">int</span> cls=Integer.MAX_VALUE,res=Integer.MAX_VALUE;</div><div class="line">     <span class="keyword">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">     <span class="keyword">int</span>[] newnum = <span class="keyword">new</span> <span class="keyword">int</span>[num.length];</div><div class="line">     System.arraycopy(num, <span class="number">0</span>, newnum, <span class="number">0</span>, num.length);  </div><div class="line">     Arrays.sort(newnum); </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length;i++){</div><div class="line">         l=i+<span class="number">1</span>; r=num.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">while</span>(l&lt;r){</div><div class="line">             <span class="keyword">int</span> sum=newnum[i]+newnum[l]+newnum[r];</div><div class="line">             <span class="keyword">int</span> diff=Math.abs(target-sum);</div><div class="line">             <span class="comment">//if match found, immediately return sum</span></div><div class="line">             <span class="keyword">if</span>(diff==<span class="number">0</span>) <span class="keyword">return</span> sum;</div><div class="line">             <span class="comment">//check if current cls is min, update sum</span></div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span> (diff&lt;cls){</div><div class="line">                 cls=diff;             </div><div class="line">                 res=sum;</div><div class="line">                 }</div><div class="line">             <span class="comment">//move pointers accordingly</span></div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span>(sum-target&lt;=<span class="number">0</span>) l++;</div><div class="line">             </div><div class="line">             <span class="keyword">else</span> {r--;}</div><div class="line">         }</div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4Sum">4Sum</h2>
+<blockquote>
+<p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.<br>Note:<br>Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)<br>The solution set must not contain duplicate quadruplets.<br>For example, given array S = {1 0 -1 0 -2 2}, and target = 0.<br>    A solution set is:<br>    (-1,  0, 0, 1)<br>    (-2, -1, 1, 2)<br>    (-2,  0, 0, 2)</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>similar to 3sum, use to pointer to find quadruplets faster, O(n^3) time.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">fourSum</span>(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {</div><div class="line">     Arrays.sort(nums);</div><div class="line">     List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">      </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length-<span class="number">3</span>; i++){</div><div class="line">     <span class="keyword">if</span> (i &gt; <span class="number">0</span> && nums[i] == nums[i-<span class="number">1</span>]) <span class="comment">//remove duplicates</span></div><div class="line">       <span class="keyword">continue</span>;</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>; j&lt;nums.length-<span class="number">2</span>; j++){</div><div class="line">             <span class="keyword">if</span> (j&gt;i+<span class="number">1</span> && nums[j]==nums[j-<span class="number">1</span>]) <span class="comment">//remove duplicates</span></div><div class="line">         <span class="keyword">continue</span>;</div><div class="line">               <span class="keyword">int</span> left = j+<span class="number">1</span>;</div><div class="line">               <span class="keyword">int</span> right = nums.length-<span class="number">1</span>;</div><div class="line">               </div><div class="line">               <span class="keyword">while</span>(left&lt;nums.length && left&lt;right){</div><div class="line">                 </div><div class="line">                 <span class="keyword">if</span>(nums[left]+ nums[right] == target-nums[i]-nums[j]) {</div><div class="line">                     ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                     <span class="keyword">int</span> leftnum = nums[left]; </div><div class="line">                     tmp.add(nums[i]);</div><div class="line">                     tmp.add(nums[j]);</div><div class="line">                     tmp.add(nums[left]);</div><div class="line">                     tmp.add(nums[right]);</div><div class="line">                     res.add(tmp);</div><div class="line">                     <span class="keyword">while</span>(left&lt;nums.length && nums[left] == leftnum){</div><div class="line">                       left++;</div><div class="line">                     }</div><div class="line">                 }</div><div class="line">                 <span class="keyword">else</span> <span class="keyword">if</span>(nums[left]+ nums[right] &gt; target-nums[i]-nums[j]){</div><div class="line">                   right--;</div><div class="line">                 }</div><div class="line">                 <span class="keyword">else</span>{</div><div class="line">                   left++;</div><div class="line">                 }</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }      </div><div class="line">       <span class="keyword">return</span> res;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fzydii%2Flilly-wood-the-prick-and-robin-schulz-prayer-in-c-robin-schulz-remix-official&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="2Sum">2Sum</h2>
+<blockquote>
+<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>T]]>
+    </summary>
+    
+      <category term="HashMap" scheme="http://sunbingjie.tk/tags/HashMap/"/>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Swap Nodes in Pairs]]></title>
@@ -1910,407 +1986,6 @@
 <li><a href="#list">LinkedList vs ArrayList</a></li>
 <li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
 <l]]>
-    </summary>
-    
-      <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
-    
-      <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Java Related Questions]]></title>
-    <link href="http://sunbingjie.tk/2015/03/13/2.12-3/"/>
-    <id>http://sunbingjie.tk/2015/03/13/2.12-3/</id>
-    <published>2015-03-13T08:49:13.000Z</published>
-    <updated>2015-03-13T08:49:13.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="Java_Questions">Java Questions</h1>
-<p>Contents:</p>
-<ul>
-<li><a href="#Keywords">Keywords</a></li>
-<li><a href="#Concepts">Concepts</a></li>
-<li><a href="#OOP">OOP</a></li>
-<li><a href="#Collections">Collections</a></li>
-<li><a href="#Thread">Threading</a></li>
-</ul>
-<h2 id="Object_Oriented">Object Oriented</h2>
-<ul>
-<li>model organized around objects rather than actions and data rather than logic</li>
-<li>based on the concept of “objects”</li>
-<li>contain data in the form of fields(attributes)</li>
-<li>code in the form of procedures(methods)</li>
-<li>object’s procedures can access and modify the data fields of the associated object</li>
-</ul>
-<p><a name="Keywords"></a></p>
-<h2 id="Java_Keywords">Java Keywords</h2>
-<ul>
-<li><p>Access modifiers</p>
-<p>| modifier | access in same package | access in different package |<br>| ———— | ——————————— | —————————————- |<br>| private  |         no             |          no                 |<br>| public   |         yes            |         yes                 |<br>| default  |         yes            |          no                 |<br>| protected|         yes            |     only if extend class    |  </p>
-</li>
-<li><p><code>final</code> keyword</p>
-<ul>
-<li>can be assigned to variable, method, class, object</li>
-<li>if assigned<ul>
-<li>variable: behave like a constant and cannot change value</li>
-<li>method: cannot be overridden in its child class</li>
-<li>class: no other class can extend it</li>
-<li>object: only instantiated once</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>synchronized</code> keyword</p>
-<ul>
-<li>provide lock on the object and prevent race condition</li>
-<li>can be applied to static/non-static methods or block of code</li>
-<li>only one thread at a time can access synchronized methods</li>
-<li>if multiple threads, need to wait for execution complete</li>
-</ul>
-</li>
-<li><p><code>volatile</code> keyword</p>
-<ul>
-<li>volatile variable stored in main memory</li>
-<li>every thread can access </li>
-<li>local copy updated from main memory</li>
-<li>has performance issues</li>
-</ul>
-</li>
-<li><p><code>static</code> variable</p>
-<ul>
-<li><code>static</code> cannot be used for class</li>
-<li>everything declared as <code>static</code> is related to class not object</li>
-<li>multiple objects of a class share the same instance of static variable</li>
-</ul>
-</li>
-<li><p><code>static</code> method</p>
-<ul>
-<li>can be accessed without creating the objects</li>
-<li>use class name to access static method</li>
-<li>static method can only access static variables and not local or global non-static variable: because if the class is not instantiated and therefore the variables are not initialized and cannot be accessed from a static method</li>
-<li>static method can only call static methods and not non-static methods</li>
-<li>non-static methods can call static methods</li>
-</ul>
-</li>
-<li><p>static class</p>
-<ul>
-<li>class cannot be declared as static</li>
-<li>class is static if all variables and methods are static and constructor is private, so the only way to access is to use class name </li>
-</ul>
-</li>
-<li><p><code>throw</code> keyword</p>
-<ul>
-<li>throw exception manually</li>
-<li>used when program fails the condition and wants to give warning</li>
-<li>throw the exception from a method to the calling method</li>
-<li>calling method can decide to handle exception or throw to its calling method</li>
-</ul>
-</li>
-</ul>
-<p><a name="Concepts"></a></p>
-<h2 id="Concepts">Concepts</h2>
-<ul>
-<li><p>object vs. class</p>
-<ul>
-<li>an object is an instance of a class<ul>
-<li>object refers to an actual instance of a class</li>
-<li>every object must belong to a class</li>
-<li>objects are created and then destroyed, only live in the program for limited time</li>
-</ul>
-</li>
-<li>objects have a lifespan but classes do not<ul>
-<li>properties of objects can change while they live</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>static</code> and <code>instance</code> method</p>
-<ul>
-<li>instance method<ul>
-<li>belong to the instance of a class and require the instance before it can be called</li>
-<li>dynamic binding</li>
-<li>JVM selects the method to invoke based on the type of object reference, known at run time </li>
-</ul>
-</li>
-<li>static method<ul>
-<li>belong to the class itself</li>
-<li>static binding </li>
-<li>JVM selects the method to invoke based on the actual class of the object, known at compile time</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>abstract</code> class and <code>interface</code></p>
-<ul>
-<li>abstract class<ul>
-<li>contain at least one abstract method</li>
-<li>can contain numbers of concrete methods</li>
-<li>variable can be <code>public</code>, <code>private</code>,<code>protected</code>, <code>default</code>, or constants</li>
-<li>a class can only extend one abstract class</li>
-<li>not compulsory to implement all methods</li>
-<li>if want to add a new feature, simply implement in the abstract class and call it from subclass</li>
-</ul>
-</li>
-<li>interface<ul>
-<li>only contain abstract methods</li>
-<li>variable is by default <code>public final</code>, only has constants</li>
-<li>a class can implement multiple interfaces</li>
-<li>compulsory to implement all methods</li>
-<li>if want to add a new feature, need to implement the method in all classes implementing the interface</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>instanceof</code> and <code>isInstance(Object obj)</code></p>
-<ul>
-<li><code>instacneof</code> is a keyword but <code>isInstance()</code> is a method</li>
-<li><code>instanceof</code> check whether the object is type of particular class or subclass</li>
-<li><code>isInstance()</code> only used to identify if object is of a particular class</li>
-</ul>
-</li>
-<li><p>pass by value and pass by reference</p>
-<ul>
-<li>Java only supports pass by value, actual value is passed</li>
-<li>Java passes the references by value, the pointer to the object is passed as value</li>
-<li>references passed to the method are actually copies of the original references</li>
-</ul>
-</li>
-<li><p><code>==</code> and <code>equals()</code></p>
-<ul>
-<li><code>==</code> is used to compare the references of the objects</li>
-<li><code>equals()</code> can compare the values of two objects</li>
-</ul>
-</li>
-<li><p><code>StringBuffer</code> and <code>StringBuild</code></p>
-<ul>
-<li><code>StringBuffer</code> is synchronized but <code>StringBuild</code> is not</li>
-</ul>
-</li>
-<li><p><code>final</code>, <code>finally</code>,<code>finalize()</code></p>
-<ul>
-<li><code>final</code>: a final variable acts like constant, a final method cannot be overridden, a final class is immutable</li>
-<li><code>finally</code>: handles exception, clean up after try block</li>
-<li><code>finalize()</code>: method helps in garbage collection, invoked before an object is discarded by the garbage collector, allowing it to clean up its state</li>
-</ul>
-</li>
-<li><p>static block and init block</p>
-<ul>
-<li>static block is loaded when class is loaded by JVM for the first time</li>
-<li>init block is loaded every time the class is loaded</li>
-</ul>
-</li>
-<li><p>object reflections</p>
-<ul>
-<li>provide a way to get reflective information of class and object</li>
-<li>perform operations such as<ul>
-<li>get information about methods and fields present inside the class at runtime</li>
-<li>get a new instance of a class</li>
-<li>get and set object fields directly by getting field reference, regardless what the access modifier is</li>
-</ul>
-</li>
-<li>advantage<ul>
-<li>help in observing or manipulating runtime behavior</li>
-<li>help in debugging or testing programs</li>
-<li>can call method by name when we do not know the method in advance  </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Overload, Override<br>-Overloading and overriding are complementary things, overloading means the same method name but different parameters, and overriding means the same method name in a subclass with the same parameters. So its not possible for overloading and overriding to happen at the same time because overloading implies different parameters.</p>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/// }</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/* method overriden */</span> }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth(String b) { <span class="comment">/* method overloaded */</span> }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
-
-
-<p><a name="OOP"></a></p>
-<h2 id="OOP">OOP</h2>
-<ul>
-<li><p>polymorphism</p>
-<ul>
-<li>define more than one function with the same name</li>
-<li>compile time polymorphism(overloading) and runtime polymorphism(overriding)</li>
-<li>method override: a class method has same name and signature as a method in parent class, JVM determines the proper method to call at runtime</li>
-<li>method overloading: method with same name but different signature, determined at compile time</li>
-</ul>
-</li>
-<li><p>inheritance</p>
-<ul>
-<li>allow a child class to inherit some properties from its parent class</li>
-<li>use <code>extends</code> keyword</li>
-<li>only public and protected access modifiers can be accessed in child class</li>
-</ul>
-</li>
-<li><p>multiple inheritance</p>
-<ul>
-<li>Java does not support multiple inheritance</li>
-<li>diamond problem</li>
-<li>use of multiple interfaces (or extend a class and implement some interfaces)</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">A</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">A</span>,<span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<ul>
-<li><p>abstraction</p>
-<ul>
-<li>convert real world objects in terms of class</li>
-</ul>
-</li>
-<li><p>encapsulation</p>
-<ul>
-<li>achieved by combining the methods and attribute into a class</li>
-<li>class acting like a container encapsulation the properties</li>
-<li>hide how things work and expose the user requests</li>
-</ul>
-</li>
-</ul>
-<p><a name="Collections"></a></p>
-<h2 id="Collections">Collections</h2>
-<ul>
-<li><p>ArrayList and vector</p>
-<ul>
-<li>synchronization<ul>
-<li>ArrayList is not thread-safe but vector is </li>
-<li>each method in vector class is surrounded by a synchronized block</li>
-</ul>
-</li>
-<li>data growth<ul>
-<li>both use arrays to store contents</li>
-<li>enlarge array if not enough space</li>
-</ul>
-</li>
-<li>performance<ul>
-<li>vector is slower than arraylist because of thread-safe</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Sort objects in lists</p>
-<ul>
-<li>implement Comparable interface for the object class and override compareTo() method</li>
-<li>if object class is a jar file, create Comparator and override compare() method</li>
-<li>call Collection.sort()</li>
-</ul>
-</li>
-<li><p>HashMap and HashTable</p>
-<ul>
-<li>HashMap is not synchronized but HashTable is</li>
-<li>use Iterator for HashMap(fail-safe) and enumerator for Hashtable(not fail-safe)</li>
-<li>HashMap allows null values and only one null key; Hashtable does not allow null key or null value</li>
-</ul>
-</li>
-<li><p>List interface</p>
-<ul>
-<li>ArrayList<ul>
-<li>resizable array implementation</li>
-<li>dynamic size</li>
-<li>not thread-safe</li>
-</ul>
-</li>
-<li>Vector<ul>
-<li>ArrayList implementation</li>
-<li>thread-safe</li>
-</ul>
-</li>
-<li>LinkedList<ul>
-<li>also implements Queue interface</li>
-<li>FIFO</li>
-<li>faster for insertion and deletion</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Set interface</p>
-<ul>
-<li>SortedSet<ul>
-<li>interface extends Set</li>
-<li>allow data to be sorted</li>
-<li>all elements inserted must implement Comparator or Comparable interface</li>
-</ul>
-</li>
-<li>TreeSet<ul>
-<li>implementation of SortedSet interface</li>
-<li>O(logn) time for add, remove, contains operations</li>
-<li>not synchronized</li>
-</ul>
-</li>
-<li>HashSet<ul>
-<li>implements Set interface</li>
-<li>back up by hash table</li>
-<li>no guarantee on constant order</li>
-<li>allow null element</li>
-<li>O(1) time for add,remove,contains</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Arrays and ArrayList</p>
-<ul>
-<li>arrays are fixed size but ArrayLists are dynamic</li>
-<li>elements in the array list can be added or removed at runtime</li>
-<li>array contains elements of same type but arraylist can contain elements of different type</li>
-</ul>
-</li>
-<li><p>ArrayList and LinkedList</p>
-<ul>
-<li>both fast in insertion, inserting into arraylist and into first position of linkedlist takes O(1) time</li>
-<li>random lookup in ArrayList is fast, but slow for LinkedList</li>
-<li>remove is slow for ArrayList(elements need to be shifted) but fast for LinkedList</li>
-</ul>
-</li>
-<li><p>Advantage of iterator</p>
-<ul>
-<li>used when no clue about object type</li>
-<li>iterator allows updates</li>
-</ul>
-</li>
-<li><p>Preferred declaration</p>
-<ul>
-<li><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;()</code> not <code>ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;()</code></li>
-<li>because function may take List as parameter</li>
-<li>more flexible</li>
-</ul>
-</li>
-<li><p>Iterator access and index access</p>
-<ul>
-<li>insert,update,or delete is faster for iterator access for elements in between the structure</li>
-<li>insert,update,or delete is faster for index access for elements at the end</li>
-<li>search is fast for index access</li>
-</ul>
-</li>
-</ul>
-<p><a name="Thread"></a></p>
-<h2 id="Threading">Threading</h2>
-<ul>
-<li>Thread vs. Process<ul>
-<li>definition<ul>
-<li>process: executing instance of an application</li>
-<li>thread: a path of execution within a process</li>
-</ul>
-</li>
-<li>relationship<ul>
-<li>a process can contain multiple threads</li>
-<li>thread considered as lightweight process</li>
-</ul>
-</li>
-<li>comparison<ul>
-<li>thread for small tasks, process for heavy tasks</li>
-<li>thread within the same process share the same address space(allow threads to read and write data to the same structures and variables, allow communication between threads), but different processes do not</li>
-<li>threads are easier to create than processes because they do not require a separate address space</li>
-<li>multi-threading: be careful that threads share structures that should be modified by one thread at a time</li>
-<li>processes are independent of each other</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fxenyriki%2Fthe-pretty-reckless-under-the&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h1 id="Java_Questions">Java Questions</h1>
-<p>Contents:</p>
-<ul>
-<li><a href="#Keywords">Keywords</a></li>
-<li><a href="#Concepts">Concepts]]>
     </summary>
     
       <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
