@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-08-22T20:54:34.107Z</updated>
+  <updated>2015-08-26T05:19:15.341Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -15,15 +15,92 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Divide Two Integers]]></title>
+    <link href="http://sunbingjie.tk/2015/08/24/8.24/"/>
+    <id>http://sunbingjie.tk/2015/08/24/8.24/</id>
+    <published>2015-08-24T18:44:52.000Z</published>
+    <updated>2015-08-24T18:44:52.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Divide_Two_Integers">Divide Two Integers</h2>
+<blockquote>
+<p>Divide two integers without using multiplication, division and mod operator.<br>If it is overflow, return MAX_INT.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution_Subtraction">Solution Subtraction</h3>
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">divide2</span>(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor) { </div><div class="line">       <span class="keyword">if</span> (dividend == <span class="number">0</span> || divisor == <span class="number">0</span>) { </div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">       } </div><div class="line">       <span class="keyword">long</span> a = Math.abs((<span class="keyword">long</span>) dividend); </div><div class="line">       <span class="keyword">long</span> b = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">       <span class="keyword">if</span> (b &gt; a) { </div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">       } </div><div class="line">  </div><div class="line">       <span class="keyword">long</span> sum = <span class="number">0</span>; </div><div class="line">       <span class="keyword">long</span> pow = <span class="number">0</span>; </div><div class="line">       <span class="keyword">long</span> result = <span class="number">0</span>; </div><div class="line">       <span class="keyword">while</span> (a &gt;= b) { </div><div class="line">           pow = <span class="number">1</span>; </div><div class="line">           sum = b; </div><div class="line">           <span class="keyword">while</span> (sum + sum &lt;= a) { </div><div class="line">               sum += sum; </div><div class="line">               pow += pow; </div><div class="line">           } </div><div class="line">           a -= sum; </div><div class="line">           result += pow; </div><div class="line">       }</div><div class="line">       result = ((((dividend ^ divisor) &gt;&gt; <span class="number">31</span>) & <span class="number">1</span>) == <span class="number">1</span>) ? -result: result;   </div><div class="line">       </div><div class="line">        <span class="keyword">if</span> (result &gt; Integer.MAX_VALUE || result &lt; Integer.MIN_VALUE) {</div><div class="line">       	 </div><div class="line">           <span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">        }</div><div class="line">         </div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)result;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Solution_Bit_Manipulation">Solution Bit Manipulation</h3>
+<ul>
+<li></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">divide</span>(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor){</div><div class="line">  	  <span class="keyword">if</span> (dividend == <span class="number">0</span> || divisor == <span class="number">0</span>) { </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">        } </div><div class="line">        <span class="keyword">long</span> a = Math.abs((<span class="keyword">long</span>) dividend); </div><div class="line">        <span class="keyword">long</span> b = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">        <span class="keyword">long</span> bb = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">        <span class="keyword">if</span> (b &gt; a) { </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">        } </div><div class="line">        <span class="keyword">long</span> sum = <span class="number">0</span>; </div><div class="line">        <span class="keyword">long</span> pow = <span class="number">0</span>; </div><div class="line">        <span class="keyword">long</span> count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">long</span> result=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(a&gt;bb){</div><div class="line">      	  bb=bb&lt;&lt;<span class="number">1</span>;</div><div class="line">      	  count=count&lt;&lt;<span class="number">1</span>;</div><div class="line">        }</div><div class="line">       </div><div class="line">        <span class="keyword">while</span> (a&gt;=b){</div><div class="line">            <span class="keyword">while</span> (a&gt;=bb){</div><div class="line">                a -= bb;</div><div class="line">                result = result+count;</div><div class="line">            }</div><div class="line">            bb=bb&gt;&gt;<span class="number">1</span>;</div><div class="line">      	  count=count&gt;&gt;<span class="number">1</span>;    </div><div class="line">        }</div><div class="line">        </div><div class="line">        result = ((((dividend ^ divisor) &gt;&gt; <span class="number">31</span>) & <span class="number">1</span>) == <span class="number">1</span>) ? -result: result;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (result &gt; Integer.MAX_VALUE || result &lt; Integer.MIN_VALUE) {</div><div class="line">       	 </div><div class="line">           <span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)result;       </div><div class="line">  }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Divide_Two_Integers">Divide Two Integers</h2>
+<blockquote>
+<p>Divide two integers without using multiplication, division and mod operator.<br>If it is overflow, return MAX_INT.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
+    
+      <category term="BitManipulation" scheme="http://sunbingjie.tk/tags/BitManipulation/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Swap Nodes in Pairs]]></title>
+    <link href="http://sunbingjie.tk/2015/08/24/8.15/"/>
+    <id>http://sunbingjie.tk/2015/08/24/8.15/</id>
+    <published>2015-08-24T18:44:51.000Z</published>
+    <updated>2015-08-24T18:44:51.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
+<blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution_In-Place">Solution In-Place</h3>
+<ul>
+<li>Use a dummyhead to avoid dealin with null cases, as usual</li>
+<li>Keep track of the first node in next pair</li>
+<li>Termination conditions: take care of odd and even node number cases</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">swapPairs</span>(ListNode head) {</div><div class="line">	ListNode dummyhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	dummyhead.next = head; <span class="comment">//use dummyhead to deal with null case</span></div><div class="line">	ListNode first = dummyhead;</div><div class="line">	ListNode second =head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(second!=<span class="keyword">null</span> && second.next!=<span class="keyword">null</span>){<span class="comment">//when second is null (odd), or second next is null(even)</span></div><div class="line">	ListNode tmp = second.next.next; <span class="comment">//record next start</span></div><div class="line">	second.next.next = second; <span class="comment">//reverse</span></div><div class="line">	first.next = second.next; <span class="comment">// link to second</span></div><div class="line">	second.next = tmp; <span class="comment">// link to next start</span></div><div class="line">	first=second; <span class="comment">// move to next</span></div><div class="line">	second = second.next; <span class="comment">//move to next</span></div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dummyhead.next;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
+<blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="LinkedList" scheme="http://sunbingjie.tk/tags/LinkedList/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[2Sum, 3Sum, 3Sum Closest, 4Sum]]></title>
-    <link href="http://sunbingjie.tk/2015/08/22/1.7/"/>
-    <id>http://sunbingjie.tk/2015/08/22/1.7/</id>
-    <published>2015-08-22T20:53:03.000Z</published>
-    <updated>2015-08-22T20:53:03.000Z</updated>
+    <link href="http://sunbingjie.tk/2015/08/24/1.7/"/>
+    <id>http://sunbingjie.tk/2015/08/24/1.7/</id>
+    <published>2015-08-24T18:44:42.000Z</published>
+    <updated>2015-08-24T18:44:42.000Z</updated>
     <content type="html"><![CDATA[<h2 id="2Sum">2Sum</h2>
 <blockquote>
 <p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
 </blockquote>
+<a id="more"></a>
 <h3 id="Solution">Solution</h3>
 <p>Two Pointer Solution:<br>First copy numbers[] into old[] and sort old[]. Then we use two pointers to scan for the target sum. At last, we recover the indexes of these two elements in the unsorted array. This takes O(nlogn) time.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">twoSum</span>(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) {</div><div class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">        <span class="keyword">int</span>[] old = <span class="keyword">new</span> <span class="keyword">int</span>[numbers.length];</div><div class="line">        System.arraycopy(numbers, <span class="number">0</span>, old, <span class="number">0</span>, numbers.length);  </div><div class="line">        Arrays.sort(old);  </div><div class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j=numbers.length-<span class="number">1</span>;</div><div class="line">        <span class="comment">//use i, j to scan the whole array</span></div><div class="line">        <span class="keyword">while</span>(i&lt;j)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span>(old[i]+old[j]&gt;target)</div><div class="line">                {j--;</div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(old[i]+old[j]&lt;target)</div><div class="line">                {</div><div class="line">                i++;    </div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> n1=old[i];</div><div class="line">        <span class="keyword">int</span> n2=old[j];</div><div class="line">        <span class="keyword">int</span> a = -<span class="number">1</span>,b=-<span class="number">1</span>;</div><div class="line">        <span class="comment">//recover indexes of the original array</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ii=<span class="number">0</span>; ii&lt;numbers.length;ii++){</div><div class="line">            <span class="keyword">if</span>(numbers[ii]==n1 || numbers[ii]==n2){</div><div class="line">                <span class="keyword">if</span>(a==-<span class="number">1</span>){a=ii+<span class="number">1</span>;}</div><div class="line">                <span class="keyword">else</span> b=ii+<span class="number">1</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        result[<span class="number">0</span>]=a;</div><div class="line">        result[<span class="number">1</span>]=b;</div><div class="line">        Arrays.sort(result);</div><div class="line">        <span class="keyword">return</span> result;    </div><div class="line">    }</div></pre></td></tr></table></figure>
@@ -79,47 +156,15 @@
     <summary type="html">
     <![CDATA[<h2 id="2Sum">2Sum</h2>
 <blockquote>
-<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>T]]>
-    </summary>
-    
-      <category term="HashMap" scheme="http://sunbingjie.tk/tags/HashMap/"/>
-    
-      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Swap Nodes in Pairs]]></title>
-    <link href="http://sunbingjie.tk/2015/08/16/8.15/"/>
-    <id>http://sunbingjie.tk/2015/08/16/8.15/</id>
-    <published>2015-08-16T21:43:29.000Z</published>
-    <updated>2015-08-16T21:43:29.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
-<blockquote>
-<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="Solution_In-Place">Solution In-Place</h3>
-<ul>
-<li>Use a dummyhead to avoid dealin with null cases, as usual</li>
-<li>Keep track of the first node in next pair</li>
-<li>Termination conditions: take care of odd and even node number cases</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">swapPairs</span>(ListNode head) {</div><div class="line">	ListNode dummyhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	dummyhead.next = head; <span class="comment">//use dummyhead to deal with null case</span></div><div class="line">	ListNode first = dummyhead;</div><div class="line">	ListNode second =head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(second!=<span class="keyword">null</span> && second.next!=<span class="keyword">null</span>){<span class="comment">//when second is null (odd), or second next is null(even)</span></div><div class="line">	ListNode tmp = second.next.next; <span class="comment">//record next start</span></div><div class="line">	second.next.next = second; <span class="comment">//reverse</span></div><div class="line">	first.next = second.next; <span class="comment">// link to second</span></div><div class="line">	second.next = tmp; <span class="comment">// link to next start</span></div><div class="line">	first=second; <span class="comment">// move to next</span></div><div class="line">	second = second.next; <span class="comment">//move to next</span></div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dummyhead.next;</div><div class="line">	}</div></pre></td></tr></table></figure>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
-<blockquote>
-<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
 </blockquote>
 ]]>
     
     </summary>
     
-      <category term="LinkedList" scheme="http://sunbingjie.tk/tags/LinkedList/"/>
+      <category term="HashMap" scheme="http://sunbingjie.tk/tags/HashMap/"/>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
     
       <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
@@ -1711,281 +1756,6 @@
 <h2 id="Iterator">Iterator</h2>
 <ul>
 <li>if structural change is made(add, remove, clear), iterator is no longer val]]>
-    </summary>
-    
-      <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>
-    
-      <category term="CC" scheme="http://sunbingjie.tk/categories/CC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Basic Comparisons]]></title>
-    <link href="http://sunbingjie.tk/2015/03/13/2.12/"/>
-    <id>http://sunbingjie.tk/2015/03/13/2.12/</id>
-    <published>2015-03-13T08:49:48.000Z</published>
-    <updated>2015-03-13T08:49:48.000Z</updated>
-    <content type="html"><![CDATA[<ul>
-<li><a href="#list">LinkedList vs ArrayList</a></li>
-<li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
-<li><a href="#setlistmap">Set vs. List vs. Map</a></li>
-<li><a href="#search">BST vs. HashTable</a></li>
-<li><a href="#graph">BFS vs. DFS</a></li>
-<li><a href="#treegraph">Graph vs. Tree</a></li>
-</ul>
-<p><a name="list"></a></p>
-<h2 id="Linkedlist_vs-_Arraylist_vs-_Vector">Linkedlist vs. Arraylist vs. Vector</h2>
-<ul>
-<li><p>Operations</p>
-<ul>
-<li>LinkedList<ul>
-<li>get(index): O(n)</li>
-<li>add(element): O(1)</li>
-<li>add(index, element): O(n)</li>
-<li>remove(index): O(n)</li>
-<li>Iterator.remove(): O(1), main benefit</li>
-<li>Iterator.add(element): O(1), main benefit</li>
-</ul>
-</li>
-<li>ArrayList<ul>
-<li>get(index): O(1), main benefit</li>
-<li>add(element): O(1) amortized, worst case O(n) because need to resize array and copy</li>
-<li>add(index, element): O(n-index) amortized, worst case O(n)</li>
-<li>remove(index): O(n-index), remove last is O(1)</li>
-<li>Iterator.remove(): O(n-index)</li>
-<li>Iterator.add(element): O(n-index)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Compare</p>
-<ul>
-<li>Linkedlist<ul>
-<li>O(1) time insertions or removals using iterator, but only sequential access</li>
-<li>finding a position in the linkedlist takes time O(n)</li>
-<li>each element of linkedlist have more memory overhead because pointers need to be stored</li>
-<li>linkedlist also implements queue interface which adds more methods such as offer(), peek(), poll()</li>
-</ul>
-</li>
-<li>Arraylist<ul>
-<li>fast random read access in O(1)</li>
-<li>adding or removing element except at the end require shifting latter elements, if add more elements, need to allocate new array and copy old values</li>
-<li>iterating over arraylist is technically faster</li>
-<li>to avoid overhead of resizing, construct arraylist with initial capacity</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Similarities</p>
-<ul>
-<li>both are implementation of list interface</li>
-<li>maintain elements in insertion order</li>
-<li>non-synchronized, but can be made synchronized explicitly</li>
-<li>if list is structurally modified after iterator is created, except through iterator’s own remove or add method, iterator will throw exception</li>
-</ul>
-</li>
-<li><p>When to use which</p>
-<ul>
-<li>frequent addition and deletion: linkedlist</li>
-<li>frequent search: arraylist</li>
-<li>less memory to store many elements: arraylist</li>
-</ul>
-</li>
-<li><p>Vector</p>
-<ul>
-<li>almost identical to arraylist, but is synchronized</li>
-<li>more overhead because of synchronization</li>
-<li>still use arraylist because they can make it synchronized explicitly by encapsulating: </li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">coll </span>=<span class="string"> Collections.synchronizedCollection(coll);</span></div></pre></td></tr></table></figure>
-
-<p><a name="map"></a></p>
-<h2 id="HashMap_vs-_TreeMap_vs-_HashTable_vs-_LinkedHashMap">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>HashMap: implemented as a hash table, no ordering on keys or values</li>
-<li>TreeMap: implemented based on red-black tree, ordered by key</li>
-<li>LinkedHashMap: preserves insertion order</li>
-<li>HashTable: synchronized in constrast to HashMap</li>
-</ul>
-</li>
-<li><p>HashMap</p>
-<ul>
-<li>operation<ul>
-<li>put(): average O(1), worst O(n) when collision</li>
-<li>get(), remove(): O(1)</li>
-</ul>
-</li>
-<li>if key is self-defined objects, need to implement equals() and hashCode()</li>
-<li>iteration order not predictable</li>
-<li>does not allow two identical elements<ul>
-<li>equals(): return true if two references refer to the same object</li>
-<li>hashCode(): return distinct integers for distinct objects</li>
-</ul>
-</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-<li><p>TreeMap</p>
-<ul>
-<li>operation<ul>
-<li>put(), get(), remove(): worst O(logn)</li>
-</ul>
-</li>
-<li>sorted by keys</li>
-<li>object for key has to implement Comparable interface</li>
-<li>only allow values to be null</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>HashMap is roughly equivalent to HashTable, except hashmap is not synchronized and permits null</li>
-<li>Hashtable does not allow null keys or values. HashMap allows one null key and any number of null values.</li>
-</ul>
-</li>
-<li><p>LinkedHashMap</p>
-<ul>
-<li>operation: see arraylist</li>
-<li>subclass of HashMap</li>
-<li>linkedlist preserves the insertion order</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-</ul>
-<p><a name="setlistmap"></a></p>
-<h2 id="Set_vs-_List_vs-_Map">Set vs. List vs. Map</h2>
-<ul>
-<li><p>Set</p>
-<ul>
-<li>unordered collection</li>
-<li>unique objects (!e1.equals(e2))</li>
-<li>contains at most one null</li>
-</ul>
-</li>
-<li><p>List</p>
-<ul>
-<li>ordered collection(sequence)</li>
-<li>access by index and search</li>
-<li>may contain duplicates</li>
-<li>user has control over where element inserted</li>
-</ul>
-</li>
-<li><p>Map</p>
-<ul>
-<li>object that maps keys to values</li>
-<li>no duplicated allowed</li>
-<li>a key can map to at most one value</li>
-</ul>
-</li>
-</ul>
-<p><a name="search"></a></p>
-<h2 id="BST_vs-_HashTable">BST vs. HashTable</h2>
-<ul>
-<li><p>BST</p>
-<ul>
-<li>insert and retrieve: O(logn)</li>
-<li>store data sorted</li>
-<li>no need to know size of input in advance</li>
-<li>memory efficient: do not reserve more memory than they need to</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>insert and retrieve: O(1)</li>
-<li>elements stored unsorted</li>
-<li>with more inputs, collisions may show up</li>
-<li>need more space than input data if to avoid collision</li>
-<li>need to know data size, otherwise might need to resize the table</li>
-</ul>
-</li>
-</ul>
-<p><a name="graph"></a></p>
-<h2 id="BFS_vs-_DFS">BFS vs. DFS</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>search algorithms for graphs and trees</li>
-<li>used for unordered graph and tree</li>
-<li>graph representation<ul>
-<li>adjacent list: space O(V+E)</li>
-<li>adjacent matrix: space O(V^2)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>BFS</p>
-<ul>
-<li>start with root node</li>
-<li>scan each node in the each level</li>
-<li>while traversing each level, decide if target is found</li>
-</ul>
-</li>
-<li><p>DFS</p>
-<ul>
-<li>start with root node</li>
-<li>follow on branch as far as possible until target is found or hit a leaf node</li>
-<li>if hit a leaf node, continue search at the nearest ancestor</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Comparison<ul>
-<li>memory<ul>
-<li>BFS uses a large amount of memory because need to store pointers to a level(serious problem if the tree is very wide)</li>
-<li>DFS uses less memory because no need to store all child pointers at a level</li>
-</ul>
-</li>
-<li>depend on the data you search for<ul>
-<li>look for people alive in family tree: DFS because targets are likely to be on the bottom of the tree</li>
-<li>look for people who died: BFS</li>
-</ul>
-</li>
-<li>implementation<ul>
-<li>BFS: queue</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">BFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">a</span> <span class="title">queue</span> <span class="title">Q</span></div><div class="line">   <span class="title">Q</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">while</span> <span class="title">Q</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">Q</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">          <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">             <span class="title">Q</span>.<span class="title">push</span><span class="params">(w)</span></div><div class="line">             <span class="title">label</span> <span class="title">w</span> <span class="title">as</span> <span class="title">visited</span></div></pre></td></tr></table></figure>
-
-<pre><code>-<span class="ruby"> <span class="constant">DFS</span><span class="symbol">:</span> stack
-</span>  + recursive
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">       <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">           <span class="title">DFS</span><span class="params">(G,w)</span></div></pre></td></tr></table></figure>
-
-<pre><code>  + iterative
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">stack</span> <span class="title">S</span></div><div class="line">   <span class="title">S</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">while</span> <span class="title">S</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">S</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">if</span> <span class="title">v</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">         <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">            <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">                <span class="title">S</span>.<span class="title">push</span><span class="params">(w)</span></div></pre></td></tr></table></figure>
-
-<ul>
-<li>solution<ul>
-<li>BFS: complete algorithm, give optimal solution</li>
-<li>DFS: suboptimal solution</li>
-</ul>
-</li>
-<li>complexity<ul>
-<li>BFS: worst time O(V+E), worst space O(V)</li>
-<li>DFS: worst time O(v+E), worst space O(V)</li>
-</ul>
-</li>
-</ul>
-<p><a name="treegraph"></a></p>
-<h2 id="Tree_vs-_Graph">Tree vs. Graph</h2>
-<ul>
-<li>tree is restricted form of a graph(directed acyclic graph)</li>
-<li>trees have direction(parent/child relationship)</li>
-<li>tree does not contain cycles</li>
-<li>in trees, a child can only have one parent</li>
-</ul>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Finterscope%2Fthe-pretty-reckless-make-me-2%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-]]></content>
-    <summary type="html">
-    <![CDATA[<ul>
-<li><a href="#list">LinkedList vs ArrayList</a></li>
-<li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
-<l]]>
     </summary>
     
       <category term="Concepts" scheme="http://sunbingjie.tk/tags/Concepts/"/>

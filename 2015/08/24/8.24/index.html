@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="LinkedList," />
+  <meta name="keywords" content="Math,BitManipulation," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> Swap Nodes in Pairs // Cici's Blog </title>
+  <title> Divide Two Integers // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Swap Nodes in Pairs
+              Divide Two Integers
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-08-16
+          Posted on 2015-08-24
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/16/8.15/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/16/8.15/"></span>
+            <a href="/2015/08/24/8.24/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/24/8.24/"></span>
             </a>
           </span>
           
@@ -161,18 +161,22 @@
       
 
       
-        <h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
+        <h2 id="Divide_Two_Integers">Divide Two Integers</h2>
 <blockquote>
-<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+<p>Divide two integers without using multiplication, division and mod operator.<br>If it is overflow, return MAX_INT.</p>
 </blockquote>
 <a id="more"></a>
-<h3 id="Solution_In-Place">Solution In-Place</h3>
+<h3 id="Solution_Subtraction">Solution Subtraction</h3>
 <ul>
-<li>Use a dummyhead to avoid dealin with null cases, as usual</li>
-<li>Keep track of the first node in next pair</li>
-<li>Termination conditions: take care of odd and even node number cases</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">divide2</span>(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor) { </div><div class="line">       <span class="keyword">if</span> (dividend == <span class="number">0</span> || divisor == <span class="number">0</span>) { </div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">       } </div><div class="line">       <span class="keyword">long</span> a = Math.abs((<span class="keyword">long</span>) dividend); </div><div class="line">       <span class="keyword">long</span> b = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">       <span class="keyword">if</span> (b &gt; a) { </div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">       } </div><div class="line">  </div><div class="line">       <span class="keyword">long</span> sum = <span class="number">0</span>; </div><div class="line">       <span class="keyword">long</span> pow = <span class="number">0</span>; </div><div class="line">       <span class="keyword">long</span> result = <span class="number">0</span>; </div><div class="line">       <span class="keyword">while</span> (a &gt;= b) { </div><div class="line">           pow = <span class="number">1</span>; </div><div class="line">           sum = b; </div><div class="line">           <span class="keyword">while</span> (sum + sum &lt;= a) { </div><div class="line">               sum += sum; </div><div class="line">               pow += pow; </div><div class="line">           } </div><div class="line">           a -= sum; </div><div class="line">           result += pow; </div><div class="line">       }</div><div class="line">       result = ((((dividend ^ divisor) &gt;&gt; <span class="number">31</span>) & <span class="number">1</span>) == <span class="number">1</span>) ? -result: result;   </div><div class="line">       </div><div class="line">        <span class="keyword">if</span> (result &gt; Integer.MAX_VALUE || result &lt; Integer.MIN_VALUE) {</div><div class="line">       	 </div><div class="line">           <span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">        }</div><div class="line">         </div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)result;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">swapPairs</span>(ListNode head) {</div><div class="line">	ListNode dummyhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	dummyhead.next = head; <span class="comment">//use dummyhead to deal with null case</span></div><div class="line">	ListNode first = dummyhead;</div><div class="line">	ListNode second =head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(second!=<span class="keyword">null</span> && second.next!=<span class="keyword">null</span>){<span class="comment">//when second is null (odd), or second next is null(even)</span></div><div class="line">	ListNode tmp = second.next.next; <span class="comment">//record next start</span></div><div class="line">	second.next.next = second; <span class="comment">//reverse</span></div><div class="line">	first.next = second.next; <span class="comment">// link to second</span></div><div class="line">	second.next = tmp; <span class="comment">// link to next start</span></div><div class="line">	first=second; <span class="comment">// move to next</span></div><div class="line">	second = second.next; <span class="comment">//move to next</span></div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dummyhead.next;</div><div class="line">	}</div></pre></td></tr></table></figure>
+<h3 id="Solution_Bit_Manipulation">Solution Bit Manipulation</h3>
+<ul>
+<li></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">divide</span>(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor){</div><div class="line">  	  <span class="keyword">if</span> (dividend == <span class="number">0</span> || divisor == <span class="number">0</span>) { </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">        } </div><div class="line">        <span class="keyword">long</span> a = Math.abs((<span class="keyword">long</span>) dividend); </div><div class="line">        <span class="keyword">long</span> b = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">        <span class="keyword">long</span> bb = Math.abs((<span class="keyword">long</span>) divisor); </div><div class="line">        <span class="keyword">if</span> (b &gt; a) { </div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">        } </div><div class="line">        <span class="keyword">long</span> sum = <span class="number">0</span>; </div><div class="line">        <span class="keyword">long</span> pow = <span class="number">0</span>; </div><div class="line">        <span class="keyword">long</span> count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">long</span> result=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(a&gt;bb){</div><div class="line">      	  bb=bb&lt;&lt;<span class="number">1</span>;</div><div class="line">      	  count=count&lt;&lt;<span class="number">1</span>;</div><div class="line">        }</div><div class="line">       </div><div class="line">        <span class="keyword">while</span> (a&gt;=b){</div><div class="line">            <span class="keyword">while</span> (a&gt;=bb){</div><div class="line">                a -= bb;</div><div class="line">                result = result+count;</div><div class="line">            }</div><div class="line">            bb=bb&gt;&gt;<span class="number">1</span>;</div><div class="line">      	  count=count&gt;&gt;<span class="number">1</span>;    </div><div class="line">        }</div><div class="line">        </div><div class="line">        result = ((((dividend ^ divisor) &gt;&gt; <span class="number">31</span>) & <span class="number">1</span>) == <span class="number">1</span>) ? -result: result;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (result &gt; Integer.MAX_VALUE || result &lt; Integer.MIN_VALUE) {</div><div class="line">       	 </div><div class="line">           <span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)result;       </div><div class="line">  }</div></pre></td></tr></table></figure>
 
 
       
@@ -182,7 +186,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LinkedList/"> #LinkedList </a>
+            <a href="/tags/Math/"> #Math </a>
+          
+            <a href="/tags/BitManipulation/"> #BitManipulation </a>
           
         </div>
       
@@ -191,13 +197,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/22/1.7/">2Sum, 3Sum, 3Sum Closest, 4Sum</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/09/7.23/">Find Median of two Sorted Arrays</a>
+              <a href="/2015/08/24/8.15/">Swap Nodes in Pairs</a>
             
           </div>
         </div>
@@ -258,7 +262,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -272,7 +276,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
@@ -317,7 +321,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swap_Nodes_in_Pairs"><span class="nav-number">1.</span> <span class="nav-text">Swap Nodes in Pairs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution_In-Place"><span class="nav-number">1.1.</span> <span class="nav-text">Solution In-Place</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Divide_Two_Integers"><span class="nav-number">1.</span> <span class="nav-text">Divide Two Integers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution_Subtraction"><span class="nav-number">1.1.</span> <span class="nav-text">Solution Subtraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution_Bit_Manipulation"><span class="nav-number">1.2.</span> <span class="nav-text">Solution Bit Manipulation</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -890,8 +894,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/08/16/8.15/';
-      var disqus_url = 'http://sunbingjie.tk/2015/08/16/8.15/';
+      var disqus_identifier = '2015/08/24/8.24/';
+      var disqus_url = 'http://sunbingjie.tk/2015/08/24/8.24/';
 
       (function(){
         var dsq = document.createElement('script');

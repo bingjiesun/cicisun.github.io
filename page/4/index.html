@@ -120,6 +120,132 @@
           
           
             
+              <a class="post-title-link" href="/2015/04/11/4.9/">
+                Maximum Subarray, Maximum Product Subarray
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/11/4.9/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/11/4.9/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Maximum_Subarray">Maximum Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],<br>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
+</blockquote>
+<h3 id="O(n)_Solution">O(n) Solution</h3>
+<ul>
+<li>It’s called the Kadane’s Algorithm…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span> max_so_far = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> max_ending_here = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">        max_ending_here+=A[i];</div><div class="line">        max_ending_here = Math.max(max_ending_here, A[i]);</div><div class="line">        max_so_far = Math.max(max_ending_here, max_so_far);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> max_so_far;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Divide_and_Conquer_Solution_O(nlogn)">Divide and Conquer Solution O(nlogn)</h3>
+<ul>
+<li>more subtle does not mean cleaner…</li>
+<li>divide the given array in two halves and return the maximum of following three</li>
+<li>Maximum subarray sum in left half </li>
+</ul>
+<ul>
+<li>Maximum subarray sum in right half </li>
+<li>Maximum subarray sum such that the subarray crosses the midpoint</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>, r=A.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">return</span> rec(A, l, r);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rec</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">if</span>(l==r) <span class="keyword">return</span> A[l];</div><div class="line">        <span class="keyword">int</span> m= (l+r)/<span class="number">2</span>; </div><div class="line">        <span class="keyword">return</span> Math.max(Math.max(rec(A,l,m),rec(A,m+<span class="number">1</span>,r)),cross(A,m,l,r));</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">cross</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">int</span> suml=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluel=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m-<span class="number">1</span>;i&gt;=l;i--){</div><div class="line">            suml+=A[i];</div><div class="line">            <span class="keyword">if</span>(suml&gt;maxvaluel){</div><div class="line">                maxvaluel=suml;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">int</span> sumr=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluer=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=r;i++){</div><div class="line">            sumr+=A[i];</div><div class="line">            <span class="keyword">if</span>(sumr&gt;maxvaluer){</div><div class="line">                maxvaluer=sumr;</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxvaluel+maxvaluer-A[m];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Maximum_Product_Subarray">Maximum Product Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.<br>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
+</blockquote>
+<h2 id="Near_Brute_force">Near Brute force</h2>
+<ul>
+<li>If we store result from i to j in t[i][j], the runtime is O(n^2)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=<span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;A.length;i++){</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;A.length;j++){</div><div class="line">			<span class="keyword">int</span> tmp=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=j;k++){</div><div class="line">			tmp*=A[k];</div><div class="line">					}</div><div class="line">			<span class="keyword">if</span>(tmp&gt;maxvalue){</div><div class="line">				maxvalue=tmp;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="DP?_Solution">DP? Solution</h2>
+<ul>
+<li>There are only two cases when we get a larger result</li>
+<li>mininum(negative) value multiply cur value(which happens to be negative)</li>
+<li>maximum value multiply cur value</li>
+<li>Be careful with the special case when multiplying both would decrease the result, then change start point to self</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> minval=A[<span class="number">0</span>], maxval=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">	    <span class="keyword">int</span> a=A[i] * minval;</div><div class="line">	    <span class="keyword">int</span> b=A[i] * maxval;</div><div class="line">	    maxval=Math.max(Math.max(a,b),A[i]);</div><div class="line">	    minval=Math.min(Math.min(a,b),A[i]);</div><div class="line">	    maxvalue=Math.max(maxvalue,maxval);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fpatrick-champarnaud%2Fticking-bomb%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/04/02/4.1/">
                 StringtoLong, Implement Trinary Tree
               </a>
@@ -883,343 +1009,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/03/13/2.12/">
-                Basic Comparisons
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-03-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/CC/">CC</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/03/13/2.12/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/13/2.12/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <ul>
-<li><a href="#list">LinkedList vs ArrayList</a></li>
-<li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
-<li><a href="#setlistmap">Set vs. List vs. Map</a></li>
-<li><a href="#search">BST vs. HashTable</a></li>
-<li><a href="#graph">BFS vs. DFS</a></li>
-<li><a href="#treegraph">Graph vs. Tree</a></li>
-</ul>
-<p><a name="list"></a></p>
-<h2 id="Linkedlist_vs-_Arraylist_vs-_Vector">Linkedlist vs. Arraylist vs. Vector</h2>
-<ul>
-<li><p>Operations</p>
-<ul>
-<li>LinkedList<ul>
-<li>get(index): O(n)</li>
-<li>add(element): O(1)</li>
-<li>add(index, element): O(n)</li>
-<li>remove(index): O(n)</li>
-<li>Iterator.remove(): O(1), main benefit</li>
-<li>Iterator.add(element): O(1), main benefit</li>
-</ul>
-</li>
-<li>ArrayList<ul>
-<li>get(index): O(1), main benefit</li>
-<li>add(element): O(1) amortized, worst case O(n) because need to resize array and copy</li>
-<li>add(index, element): O(n-index) amortized, worst case O(n)</li>
-<li>remove(index): O(n-index), remove last is O(1)</li>
-<li>Iterator.remove(): O(n-index)</li>
-<li>Iterator.add(element): O(n-index)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Compare</p>
-<ul>
-<li>Linkedlist<ul>
-<li>O(1) time insertions or removals using iterator, but only sequential access</li>
-<li>finding a position in the linkedlist takes time O(n)</li>
-<li>each element of linkedlist have more memory overhead because pointers need to be stored</li>
-<li>linkedlist also implements queue interface which adds more methods such as offer(), peek(), poll()</li>
-</ul>
-</li>
-<li>Arraylist<ul>
-<li>fast random read access in O(1)</li>
-<li>adding or removing element except at the end require shifting latter elements, if add more elements, need to allocate new array and copy old values</li>
-<li>iterating over arraylist is technically faster</li>
-<li>to avoid overhead of resizing, construct arraylist with initial capacity</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Similarities</p>
-<ul>
-<li>both are implementation of list interface</li>
-<li>maintain elements in insertion order</li>
-<li>non-synchronized, but can be made synchronized explicitly</li>
-<li>if list is structurally modified after iterator is created, except through iterator’s own remove or add method, iterator will throw exception</li>
-</ul>
-</li>
-<li><p>When to use which</p>
-<ul>
-<li>frequent addition and deletion: linkedlist</li>
-<li>frequent search: arraylist</li>
-<li>less memory to store many elements: arraylist</li>
-</ul>
-</li>
-<li><p>Vector</p>
-<ul>
-<li>almost identical to arraylist, but is synchronized</li>
-<li>more overhead because of synchronization</li>
-<li>still use arraylist because they can make it synchronized explicitly by encapsulating: </li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">coll </span>=<span class="string"> Collections.synchronizedCollection(coll);</span></div></pre></td></tr></table></figure>
-
-<p><a name="map"></a></p>
-<h2 id="HashMap_vs-_TreeMap_vs-_HashTable_vs-_LinkedHashMap">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>HashMap: implemented as a hash table, no ordering on keys or values</li>
-<li>TreeMap: implemented based on red-black tree, ordered by key</li>
-<li>LinkedHashMap: preserves insertion order</li>
-<li>HashTable: synchronized in constrast to HashMap</li>
-</ul>
-</li>
-<li><p>HashMap</p>
-<ul>
-<li>operation<ul>
-<li>put(): average O(1), worst O(n) when collision</li>
-<li>get(), remove(): O(1)</li>
-</ul>
-</li>
-<li>if key is self-defined objects, need to implement equals() and hashCode()</li>
-<li>iteration order not predictable</li>
-<li>does not allow two identical elements<ul>
-<li>equals(): return true if two references refer to the same object</li>
-<li>hashCode(): return distinct integers for distinct objects</li>
-</ul>
-</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-<li><p>TreeMap</p>
-<ul>
-<li>operation<ul>
-<li>put(), get(), remove(): worst O(logn)</li>
-</ul>
-</li>
-<li>sorted by keys</li>
-<li>object for key has to implement Comparable interface</li>
-<li>only allow values to be null</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>HashMap is roughly equivalent to HashTable, except hashmap is not synchronized and permits null</li>
-<li>Hashtable does not allow null keys or values. HashMap allows one null key and any number of null values.</li>
-</ul>
-</li>
-<li><p>LinkedHashMap</p>
-<ul>
-<li>operation: see arraylist</li>
-<li>subclass of HashMap</li>
-<li>linkedlist preserves the insertion order</li>
-<li>allow null keys and values</li>
-</ul>
-</li>
-</ul>
-<p><a name="setlistmap"></a></p>
-<h2 id="Set_vs-_List_vs-_Map">Set vs. List vs. Map</h2>
-<ul>
-<li><p>Set</p>
-<ul>
-<li>unordered collection</li>
-<li>unique objects (!e1.equals(e2))</li>
-<li>contains at most one null</li>
-</ul>
-</li>
-<li><p>List</p>
-<ul>
-<li>ordered collection(sequence)</li>
-<li>access by index and search</li>
-<li>may contain duplicates</li>
-<li>user has control over where element inserted</li>
-</ul>
-</li>
-<li><p>Map</p>
-<ul>
-<li>object that maps keys to values</li>
-<li>no duplicated allowed</li>
-<li>a key can map to at most one value</li>
-</ul>
-</li>
-</ul>
-<p><a name="search"></a></p>
-<h2 id="BST_vs-_HashTable">BST vs. HashTable</h2>
-<ul>
-<li><p>BST</p>
-<ul>
-<li>insert and retrieve: O(logn)</li>
-<li>store data sorted</li>
-<li>no need to know size of input in advance</li>
-<li>memory efficient: do not reserve more memory than they need to</li>
-</ul>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>insert and retrieve: O(1)</li>
-<li>elements stored unsorted</li>
-<li>with more inputs, collisions may show up</li>
-<li>need more space than input data if to avoid collision</li>
-<li>need to know data size, otherwise might need to resize the table</li>
-</ul>
-</li>
-</ul>
-<p><a name="graph"></a></p>
-<h2 id="BFS_vs-_DFS">BFS vs. DFS</h2>
-<ul>
-<li><p>Overview</p>
-<ul>
-<li>search algorithms for graphs and trees</li>
-<li>used for unordered graph and tree</li>
-<li>graph representation<ul>
-<li>adjacent list: space O(V+E)</li>
-<li>adjacent matrix: space O(V^2)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>BFS</p>
-<ul>
-<li>start with root node</li>
-<li>scan each node in the each level</li>
-<li>while traversing each level, decide if target is found</li>
-</ul>
-</li>
-<li><p>DFS</p>
-<ul>
-<li>start with root node</li>
-<li>follow on branch as far as possible until target is found or hit a leaf node</li>
-<li>if hit a leaf node, continue search at the nearest ancestor</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Comparison<ul>
-<li>memory<ul>
-<li>BFS uses a large amount of memory because need to store pointers to a level(serious problem if the tree is very wide)</li>
-<li>DFS uses less memory because no need to store all child pointers at a level</li>
-</ul>
-</li>
-<li>depend on the data you search for<ul>
-<li>look for people alive in family tree: DFS because targets are likely to be on the bottom of the tree</li>
-<li>look for people who died: BFS</li>
-</ul>
-</li>
-<li>implementation<ul>
-<li>BFS: queue</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">BFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">a</span> <span class="title">queue</span> <span class="title">Q</span></div><div class="line">   <span class="title">Q</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">while</span> <span class="title">Q</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">Q</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">          <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">             <span class="title">Q</span>.<span class="title">push</span><span class="params">(w)</span></div><div class="line">             <span class="title">label</span> <span class="title">w</span> <span class="title">as</span> <span class="title">visited</span></div></pre></td></tr></table></figure>
-
-<pre><code>-<span class="ruby"> <span class="constant">DFS</span><span class="symbol">:</span> stack
-</span>  + recursive
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">       <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">           <span class="title">DFS</span><span class="params">(G,w)</span></div></pre></td></tr></table></figure>
-
-<pre><code>  + iterative
-</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">stack</span> <span class="title">S</span></div><div class="line">   <span class="title">S</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">while</span> <span class="title">S</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">S</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">if</span> <span class="title">v</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">         <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">            <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">                <span class="title">S</span>.<span class="title">push</span><span class="params">(w)</span></div></pre></td></tr></table></figure>
-
-<ul>
-<li>solution<ul>
-<li>BFS: complete algorithm, give optimal solution</li>
-<li>DFS: suboptimal solution</li>
-</ul>
-</li>
-<li>complexity<ul>
-<li>BFS: worst time O(V+E), worst space O(V)</li>
-<li>DFS: worst time O(v+E), worst space O(V)</li>
-</ul>
-</li>
-</ul>
-<p><a name="treegraph"></a></p>
-<h2 id="Tree_vs-_Graph">Tree vs. Graph</h2>
-<ul>
-<li>tree is restricted form of a graph(directed acyclic graph)</li>
-<li>trees have direction(parent/child relationship)</li>
-<li>tree does not contain cycles</li>
-<li>in trees, a child can only have one parent</li>
-</ul>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Finterscope%2Fthe-pretty-reckless-make-me-2%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Concepts/"> #Concepts </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1260,7 +1049,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1274,7 +1063,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>

@@ -120,8 +120,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/22/1.7/">
-                2Sum, 3Sum, 3Sum Closest, 4Sum
+              <a class="post-title-link" href="/2015/08/24/8.24/">
+                Divide Two Integers
               </a>
             
           
@@ -130,7 +130,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-08-22
+          Posted on 2015-08-24
         </span>
 
         
@@ -150,8 +150,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/22/1.7/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/22/1.7/"></span>
+            <a href="/2015/08/24/8.24/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/24/8.24/"></span>
             </a>
           </span>
           
@@ -166,62 +166,16 @@
 
       
         
-          <h2 id="2Sum">2Sum</h2>
+          <h2 id="Divide_Two_Integers">Divide Two Integers</h2>
 <blockquote>
-<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
+<p>Divide two integers without using multiplication, division and mod operator.<br>If it is overflow, return MAX_INT.</p>
 </blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Two Pointer Solution:<br>First copy numbers[] into old[] and sort old[]. Then we use two pointers to scan for the target sum. At last, we recover the indexes of these two elements in the unsorted array. This takes O(nlogn) time.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">twoSum</span>(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) {</div><div class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">        <span class="keyword">int</span>[] old = <span class="keyword">new</span> <span class="keyword">int</span>[numbers.length];</div><div class="line">        System.arraycopy(numbers, <span class="number">0</span>, old, <span class="number">0</span>, numbers.length);  </div><div class="line">        Arrays.sort(old);  </div><div class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j=numbers.length-<span class="number">1</span>;</div><div class="line">        <span class="comment">//use i, j to scan the whole array</span></div><div class="line">        <span class="keyword">while</span>(i&lt;j)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span>(old[i]+old[j]&gt;target)</div><div class="line">                {j--;</div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(old[i]+old[j]&lt;target)</div><div class="line">                {</div><div class="line">                i++;    </div><div class="line">            <span class="keyword">continue</span>;}</div><div class="line">            <span class="keyword">else</span> <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> n1=old[i];</div><div class="line">        <span class="keyword">int</span> n2=old[j];</div><div class="line">        <span class="keyword">int</span> a = -<span class="number">1</span>,b=-<span class="number">1</span>;</div><div class="line">        <span class="comment">//recover indexes of the original array</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> ii=<span class="number">0</span>; ii&lt;numbers.length;ii++){</div><div class="line">            <span class="keyword">if</span>(numbers[ii]==n1 || numbers[ii]==n2){</div><div class="line">                <span class="keyword">if</span>(a==-<span class="number">1</span>){a=ii+<span class="number">1</span>;}</div><div class="line">                <span class="keyword">else</span> b=ii+<span class="number">1</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        result[<span class="number">0</span>]=a;</div><div class="line">        result[<span class="number">1</span>]=b;</div><div class="line">        Arrays.sort(result);</div><div class="line">        <span class="keyword">return</span> result;    </div><div class="line">    }</div></pre></td></tr></table></figure>
 
-<h3 id="HashTable_Solution:">HashTable Solution:</h3>
-<p>During one pass, we put element and index (as key, value) into the map, meanwhile we search for target-num[i] in our map. If found, get the two indexes. This takes O(n) time.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">twoSum</span>(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) {  </div><div class="line">    </div><div class="line">       HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;(); </div><div class="line">       </div><div class="line">       <span class="keyword">int</span> n = numbers.length;  </div><div class="line">       <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];  </div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length; i++)  </div><div class="line">       {  </div><div class="line">           <span class="keyword">if</span> (map.containsKey(target - numbers[i]))  </div><div class="line">           {  </div><div class="line">               result[<span class="number">0</span>] = map.get(target-numbers[i]) + <span class="number">1</span>;  </div><div class="line">               result[<span class="number">1</span>] = i + <span class="number">1</span>;  </div><div class="line">               <span class="keyword">break</span>;  </div><div class="line">           }  </div><div class="line">           <span class="keyword">else</span>  </div><div class="line">           {  </div><div class="line">               map.put(numbers[i], i);  </div><div class="line">           }  </div><div class="line">       }  </div><div class="line">       <span class="keyword">return</span> result;  </div><div class="line">         </div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3Sum">3Sum</h2>
-<blockquote>
-<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.<br>Note:<br>Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)<br>The solution set must not contain duplicate triplets.<br>For example, given array S = {-1 0 1 2 -1 -4},<br>A solution set is:<br>(-1, 0, 1)<br>(-1, -1, 2)</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Brute force method.<br>Use three loops, for each i,j,k indexes check if 3 sum equals to 0. In order to avoid duplicate sets, we make the following obeservations:</p>
-<li>The first element must be non-positive</li>
-
-<li>Given the first element, the first two element must sum to non-positive</li>
-
-<p>Note: the Solution doesn’t handle duplicates, and O(N^3) exceeded limited time.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">threeSum</span>(<span class="keyword">int</span>[] num) {</div><div class="line">Arrays.sort(num);</div><div class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">ArrayList&lt;Integer&gt; each=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length;i++){</div><div class="line">   <span class="keyword">if</span>(num[i]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> j=i;j&lt;num.length;j++){</div><div class="line">       <span class="keyword">if</span>(num[i]+num[j]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> k=j;k&lt;num.length;k++){</div><div class="line">           <span class="keyword">if</span>(num[i]+num[j]+num[k]==<span class="number">0</span>){</div><div class="line">               each.add(num[i]);</div><div class="line">               each.add(num[j]);</div><div class="line">               each.add(num[k]);</div><div class="line">               res.add(each);</div><div class="line">               each.clear();                </div><div class="line">           }</div><div class="line">       }</div><div class="line">   }</div><div class="line">}</div><div class="line">   <span class="keyword">return</span> res;</div><div class="line">   </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Better_Solution:">Better Solution:</h3>
-<p>Similar to how we used 2 pointers in 2Sum, we now use three pointers to solve 3Sum. For removing duplicate sets, we first sort input.</p>
-<li>For the first element, we only run checking process for the first of duplicate elements.</li>
-
-<li>We use two pointers to check for cases such that num[i]+num[l]+num[r]==0. If found, move both pointers closer (don’t forget to skip duplicates), if not found, move only one pointer.</li>
-
-<p>Overall runtime is O(N^2) and we can guarantee no duplicate sets.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">threeSum</span>(<span class="keyword">int</span>[] num) {</div><div class="line">    Arrays.sort(num);</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length-<span class="number">2</span>;i++){</div><div class="line">       <span class="keyword">if</span>(num[i]&gt;<span class="number">0</span>) <span class="keyword">break</span>;</div><div class="line">       <span class="comment">//skip the duplicated first element</span></div><div class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(i&gt;<span class="number">0</span> && num[i]==num[i-<span class="number">1</span>]) <span class="keyword">continue</span>;</div><div class="line">       l=i+<span class="number">1</span>;</div><div class="line">       r=num.length-<span class="number">1</span>;</div><div class="line">       <span class="comment">//use left and right pointer to scan the rest </span></div><div class="line">       <span class="keyword">while</span>(l&lt;r){</div><div class="line">           <span class="keyword">if</span>(num[i]+num[l]+num[r]==<span class="number">0</span>){</div><div class="line">               ArrayList&lt;Integer&gt; tmp=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                    tmp.add(num[i]);</div><div class="line">                    tmp.add(num[l]);</div><div class="line">                    tmp.add(num[r]);</div><div class="line">                    res.add(tmp);</div><div class="line">                    l++;</div><div class="line">                    r--;</div><div class="line">                    <span class="comment">//skip duplicates</span></div><div class="line">                    <span class="keyword">while</span>(l&lt;r && num[l]==num[l-<span class="number">1</span>]) l++;</div><div class="line">                    <span class="keyword">while</span>(l&lt;r && num[r]==num[r+<span class="number">1</span>]) r--;</div><div class="line">           }</div><div class="line">           <span class="comment">//scan the rest starting with num[i]</span></div><div class="line">           <span class="keyword">else</span> <span class="keyword">if</span>(num[i]+num[l]+num[r]&lt;<span class="number">0</span>) l++;</div><div class="line">           <span class="keyword">else</span> r--;</div><div class="line">           </div><div class="line">       }</div><div class="line"> </div><div class="line">       </div><div class="line">        </div><div class="line">    }</div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="3Sum_Closest">3Sum Closest</h2>
-<blockquote>
-<p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.<br>For example, given array S = {-1 2 1 -4}, and target = 1.<br>The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).</p>
-</blockquote>
-<p>Similar to 3Sum, first sort the array and then we use three pointers to scan for the closest sum:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span>(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target) {</div><div class="line">     <span class="keyword">int</span> cls=Integer.MAX_VALUE,res=Integer.MAX_VALUE;</div><div class="line">     <span class="keyword">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">     <span class="keyword">int</span>[] newnum = <span class="keyword">new</span> <span class="keyword">int</span>[num.length];</div><div class="line">     System.arraycopy(num, <span class="number">0</span>, newnum, <span class="number">0</span>, num.length);  </div><div class="line">     Arrays.sort(newnum); </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num.length;i++){</div><div class="line">         l=i+<span class="number">1</span>; r=num.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">while</span>(l&lt;r){</div><div class="line">             <span class="keyword">int</span> sum=newnum[i]+newnum[l]+newnum[r];</div><div class="line">             <span class="keyword">int</span> diff=Math.abs(target-sum);</div><div class="line">             <span class="comment">//if match found, immediately return sum</span></div><div class="line">             <span class="keyword">if</span>(diff==<span class="number">0</span>) <span class="keyword">return</span> sum;</div><div class="line">             <span class="comment">//check if current cls is min, update sum</span></div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span> (diff&lt;cls){</div><div class="line">                 cls=diff;             </div><div class="line">                 res=sum;</div><div class="line">                 }</div><div class="line">             <span class="comment">//move pointers accordingly</span></div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span>(sum-target&lt;=<span class="number">0</span>) l++;</div><div class="line">             </div><div class="line">             <span class="keyword">else</span> {r--;}</div><div class="line">         }</div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="4Sum">4Sum</h2>
-<blockquote>
-<p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.<br>Note:<br>Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)<br>The solution set must not contain duplicate quadruplets.<br>For example, given array S = {1 0 -1 0 -2 2}, and target = 0.<br>    A solution set is:<br>    (-1,  0, 0, 1)<br>    (-2, -1, 1, 2)<br>    (-2,  0, 0, 2)</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<ul>
-<li>similar to 3sum, use to pointer to find quadruplets faster, O(n^3) time.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">fourSum</span>(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {</div><div class="line">     Arrays.sort(nums);</div><div class="line">     List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">      </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length-<span class="number">3</span>; i++){</div><div class="line">     <span class="keyword">if</span> (i &gt; <span class="number">0</span> && nums[i] == nums[i-<span class="number">1</span>]) <span class="comment">//remove duplicates</span></div><div class="line">       <span class="keyword">continue</span>;</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>; j&lt;nums.length-<span class="number">2</span>; j++){</div><div class="line">             <span class="keyword">if</span> (j&gt;i+<span class="number">1</span> && nums[j]==nums[j-<span class="number">1</span>]) <span class="comment">//remove duplicates</span></div><div class="line">         <span class="keyword">continue</span>;</div><div class="line">               <span class="keyword">int</span> left = j+<span class="number">1</span>;</div><div class="line">               <span class="keyword">int</span> right = nums.length-<span class="number">1</span>;</div><div class="line">               </div><div class="line">               <span class="keyword">while</span>(left&lt;nums.length && left&lt;right){</div><div class="line">                 </div><div class="line">                 <span class="keyword">if</span>(nums[left]+ nums[right] == target-nums[i]-nums[j]) {</div><div class="line">                     ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                     <span class="keyword">int</span> leftnum = nums[left]; </div><div class="line">                     tmp.add(nums[i]);</div><div class="line">                     tmp.add(nums[j]);</div><div class="line">                     tmp.add(nums[left]);</div><div class="line">                     tmp.add(nums[right]);</div><div class="line">                     res.add(tmp);</div><div class="line">                     <span class="keyword">while</span>(left&lt;nums.length && nums[left] == leftnum){</div><div class="line">                       left++;</div><div class="line">                     }</div><div class="line">                 }</div><div class="line">                 <span class="keyword">else</span> <span class="keyword">if</span>(nums[left]+ nums[right] &gt; target-nums[i]-nums[j]){</div><div class="line">                   right--;</div><div class="line">                 }</div><div class="line">                 <span class="keyword">else</span>{</div><div class="line">                   left++;</div><div class="line">                 }</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }      </div><div class="line">       <span class="keyword">return</span> res;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fzydii%2Flilly-wood-the-prick-and-robin-schulz-prayer-in-c-robin-schulz-remix-official&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/24/8.24/#more">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -230,9 +184,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HashMap/"> #HashMap </a>
+            <a href="/tags/Math/"> #Math </a>
           
-            <a href="/tags/Array/"> #Array </a>
+            <a href="/tags/BitManipulation/"> #BitManipulation </a>
           
         </div>
       
@@ -259,7 +213,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/16/8.15/">
+              <a class="post-title-link" href="/2015/08/24/8.15/">
                 Swap Nodes in Pairs
               </a>
             
@@ -269,7 +223,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-08-16
+          Posted on 2015-08-24
         </span>
 
         
@@ -289,8 +243,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/16/8.15/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/16/8.15/"></span>
+            <a href="/2015/08/24/8.15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/24/8.15/"></span>
             </a>
           </span>
           
@@ -311,7 +265,7 @@
 </blockquote>
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/16/8.15/#more">
+            <a class="btn" href="/2015/08/24/8.15/#more">
               Read more &raquo;
             </a>
           </div>
@@ -324,6 +278,99 @@
         <div class="post-tags">
           
             <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/24/1.7/">
+                2Sum, 3Sum, 3Sum Closest, 4Sum
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-08-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/24/1.7/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/24/1.7/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="2Sum">2Sum</h2>
+<blockquote>
+<p>Given an array of integers, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/24/1.7/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HashMap/"> #HashMap </a>
+          
+            <a href="/tags/Array/"> #Array </a>
           
         </div>
       
@@ -511,99 +558,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/07/5.30/">
-                Jump Game, Jump Game II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-06-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/07/5.30/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/07/5.30/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Jump_Game">Jump Game</h2>
-<blockquote>
-<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Determine if you are able to reach the last index.<br>For example:<br>A = [2,3,1,1,4], return true.<br>A = [3,2,1,0,4], return false.</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/06/07/5.30/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DP/"> #DP </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -644,7 +598,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -658,7 +612,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
