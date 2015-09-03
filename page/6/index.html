@@ -120,6 +120,82 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/blackmirror/">
+                Black Mirror Christmas Special
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/追剧/">追剧</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/blackmirror/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/blackmirror/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <object width="1140" height="880"><param name="movie" value="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page"><param name="allowFullScreen" value="true"><param name="allowscriptaccess" value="always"><param name="wmode" value="Transparent"><embed width="1140" height="488" wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page" type="application/x-shockwave-flash"></object>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/2.5/">
                 Roman to Integer, Integer to Roman, ZigZag Conversion
               </a>
@@ -673,128 +749,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.5/">
-                Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.5/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.5/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Remove_Duplicates_from_Sorted_List_I">Remove Duplicates from Sorted List I</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all duplicates such that each element appear only once.<br>For example,<br>Given 1-&gt;1-&gt;2, return 1-&gt;2.<br>Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Two loops One pointer solution, only move cursor to next when we confirmed cur.next.val!==cur.val.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">    ListNode h = head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur= head;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.next.val==cur.val)</div><div class="line">        cur.next=cur.next.next;</div><div class="line">        cur=cur.next;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Or we can use only one loop:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">      ListNode h = head;</div><div class="line">      <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">      ListNode cur= head;</div><div class="line">      <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">          ListNode tmp=cur.next;</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="keyword">null</span>&&tmp.val==cur.val){</div><div class="line">              cur.next=tmp.next;}</div><div class="line">          <span class="keyword">else</span> cur=cur.next;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> h;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_List_II">Remove Duplicates from Sorted List II</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.<br>Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Similar to how we deleted duplicates in I, now we add a pre pointer to record the last non-duplicate element, and a dummy head to deal with cases where head needs to be removed. Note: we can only move pre to next when we confirmed now cur is pointing to a unique element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">       ListNode dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next=head;</div><div class="line">       ListNode cur=head, pre=dummy;</div><div class="line">       <span class="keyword">while</span>(cur!=<span class="keyword">null</span>&& cur.next!=<span class="keyword">null</span>){</div><div class="line">           <span class="comment">//if dup found, keep cur at last dup element</span></div><div class="line">           <span class="keyword">if</span>(cur.val==cur.next.val){</div><div class="line">           <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.val==cur.next.val){cur=cur.next;}</div><div class="line">           <span class="comment">//remove the dups, remember to move the cur for detecting more dups</span></div><div class="line">           pre.next=cur.next;</div><div class="line">           cur=cur.next;}</div><div class="line">           <span class="comment">//move the two pointers next when no dup found</span></div><div class="line">           <span class="keyword">else</span> {pre=pre.next; cur=cur.next;}     </div><div class="line">       }       </div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array">Remove Duplicates from Sorted Array</h2>
-<blockquote>
-<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = [1,1,2],<br>Your function should return length = 2, and A is now [1,2].</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<p>Just replace current element with the first non-duplicate, in other words, non-equal-to-current element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">          <span class="keyword">int</span> n=A.length;</div><div class="line">          <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">          <span class="keyword">if</span>(A.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">              <span class="comment">//count points to the last element of our new array, i pointer finds the next non-dup element</span></div><div class="line">              <span class="keyword">if</span>(A[i]!=A[count]){A[++count]=A[i];}</div><div class="line">          }<span class="keyword">return</span> count+<span class="number">1</span>;</div><div class="line">      }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array_II">Remove Duplicates from Sorted Array II</h2>
-<blockquote>
-<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = [1,1,1,2,2,3],<br>Your function should return length = 5, and A is now [1,1,2,2,3].</p>
-</blockquote>
-<h3 id="Solution-3">Solution</h3>
-<p>The solution is a bit tricky. We use two pointers, pre to keep the second duplicate element, and cur to keep the first element different from current duplicate element. Then we replcace the next element of pre, to whatever next element cur is pointing at.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       <span class="keyword">int</span> n = A.length;</div><div class="line">       <span class="keyword">int</span> pre=<span class="number">1</span>,cur=<span class="number">2</span>;</div><div class="line">       <span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>||n==<span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">       <span class="keyword">while</span>(cur&lt;n){</div><div class="line">           <span class="comment">//confirm no three dups in new array  </span></div><div class="line">           <span class="keyword">if</span>(A[cur]==A[pre-<span class="number">1</span>]){</div><div class="line">               <span class="comment">//cur points to the first element different from current dups</span></div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> {</div><div class="line">               <span class="comment">//move pre to the third dup element</span></div><div class="line">               pre++;</div><div class="line">               <span class="comment">//replace the third dup with the next element </span></div><div class="line">               A[pre]=A[cur];</div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> pre+<span class="number">1</span>;</div><div class="line">       </div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -835,7 +789,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

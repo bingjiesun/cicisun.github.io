@@ -120,6 +120,128 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/1.5/">
+                Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.5/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.5/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Remove_Duplicates_from_Sorted_List_I">Remove Duplicates from Sorted List I</h2>
+<blockquote>
+<p>Given a sorted linked list, delete all duplicates such that each element appear only once.<br>For example,<br>Given 1-&gt;1-&gt;2, return 1-&gt;2.<br>Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Two loops One pointer solution, only move cursor to next when we confirmed cur.next.val!==cur.val.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">    ListNode h = head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur= head;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.next.val==cur.val)</div><div class="line">        cur.next=cur.next.next;</div><div class="line">        cur=cur.next;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or we can use only one loop:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">      ListNode h = head;</div><div class="line">      <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">      ListNode cur= head;</div><div class="line">      <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">          ListNode tmp=cur.next;</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="keyword">null</span>&&tmp.val==cur.val){</div><div class="line">              cur.next=tmp.next;}</div><div class="line">          <span class="keyword">else</span> cur=cur.next;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> h;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_List_II">Remove Duplicates from Sorted List II</h2>
+<blockquote>
+<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.<br>Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Similar to how we deleted duplicates in I, now we add a pre pointer to record the last non-duplicate element, and a dummy head to deal with cases where head needs to be removed. Note: we can only move pre to next when we confirmed now cur is pointing to a unique element.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">       ListNode dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next=head;</div><div class="line">       ListNode cur=head, pre=dummy;</div><div class="line">       <span class="keyword">while</span>(cur!=<span class="keyword">null</span>&& cur.next!=<span class="keyword">null</span>){</div><div class="line">           <span class="comment">//if dup found, keep cur at last dup element</span></div><div class="line">           <span class="keyword">if</span>(cur.val==cur.next.val){</div><div class="line">           <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.val==cur.next.val){cur=cur.next;}</div><div class="line">           <span class="comment">//remove the dups, remember to move the cur for detecting more dups</span></div><div class="line">           pre.next=cur.next;</div><div class="line">           cur=cur.next;}</div><div class="line">           <span class="comment">//move the two pointers next when no dup found</span></div><div class="line">           <span class="keyword">else</span> {pre=pre.next; cur=cur.next;}     </div><div class="line">       }       </div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_Array">Remove Duplicates from Sorted Array</h2>
+<blockquote>
+<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = [1,1,2],<br>Your function should return length = 2, and A is now [1,2].</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<p>Just replace current element with the first non-duplicate, in other words, non-equal-to-current element.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">          <span class="keyword">int</span> n=A.length;</div><div class="line">          <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">          <span class="keyword">if</span>(A.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">              <span class="comment">//count points to the last element of our new array, i pointer finds the next non-dup element</span></div><div class="line">              <span class="keyword">if</span>(A[i]!=A[count]){A[++count]=A[i];}</div><div class="line">          }<span class="keyword">return</span> count+<span class="number">1</span>;</div><div class="line">      }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Duplicates_from_Sorted_Array_II">Remove Duplicates from Sorted Array II</h2>
+<blockquote>
+<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = [1,1,1,2,2,3],<br>Your function should return length = 5, and A is now [1,1,2,2,3].</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<p>The solution is a bit tricky. We use two pointers, pre to keep the second duplicate element, and cur to keep the first element different from current duplicate element. Then we replcace the next element of pre, to whatever next element cur is pointing at.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       <span class="keyword">int</span> n = A.length;</div><div class="line">       <span class="keyword">int</span> pre=<span class="number">1</span>,cur=<span class="number">2</span>;</div><div class="line">       <span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>||n==<span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">       <span class="keyword">while</span>(cur&lt;n){</div><div class="line">           <span class="comment">//confirm no three dups in new array  </span></div><div class="line">           <span class="keyword">if</span>(A[cur]==A[pre-<span class="number">1</span>]){</div><div class="line">               <span class="comment">//cur points to the first element different from current dups</span></div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> {</div><div class="line">               <span class="comment">//move pre to the third dup element</span></div><div class="line">               pre++;</div><div class="line">               <span class="comment">//replace the third dup with the next element </span></div><div class="line">               A[pre]=A[cur];</div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> pre+<span class="number">1</span>;</div><div class="line">       </div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/1.27/">
                 Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix
               </a>
@@ -784,128 +906,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.20/">
-                Subsets, Subsets II, Missing Ranges
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.20/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.20/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Subsets">Subsets</h2>
-<blockquote>
-<p>Given a set of distinct integers, S, return all possible subsets.<br>Note:<br>Elements in a subset must be in non-descending order.<br>The solution set must not contain duplicate subsets.<br>For example,<br>If S = [1,2,3], a solution is:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">3</span>],</div><div class="line">  [<span class="number">1</span>],</div><div class="line">  [<span class="number">2</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">2</span>,<span class="number">3</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">2</span>],</div><div class="line">  []</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<h3 id="Non-recursive_Solution"><a href="https://leetcodenotes.wordpress.com/2013/10/08/leetcode-subsets-2-%E7%BB%99%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%EF%BC%8C%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E5%8D%87%E5%BA%8F%E7%9A%84%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84subsets/" target="_blank" rel="external">Non-recursive Solution</a></h3>
-<p>Just keep adding current number to the result collection..<br>Pay attention to the use of add and addAll</p>
-<p>i=0 | [[], [1]]<br>i=1 | [[2], [1,2]]<br>i=2 | [[3], [1,3], [2,3], [1,2,3]]</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">subsets</span>(<span class="keyword">int</span>[] S) {</div><div class="line">        Arrays.sort(S);</div><div class="line">        ArrayList&lt;Integer&gt; subset=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ();</div><div class="line">        <span class="comment">//add empty set</span></div><div class="line">        subsets.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">        <span class="comment">//add set from layers </span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;S.length;i++){</div><div class="line">             ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsetsfori=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">            <span class="keyword">for</span>(ArrayList&lt;Integer&gt; prev: subsets){</div><div class="line">                ArrayList&lt;Integer&gt; tmp= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                tmp.addAll(prev);</div><div class="line">                tmp.add(S[i]);</div><div class="line">                subsetsfori.add(tmp);</div><div class="line">        }</div><div class="line">        subsets.addAll(subsetsfori);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> subsets;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive_Solution"><a href="http://blog.csdn.net/u011095253/article/details/9158397" target="_blank" rel="external">Recursive Solution</a></h3>
-<p>Similar to DFS, i refers to start position of a subset</p>
-<p>i=0 | [[], [1], [1,2], [1,2,3]]<br>i=1 | [[2], [2,3]]<br>i=2 | [[3]]</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">subsets</span>(<span class="keyword">int</span>[] S) {</div><div class="line">        Arrays.sort(S);</div><div class="line">        ArrayList&lt;Integer&gt; subset=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ();</div><div class="line">        subsets.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">        subset_helper(subsets, subset, <span class="number">0</span>, S);</div><div class="line">    <span class="keyword">return</span> subsets;</div><div class="line">}</div><div class="line">    <span class="keyword">private</span>  <span class="keyword">void</span> <span class="title">subset_helper</span>(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets, ArrayList&lt;Integer&gt; subset, <span class="keyword">int</span> start, <span class="keyword">int</span>[] s){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;s.length;i++){</div><div class="line">            subset.add(s[i]);</div><div class="line">            <span class="comment">//add new arraylist subset here</span></div><div class="line">            subsets.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(subset));</div><div class="line">            subset_helper(subsets, subset, i+<span class="number">1</span>, s);</div><div class="line">            subset.remove(subset.size()-<span class="number">1</span>);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Subsets_II">Subsets II</h2>
-<blockquote>
-<p>Given a collection of integers that might contain duplicates, S, return all possible subsets.<br>Note:<br>Elements in a subset must be in non-descending order.<br>The solution set must not contain duplicate subsets.<br>For example,<br>If S = [1,2,2], a solution is:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">2</span>],</div><div class="line">  [<span class="number">1</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">2</span>,<span class="number">2</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">2</span>],</div><div class="line">  []</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<p>Only difference is the added while loop.<br>If completed current layer, and found the next element is the same then skip.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">subsetsWithDup</span>(<span class="keyword">int</span>[] num) {</div><div class="line">          Arrays.sort(num);</div><div class="line">        ArrayList&lt;Integer&gt; subset=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ();</div><div class="line">        subsets.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">        subset_helper(subsets, subset, <span class="number">0</span>, num);</div><div class="line">    <span class="keyword">return</span> subsets;</div><div class="line">    }</div><div class="line">    </div><div class="line">  <span class="keyword">private</span>  <span class="keyword">void</span> <span class="title">subset_helper</span>(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsets, ArrayList&lt;Integer&gt; subset, <span class="keyword">int</span> start, <span class="keyword">int</span>[] s){</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;s.length;i++){</div><div class="line">      subset.add(s[i]);</div><div class="line">      <span class="comment">//add new arraylist subset here</span></div><div class="line">      subsets.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(subset));</div><div class="line">      subset_helper(subsets, subset, i+<span class="number">1</span>, s);</div><div class="line">      subset.remove(subset.size()-<span class="number">1</span>);</div><div class="line">      <span class="keyword">while</span>(i &lt; s.length-<span class="number">1</span> && s[i]==s[i+<span class="number">1</span>]) </div><div class="line">      {i++;}</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="Missing_Ranges">Missing Ranges</h2>
-<blockquote>
-<p>Given a sorted integer array where the range of elements are [lower, upper] inclusive, return its missing ranges.<br>For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return [“2”, “4-&gt;49”, “51-&gt;74”, “76-&gt;99”].</p>
-</blockquote>
-<p>Main idea: output accrodingly when two elements differ&gt;=2, pay attention to edge cases.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">findmissingRanges</span>(<span class="keyword">int</span>[] num, <span class="keyword">int</span> lower, <span class="keyword">int</span> upper){</div><div class="line">    ArrayList&lt;String&gt; res=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">   </div><div class="line">      <span class="keyword">if</span>(num.length==<span class="number">0</span>){</div><div class="line">        <span class="keyword">if</span>(lower!=upper) res.add(lower+<span class="string">"-&gt;"</span>+upper);</div><div class="line">        <span class="keyword">else</span> res.add(lower+<span class="string">""</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(lower&lt;num[<span class="number">0</span>]){</div><div class="line">        <span class="keyword">if</span>(num[<span class="number">0</span>]-lower&gt;<span class="number">1</span>) res.add(lower+<span class="string">"-&gt;"</span>+(num[<span class="number">0</span>]-<span class="number">1</span>));</div><div class="line">        <span class="keyword">else</span> res.add(lower+<span class="string">""</span>);</div><div class="line">      }</div><div class="line">      </div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;num.length-<span class="number">1</span>;i++){</div><div class="line">        <span class="keyword">if</span>(num[i+<span class="number">1</span>]-num[i]&gt;<span class="number">2</span>) res.add((num[i]+<span class="number">1</span>)+<span class="string">"-&gt;"</span>+(num[i+<span class="number">1</span>]-<span class="number">1</span>)+<span class="string">""</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(num[i+<span class="number">1</span>]-num[i]==<span class="number">2</span>) res.add(num[i]+<span class="number">1</span>+<span class="string">""</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">continue</span>;</div><div class="line">      }</div><div class="line">      </div><div class="line">      <span class="keyword">if</span>(num[num.length-<span class="number">1</span>]&lt;upper){</div><div class="line">        <span class="keyword">if</span>(upper-num[num.length-<span class="number">1</span>]&gt;<span class="number">1</span>) res.add(num[num.length-<span class="number">1</span>]+<span class="number">1</span>+<span class="string">"-&gt;"</span>+upper);</div><div class="line">        <span class="keyword">else</span> res.add(<span class="string">""</span>+upper);</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> res;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<p>More Concise:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;String&gt; <span class="title">findMissingRanges</span>(<span class="keyword">int</span>[] vals, <span class="keyword">int</span> start, <span class="keyword">int</span> end) {</div><div class="line">       List&lt;String&gt; ranges = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">       <span class="keyword">int</span> prev = start - <span class="number">1</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=vals.length; i++) {</div><div class="line">           <span class="keyword">int</span> curr = (i==vals.length) ? end + <span class="number">1</span> : vals[i];</div><div class="line">           <span class="keyword">if</span> ( curr-prev&gt;=<span class="number">2</span> ) {</div><div class="line">               ranges.add(getRange(prev+<span class="number">1</span>, curr-<span class="number">1</span>));</div><div class="line">           }</div><div class="line">           prev = curr;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> ranges;</div><div class="line">   }</div><div class="line">   <span class="keyword">private</span> String <span class="title">getRange</span>(<span class="keyword">int</span> from, <span class="keyword">int</span> to) {</div><div class="line">       <span class="keyword">return</span> (from==to) ? String.valueOf(from) : from + <span class="string">"-&gt;"</span> +to;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fahainen%2Ftwo-door-cinema-club-golden-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -946,7 +946,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

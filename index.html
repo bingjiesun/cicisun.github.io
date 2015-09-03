@@ -120,6 +120,99 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/03/9.3/">
+                Combination Sum
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-03
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/03/9.3/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/9.3/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Combination_Sum">Combination Sum</h2>
+<blockquote>
+<p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">    List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    Arrays.sort(candidates);</div><div class="line">    dfs(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">	<span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">		tmp.add(candidates[i]);</div><div class="line">		dfs(res,tmp,candidates,target-candidates[i],i);</div><div class="line">		tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/24/8.24/">
                 Divide Two Integers
               </a>
@@ -470,94 +563,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/07/angular/">
-                Learning AngularJS day by day
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-08-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/学习/">学习</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/07/angular/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/07/angular/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>I’ll be using AngularJS for a project at work, mainly using <a href="http://www.amazon.com/Mastering-Web-Application-Development-AngularJS/dp/1782161821" target="_blank" rel="external">Mastering Web Application Development with AngularJS</a> and <a href="http://henriquat.re/" target="_blank" rel="external">This ebook</a>.</p>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/07/angular/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/AngularJS/"> #AngularJS </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -598,7 +603,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

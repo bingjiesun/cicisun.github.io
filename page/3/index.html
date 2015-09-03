@@ -120,6 +120,96 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/01/scrapy/">
+                Web scraping with Scrapy
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/学习/">学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/scrapy/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/scrapy/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/01/scrapy/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crawler/"> #Crawler </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/01/Paganini/">
                 Niccolo Paganini Selected Works
               </a>
@@ -592,145 +682,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/12/4.6/">
-                Number of Islands
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-04-12
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/04/12/4.6/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/12/4.6/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Update—Leetcode now includes this problem:</p>
-<h2 id="Number_of_Islands">Number of Islands</h2>
-<blockquote>
-<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
-
-<h2 id="Solution">Solution</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
-<blockquote>
-<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
-
-<p>Return 5， 1， 2</p>
-<h3 id="Solution-1">Solution</h3>
-<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
-<ul>
-<li>Mark each node visited to avoid duplicated counting.</li>
-</ul>
-<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
-    <span class="keyword">int</span> one,count;
-    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
-    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
-
-    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
-        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
-
-            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
-                res.add(dfs(i,j, mat, mark));
-            }
-        }
-    }
-    <span class="keyword">return</span> res;
-}
-
-<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
-    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
-        <span class="keyword">return</span> <span class="number">0</span>;
-    mark[i][j] = <span class="number">1</span>;
-    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
-}
-
-<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
-    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
-    countIslands c = <span class="keyword">new</span> countIslands();
-    System.<span class="keyword">out</span>.println(c.countIslands(test));
-}
-</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -771,7 +722,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
