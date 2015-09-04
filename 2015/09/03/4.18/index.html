@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-05-04
+          Posted on 2015-09-04
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/03/4.18/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/03/4.18/"></span>
+            <a href="/2015/09/03/4.18/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/4.18/"></span>
             </a>
           </span>
           
@@ -189,22 +189,6 @@
 
 <h3 id="Map_+_List_Solution">Map + List Solution</h3>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> HashMap&lt;Integer,Integer&gt; map;</div><div class="line"><span class="keyword">private</span> ArrayList&lt;Integer&gt; list;</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cap;</div><div class="line"><span class="keyword">public</span> <span class="title">LRUCache</span>(<span class="keyword">int</span> cap){</div><div class="line">    map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line">    list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">this</span>.cap = cap; </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span>(<span class="keyword">int</span> key){</div><div class="line">    <span class="keyword">if</span>(!map.containsKey(key)) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> var = map.get(key);</div><div class="line">    list.remove(list.indexOf(key));</div><div class="line">    list.add(key);</div><div class="line">    <span class="keyword">return</span> var;</div><div class="line">}</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span>(<span class="keyword">int</span> key, <span class="keyword">int</span> value){</div><div class="line">    <span class="keyword">int</span> val = get(key);</div><div class="line">    map.put(key, value);</div><div class="line">    <span class="keyword">if</span>(val == -<span class="number">1</span>){</div><div class="line">        list.add(key);</div><div class="line">        <span class="keyword">if</span>(map.size()&gt; cap){</div><div class="line">            map.remove(list.get(<span class="number">0</span>));</div><div class="line">            list.remove(<span class="number">0</span>);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Generate_Parentheses">Generate Parentheses</h2>
-<blockquote>
-<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br>“((()))”, “(()())”, “(())()”, “()(())”, “()()()”</p>
-</blockquote>
-<h3 id="DFS_+_Backtracking_Solution">DFS + Backtracking Solution</h3>
-<ul>
-<li>left/right represents how many l/r brackets left for use</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder(); </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, sb, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, StringBuilder sb,<span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(sb.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">'('</span>), left-<span class="number">1</span>, right);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,sb.append(<span class="string">')'</span>), left, right-<span class="number">1</span>);</div><div class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<ul>
-<li>If we use String here, no need to delete when backtracking</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span>(<span class="keyword">int</span> n) {</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    String tmp = <span class="string">""</span>; </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, tmp, n, n);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">    </div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(ArrayList&lt;String&gt; res, String tmp, <span class="keyword">int</span> left, <span class="keyword">int</span> right){</div><div class="line">    <span class="keyword">if</span>(left &gt; right) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> && right == <span class="number">0</span>){</div><div class="line">        res.add(<span class="keyword">new</span> String(tmp));</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(left&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">"("</span>, left-<span class="number">1</span>, right);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(right&gt;<span class="number">0</span>){</div><div class="line">        dfs(res,tmp+<span class="string">")"</span>, left, right-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="Search_Insert_Position">Search Insert Position</h2>
@@ -271,13 +255,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/07/5.30/">Jump Game, Jump Game II</a>
+              <a href="/2015/09/03/4.12/">Single Number, Single Number II, Decode Ways, Triangle</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/01/pianosheets/">List of piano sheet to learn</a>
+              <a href="/2015/09/03/1.24/">Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Word Ladder, Word Ladder II</a>
             
           </div>
         </div>
@@ -338,7 +322,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -397,7 +381,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First_Problem_ఠ_ఠ"><span class="nav-number">1.</span> <span class="nav-text">First Problem ఠ_ఠ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The_Great_Tree-List_Recursion_Problem"><span class="nav-number">2.</span> <span class="nav-text">The Great Tree-List Recursion Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU_Cache"><span class="nav-number">3.</span> <span class="nav-text">LRU Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashMap_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">LinkedHashMap Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map_+_List_Solution"><span class="nav-number">3.2.</span> <span class="nav-text">Map + List Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generate_Parentheses"><span class="nav-number">4.</span> <span class="nav-text">Generate Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_+_Backtracking_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">DFS + Backtracking Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search_Insert_Position"><span class="nav-number">5.</span> <span class="nav-text">Search Insert Position</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary_Search_Solution"><span class="nav-number">5.1.</span> <span class="nav-text">Binary Search Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest_Common_Prefix"><span class="nav-number">6.</span> <span class="nav-text">Longest Common Prefix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">6.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked_List_Cycle"><span class="nav-number">7.</span> <span class="nav-text">Linked List Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast_Slow_Pointer_Solution"><span class="nav-number">7.1.</span> <span class="nav-text">Fast Slow Pointer Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked_List_Cycle_II"><span class="nav-number">8.</span> <span class="nav-text">Linked List Cycle II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">8.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First_Problem_ఠ_ఠ"><span class="nav-number">1.</span> <span class="nav-text">First Problem ఠ_ఠ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The_Great_Tree-List_Recursion_Problem"><span class="nav-number">2.</span> <span class="nav-text">The Great Tree-List Recursion Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU_Cache"><span class="nav-number">3.</span> <span class="nav-text">LRU Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashMap_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">LinkedHashMap Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map_+_List_Solution"><span class="nav-number">3.2.</span> <span class="nav-text">Map + List Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search_Insert_Position"><span class="nav-number">4.</span> <span class="nav-text">Search Insert Position</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary_Search_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">Binary Search Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest_Common_Prefix"><span class="nav-number">5.</span> <span class="nav-text">Longest Common Prefix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked_List_Cycle"><span class="nav-number">6.</span> <span class="nav-text">Linked List Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast_Slow_Pointer_Solution"><span class="nav-number">6.1.</span> <span class="nav-text">Fast Slow Pointer Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked_List_Cycle_II"><span class="nav-number">7.</span> <span class="nav-text">Linked List Cycle II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">7.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -970,8 +954,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/05/03/4.18/';
-      var disqus_url = 'http://sunbingjie.tk/2015/05/03/4.18/';
+      var disqus_identifier = '2015/09/03/4.18/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/03/4.18/';
 
       (function(){
         var dsq = document.createElement('script');

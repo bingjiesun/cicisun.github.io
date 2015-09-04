@@ -31,7 +31,7 @@
 
 
 
-  <title> Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Valid Parentheses, Valid Sudoku, Word Ladder, Word Ladder II // Cici's Blog </title>
+  <title> Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Word Ladder, Word Ladder II // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Valid Parentheses, Valid Sudoku, Word Ladder, Word Ladder II
+              Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Word Ladder, Word Ladder II
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-02-26
+          Posted on 2015-09-04
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.24/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.24/"></span>
+            <a href="/2015/09/03/1.24/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/1.24/"></span>
             </a>
           </span>
           
@@ -205,24 +205,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Stack&lt;Integer&gt; stk=<span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">   Stack&lt;Integer&gt; minstk=<span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">   </div><div class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span>(<span class="keyword">int</span> x) {</div><div class="line">       stk.push(x);</div><div class="line">       <span class="keyword">if</span>(minstk.isEmpty() || x&lt;=minstk.peek()){minstk.push(x);}</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span>() {</div><div class="line">    <span class="keyword">if</span>(stk.isEmpty()) <span class="keyword">return</span>;     </div><div class="line">       <span class="keyword">int</span> tmp=stk.pop();</div><div class="line">       <span class="keyword">if</span>(!minstk.isEmpty() && tmp==minstk.peek()){minstk.pop();}</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span>() {</div><div class="line">    <span class="keyword">if</span>(stk.isEmpty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> stk.peek();</div><div class="line">   }</div><div class="line">   <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMin</span>() {</div><div class="line">       <span class="keyword">if</span>(!minstk.isEmpty()) <span class="keyword">return</span> minstk.peek();</div><div class="line">       <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="Valid_Parentheses">Valid Parentheses</h2>
-<blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-<h3 id="Solution-3">Solution</h3>
-<p>Just use a stack, push when empty, or left parenthese found; pop when found a match.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span>(String s) {</div><div class="line">    Stack&lt;Character&gt; stk=<span class="keyword">new</span> Stack&lt;Character&gt;();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">        Character tmp=s.charAt(i);</div><div class="line">        <span class="keyword">if</span>(stk.isEmpty() && (tmp==<span class="string">')'</span> || tmp==<span class="string">']'</span> || tmp==<span class="string">'}'</span>)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">if</span>(!stk.isEmpty() && isMatch(stk.peek(), tmp)) </div><div class="line">            stk.pop();</div><div class="line">        <span class="keyword">else</span> stk.push(tmp);</div><div class="line">    } <span class="keyword">return</span> stk.isEmpty();</div><div class="line">}</div><div class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(Character a, Character b){</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'('</span> && b==<span class="string">')'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'['</span> && b==<span class="string">']'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(a==<span class="string">'{'</span> && b==<span class="string">'}'</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Valid_Sudoku">Valid Sudoku</h2>
-<blockquote>
-<p>Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.<br>The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="pic"><br>A partially filled sudoku which is valid.<br>Note:<br>A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.</p>
-</blockquote>
-<h3 id="Solution-4">Solution</h3>
-<p>Three HashSets, return false when add failure.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidSudoku</span>(<span class="keyword">char</span>[][] board) {</div><div class="line">    <span class="keyword">int</span> len=board[<span class="number">0</span>].length;</div><div class="line">    <span class="comment">//column</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len;i++){</div><div class="line">        HashSet&lt;Character&gt; col=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span> ;j&lt;len;j++){</div><div class="line">        <span class="keyword">if</span>(board[j][i]!=<span class="string">'.'</span> && !col.add(board[j][i])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    }</div><div class="line">    <span class="comment">//row</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len;i++){</div><div class="line">        HashSet&lt;Character&gt; row=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span> ;j&lt;len;j++){</div><div class="line">        <span class="keyword">if</span>(board[i][j]!=<span class="string">'.'</span> && !row.add(board[i][j])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    }</div><div class="line">    <span class="comment">//tuple</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">3</span>;j++){</div><div class="line">            HashSet&lt;Character&gt; tup=<span class="keyword">new</span> HashSet&lt;Character&gt;();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> m=i*<span class="number">3</span>;m&lt;<span class="number">3</span>+i*<span class="number">3</span>;m++){</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> n=j*<span class="number">3</span>;n&lt;<span class="number">3</span>+j*<span class="number">3</span>;n++){</div><div class="line">                    <span class="keyword">if</span>(board[m][n]!=<span class="string">'.'</span> && !tup.add(board[m][n])) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
 <h2 id="Word_Ladder">Word Ladder</h2>
 <blockquote>
 <p>Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:<br>Only one letter can be changed at a time<br>Each intermediate word must exist in the dictionary<br>For example,<br>Given:<br>start = “hit”<br>end = “cog”<br>dict = [“hot”,”dot”,”dog”,”lot”,”log”]<br>As one shortest transformation is “hit” -&gt; “hot” -&gt; “dot” -&gt; “dog” -&gt; “cog”,<br>return its length 5.<br>Note:<br>Return 0 if there is no such transformation sequence.<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.</p>
@@ -274,13 +256,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/02/25/1.27/">Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix</a>
+              <a href="/2015/09/03/4.18/">The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/02/25/1.23/">Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree</a>
+              <a href="/2015/09/03/9.3/">Combination Sum,Combination Sum II, Combination Sum III</a>
             
           </div>
         </div>
@@ -341,7 +323,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -400,7 +382,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Plus_One"><span class="nav-number">1.</span> <span class="nav-text">Plus One</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Largest_Number"><span class="nav-number">2.</span> <span class="nav-text">Largest Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pow(x,_n)"><span class="nav-number">3.</span> <span class="nav-text">Pow(x, n)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Recursive Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sqrt(x)"><span class="nav-number">4.</span> <span class="nav-text">Sqrt(x)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">4.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Min_Stack"><span class="nav-number">5.</span> <span class="nav-text">Min Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Parentheses"><span class="nav-number">6.</span> <span class="nav-text">Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">6.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Sudoku"><span class="nav-number">7.</span> <span class="nav-text">Valid Sudoku</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">7.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word_Ladder"><span class="nav-number">8.</span> <span class="nav-text">Word Ladder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS_Search_Solution"><span class="nav-number">8.1.</span> <span class="nav-text">BFS Search Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word_Ladder_II"><span class="nav-number">9.</span> <span class="nav-text">Word Ladder II</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Plus_One"><span class="nav-number">1.</span> <span class="nav-text">Plus One</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Largest_Number"><span class="nav-number">2.</span> <span class="nav-text">Largest Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pow(x,_n)"><span class="nav-number">3.</span> <span class="nav-text">Pow(x, n)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Recursive Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sqrt(x)"><span class="nav-number">4.</span> <span class="nav-text">Sqrt(x)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">4.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Min_Stack"><span class="nav-number">5.</span> <span class="nav-text">Min Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word_Ladder"><span class="nav-number">6.</span> <span class="nav-text">Word Ladder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS_Search_Solution"><span class="nav-number">6.1.</span> <span class="nav-text">BFS Search Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word_Ladder_II"><span class="nav-number">7.</span> <span class="nav-text">Word Ladder II</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -973,8 +955,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/02/25/1.24/';
-      var disqus_url = 'http://sunbingjie.tk/2015/02/25/1.24/';
+      var disqus_identifier = '2015/09/03/1.24/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/03/1.24/';
 
       (function(){
         var dsq = document.createElement('script');
