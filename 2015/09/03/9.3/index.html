@@ -31,7 +31,7 @@
 
 
 
-  <title> Combination Sum // Cici's Blog </title>
+  <title> Combination Sum,Combination Sum II, Combination Sum III // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Combination Sum
+              Combination Sum,Combination Sum II, Combination Sum III
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-09-03
+          Posted on 2015-09-04
         </span>
 
         
@@ -166,7 +166,29 @@
 <p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
 </blockquote>
 <h3 id="Solution">Solution</h3>
+<p>Simple DFS</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">    List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    Arrays.sort(candidates);</div><div class="line">    dfs(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">	<span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">		tmp.add(candidates[i]);</div><div class="line">		dfs(res,tmp,candidates,target-candidates[i],i);</div><div class="line">		tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Combination_Sum_II">Combination Sum II</h2>
+<blockquote>
+<p>Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>Each number in C may only be used once in the combination.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 10,1,2,7,6,1,5 and target 8,<br>A solution set is:<br>[1, 7]<br>[1, 2, 5]<br>[2, 6]<br>[1, 1, 6]</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Two small changes:</p>
+<ul>
+<li>pass in i+1 as new start in each recursive call</li>
+<li>keep track of a prev value of the last value in the last tuple, if the next one equals to prev then it is duplicate</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum2</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">        List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">        Arrays.sort(candidates);</div><div class="line">        dfs2(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs2</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">         </div><div class="line">        <span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> prev=-<span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">            <span class="keyword">if</span>(target&lt;candidates[i]) <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span>(candidates[i]!=prev){</div><div class="line">                tmp.add(candidates[i]);</div><div class="line">                dfs2(res,tmp,candidates,target-candidates[i],i+<span class="number">1</span>);</div><div class="line">                prev=candidates[i];</div><div class="line">                tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Combination_Sum_III">Combination Sum III</h2>
+<blockquote>
+<p>Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.<br>Ensure that numbers within the set are sorted in ascending order.<br>Example 1:<br>Input: k = 3, n = 7<br>Output:<br>[[1,2,4]]<br>Example 2:<br>Input: k = 3, n = 9<br>Output:<br>[[1,2,6], [1,3,5], [2,3,4]]</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum3</span>(<span class="keyword">int</span> k, <span class="keyword">int</span> n) {</div><div class="line">        List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">        dfs(res,tmp,k,n,<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt;tmp, <span class="keyword">int</span> k, <span class="keyword">int</span> n, <span class="keyword">int</span> start){</div><div class="line">        <span class="keyword">if</span>(tmp.size()==k && n==<span class="number">0</span>){</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(n&lt;<span class="number">0</span> || tmp.size()&gt;k) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=start; i&lt;=<span class="number">9</span>; i++){</div><div class="line">            tmp.add(i);</div><div class="line">            dfs(res,tmp,k,n-i,i+<span class="number">1</span>);</div><div class="line">            tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
 
 
       
@@ -193,7 +215,7 @@
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/24/8.24/">Divide Two Integers</a>
+              <a href="/2015/09/01/8.25/">Next Permutation, Permutation, Permutations II, Permutation Sequence</a>
             
           </div>
         </div>
@@ -254,7 +276,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -313,7 +335,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination_Sum"><span class="nav-number">1.</span> <span class="nav-text">Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination_Sum"><span class="nav-number">1.</span> <span class="nav-text">Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination_Sum_II"><span class="nav-number">2.</span> <span class="nav-text">Combination Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination_Sum_III"><span class="nav-number">3.</span> <span class="nav-text">Combination Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -120,6 +120,487 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/1.28/">
+                把《编程珠玑》读薄
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.28/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.28/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>出处：<a href="http://hawstein.com/posts/make-thiner-programming-pearls.html" target="_blank" rel="external">http://hawstein.com/posts/make-thiner-programming-pearls.html</a></p>
+<h2>目录</h2><br><ol><br><li><a href="#Begin">开篇</a></li><br><li><a href="#AhaAlgo">啊哈！算法</a></li><br><li><a href="#DataSP">数据决定程序结构</a></li><br><li><a href="#WriteCP">编写正确的程序</a></li><br><li><a href="#SmallM">编程中的次要问题</a></li><br><li><a href="#Performance">程序性能分析</a></li><br><li><a href="#Estimate">粗略估算</a></li><br><li><a href="#AlgoDesign">算法设计技术</a></li><br><li><a href="#CodeTuning">代码调优</a></li><br><li><a href="#SqueezingSpace">节省空间</a></li><br><li><a href="#Sorting">排序</a></li><br><li><a href="#Sampling">取样问题</a></li><br><li><a href="#Searching">搜索</a></li><br><li><a href="#Heap">堆</a></li><br><li><a href="#String">字符串</a></li><br></ol><br><h2><a id="Begin">开篇</a></h2>
+
+<p>具体化你的解决的问题。下面是A和B的对话。</p>
+
+<pre><code>A：我该如何对磁盘文件进行排序？
+B：需要排序的内容是什么？文件中有多少条记录？每个记录的格式是什么？
+A：该文件包含至多10,000,000个记录，每条记录都是一个7位整数。
+B：如果文件那么小，为什么要使用磁盘排序呢？为什么不在主存中对它排序？
+A：该功能是某大型系统中的一部分，大概只能提供1MB主存给它。
+B：你能将记录方面的内容说得更详细一些吗？
+A：每个记录是一个7位正整数，没有其它的关联数据，每个整数至多只能出现一次。
+... ...
+</code></pre>
+
+<p>经过一系统的问题，我们可以将一个定义模糊不清的问题变得具体而清晰：</p>
+
+<pre><code>输入：
+所输入的是一个文件，至多包含n个正整数，每个正整数都要小于n，这里n=10^7。
+如果输入时某一个整数出现了两次，就会产生一个致命的错误。
+这些整数与其它任何数据都不关联。
+输出：
+以增序形式输出经过排序的整数列表。
+约束：
+大概有1MB的可用主存，但可用磁盘空间充足。运行时间至多允许几分钟，
+10秒钟是最适宜的运行时间。
+</code></pre>
+
+<p>如果主存容量不是严苛地限制在1MB，比如说可以是1MB多，或是1~2MB之间，<br>那么我们就可以一次性将所有数据都加载到主存中，用Bitmap来做。<br>10,000,000个数就需要10,000,000位，也就是10,000,000b = 1.25MB。</p>
+
+<p>程序可分为三个部分：第一，初始化所有的位为0；第二，读取文件中每个整数，<br>如果该整数对应的位已经为1，说明前面已经出现过这个整数，抛出异常，退出程序<br>(输入要求每个整数都只能出现一次)。否则，将相应的位置1；第三，<br>检查每个位，如果某个位是1，就写出相应的整数，从而创建已排序的输出文件。</p>
+
+<p>如果主存容量严苛地限制在1MB，而使用Bitmap需要1.25MB，<br>因此无法一次载入完成排序。那么，我们可以将该文件分割成两个文件，<br>再分别用Bitmap处理。分割策略可以简单地把前一半的数据放到一个文件，<br>后一半的数据放到另一个文件，分别排序后再做归并。<br>也可以把文件中小于某个数(比如5,000,000)的整数放到一个文件，叫less.txt，<br>把其余的整数放到另一个文件，叫greater.txt。分别排序后，<br>把greater.txt的排序结果追加到less.txt的排序结果即可。</p>
+
+<h2><a id="AhaAlgo">啊哈！算法</a></h2>
+
+<p>第2章围绕3个问题展开。</p>
+
+<ul><br><li>给定一个包含32位整数的顺序文件，它至多只能包含40亿个这样的整数，<br>并且整数的次序是随机的。请查找一个此文件中不存在的32位整数。<br>在有足够主存的情况下，你会如何解决这个问题？<br>如果你可以使用若干外部临时文件，但可用主存却只有上百字节，<br>你会如何解决这个问题？</li><br></ul>
+
+
+<p>这是CTCI中的一道题目，详细解答请戳以下链接：</p>
+
+<p><a href="http://www.hawstein.com/posts/12.3.html" target="_blank" rel="external">请猛戳我</a></p>
+
+<ul><br><li>请将一个具有n个元素的一维向量向左旋转i个位置。例如，假设n=8,i=3，<br>那么向量abcdefgh旋转之后得到向量defghabc。</li><br></ul>
+
+
+<p>这个问题很常见了，做3次翻转即可，无需额外空间：</p>
+
+<pre><code>reverse(0, i-1); // cbadefgh
+reverse(i, n-1); // cbahgfed
+reverse(0, n-1); // defghabc
+</code></pre>
+
+<ul><br><li>给定一本英语单词词典，请找出所有的变位词集。例如，因为“pots”，<br>“stop”，“tops”相互之间都是由另一个词的各个字母改变序列而构成的，<br>因此这些词相互之间就是变位词。</li><br></ul>
+
+
+<p>这个问题可以分3步来解决。第一步将每个单词按字典序排序，<br>做为原单词的签名，这样一来，变位词就会具有相同的签名。<br>第二步对所有的单词按照其签名进行排序，这样一来，变位词就会聚集到一起。<br>第三步将变位词分组，形成变位词集。示意图如下：</p>
+
+<p><img src="http://www.hawstein.com/assets/img/2013/8/11/anagrams.png"></p>
+
+<h2><a id="DataSP">数据决定程序结构</a></h2>
+
+<p>恰当的数据视图实际上决定了程序的结构。<br>我们常常可以通过重新组织内部数据来使程序变得小而美。</p>
+
+<p>发明家悖论：更一般性的问题也许更容易解决。(有时候吧)</p>
+
+<p>程序员在节省空间方面无计可施时，将自己从代码中解脱出来，<br>退回起点并集中心力研究数据，常常能有奇效。数据的表示形式是程序设计的根本。</p>
+
+<p>下面是退回起点进行思考时的几条原则：</p>
+
+<ul><br><li><p>使用数组重新编写重复代码。冗长的相似代码常常可以使用最简单的数据结构——<br>数组来更好地表述。</p></li><br><li><p>封装复杂结构。当需要非常复杂的数据结构时，使用抽象术语进行定义，<br>并将操作表示为类。</p></li><br><li><p>尽可能使用高级工具。超文本，名字-值对，电子表格，数据库，<br>编程语言等都是特定问题领域中的强大的工具。</p></li><br><li><p>从数据得出程序的结构。在动手编写代码之前，优秀的程序员会彻底理解输入，<br>输出和中间数据结构，并围绕这些结构创建程序。</p></li><br></ul>
+
+
+<p>提到的书籍：Polya的《How to Solve it》，中文书《怎样解题》；<br>Kernighan和Plauger的《Elements of Programming Style》；Fred Brooks的《人月神话》<br>Steve McConnell的《代码大全》；《Rapid Development》；<br>《Software Project Survival Guide》</p>
+
+<h2><a id="WriteCP">编写正确的程序</a></h2>
+
+<p>本章以二分搜索为例子，讲述了如何对程序进行验证及正确性分析。</p>
+
+<p>深入阅读：David Gries的《Science of Programming》<br>是程序验证领域里极佳的一本入门书籍。</p>
+
+<h2><a id="SmallM">编程中的次要问题</a></h2>
+
+<p>到目前为止，你已经做了一切该做的事：通过深入挖掘定义了正确的问题，<br>通过仔细选择算法和数据结构平衡了真正的需求，通过程序验证技术写出了优雅的代码，<br>并且对其正确性相当有把握。万事俱备，只欠编程。</p>
+
+<ul><br><li><p>使用断言assert</p></li><br><li><p>自动化测试程序</p></li><br></ul>
+
+
+<p>进阶阅读：《Practice of Programming》第5章(调试)，第6章(测试)<br>《Code Complete》第25章(单元测试)，第26章(调试)</p>
+
+<h2><a id="Performance">程序性能分析</a></h2>
+
+<p>下图展示了一个程序的性能提升过程，<br>该程序的作用是对三维空间中n个物体的运动进行仿真。从图中可以看出，<br>一个程序可以从多方面进行性能提升，而其中算法和数据结构的选择又显得尤为重要。</p>
+
+<p><img src="http://www.hawstein.com/assets/img/2013/8/11/improve.png"></p>
+
+<p>从设计层面提升程序性能：</p>
+
+<ol><br><li>问题定义。良好的问题定义可以有效减少程序运行时间和程序长度。</li><br><li>系统结构。将大型系统分解成模块，也许是决定其性能的最重要的单个因素。</li><br><li>算法和数据结构。这个不用说了。</li><br><li>代码调优。针对代码本身的改进。</li><br><li>系统软件。有时候改变系统所基于的软件比改变系统本身更容易。</li><br><li>硬件。更快的硬件可以提高系统的性能。</li><br></ol>
+
+
+<p>深入阅读：Butler Lampson的“Hints for Computer System Design”，<br>该论文特别适合于集成硬件和软件的计算机系统设计。</p>
+
+<h2><a id="Estimate">粗略估算</a></h2>
+
+<p>这一章讲述了估算技术，我认为是相当有用的一章。</p>
+
+<p>文中先抛出一个问题：密西西比河一天流出多少水？如果让你来回答，<br>你会怎么答，注意不能去Google哦。</p>
+
+<p>作者是这么回答这个问题：假设河的出口大约有1英里宽和20英尺深(1/250英里)，<br>而河水的流速是每小时5英里，也就是每天120英里。则可以计算出一天的流量：</p>
+
+<pre><code>1英里 * 1/250英里 * 120英里/天  约等于  1/2 英里^3/天
+</code></pre>
+
+<p>上述算式非常简单，可是在看到这些文字之前，如果有人真的问你，<br>密西西比河一天流出多少水？你真的能答上来吗？还是愣了一下后，摆摆手，说：<br>这我哪知道！</p>
+
+<p>对于上面的问题，我们至少可以注意到以下两点：</p>
+
+<ol><br><li><p>你需要把问题转换成一个可计算的具体模型。这一点往往不需要太担心，<br>因为我们做的是估算，所以可以忽视很多无关紧要的因素，可以去简化你的模型，<br>记住我们要的只是一个粗略计算的结果。比如对于上面的问题，<br>计算密西西比河一天流出多少水其实就是计算其一天的流量，利用中学所学知识，<br>流量 = 截面积 x 流速，那我们就只需计算密西西比河的出水口的截面积和流速即可。<br>我们可以将出水口简化成一个矩形，因此就只需要知道出水口的宽和深即可。</p></li><br><li><p>你需要知道常识性的东西。上面我们已经把问题转换成了一个可计算的具体模型：<br>流量 = 出水口宽 x 出水口深 x 流速。接下来呢？你需要代入具体的数值去求得答案。<br>而这就需要你具备一些常识性的知识了。比如作者就估计了密西西比河的出口有1英里宽，<br>20英尺深(如果你估计只有几十米宽，那就相差得太离谱了)。<br>这些常识性的知识比第1点更值得关注，因为你无法给出一个靠谱的估算值往往是因为这点。</p></li><br></ol>
+
+
+<p>当我们懂得如何把一个问题具体化定义出来并为其选用适当的模型，<br>并且我们也积累了必要的常识性的知识后，回答那些初看起来无从下手的问题也就不难了。<br>这就是估算的力量。</p>
+
+<p>以下是估算时的一些有用提示：</p>
+
+<ul><br><li><p>两个答案比一个答案好。即鼓励你从多个角度去对一个问题进行估算，<br>如果从不同角度得到的答案差别都不大，说明这个估算值是比较靠谱的。</p></li><br><li><p>快速检验。即量纲检验。即等式两边最终的量纲要一致。<br>这一点在等式简单的时候相当显而易见。比如位移的单位是米，时间单位是秒，<br>速度单位是米/秒，那显然我们应该要用位移去除以时间来得到速度，<br>这样才能保证它们单位的一致。你可能会说，我了个去，这种小学生都懂的事，<br>你好意思拿出来讲。其实不然，当你面对的是一个具有多个变量的复杂物理公式，<br>或者你提出某种物理假设，正在考虑将其公式化，该方法可以切切实实地帮你做出检验。</p></li><br><li><p>经验法则。“72法则”：1.假设以年利率r%投资一笔钱y年，如果r<em>y = 72，<br>那么你的投资差不多会翻倍。2.如果一个盘子里的菌群以每小时3%的速率增长，<br>那么其数量每天(24小时)都会翻倍。在误差不超过千分之五的情况下，<br>\pi秒就是一个纳世纪。也就是说：</em></p><br><br><p>  3.14秒 = 10<sup>-9</sup>  100年 = 10<sup>-7</sup> 年</p></li><br></ul>
+
+
+<p>也就是说，1年大概是3.14x10<sup>7</sup> 秒。所以如果有人告诉你，一个程序运行10<sup>7</sup> 秒，<br>你应该能很快反应出，他说的其实是4个月。</p>
+
+<ul><br><li>实践。与许多其他活动一样，估算技巧只能通过实践来提高。</li><br></ul>
+
+
+<p>如果问题的规模太大，我们还可以通过求解它的小规模同质问题来做估算。比如，<br>我们想测试某个程序运行10亿次需要多长时间，如果你真去跑10亿次，<br>说不定运行几个小时都没结束，那不是很悲剧？我们可以运行这个程序1万次或是10万次，<br>得出结果然后倍增它即可。当然，这个结果未必是准确的，<br>因为你没法保证运行时间是随着运行次数线性增加的。谨慎起见，我们可以运行不同的次数，<br>来观察它的变化趋势。比如运行10次，100次，1000次，10000次等，<br>观察它的运行时间是否是线性增加的，或是一条二次曲线。</p>
+
+<p>有时候，我们需要为估算的结果乘上一个安全系数。比如，<br>我们预估完成某项功能需要时间t，那根据以往经验，也许我们需要为这个值乘上2或4，<br>这样也许才是一个靠谱的预估值。</p>
+
+<p>Little定律：系统中物体的平均数量等于物体离开系统的平均速率和每个物体在系统中停留<br>的平均时间的乘积。(如果物体离开和进入系统的总体出入流是平衡的，<br>那么离开速率也就是进入速率)</p>
+
+<p>举个例子，比如你正在排除等待进入一个火爆的夜总会，<br>你可以通过估计人们进入的速率来了解自己还要等待多长时间。根据Little定律，<br>你可以推论：这个地方可以容纳约60人，每个人在里面逗留时间大约是3小时，<br>因此我们进入夜总会的速率大概是每小时20人。现在队伍中我们前面还有20人，<br>也就意味着我们还要等待大约一个小时。</p>
+
+<p>深入阅读：Darrell Huff的《How To Lie With Statistics》；关键词：<br>费米近似(Fermi estimate, Fermi problem)</p>
+
+<h2><a id="AlgoDesign">算法设计技术</a></h2>
+
+<p>这一章就一个小问题研究了4种不同的算法，重点强调这些算法的设计技术。<br>研究的这个小问题是一个非常常见的面试题：子数组之和的最大值。<br>如果之前没有听过，建议Google之。</p>
+
+<p>深入阅读：Aho,Hopcroft和Ullman的《Data Structures and Algorithms》<br>Cormen,Leiserson,Rivest和Stein的《Introduction to Algorithms》</p>
+
+<h2><a id="CodeTuning">代码调优</a></h2>
+
+<p>前面各章讨论了提高程序效率的高层次方法：问题定义，系统结构，<br>算法设计及数据结构选择。本章讨论的则是低层次的方法：代码调优。</p>
+
+<p>代码调优的最重要原理就是尽量少用它。不成熟的优化是大量编程灾害的根源。<br>它会危及程序的正确性，功能性以及可维护性。当效率很重要时，<br>第一步就是对系统进行性能监视，以确定其运行时间的分布状况。<br>效率问题可以由多种方法来解决，只有在确信没有更好的解决方案时才考虑进行代码调优。</p>
+
+<p>事实上，如果不是十分十分必要，不要去做代码调优，<br>因为它会牺牲掉软件的其他许多性质。</p>
+
+<p>so，just skip this chapter。</p>
+
+<h2><a id="SqueezingSpace">节省空间</a></h2>
+
+<p>本章讲述了节省空间的一些重要方法。</p>
+
+<p>减少程序所需数据的存储空间，一般有以下方法：</p>
+
+<ul><br><li>不存储，重新计算。</li><br><li>稀疏数据结构。下面着重讲一下这点。</li><br><li>数据压缩。可以通过压缩的方式对对象进行编码，以减少存储空间。</li><br><li>分配策略。只有在需要的时候才进行分配。</li><br><li>垃圾回收。对废弃的存储空间进行回收再利用。</li><br></ul>
+
+
+<p>以下是节省代码空间的几种通用技术：</p>
+
+<ul><br><li>函数定义。用函数替换代码中的常见模式可以简化程序，同时减少代码的空间需求。</li><br><li>解释程序。用解释程序命令替换长的程序文本。</li><br><li>翻译成机器语言。可以将大型系统中的关键部分用汇编语言进行手工编码。</li><br></ul>
+
+
+<p><strong>稀疏数据结构</strong></p>
+
+<p>假设我们有一个200 x 200的矩阵(共40000个元素)，里面只有2000个元素有值，<br>其它的都为0，示意图如下：</p>
+
+<p><img src="http://www.hawstein.com/assets/img/2013/8/11/matrix.png"></p>
+
+<p>显然这是一个稀疏矩阵，直接用一个200 x 200<br>的二维数组来存储这些数据会造成大量的空间浪费，共需要200x200x4B=160KB。<br>所以，我们应该想办法用另一种形式来存储这些数据。</p>
+
+<p><strong>方法一</strong></p>
+
+<p>使用数组表示所有的列，同时使用链表来表示给定列中的活跃元素。<br>如下图所示：</p>
+
+<p><img src="http://www.hawstein.com/assets/img/2013/8/11/sparse_matrix.png"></p>
+
+<p>该结构中，有200个指针(colhead)和2000条记录(每条记录是两个整数和一个指针)，<br>占用空间是200x4B + 2000x12B = 24800B = 24.8KB，<br>比直接用二维数组存储(160KB)要小很多。</p>
+
+<p><strong>方法二</strong></p>
+
+<p>我们可以开三个数组来保存这些数，如下图所示：</p>
+
+<p><img src="http://www.hawstein.com/assets/img/2013/8/11/3array.png"></p>
+
+<p>firstincol是一个长度为201的数组，对于第i列，在数组row中，<br>下标为firstincol[i]到firstincol[i+1]-1对应的行元素非0，<br>其值存储在相应的pointnum数组中。</p>
+
+<p>比如对于上图，在第0列中，元素值非0的行有3行，分别是row[0],row[1],row[2],<br>元素值是pointnum[0],pointnum[1],pointnum[2]；在第1列中，元素值非0的行有2行，<br>分别是row[3],row[4]，元素值是pointnum[3],pointnum[4]。依次类推。</p>
+
+<p>该结构所需要的存储空间为2x2000x4B + 201x4B = 16804B = 16.8KB。<br>由于row数组中的元素全部都小于200，所以每个元素可以用一个unsigned char来保存，<br>firstincol数组中元素最大也就2000，所以可以用一个short(或unsigned short)来保存，<br>pointnum中的元素是一个4B的int，<br>最终所需空间变为：2000x4B + 2000x1B + 201x2B = 10402B = 10.4KB。</p>
+
+<p>深入阅读：Fred Brooks的《人月神话》</p>
+
+<h2><a id="Sorting">排序</a></h2>
+
+<p>本章先简单介绍了插入排序，然后着重讲述快速排序。</p>
+
+<p><strong>插入排序</strong></p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 版本1</span></div><div class="line"><span class="keyword">void</span> InsertSort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;n; ++i)</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i; j&gt;<span class="number">0</span> && a[j-<span class="number">1</span>]&gt;a[j]; —j)</div><div class="line">            swap(a[j-<span class="number">1</span>], a[j]);</div><div class="line">}</div><div class="line"><span class="comment">// 版本2</span></div><div class="line"><span class="keyword">void</span> InsertSort1(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;n; ++i) {</div><div class="line">        <span class="keyword">int</span> t = a[i];</div><div class="line">        <span class="keyword">int</span> j = i;</div><div class="line">        <span class="keyword">for</span>(; j&gt;<span class="number">0</span> && a[j-<span class="number">1</span>]&gt;t; —j)</div><div class="line">            a[j] = a[j-<span class="number">1</span>];</div><div class="line">        a[j] = t;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>快速排序</strong></p>
+
+<blockquote><blockquote><p>我们在这里规定：小于等于pivot的元素移到左边，大于pivot的元素移到右边。</p></blockquote></blockquote>
+
+<p><strong>实现1：单向移动版本</strong></p>
+
+<p>这个版本的关键是设置一快一慢两个指针，慢指针左侧都是小于等于pivot(包含慢指针所在位置)，<br>慢指针到快指针之间的值是大于pivot，快指针右侧的值是还未比较过的。示意图如下：</p>
+
+<pre><code>小于等于pivot    ｜    大于pivot    ｜    ？
+             slow                fast
+</code></pre>
+
+<p>快指针一次一步向前走，遇到大于pivot什么也不做继续向前走。遇到小于等于pivot的元素，<br>则慢指针slow向前走一步，然后交换快慢指针指向的元素。一次划分结束后，<br>再递归对左右两侧的元素进行快排。代码如下：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数组快排</span></div><div class="line"><span class="keyword">void</span> QSort(<span class="keyword">int</span> a[], <span class="keyword">int</span> head, <span class="keyword">int</span> end) {</div><div class="line">    <span class="keyword">if</span>(a==NULL || head==end) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> slow = head, fast = head + <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> pivot = a[head];</div><div class="line">    <span class="keyword">while</span>(fast != end) {</div><div class="line">        <span class="keyword">if</span>(a[fast] &lt;= pivot)</div><div class="line">            swap(a[++slow], a[fast]);</div><div class="line">        ++fast;</div><div class="line">    }</div><div class="line">    swap(a[head], a[slow]);</div><div class="line">    QSort(a, head, slow);</div><div class="line">    QSort(a, slow+<span class="number">1</span>, end);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>排序数组a只需要调用QSort(a, 0, n)即可。该思路同样可以很容易地在链表上实现：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 单链表快排</span></div><div class="line"><span class="keyword">void</span> qsort(Node head, Node end){</div><div class="line">    <span class="keyword">if</span>(head==NULL || head==end) <span class="keyword">return</span>;</div><div class="line">    Node slow = head, fast = head-&gt;next;</div><div class="line">    <span class="keyword">int</span> pivot = head-&gt;data;</div><div class="line">    <span class="keyword">while</span>(fast != end){</div><div class="line">        <span class="keyword">if</span>(fast-&gt;data &lt;= pivot){</div><div class="line">            slow = slow-&gt;next;</div><div class="line">            swap(slow-&gt;data, fast-&gt;data);</div><div class="line">        }</div><div class="line">        fast = fast-&gt;next;</div><div class="line">    }</div><div class="line">    swap(head-&gt;data, slow-&gt;data);</div><div class="line">    qsort(head, slow);</div><div class="line">    qsort(slow-&gt;next, end);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>排序头指针为head的单链表只需调用qsort(head, NULL)即可。</p>
+
+<p><strong>实现2：双向移动版本</strong></p>
+
+<p>版本1能能够快速完成对随机整数数组的排序，但如果数组有序，<br>或是数组中元素相同，快排的时间复杂度会退化成O(n<sup>2</sup> )，性能变得非常差。</p>
+
+<p>一种缓解方案是使用双向移动版本的快排，它每次划分也是使用两个指针，<br>不过一个是从左向右移动，一个是从右向左移动，示意图如下：</p>
+
+<pre><code>小于等于pivot    ｜    ？    ｜    大于pivot
+               i            j
+</code></pre>
+
+<p>指针j不断向左移动，直到遇到小于等于pivot，就交换指针i和j所指元素<br>(指针i一开始指向pivot)；指针i不断向右移动，直到遇到大于pivot的，<br>就交换指针i和j所指元素。pivot在这个过程中，不断地换来换去，<br>最终会停在分界线上，分界线左边都是小于等于它的元素，右边都是大于它的元素。<br>这样就避免了最后还要交换一次pivot的操作，代码也变得美观许多。</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> partition(<span class="keyword">int</span> a[], <span class="keyword">int</span> low, <span class="keyword">int</span> high){</div><div class="line">    <span class="keyword">int</span> pivot = a[low], i=low, j=high;</div><div class="line">    <span class="keyword">while</span>(i &lt; j){</div><div class="line">        <span class="keyword">while</span>(i&lt;j && a[j]&gt;pivot) —j;</div><div class="line">        <span class="keyword">if</span>(i &lt; j) swap(a[i], a[j]);</div><div class="line">        <span class="keyword">while</span>(i&lt;j && a[i]&lt;=pivot) ++i;</div><div class="line">        <span class="keyword">if</span>(i &lt; j) swap(a[i], a[j]);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> i;</div><div class="line">}</div><div class="line"><span class="keyword">void</span> quicksort(<span class="keyword">int</span> a[], <span class="keyword">int</span> first, <span class="keyword">int</span> last){</div><div class="line">    <span class="keyword">if</span>(first&lt;last){</div><div class="line">        <span class="keyword">int</span> k = partition(a, first, last);</div><div class="line">        quicksort(a, first, k-<span class="number">1</span>);</div><div class="line">        quicksort(a, k+<span class="number">1</span>, last);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>当然，如果对于partition函数，你如果觉得大循环内的两个swap还是做了些无用功的话，<br>也可以把pivot的赋值放到最后一步，而不是在这个过程中swap来swap去的。代码如下：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> partition(<span class="keyword">int</span> a[], <span class="keyword">int</span> low, <span class="keyword">int</span> high){</div><div class="line">    <span class="keyword">int</span> pivot = a[low], i=low, j=high;</div><div class="line">    <span class="keyword">while</span>(i&lt;j){</div><div class="line">        <span class="keyword">while</span>(i&lt;j && a[j]&gt;pivot) —j;</div><div class="line">        <span class="keyword">if</span>(i&lt;j) a[i++] = a[j];</div><div class="line">        <span class="keyword">while</span>(i&lt;j && a[i]&lt;=pivot) ++i;</div><div class="line">        <span class="keyword">if</span>(i&lt;j) a[j—] = a[i];</div><div class="line">    }</div><div class="line">    a[i] = pivot;</div><div class="line">    <span class="keyword">return</span> i;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>如果数组基本有序，那随机选择pivot(而不像上面那样选择第一个做为pivot)<br>会得到更好的性能。在partition函数里，我们只需要在数组中随机选一个元素，<br>然后将它和数组中第一个元素交换，后面的划分代码无需改变，<br>就可以达到随机选择pivot的效果。</p>
+
+<p><strong>进一步优化</strong></p>
+
+<p>对于小数组，用插入排序之类的简单方法来排序反而会更快，因此在快排中，<br>当数组长度小于某个值时，我们就什么也不做。对应到代码中，<br>就是修改quicksort中的if条件：</p>
+
+<pre><code>if(first &lt; last)  改为  if(last-first &gt; cutoff)
+</code></pre>
+
+<p>其中cutoff是一个小整数。程序结束时，数组并不是有序的，<br>而是被组合成一块一块随机排列的值，并且满足这样的条件：<br>某一块中的元素小于它右边任何块中的元素。我们必须通过另一种排序算法对块内进行排序。<br>由于数组是几乎有序的，因此插入排序比较适用。</p>
+
+<p>这种方法结合了快排和插入排序，让它们去做各自擅长的事情，往往比单纯用快排要快。</p>
+
+<p>深入阅读：Don Knuth的《The Art of Computer Programming, Volume 3:<br>Sorting and Searching》；Robert Sedgewick的《Algorithms》；<br>《Algorithms in C》,《Algorithms in C++》,《Algorithms in Java》。</p>
+
+<h2><a id="Sampling">取样问题</a></h2>
+
+<p>本章讲述了一个小的随机抽样问题，并用不同的方法来解决它。</p>
+
+<p>问题：对于整数m和n，其中m&lt;n，输出0~n-1范围内m个随机整数的<code>有序列表</code>，<br>不允许重复。</p>
+
+<p>比如m=3, n=5，那么一种可能输出是0，2，3(要求有序)。实现1来自Knuth的TAOCP，<br>时间复杂度O(n)：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> GenKnuth(<span class="keyword">int</span> m, <span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) {</div><div class="line">        <span class="keyword">if</span>((bigrand()%(n-i)) &lt; m) {</div><div class="line">            cout&lt;&lt;i&lt;&lt;endl;</div><div class="line">            —m;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>其中，bigrand()的作用是返回一个很大的随机整数。</p>
+
+<p>实现2：在一个初始为空的集合里面插入随机整数，直到个数足够。代码如下：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> GenSets(<span class="keyword">int</span> m, <span class="keyword">int</span> n) {</div><div class="line">    set&lt;<span class="keyword">int</span>&gt; s;</div><div class="line">    <span class="keyword">while</span>(s.size() &lt; m)</div><div class="line">        s.insert(bigrand() % n);</div><div class="line">    set&lt;<span class="keyword">int</span>&gt;::iterator i;</div><div class="line">    <span class="keyword">for</span>(i=s.begin(); i!=s.end(); ++i)</div><div class="line">        cout&lt;&lt;*i&lt;&lt;endl;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>实现3：把包含整数0～n-1的数组顺序打乱，然后把前m个元素排序输出。<br>该方法的性能通常不如Knuth的算法。代码如下：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> GenShuf(<span class="keyword">int</span> m, <span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">int</span> x[n];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i)</div><div class="line">        x[i] = i;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; ++i) {</div><div class="line">        <span class="keyword">int</span> j = randint(i, n-<span class="number">1</span>);</div><div class="line">        swap(x[i], x[j]);</div><div class="line">    }</div><div class="line">    sort(x, x+m);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; ++i)</div><div class="line">        cout&lt;&lt;x[i]&lt;&lt;endl;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>深入阅读：Don Knuth的《The Art of Computer Programming,<br>Volume 2: Seminumerical Algorithms》</p>
+
+<h2><a id="Searching">搜索</a></h2>
+
+<p>本章详细研究这样一个搜索问题：在没有其他相关数据的情况下，如何存储一组整数？<br>为些介绍了5种数据结构：有序数组，有序链表，二叉搜索树，箱，位向量。</p>
+
+<p>其中，二叉搜索树应该熟练掌握，以下是一种实现：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div></pre></td><td class="code"><pre><div class="line">struct Node {</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">    Node lchild, rchild, parent;</div><div class="line">    Node(): lchild(NULL), rchild(NULL), parent(NULL) { }</div><div class="line">};</div><div class="line"></div><div class="line">class BST {</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> kMax = <span class="number">1000</span>;</div><div class="line">    Node root, *parent, nodes[kMax];</div><div class="line">    <span class="keyword">int</span> size;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Node <span class="title">minimum</span>(Node node);</div><div class="line">    Node maximum(Node node);</div><div class="line">    Node successor(Node node);</div><div class="line">    Node predecessor(Node node);</div><div class="line">    <span class="keyword">void</span> Insert(Node &node, <span class="keyword">int</span> x);</div><div class="line">    <span class="keyword">void</span> InorderTraver(Node node);</div><div class="line">    Node Find(Node node, <span class="keyword">int</span> x);</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="title">BST</span>(): <span class="title">root</span>(NULL), <span class="title">parent</span>(NULL), <span class="title">size</span>(0) {</div><div class="line">        memset(nodes, <span class="string">'\0'</span>, sizeof(nodes));</div><div class="line">    }</div><div class="line">    <span class="keyword">void</span> Insert(<span class="keyword">int</span> x);</div><div class="line">    <span class="keyword">void</span> InorderTraver();</div><div class="line">    Node Find(<span class="keyword">int</span> x);</div><div class="line">    <span class="keyword">void</span> Remove(Node z);</div><div class="line">};</div><div class="line"></div><div class="line">Node BST::minimum(Node node) {</div><div class="line">    <span class="keyword">if</span>(node == NULL) <span class="keyword">return</span> NULL;</div><div class="line">    <span class="keyword">while</span>(node-&gt;lchild)</div><div class="line">        node = node-&gt;lchild;</div><div class="line">    <span class="keyword">return</span> node;</div><div class="line">}</div><div class="line"></div><div class="line">Node BST::maximum(Node node) {</div><div class="line">    <span class="keyword">if</span>(node == NULL) <span class="keyword">return</span> NULL;</div><div class="line">    <span class="keyword">while</span>(node-&gt;rchild)</div><div class="line">        node = node-&gt;rchild;</div><div class="line">    <span class="keyword">return</span> node;</div><div class="line">}</div><div class="line"></div><div class="line">Node BST::successor(Node node) {</div><div class="line">    <span class="keyword">if</span>(node-&gt;rchild)</div><div class="line">        <span class="keyword">return</span> minimum(node-&gt;rchild);</div><div class="line">    Node y = node-&gt;parent;</div><div class="line">    <span class="keyword">while</span>(y && node==y-&gt;rchild) {</div><div class="line">        node = y;</div><div class="line">        y = node-&gt;parent;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> y;</div><div class="line">}</div><div class="line"></div><div class="line">Node BST::predecessor(Node node) {</div><div class="line">    <span class="keyword">if</span>(node-&gt;lchild)</div><div class="line">        <span class="keyword">return</span> maximum(node-&gt;lchild);</div><div class="line">    Node y = node-&gt;parent;</div><div class="line">    <span class="keyword">while</span>(y && node==y-&gt;lchild) {</div><div class="line">        node = y;</div><div class="line">        y = node-&gt;parent;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> y;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">void</span> BST::Insert(Node* &node, <span class="keyword">int</span> x) {</div><div class="line">    <span class="keyword">if</span>(node == NULL) {</div><div class="line">        nodes[size].data = x;</div><div class="line">        nodes[size].parent = parent;</div><div class="line">        node = &nodes[size];</div><div class="line">        ++size;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    parent = node;</div><div class="line">    <span class="keyword">if</span>(x &lt; node-&gt;data)</div><div class="line">        Insert(node-&gt;lchild, x);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        Insert(node-&gt;rchild, x);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">void</span> BST::Insert(<span class="keyword">int</span> x) {</div><div class="line">    Insert(root, x);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">void</span> BST::InorderTraver(Node* node) {</div><div class="line">    <span class="keyword">if</span>(node == NULL) <span class="keyword">return</span>;</div><div class="line">    InorderTraver(node-&gt;lchild);</div><div class="line">    cout&lt;&lt;node-&gt;data&lt;&lt;<span class="string">" "</span>;</div><div class="line">    InorderTraver(node-&gt;rchild);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">void</span> BST::InorderTraver() {</div><div class="line">    InorderTraver(root);</div><div class="line">}</div><div class="line"></div><div class="line">Node BST::Find(Node node, <span class="keyword">int</span> x) {</div><div class="line">    <span class="keyword">if</span>(node == NULL) <span class="keyword">return</span> NULL;</div><div class="line">    <span class="keyword">if</span>(x &lt; node-&gt;data) <span class="keyword">return</span> Find(node-&gt;lchild, x);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(x &gt; node-&gt;data) <span class="keyword">return</span> Find(node-&gt;rchild, x);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> node;</div><div class="line">}</div><div class="line"></div><div class="line">Node BST::Find(<span class="keyword">int</span> x) {</div><div class="line">    <span class="keyword">return</span> Find(root_, x);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">void</span> BST::Remove(Node z) {</div><div class="line">    <span class="keyword">if</span>(!z-&gt;lchild && !z-&gt;rchild) {</div><div class="line">        <span class="keyword">if</span>(z == root) root = NULL;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(z == z-&gt;parent-&gt;lchild)</div><div class="line">            z-&gt;parent-&gt;lchild = NULL;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            z-&gt;parent-&gt;rchild = NULL;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(z-&gt;lchild==NULL || z-&gt;rchild==NULL) {</div><div class="line">        <span class="keyword">if</span>(z == root) {</div><div class="line">            <span class="keyword">if</span>(z-&gt;lchild) root = z-&gt;lchild;</div><div class="line">            <span class="keyword">else</span> root = z-&gt;rchild;</div><div class="line">            root-&gt;parent = NULL;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> {</div><div class="line">            <span class="keyword">if</span>(z==z-&gt;parent-&gt;lchild && z-&gt;lchild) {</div><div class="line">                z-&gt;parent-&gt;lchild = z-&gt;lchild;</div><div class="line">                z-&gt;lchild-&gt;parent = z-&gt;parent;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(z==z-&gt;parent-&gt;lchild && z-&gt;rchild) {</div><div class="line">                z-&gt;parent-&gt;lchild = z-&gt;rchild;</div><div class="line">                z-&gt;rchild-&gt;parent = z-&gt;parent;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(z==z-&gt;parent-&gt;rchild && z-&gt;lchild) {</div><div class="line">                z-&gt;parent-&gt;rchild = z-&gt;lchild;</div><div class="line">                z-&gt;lchild-&gt;parent = z-&gt;parent;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span> {</div><div class="line">                z-&gt;parent-&gt;rchild = z-&gt;rchild;</div><div class="line">                z-&gt;rchild-&gt;parent = z-&gt;parent;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">else</span> {</div><div class="line">        Node *s = predecessor(z);</div><div class="line">        z-&gt;data = s-&gt;data;</div><div class="line">        <span class="keyword">if</span>(z == s-&gt;parent)</div><div class="line">            s-&gt;parent-&gt;lchild = s-&gt;lchild;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            s-&gt;parent-&gt;rchild = s-&gt;lchild;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(s-&gt;lchild)</div><div class="line">            s-&gt;lchild-&gt;parent = s-&gt;parent;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2><a id="Heap">堆</a></h2>
+
+<p>本章主要介绍堆，下面是关于堆的一些主要操作：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 最大堆实现, 数组下标从1开始，a[0]不使用。</span></div><div class="line"></div><div class="line"><span class="comment">// 交换两数</span></div><div class="line"><span class="keyword">void</span> swap(<span class="keyword">int</span> &a, <span class="keyword">int</span> &b) {</div><div class="line">    <span class="keyword">int</span> t = a;</div><div class="line">    a = b;</div><div class="line">    b = t;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 把第i个元素向上移动</span></div><div class="line"><span class="keyword">void</span> ShiftUp(<span class="keyword">int</span> a[], <span class="keyword">int</span> i) {</div><div class="line">    <span class="keyword">while</span>(i&gt;<span class="number">1</span> && a[i]&gt;a[i/<span class="number">2</span>]) {</div><div class="line">        swap(a[i], a[i/<span class="number">2</span>]);</div><div class="line">        i &gt;&gt;= <span class="number">1</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 把第i个元素向下移动</span></div><div class="line"><span class="keyword">void</span> ShiftDown(<span class="keyword">int</span> a[], <span class="keyword">int</span> n, <span class="keyword">int</span> i) {</div><div class="line">    <span class="keyword">while</span>((i=<span class="number">2</span>*i) &lt;= n) {</div><div class="line">        <span class="keyword">if</span>(i+<span class="number">1</span>&lt;=n && a[i+<span class="number">1</span>]&gt;a[i]) ++i;</div><div class="line">        <span class="keyword">if</span>(a[i] &gt; a[i/<span class="number">2</span>]) swap(a[i], a[i/<span class="number">2</span>]);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">break</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 把数组a变成具备最大堆性质的数组</span></div><div class="line"><span class="keyword">void</span> MakeHeap(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n/<span class="number">2</span>; i&gt;<span class="number">0</span>; —i)</div><div class="line">        ShiftDown(a, n, i);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 向堆中插入元素x</span></div><div class="line"><span class="keyword">void</span> Insert(<span class="keyword">int</span> a[], <span class="keyword">int</span> &n, <span class="keyword">int</span> x) {</div><div class="line">    a[++n] = x;</div><div class="line">    ShiftUp(a, n);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 删除堆中第i个元素</span></div><div class="line"><span class="keyword">void</span> Del(<span class="keyword">int</span> a[], <span class="keyword">int</span> &n, <span class="keyword">int</span> i) {</div><div class="line">    a[i] = a[n—];</div><div class="line">    <span class="keyword">if</span>(i&gt;<span class="number">1</span> && a[i]&gt;a[i/<span class="number">2</span>]) ShiftUp(a, i);</div><div class="line">    <span class="keyword">else</span> ShiftDown(a, n, i);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 堆排序，时间复杂度O(nlogn)</span></div><div class="line"><span class="keyword">void</span> HeapSort(<span class="keyword">int</span> a[], <span class="keyword">int</span> n) {</div><div class="line">    MakeHeap(a, n);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n; i&gt;<span class="number">1</span>; —i) {</div><div class="line">        swap(a[i], a[<span class="number">1</span>]);</div><div class="line">        ShiftDown(a, i-<span class="number">1</span>, <span class="number">1</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2><a id="String">字符串</a></h2>
+
+<p>程序1：循环输入并将每个单词插入集合S(忽略重复单词)，然后排序输出。</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> main(<span class="keyword">void</span>) {</div><div class="line">    set&lt;string&gt; s;</div><div class="line">    set&lt;string&gt;::iterator j;</div><div class="line">    string t;</div><div class="line">    <span class="keyword">while</span>(cin &gt;&gt; t)</div><div class="line">        s.insert(t);</div><div class="line">    <span class="keyword">for</span>(j=s.begin(); j!=s.end(); ++j)</div><div class="line">        cout&lt;&lt;*j&lt;&lt;endl;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>程序2：单词计数</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> main(<span class="keyword">void</span>) {</div><div class="line">    map&lt;string, <span class="keyword">int</span>&gt; m;</div><div class="line">    map&lt;string, <span class="keyword">int</span>&gt;::iterator j;</div><div class="line">    string t;</div><div class="line">    <span class="keyword">while</span>(cin &gt;&gt; t)</div><div class="line">        m[t]++;</div><div class="line">    <span class="keyword">for</span>(j=m.begin(); j!=m.end(); ++j)</div><div class="line">        cout&lt;&lt;j-&gt;first&lt;&lt;<span class="string">" "</span>&lt;&lt;j-&gt;second&lt;&lt;endl;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>程序3：建立自己的哈希表(散列表)，以下是一种实现：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">class Hash {</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="title">Hash</span>(): <span class="title">seed</span>(131), <span class="title">size</span>(0) {</div><div class="line">        memset(head, <span class="number">0</span>, sizeof(head));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">void</span> Insert(<span class="keyword">const</span> <span class="keyword">char</span> str) {</div><div class="line">        unsigned <span class="keyword">int</span> id = hash(str);</div><div class="line">        <span class="keyword">char</span> dst = (<span class="keyword">char</span>)node[size].word;</div><div class="line">        <span class="keyword">while</span>(dst++ = str++);</div><div class="line">        node[size].next = head[id];</div><div class="line">        head[id] = &node[size];</div><div class="line">        ++size_;</div><div class="line">    }</div><div class="line"></div><div class="line">    bool Find(<span class="keyword">const</span> <span class="keyword">char</span> str) {</div><div class="line">        unsigned <span class="keyword">int</span> id = hash(str);</div><div class="line">        <span class="keyword">for</span>(Node p=head_[id]; p; p=p-&gt;next) {</div><div class="line">            <span class="keyword">char</span> dst = (<span class="keyword">char</span>)p-&gt;word;</div><div class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(; (str+i) && (str+i)==(dst+i); ++i);</div><div class="line">            <span class="keyword">if</span>(!(str+i) && !(dst+i)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    unsigned <span class="keyword">int</span> <span class="title">hash</span>(<span class="keyword">const</span> <span class="keyword">char</span> str) {<span class="comment">// BKDR Hash Function</span></div><div class="line">        unsigned <span class="keyword">int</span> hash = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(str) {</div><div class="line">            hash = hash  seed_ + (str++);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> (hash & <span class="number">0x7FFFFFFF</span>) % kHashSize;</div><div class="line">    }</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    unsigned <span class="keyword">int</span> seed;</div><div class="line">    unsigned <span class="keyword">int</span> size;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> kWordSize = <span class="number">26</span> + <span class="number">1</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> kNodeSize = <span class="number">20000</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> kHashSize = <span class="number">10001</span>;</div><div class="line">    struct Node {</div><div class="line">        <span class="keyword">char</span> word[kWordSize];</div><div class="line">        Node next;</div><div class="line">    };</div><div class="line">    Node node_[kNodeSize];</div><div class="line">    Node head_[kHashSize];</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p><strong>后缀数组</strong></p>
+
+<p>假设我们有以下字符串及一个char*数组：</p>
+
+<pre><code> char c[20] = "hawstein";
+ char* pc[20];
+</code></pre>
+
+<p>我们让指针pc[i]指向字符串的第i个字符，即：</p>
+
+<pre><code>for(int i=0; i&lt;8; ++i)
+    pc[i] = &amp;c[i];
+</code></pre>
+
+<p>这时候我们输出pc[i]，会得到字符串”hawstein”的所有后缀：</p>
+
+<pre><code>hawstein
+awstein
+wstein
+stein
+tein
+ein
+in
+n
+</code></pre>
+
+<p>然后，我们对数组pc进行排序，将所有后缀按字典序排序：</p>
+
+<pre><code>sort(pc, pc+8, cmp);
+</code></pre>
+
+<p>其中，比较函数cmp如下：</p>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">inline bool cmp(<span class="keyword">char</span> p, charq) {</div><div class="line">    <span class="keyword">return</span> strcmp(p, q) &lt; <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这时，我们再输出pc[i]，会得到排序后的结果：</p>
+
+<pre><code>awstein
+ein
+hawstein
+in
+n
+stein
+tein
+wstein
+</code></pre>
+
+<p>我们把数组pc称为“后缀数组”。这里需要注意，数组pc<br>中存储的是指向每个后缀首字符的地址。我们也可以存储每个后缀首字符在原数组中的下标，<br>效果是一样的。</p>
+
+<p>本章中用后缀数组解决了一个小问题：可重叠最长重复子串。比如对于字符串”banana”，<br>其后缀数组为：</p>
+
+<pre><code>a
+ana
+anana
+banana
+na
+nana
+</code></pre>
+
+<p>扫描一次数组，比较相邻子串，找到相邻子串的最长公共前缀即可。本例为”ana”，<br>其中一个a是重叠的。</p>
+
+<p>后缀数组是处理字符串的有力工具，常见的两种实现方法是：倍增算法和DC3算法。<br>推荐阅读以下材料来学习后缀数组：</p>
+
+<blockquote><blockquote><p>许智磊，《后缀数组》</p><br><br><p>罗穗骞，《后缀数组——处理字符串的有力工具》</p></blockquote></blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Reading/"> #Reading </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/blackmirror/">
                 Black Mirror Christmas Special
               </a>
@@ -585,170 +1066,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.6/">
-                Substring with Concatenation of All Words, Longest Substring Without Repeating Characters, Minimum Window Substring, Longest Palindromic Substring
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.6/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.6/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Substring_with_Concatenation_of_All_Words">Substring with Concatenation of All Words</h2>
-<blockquote>
-<p>You are given a string, S, and a list of words, L, that are all of the same length. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.<br>For example, given:<br>S: “barfoothefoobarman”<br>L: [“foo”, “bar”]<br>You should return the indices: [0,9].<br>(order does not matter).</p>
-</blockquote>
-<h3 id="Brute_Force_Solution">Brute Force Solution</h3>
-<p>Two Hashmaps</p>
-<li>rest: store all words in L, including times of appreance</li>
-
-<li>found: renew at each round, store matched words, including times of appreance</li>
-
-<p>Two pointers</p>
-<li>i: starting index of current substring</li>
-
-<li>j: numebers of words matched to current substring</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">findSubstring</span>(String S, String[] L) {</div><div class="line">     ArrayList&lt;Integer&gt; res=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">     HashMap&lt;String, Integer&gt; rest=<span class="keyword">new</span>  HashMap&lt;String, Integer&gt;();</div><div class="line">     HashMap&lt;String, Integer&gt; found=<span class="keyword">new</span>  HashMap&lt;String, Integer&gt;();</div><div class="line">     <span class="keyword">if</span>(S==<span class="keyword">null</span>||L.length==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">     <span class="keyword">int</span> wordlen=L[<span class="number">0</span>].length(), Llen=L.length, Slen=S.length();</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;L.length;i++){</div><div class="line">         <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">         <span class="keyword">if</span>(rest.get(L[i])!=<span class="keyword">null</span>) </div><div class="line">             num+=rest.get(L[i]);</div><div class="line">         rest.put(L[i], num);</div><div class="line">     }</div><div class="line">    </div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;Slen-Llen*wordlen+<span class="number">1</span>;i++){</div><div class="line">         <span class="keyword">int</span> j=<span class="number">0</span>;</div><div class="line">         found.clear();</div><div class="line">         <span class="keyword">for</span>(;j&lt;Llen;j++){</div><div class="line">             <span class="keyword">int</span> start=i+j*wordlen;</div><div class="line">             <span class="keyword">int</span> end=start+wordlen;</div><div class="line">             <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">             String tmp=S.substring(start, end);</div><div class="line">             <span class="keyword">if</span>(!rest.containsKey(tmp)) <span class="keyword">break</span>;</div><div class="line">             <span class="keyword">if</span>(found.get(tmp)!=<span class="keyword">null</span>) num+=found.get(tmp);</div><div class="line">             <span class="keyword">if</span>(num&gt;rest.get(tmp)) <span class="keyword">break</span>;</div><div class="line">             found.put(tmp, num);</div><div class="line">         }</div><div class="line">         <span class="keyword">if</span>(j==Llen) res.add(i);</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> res;   </div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<p><a href="http://www.cnblogs.com/springfor/p/3872516.html" target="_blank" rel="external">Minimun Window Solution</a></p>
-<li>outer loop: i increment wordlen times, each time scan through S</li>
-
-<li>inner loop: j increment wordlen per time, until first letter of last word</li>
-
-<li>each outerloop: reset count=0, reset index=i</li>
-
-<li>each innerloop: curdict to store current window</li>
-
-<p>If tmp str not found in dict, increment index, reset count and curdict<br>If found, add to curdict, count++<br>before count++: compare num, if exceeded, increment index ,then decrement count and curdict<br>If count equals listlen add index into result, increment index, update curdict</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">findSubstring</span>(String S, String[] L) { </div><div class="line">  ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">  <span class="keyword">if</span>(S==<span class="keyword">null</span>||L==<span class="keyword">null</span>||S.length()==<span class="number">0</span>||L.length==<span class="number">0</span>)</div><div class="line">     <span class="keyword">return</span> res;</div><div class="line">  <span class="keyword">int</span> wordLen = L[<span class="number">0</span>].length();<span class="comment">//same length for each word in dictionary</span></div><div class="line">  </div><div class="line">  <span class="comment">//put given dictionary into hashmap with each word's count</span></div><div class="line">  HashMap&lt;String, Integer&gt; dict = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">  <span class="keyword">for</span>(String word: L){</div><div class="line">      <span class="keyword">if</span>(!dict.containsKey(word))</div><div class="line">         dict.put(word, <span class="number">1</span>);</div><div class="line">      <span class="keyword">else</span></div><div class="line">         dict.put(word, dict.get(word) + <span class="number">1</span>);</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; wordLen; i++){</div><div class="line">      <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">      <span class="keyword">int</span> index = i;<span class="comment">//index of each startpoint</span></div><div class="line">      HashMap&lt;String, Integer&gt; curdict = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">      <span class="comment">//till the first letter of last word </span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt;= S.length() - wordLen; j += wordLen){</div><div class="line">          String curWord = S.substring(j, j + wordLen);</div><div class="line">          <span class="comment">//check each word to tell if it existes in give dictionary</span></div><div class="line">          <span class="keyword">if</span>(!dict.containsKey(curWord)){</div><div class="line">              curdict.clear();</div><div class="line">              count = <span class="number">0</span>;</div><div class="line">              index = j + wordLen;</div><div class="line">          }<span class="keyword">else</span>{</div><div class="line">              <span class="comment">//form current dictionary</span></div><div class="line">              <span class="keyword">if</span>(!curdict.containsKey(curWord))</div><div class="line">                 curdict.put(curWord, <span class="number">1</span>);</div><div class="line">              <span class="keyword">else</span></div><div class="line">                 curdict.put(curWord, curdict.get(curWord) + <span class="number">1</span>);</div><div class="line">              </div><div class="line">              <span class="comment">//count for current found word and check if it exceed given word count</span></div><div class="line">              <span class="keyword">if</span>(curdict.get(curWord) &lt;= dict.get(curWord)){</div><div class="line">                  count++;</div><div class="line">              }<span class="keyword">else</span>{</div><div class="line">                <span class="keyword">while</span>(curdict.get(curWord) &gt; dict.get(curWord)){</div><div class="line">                     String temp = S.substring(index, index + wordLen);</div><div class="line">                     curdict.put(temp, curdict.get(temp)-<span class="number">1</span>);</div><div class="line">                     index = index + wordLen;<span class="comment">//make index move next</span></div><div class="line">                     <span class="keyword">if</span>(curdict.get(temp)&lt;dict.get(temp))</div><div class="line">                     count--;</div><div class="line">                 }</div><div class="line">              }</div><div class="line">              </div><div class="line">              <span class="comment">//put into res and move index point to nextword </span></div><div class="line">              <span class="comment">//and update current dictionary as well as count num</span></div><div class="line">              <span class="keyword">if</span>(count == L.length){</div><div class="line">                  res.add(index);</div><div class="line">                  String temp = S.substring(index, index + wordLen);</div><div class="line">                  curdict.put(temp, curdict.get(temp)-<span class="number">1</span>);</div><div class="line">                  index = index + wordLen;</div><div class="line">                  count--;</div><div class="line">              }</div><div class="line">          }</div><div class="line">      }<span class="comment">//end for j</span></div><div class="line">  }<span class="comment">//end for i</span></div><div class="line">   <span class="keyword">return</span> res;</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<h2 id="Longest_Substring_Without_Repeating_Characters">Longest Substring Without Repeating Characters</h2>
-<blockquote>
-<p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.</p>
-</blockquote>
-<h3 id="Brute_force_method">Brute force method</h3>
-<p>Find all substrings and check if each of it contains only unique characters. As for the maxlength, we use Greedy Algorithm to only keep the longest substring seen so far. There are one inner loop and each check takes linear time, O(N^2) time won’t pass the OJ.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span>(String s) {</div><div class="line"><span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> maxlen=<span class="number">1</span>;</div><div class="line">Hashtable &lt;Character, Boolean&gt; map=<span class="keyword">new</span> Hashtable&lt;Character, Boolean&gt;();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt; s.length();i++){</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;s.length();j++){</div><div class="line">        <span class="keyword">if</span>(map.containsKey(s.charAt(j))){map.clear(); <span class="keyword">break</span>;}</div><div class="line">        <span class="keyword">else</span>{map.put(s.charAt(j), <span class="keyword">false</span>);}</div><div class="line">        <span class="keyword">int</span> len=map.size();</div><div class="line">        <span class="keyword">if</span>(len&gt;maxlen){maxlen=len;}</div><div class="line">    }</div><div class="line">}</div><div class="line">    <span class="keyword">return</span> maxlen;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p><a href="http://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/" target="_blank" rel="external">Better Solution</a><br>Use a Hashmap/Hashset recording current substring and two pointers to record current positions.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span>(String s) {</div><div class="line">    <span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> maxlen=<span class="number">1</span>,l=<span class="number">0</span>,r=<span class="number">0</span>;</div><div class="line">        Hashtable &lt;Character, Boolean&gt; map=<span class="keyword">new</span> Hashtable&lt;Character, Boolean&gt;();</div><div class="line">        <span class="keyword">while</span>(r&lt;s.length()){</div><div class="line">            <span class="keyword">char</span> tmp=s.charAt(r);</div><div class="line">            <span class="keyword">if</span>(!map.containsKey(tmp)||map.get(tmp)==<span class="keyword">false</span>){</div><div class="line">                map.put(tmp, <span class="keyword">true</span>);</div><div class="line">                maxlen=Math.max((r-l+<span class="number">1</span>), maxlen);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">while</span>(s.charAt(l)!=s.charAt(r)){map.put(s.charAt(l), <span class="keyword">false</span>);l++;}</div><div class="line">                l++;</div><div class="line">            }</div><div class="line">            r++;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> maxlen;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="Minimum_Window_Substring">Minimum Window Substring</h2>
-<blockquote>
-<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).<br>For example,<br>S = “ADOBECODEBANC”<br>T = “ABC”<br>Minimum window is “BANC”.<br>Note:<br>If there is no such window in S that covers all characters in T, return the emtpy string “”.<br>If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.</p>
-</blockquote>
-<h3 id="Min_Sliding_Window_Solution"><a href="http://blog.csdn.net/linhuanmars/article/details/20343903" target="_blank" rel="external">Min Sliding Window Solution</a></h3>
-<li>Use a Hashmap to record each character, numbers in T</li>
-
-<li>Two pointers:</li><br>left: increment when current substring contains all chars in T, pass unrelevant chars and exceeded chars<br>right: increment each loop, if found a match in T decrement its Hashmap value<br><br><li>Minlen: when we found a new substring update minlength</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">    HashMap&lt;Character,Integer&gt; dict=<span class="keyword">new</span> HashMap&lt;Character,Integer&gt;();</div><div class="line">    <span class="keyword">int</span> tlen=T.length(), slen=S.length(),minlen=slen+<span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tlen;i++){</div><div class="line">        <span class="keyword">int</span> num=<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(dict.containsKey(T.charAt(i))) num+=dict.get(T.charAt(i));</div><div class="line">        dict.put(T.charAt(i),num);</div><div class="line">    }</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>,left=<span class="number">0</span>,start=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;slen;i++){</div><div class="line">        <span class="keyword">if</span>(dict.containsKey(S.charAt(i))){</div><div class="line">            dict.put(S.charAt(i),dict.get(S.charAt(i))-<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(dict.get(S.charAt(i))&gt;=<span class="number">0</span>) count++;</div><div class="line">            <span class="keyword">if</span>(count==tlen){</div><div class="line">                <span class="keyword">while</span>(count==tlen){</div><div class="line">                    <span class="keyword">if</span>(i-left+<span class="number">1</span>&lt;minlen){minlen=i-left+<span class="number">1</span>; start=left; }</div><div class="line">                    <span class="keyword">if</span>(dict.containsKey(S.charAt(left))) {</div><div class="line">                         dict.put(S.charAt(left),dict.get(S.charAt(left))+<span class="number">1</span>);</div><div class="line">                         <span class="keyword">if</span>(dict.get(S.charAt(left))&gt;<span class="number">0</span>) count--;</div><div class="line">                    }</div><div class="line">                    left++;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    </div><div class="line">     <span class="keyword">return</span> minlen&gt;slen? <span class="string">""</span>:S.substring(start,start+minlen);</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Another version using <a href="http://www.lifeincode.net/programming/leetcode-minimum-window-substring-java/" target="_blank" rel="external">two hashmaps</a>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">    HashMap&lt;Character, Integer&gt; dict = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T.length(); i++) {</div><div class="line">        <span class="keyword">char</span> c = T.charAt(i);</div><div class="line">        <span class="keyword">if</span> (!dict.containsKey(c))</div><div class="line">            dict.put(c, <span class="number">1</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            dict.put(c, dict.get(c) + <span class="number">1</span>);</div><div class="line">    }</div><div class="line">    HashMap&lt;Character, Integer&gt; found = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">int</span> foundCounter = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> end = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> min = Integer.MAX_VALUE;</div><div class="line">    String minWindow = <span class="string">""</span>;</div><div class="line">    <span class="keyword">while</span> (end &lt; S.length()) {</div><div class="line">        <span class="keyword">char</span> c = S.charAt(end);</div><div class="line">        <span class="keyword">if</span> (dict.containsKey(c)) {</div><div class="line">            <span class="keyword">if</span> (found.containsKey(c)) {</div><div class="line">                <span class="keyword">if</span> (found.get(c) &lt; dict.get(c))</div><div class="line">                    foundCounter++;</div><div class="line">                found.put(c, found.get(c) + <span class="number">1</span>);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                found.put(c, <span class="number">1</span>);</div><div class="line">                foundCounter++;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (foundCounter == T.length()) {</div><div class="line">            <span class="comment">//When foundCounter equals to T.length(), in other words, found all characters.</span></div><div class="line">            <span class="keyword">char</span> sc = S.charAt(start);</div><div class="line">            <span class="keyword">while</span> (!found.containsKey(sc) || found.get(sc) &gt; dict.get(sc)) {</div><div class="line">                <span class="keyword">if</span> (found.containsKey(sc) && found.get(sc) &gt; dict.get(sc))</div><div class="line">                    found.put(sc, found.get(sc) - <span class="number">1</span>);</div><div class="line">                start++;</div><div class="line">                sc = S.charAt(start);</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span> (end - start + <span class="number">1</span> &lt; min) {</div><div class="line">                minWindow = S.substring(start, end + <span class="number">1</span>);</div><div class="line">                min = end - start + <span class="number">1</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        end++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> minWindow;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Array_Solution">Array Solution</h3>
-<p>To count occurrence of characters, instead of using a hash map, can use an int array of 256<br>Two pointer method with one point to end and one point to start.<br>Pointer advance condition: move end forward till finds one window, then move start forward till the window no longer valid</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> String <span class="title">minWindow</span>(String S, String T) {</div><div class="line">        <span class="keyword">int</span>[] map=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>],found=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">int</span> start=<span class="number">0</span>, count=<span class="number">0</span>,end=<span class="number">0</span>,minlen=S.length()+<span class="number">1</span>,tlen=T.length(),slen=S.length();</div><div class="line">        String min=<span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tlen; i++){</div><div class="line">            map[T.charAt(i)]++;</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(;end&lt;slen;end++){</div><div class="line">            <span class="keyword">if</span>(map[S.charAt(end)]&gt;found[S.charAt(end)]) {count++;}</div><div class="line">            found[S.charAt(end)]++;</div><div class="line">            <span class="keyword">if</span>(count==T.length()){</div><div class="line">                <span class="keyword">while</span>(found[S.charAt(start)]&gt;map[S.charAt(start)])</div><div class="line">                {   found[S.charAt(start)]--;</div><div class="line">                    start++;</div><div class="line">                }</div><div class="line">                <span class="keyword">if</span>(end-start+<span class="number">1</span>&lt;minlen) {minlen=end-start+<span class="number">1</span>; min = S.substring(start, end+<span class="number">1</span>);</div><div class="line">}</div><div class="line">                found[S.charAt(start)]--;</div><div class="line">                start++;</div><div class="line">                count--;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> min;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Longest_Palindromic_Substring">Longest Palindromic Substring</h2>
-<blockquote>
-<p>Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.</p>
-</blockquote>
-<h3 id="Brute_Force_Solution-1">Brute Force Solution</h3>
-<p>Find all possible substrings and check if each is palindrome. O(N^3) too LTE…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome</span>(String s) {</div><div class="line">       <span class="keyword">int</span> maxlen=<span class="number">0</span>; </div><div class="line">       String maxstr=<span class="keyword">null</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;s.length();j++){</div><div class="line">               String tmp=s.substring(i,j+<span class="number">1</span>);</div><div class="line">               <span class="keyword">if</span>(IsPalindrome(tmp)&&tmp.length()&gt;maxlen)</div><div class="line">                   {</div><div class="line">                   maxlen=tmp.length();</div><div class="line">                   maxstr=tmp;}</div><div class="line">           }</div><div class="line">       }<span class="keyword">return</span> maxstr;</div><div class="line">   }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> Boolean <span class="title">IsPalindrome</span>(String s) {</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">       <span class="keyword">if</span>(s.charAt(i)!=s.charAt(s.length()-<span class="number">1</span>-i)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       } <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<h3 id="DP_Solution">DP Solution</h3>
-<p>Time O(n^2) Space O(n^2) but didn’t pass OJ. Why?<br>Three rounds of loops:</p>
-<li>set diagonal to 1: t[i][i]=0</li><br><li>set top-right second diagonal: t[i][i+1]=1 if two consecutive character</li><br><li>set whole table [diagonaly]</li><br><li>a. start from substring length 3 to full length</li><br><li>b. inner loop: from 0 to length-len, check substring(i, i+len), set t[i][i+len-1] according to changing rule:</li><br><li>c. If s.charAt(i) == s.charAt(j) then t[i][j] = t[i + 1][j - 1]</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome2</span>(String s) {</div><div class="line">          <span class="keyword">int</span> maxlen=<span class="number">0</span>; </div><div class="line">          String maxstr=<span class="keyword">null</span>;</div><div class="line">          <span class="keyword">int</span>[][] t=<span class="keyword">new</span> <span class="keyword">int</span>[s.length()][s.length()];</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){t[i][i]=<span class="number">1</span>;}</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length()-<span class="number">1</span>;i++){</div><div class="line">              <span class="keyword">if</span>(s.charAt(i)==s.charAt(i+<span class="number">1</span>))</div><div class="line">                  {t[i][i+<span class="number">1</span>]=<span class="number">1</span>;</div><div class="line">                  maxlen=<span class="number">2</span>;maxstr=s.substring(i,i+<span class="number">2</span>);}</div><div class="line">              <span class="keyword">else</span> t[i][i+<span class="number">1</span>]=<span class="number">0</span>;</div><div class="line">              }</div><div class="line">          </div><div class="line">          printTable(t);</div><div class="line">          </div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">3</span>; len &lt;= s.length(); len++) {</div><div class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= s.length()-len; i++) {</div><div class="line">                  <span class="keyword">int</span> j = i + len - <span class="number">1</span>;</div><div class="line">                  <span class="keyword">if</span> (s.charAt(i) == s.charAt(j)) {</div><div class="line">                      t[i][j] = t[i + <span class="number">1</span>][j - <span class="number">1</span>];</div><div class="line">                      <span class="keyword">if</span> (t[i][j] == <span class="number">1</span> && len &gt; maxlen)</div><div class="line">                          maxstr = s.substring(i, j + <span class="number">1</span>);</div><div class="line">                  } </div><div class="line">                  <span class="keyword">else</span> {t[i][j]=<span class="number">0</span>;}</div><div class="line">                  printTable(t);</div><div class="line">              }</div><div class="line">          }</div><div class="line">          </div><div class="line">          <span class="keyword">return</span> maxstr;</div><div class="line">          </div><div class="line">    }</div><div class="line">      </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printTable</span>(<span class="keyword">int</span>[][] x){</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> [] y : x){</div><div class="line">              <span class="keyword">for</span>(<span class="keyword">int</span> z: y){</div><div class="line">                  System.out.print(z + <span class="string">" "</span>);</div><div class="line">              }</div><div class="line">              System.out.println();</div><div class="line">          }</div><div class="line">          System.out.println(<span class="string">"------"</span>);</div><div class="line">      }</div></pre></td></tr></table></figure>
-
-<p><a href="http://www.programcreek.com/2013/12/leetcode-solution-of-longest-palindromic-substring-java/" target="_blank" rel="external">Another Algorithm</a></p>
-<p>i from 0 to length-1, get palindrom substring with center of i or i, i+1, keep updating the longest substring: Time O(n^2), space O(1)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">longestPalindrome</span>(String s) {       </div><div class="line">          String maxstr = <span class="string">""</span>;</div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) {</div><div class="line">              <span class="comment">// get longest palindrome with center of i eg: BAB</span></div><div class="line">              String tmp = helper(s, i, i);</div><div class="line">              <span class="keyword">if</span> (tmp.length() &gt; maxstr.length()) {</div><div class="line">                  maxstr = tmp;</div><div class="line">              }</div><div class="line">       </div><div class="line">              <span class="comment">// get longest palindrome with center of i, i+1 eg: ABBA</span></div><div class="line">              tmp = helper(s, i, i + <span class="number">1</span>);</div><div class="line">              <span class="keyword">if</span> (tmp.length() &gt; maxstr.length()) {</div><div class="line">                  maxstr = tmp;</div><div class="line">              }</div><div class="line">          }</div><div class="line">       </div><div class="line">          <span class="keyword">return</span> maxstr;</div><div class="line">      }</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">helper</span>(String s, <span class="keyword">int</span> begin, <span class="keyword">int</span> end) {</div><div class="line">          <span class="keyword">while</span> (begin &gt;= <span class="number">0</span> && end &lt;= s.length() - <span class="number">1</span> && s.charAt(begin) == s.charAt(end)) {</div><div class="line">              begin--;</div><div class="line">              end++;</div><div class="line">          }</div><div class="line">          <span class="keyword">return</span> s.substring(begin + <span class="number">1</span>, end);</div><div class="line">          }</div></pre></td></tr></table></figure>
-
-<p><a href="http://algs4.cs.princeton.edu/53substring/Manacher.java.html" target="_blank" rel="external">Manacher’s algorithm</a><br>Computes the longest palindromic substring in linear time.</p>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/String/"> #String </a>
-          
-            <a href="/tags/DP/"> #DP </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -758,7 +1075,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
   </div>
 
 
@@ -789,7 +1106,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

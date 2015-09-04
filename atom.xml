@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-03T22:24:30.451Z</updated>
+  <updated>2015-09-04T03:14:35.272Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -15,23 +15,135 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Combination Sum]]></title>
+    <title><![CDATA[Combination Sum,Combination Sum II, Combination Sum III]]></title>
     <link href="http://sunbingjie.tk/2015/09/03/9.3/"/>
     <id>http://sunbingjie.tk/2015/09/03/9.3/</id>
-    <published>2015-09-03T22:13:02.000Z</published>
-    <updated>2015-09-03T22:13:02.000Z</updated>
+    <published>2015-09-04T03:14:23.000Z</published>
+    <updated>2015-09-04T03:14:23.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Combination_Sum">Combination Sum</h2>
 <blockquote>
 <p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
 </blockquote>
 <h3 id="Solution">Solution</h3>
+<p>Simple DFS</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">    List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    Arrays.sort(candidates);</div><div class="line">    dfs(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">	<span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">		tmp.add(candidates[i]);</div><div class="line">		dfs(res,tmp,candidates,target-candidates[i],i);</div><div class="line">		tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Combination_Sum_II">Combination Sum II</h2>
+<blockquote>
+<p>Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>Each number in C may only be used once in the combination.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 10,1,2,7,6,1,5 and target 8,<br>A solution set is:<br>[1, 7]<br>[1, 2, 5]<br>[2, 6]<br>[1, 1, 6]</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>Two small changes:</p>
+<ul>
+<li>pass in i+1 as new start in each recursive call</li>
+<li>keep track of a prev value of the last value in the last tuple, if the next one equals to prev then it is duplicate</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum2</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">        List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">        Arrays.sort(candidates);</div><div class="line">        dfs2(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs2</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">         </div><div class="line">        <span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> prev=-<span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">            <span class="keyword">if</span>(target&lt;candidates[i]) <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span>(candidates[i]!=prev){</div><div class="line">                tmp.add(candidates[i]);</div><div class="line">                dfs2(res,tmp,candidates,target-candidates[i],i+<span class="number">1</span>);</div><div class="line">                prev=candidates[i];</div><div class="line">                tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Combination_Sum_III">Combination Sum III</h2>
+<blockquote>
+<p>Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.<br>Ensure that numbers within the set are sorted in ascending order.<br>Example 1:<br>Input: k = 3, n = 7<br>Output:<br>[[1,2,4]]<br>Example 2:<br>Input: k = 3, n = 9<br>Output:<br>[[1,2,6], [1,3,5], [2,3,4]]</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum3</span>(<span class="keyword">int</span> k, <span class="keyword">int</span> n) {</div><div class="line">        List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">        dfs(res,tmp,k,n,<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt;tmp, <span class="keyword">int</span> k, <span class="keyword">int</span> n, <span class="keyword">int</span> start){</div><div class="line">        <span class="keyword">if</span>(tmp.size()==k && n==<span class="number">0</span>){</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(n&lt;<span class="number">0</span> || tmp.size()&gt;k) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=start; i&lt;=<span class="number">9</span>; i++){</div><div class="line">            tmp.add(i);</div><div class="line">            dfs(res,tmp,k,n-i,i+<span class="number">1</span>);</div><div class="line">            tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
 
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="Combination_Sum">Combination Sum</h2>
 <blockquote>
 <p>Given a set of candidate numbers (C) and a target number (T), find all unique ]]>
+    </summary>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
+    
+      <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Next Permutation, Permutation, Permutations II, Permutation Sequence]]></title>
+    <link href="http://sunbingjie.tk/2015/09/01/8.25/"/>
+    <id>http://sunbingjie.tk/2015/09/01/8.25/</id>
+    <published>2015-09-01T05:54:06.000Z</published>
+    <updated>2015-09-01T05:54:06.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Next_Permutation">Next Permutation</h2>
+<blockquote>
+<p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.<br>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).<br>The replacement must be in-place, do not allocate extra memory.<br>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.<br>1,2,3 → 1,3,2<br>3,2,1 → 1,2,3<br>1,1,5 → 1,5,1</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<p>Find the following <a href="http://blog.csdn.net/linhuanmars/article/details/20434115" target="_blank" rel="external">pattern</a>:</p>
+<ol>
+<li><p>From right to left, find the first digit (PartitionNumber) which violate the increase trend.</p>
+</li>
+<li><p>From right to left, find the first digit which larger than PartitionNumber, call it ChangeNumber.</p>
+</li>
+<li><p>Swap the PartitionNumber and ChangeNumber.</p>
+</li>
+<li><p>Reverse all the digit on the right of partition index.</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">nextPermutation</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    	<span class="keyword">int</span> i=nums.length-<span class="number">1</span>;</div><div class="line">    	<span class="keyword">while</span>(i&gt;<span class="number">0</span> && nums[i-<span class="number">1</span>]&gt;=nums[i]){</div><div class="line">    		i--;</div><div class="line">    	}</div><div class="line">    	i--;</div><div class="line">  </div><div class="line">    	<span class="keyword">if</span>(i&lt;<span class="number">0</span>) {</div><div class="line">    		reverse(nums,<span class="number">0</span>);</div><div class="line">    		<span class="keyword">return</span> ;</div><div class="line">    	}</div><div class="line">    	<span class="keyword">int</span> j=nums.length-<span class="number">1</span>;</div><div class="line">    	<span class="keyword">while</span>(j&gt;i && nums[j]&lt;=nums[i]){</div><div class="line">    		j--;</div><div class="line">    	}</div><div class="line">      	 </div><div class="line">    	<span class="comment">//swap i,j</span></div><div class="line">    	<span class="keyword">int</span> tmp=nums[i];</div><div class="line">    	nums[i]=nums[j];</div><div class="line">    	nums[j]=tmp;</div><div class="line"></div><div class="line">    	<span class="comment">//reverse the partition after i</span></div><div class="line">    	reverse(nums, i+<span class="number">1</span>);</div><div class="line"></div><div class="line">    	<span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    </div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reverse</span>(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i){</div><div class="line">	   <span class="keyword">int</span> l=i, r=nums.length-<span class="number">1</span>;</div><div class="line">	   <span class="keyword">while</span>(l&lt;r){</div><div class="line">			<span class="keyword">int</span> tmp=nums[l];</div><div class="line">			nums[l]=nums[r];</div><div class="line">			nums[r]=tmp;</div><div class="line">			l++;</div><div class="line">			r--;</div><div class="line">	   }</div><div class="line">	   <span class="keyword">return</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Permutation">Permutation</h2>
+<blockquote>
+<p>Given a collection of numbers, return all possible permutations.<br>For example,<br>[1,2,3] have the following permutations:<br>[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].</p>
+</blockquote>
+<h3 id="DFS_Solution">DFS Solution</h3>
+<ul>
+<li>Each digit has n possible values</li>
+<li>If containing the same values as previous ones, continue</li>
+<li>When reached end level, remove last element from list</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">permute</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    	List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    	List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    	dfs(result,tmp,nums);</div><div class="line">    	<span class="keyword">return</span> result;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; result,List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] nums){</div><div class="line">    	<span class="keyword">if</span>(tmp.size() == nums.length) {</div><div class="line">    		result.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">    		<span class="keyword">return</span>;}</div><div class="line">    	 </div><div class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++){</div><div class="line">    		<span class="keyword">if</span>(tmp.contains(nums[i])) <span class="keyword">continue</span>;</div><div class="line">			 tmp.add(nums[i]);</div><div class="line">			 dfs(result, tmp, nums);</div><div class="line">			 tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">    		}</div><div class="line">    	<span class="keyword">return</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Permutations_II">Permutations II</h2>
+<blockquote>
+<p>Given a collection of numbers that might contain duplicates, return all possible unique permutations.<br>For example,<br>[1,1,2] have the following unique permutations:<br>[1,1,2], [1,2,1], and [2,1,1].</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li>Similar to Permutations, we only need to make sure not using the same element twice in the same way</li>
+<li>Use Visited[] to keep track of currently used element</li>
+<li>After sorted, if previous element is not visited and the same with current, then this will be duplicate permutation</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">permuteUnique</span>(<span class="keyword">int</span>[] num) {</div><div class="line">      List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">      <span class="keyword">if</span>(num == <span class="keyword">null</span> || num.length == <span class="number">0</span>)</div><div class="line">          <span class="keyword">return</span> result;</div><div class="line">      List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">      <span class="keyword">int</span>[] visited = <span class="keyword">new</span> <span class="keyword">int</span>[num.length];</div><div class="line">      </div><div class="line">      Arrays.sort(num);</div><div class="line">      helper(result, list, visited, num);</div><div class="line">      <span class="keyword">return</span> result;</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">helper</span>(List&lt;List&lt;Integer&gt;&gt; result, List&lt;Integer&gt; list, <span class="keyword">int</span>[] visited, <span class="keyword">int</span>[] num) {</div><div class="line">      <span class="keyword">if</span>(list.size() == num.length) {</div><div class="line">          result.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(list));</div><div class="line">          <span class="keyword">return</span>;</div><div class="line">      }</div><div class="line">      </div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length; i++) {</div><div class="line">          <span class="keyword">if</span> (visited[i] == <span class="number">1</span> || (i != <span class="number">0</span> && num[i] == num[i - <span class="number">1</span>] && visited[i - <span class="number">1</span>] == <span class="number">0</span>)){</div><div class="line">              <span class="keyword">continue</span>;</div><div class="line">          }</div><div class="line">          visited[i] = <span class="number">1</span>;</div><div class="line">          list.add(num[i]);</div><div class="line">          helper(result, list, visited, num);</div><div class="line">          list.remove(list.size() - <span class="number">1</span>);</div><div class="line">          visited[i] = <span class="number">0</span>;</div><div class="line">      }</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Permutation_Sequence">Permutation Sequence</h2>
+<blockquote>
+<p>The set [1,2,3,…,n] contains a total of n! unique permutations.<br>By listing and labeling all of the permutations in order,<br>We get the following sequence (ie, for n = 3):<br>“123”<br>“132”<br>“213”<br>“231”<br>“312”<br>“321”<br>Given n and k, return the kth permutation sequence.<br>Note: Given n will be between 1 and 9 inclusive.</p>
+</blockquote>
+<h3 id="DFS_Solution-1">DFS Solution</h3>
+<ul>
+<li>Find kth permutation, LTE…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getPermutation</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> k) {</div><div class="line">        <span class="keyword">int</span>[] count={<span class="number">0</span>};</div><div class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        tmp = dfs(tmp, n, k, count);</div><div class="line">        StringBuilder re= <span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : tmp){</div><div class="line">            re.append(i);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> re.toString();</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">dfs</span>(ArrayList&lt;Integer&gt; tmp, <span class="keyword">int</span> n , <span class="keyword">int</span> k, <span class="keyword">int</span>[] count){</div><div class="line">    </div><div class="line">        <span class="keyword">if</span>(tmp.size() == n){</div><div class="line">            count[<span class="number">0</span>]++;</div><div class="line">            <span class="keyword">if</span>(count[<span class="number">0</span>]==k) <span class="keyword">return</span> tmp;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; i++){</div><div class="line">            <span class="keyword">if</span>(tmp.contains(i)) <span class="keyword">continue</span>;</div><div class="line">            tmp.add(i);</div><div class="line">            ArrayList&lt;Integer&gt; res = dfs(tmp, n, k, count);</div><div class="line">            <span class="keyword">if</span>(res!= <span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">            tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="Math_Solution">Math Solution</h3>
+<p>Find the following <a href="https://leetcode.com/discuss/42700/explain-like-im-five-java-solution-in-o-n" target="_blank" rel="external">pattern</a>:</p>
+<ul>
+<li>To find kth sequence, (k-1)/(n-1)! will be the index of the number to be added</li>
+<li>We have elimated  (k-1)/(n-1)! <em> (n-1)! tuples, so keep finding k-(k-1)/(n-1)! </em> (n-1)! === k%(n-1)! in the sub problems</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getPermutation</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> k){</div><div class="line">       StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">       k=k-<span class="number">1</span>;</div><div class="line">       <span class="keyword">int</span> factorial=<span class="number">1</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++){</div><div class="line">           factorial*=i;</div><div class="line">       }</div><div class="line">       ArrayList&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; i++) {</div><div class="line">           nums.add(i);</div><div class="line">       }</div><div class="line">       <span class="keyword">while</span>(n&gt;<span class="number">1</span>){</div><div class="line">           <span class="keyword">int</span> index = k/factorial;</div><div class="line">           sb.append(nums.get(index));</div><div class="line">           nums.remove(index);</div><div class="line">           k = k%factorial;</div><div class="line">           factorial = factorial/(n-<span class="number">1</span>);</div><div class="line">            </div><div class="line">           n--;</div><div class="line">       }</div><div class="line">       sb.append(nums.get(<span class="number">0</span>));</div><div class="line">       <span class="keyword">return</span> sb.toString();</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Next_Permutation">Next Permutation</h2>
+<blockquote>
+<p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.<br>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).<br>The replacement must be in-place, do not allocate extra memory.<br>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.<br>1,2,3 → 1,3,2<br>3,2,1 → 1,2,3<br>1,1,5 → 1,5,1</p>
+</blockquote>
+]]>
+    
     </summary>
     
       <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
@@ -1356,46 +1468,6 @@
       <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
     
       <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Stack and Heap]]></title>
-    <link href="http://sunbingjie.tk/2015/03/20/3.19.3/"/>
-    <id>http://sunbingjie.tk/2015/03/20/3.19.3/</id>
-    <published>2015-03-20T07:17:01.000Z</published>
-    <updated>2015-03-20T07:17:01.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Overview">Overview</h2>
-<p>Value types are created on the stack, and reference types are created on the heap.</p>
-<p>Both are stored in computer RAM.</p>
-<p>Each thread gets a stack, while there’s typically only one heap for the application.</p>
-<h2 id="Stack">Stack</h2>
-<p>When a function is called, a block is reserved on the top of the stack for local variables and some bookkeeping data in a LIFO order. Freeing a block from the stack is nothing more than adjusting one pointer.</p>
-<h2 id="Heap">Heap</h2>
-<p>Unlike the stack, there’s no enforced pattern to the allocation and deallocation of blocks from the heap; you can allocate a block at any time and free it at any time. This makes it much more complex to keep track of which parts of the heap are allocated or free at any given time; there are many custom heap allocators available to tune heap performance for different usage patterns.</p>
-<h2 id="Q_&amp;_A">Q &amp; A</h2>
-<h4 id="What_is_their_scope?">What is their scope?</h4>
-<p>The stack is attached to a thread, so when the thread exits the stack is reclaimed.</p>
-<p>The heap is typically allocated at application startup by the runtime, and is reclaimed when the application (technically process) exits.</p>
-<h4 id="What_determines_the_size_of_each_of_them?">What determines the size of each of them?</h4>
-<p>The size of the stack is set when a thread is created.</p>
-<p>The size of the heap is set on application startup, but can grow as space is needed (the allocator requests more memory from the operating system).</p>
-<h4 id="What_makes_one_faster?">What makes one faster?</h4>
-<p>The stack is faster because the access pattern makes it trivial to allocate and deallocate memory from it, while the heap has much more complex bookkeeping involved in an allocation or free.</p>
-<p>Each byte in the stack tends to be reused very frequently which means it tends to be mapped to the processor’s cache, making it very fast.</p>
-<p>Another performance hit for the heap is that the heap, being mostly a global resource, typically has to be multi-threading safe, i.e. each allocation and deallocation needs to be (typically) synchronized.</p>
-<p><img src="http://okckd.github.io/assets/images/stack-and-heap.png" alt=""></p>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Frapid-snap%2Ftwenty-one-pilots-cant-help%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Overview">Overview</h2>
-<p>Value types are created on the stack, and reference types are created on the heap.</p>
-<p>Both are stored]]>
-    </summary>
-    
-      <category term="Design" scheme="http://sunbingjie.tk/tags/Design/"/>
     
       <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
