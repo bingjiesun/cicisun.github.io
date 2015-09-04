@@ -1,0 +1,1240 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+
+
+  <meta name="keywords" content="LeetCode,Programming" />
+
+
+
+  <link rel="alternate" href="//atom.xml" title="Cici's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Cici's Blog </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Cici's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          Home
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          Archives
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/1.17/">
+                Best Time to Buy and Sell Stock, Best Time to Buy and Sell Stock II, Best Time to Buy and Sell Stock III
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.17/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.17/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Best_Time_to_Buy_and_Sell_Stock">Best Time to Buy and Sell Stock</h2>
+<blockquote>
+<p>Say you have an array for which the ith element is the price of a given stock on day i.<br>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+</blockquote>
+<h3 id="Brute_Force_Solution">Brute Force Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">    <span class="keyword">int</span> maxp=<span class="number">0</span>, low=Integer.MAX_VALUE;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length;i++){</div><div class="line">            <span class="keyword">if</span>(prices[i]&lt;low) low=prices[i];</div><div class="line">            <span class="keyword">if</span>(prices[i]-low&gt;maxp)</div><div class="line">            maxp=prices[i]-low;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> maxp;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">int</span> maxp=<span class="number">0</span>, tmp=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length &lt;<span class="number">2</span>) { <span class="keyword">return</span> <span class="number">0</span>;}</div><div class="line">        <span class="keyword">int</span>[] t=<span class="keyword">new</span> <span class="keyword">int</span>[prices.length-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length-<span class="number">1</span>;i++){</div><div class="line">                t[i]=prices[i+<span class="number">1</span>]-prices[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t.length;i++){</div><div class="line">            tmp+=t[i];</div><div class="line">                <span class="keyword">if</span>(tmp&gt;maxp) maxp=tmp;</div><div class="line">                <span class="keyword">if</span>(tmp&lt;<span class="number">0</span>) tmp=<span class="number">0</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxp;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Best_Time_to_Buy_and_Sell_Stock_II">Best Time to Buy and Sell Stock II</h2>
+<h3 id="Greedy_Solution:_trasaction_once_there_exist_profit-">Greedy Solution: trasaction once there exist profit.</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">      <span class="keyword">if</span>(prices.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">      <span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;prices.length; i++){</div><div class="line">          <span class="keyword">if</span>(prices[i] &gt; prices[i-<span class="number">1</span>])</div><div class="line">            ans += prices[i]-prices[i-<span class="number">1</span>];</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> ans;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution-1">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">int</span> maxp=<span class="number">0</span>, tmp=<span class="number">0</span>,curmax=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length &lt;<span class="number">2</span>) { <span class="keyword">return</span> <span class="number">0</span>;}</div><div class="line">        <span class="keyword">int</span>[] t=<span class="keyword">new</span> <span class="keyword">int</span>[prices.length-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prices.length-<span class="number">1</span>;i++){</div><div class="line">                t[i]=prices[i+<span class="number">1</span>]-prices[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t.length;i++){</div><div class="line">          <span class="keyword">if</span>(t[i]&gt;<span class="number">0</span>) maxp+=t[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxp;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Best_Time_to_Buy_and_Sell_Stock_III">Best Time to Buy and Sell Stock III</h2>
+<blockquote>
+<p>Say you have an array for which the ith element is the price of a given stock on day i.<br>Design an algorithm to find the maximum profit. You may complete at most two transactions.<br>Note:<br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+</blockquote>
+<h3 id="DP_Solution-1">DP Solution</h3>
+<p>First thought: we can cut the array in half in n ways, and get the max profit from both sides using solution in the first question. This will be O(n^2), too LTE…<br>Using DP to store the max profit from both sides? just scan twice from both directions and update the max profit array for [0…i] and [i…n-1]. Return the max value when a[i]+b[i] is max.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">        <span class="keyword">if</span>(prices==<span class="keyword">null</span>||prices.length&lt;<span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n=prices.length, maxsofar=<span class="number">0</span>, low=<span class="number">0</span>,high=<span class="number">0</span>;</div><div class="line">        <span class="comment">//curmax[i] shows max profit from [0..i]</span></div><div class="line">        <span class="keyword">int</span>[] curmax=<span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        curmax[<span class="number">0</span>]=<span class="number">0</span>;low=prices[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++){</div><div class="line">            <span class="keyword">if</span>(prices[i]&lt;low) low=prices[i];</div><div class="line">            <span class="keyword">if</span>(prices[i]-low&gt;maxsofar) maxsofar=prices[i]-low;</div><div class="line">            curmax[i]=maxsofar;</div><div class="line">        }</div><div class="line">        <span class="comment">//backmax[i] shows max profits from [i...n-1]</span></div><div class="line">        <span class="keyword">int</span>[] backmax=<span class="keyword">new</span> <span class="keyword">int</span>[n];maxsofar=<span class="number">0</span>;</div><div class="line">        backmax[n-<span class="number">1</span>]=<span class="number">0</span>; high=prices[n-<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(i=n-<span class="number">2</span>;i&gt;=<span class="number">0</span>;i--){</div><div class="line">            <span class="keyword">if</span>(high&lt;prices[i]) high=prices[i];</div><div class="line">            <span class="keyword">if</span>(high-prices[i]&gt;maxsofar) maxsofar=high-prices[i];</div><div class="line">            backmax[i]=maxsofar;</div><div class="line">        }</div><div class="line">        maxsofar=<span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">            <span class="keyword">if</span>(backmax[i]+curmax[i]&gt;maxsofar) maxsofar = backmax[i]+curmax[i];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxsofar;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="General_DP_Solution"><a href="https://oj.leetcode.com/discuss/15153/a-clean-dp-solution-which-generalizes-to-k-transactions" target="_blank" rel="external">General DP Solution</a></h3>
+<p>Two cases select max as f[k][i]</p>
+<li>transact on i: p[i]-p[j]+f[k-1][j] or write as p[i]-max(f[k-1][j]-p[j]) j belongs to [0,i-1]</li><br><li>no transaction on i: t[k][i-1]</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span>(<span class="keyword">int</span>[] prices) {</div><div class="line">    <span class="keyword">if</span>(prices==<span class="keyword">null</span>||prices.length&lt;<span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> n=prices.length, maxsofar=<span class="number">0</span>, K=<span class="number">2</span>;</div><div class="line">    <span class="keyword">int</span>[][] f=<span class="keyword">new</span> <span class="keyword">int</span>[K+<span class="number">1</span>][n];</div><div class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> kk = <span class="number">1</span>; kk &lt;= K; kk++) {</div><div class="line">            <span class="keyword">int</span> tmpMax = f[kk-<span class="number">1</span>][<span class="number">0</span>] - prices[<span class="number">0</span>];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> ii = <span class="number">1</span>; ii &lt; n; ii++) {</div><div class="line">                f[kk][ii] = Math.max(f[kk][ii-<span class="number">1</span>], prices[ii] + tmpMax);</div><div class="line">                tmpMax = Math.max(tmpMax, f[kk-<span class="number">1</span>][ii] - prices[ii]);</div><div class="line">                maxsofar = Math.max(f[kk][ii], maxsofar);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> maxsofar;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fmilkychance%2Fstolen-dance-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/1.14/">
+                Container With Most Water, Trapping Rain Water
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.14/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.14/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Container_With_Most_Water">Container With Most Water</h2>
+<blockquote>
+<p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Two Pointers l and r:</p>
+<li>start from two ends, keep updating maxsofar area</li>
+
+<li>changing rule: if left’&lt;’right then we know moving right makes no change(width decreases and min board is still left), so we need to move left pointer, vise versa</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span>(<span class="keyword">int</span>[] height) {</div><div class="line">     <span class="keyword">if</span>(height==<span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">     <span class="keyword">int</span> curmax=-<span class="number">1</span>, maxsofar=-<span class="number">1</span>, l=<span class="number">0</span>,r=height.length-<span class="number">1</span>;</div><div class="line">     <span class="keyword">while</span>(l&lt;r){</div><div class="line">      curmax=(r-l)*Math.min(height[l],height[r]);</div><div class="line">      <span class="keyword">if</span>(curmax&gt;maxsofar){</div><div class="line">        maxsofar=curmax;</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(height[l]&lt;height[r]){</div><div class="line">        <span class="comment">//move r-- would never increase area with same l</span></div><div class="line">        <span class="keyword">int</span> tmp=height[l];</div><div class="line">        <span class="keyword">while</span>(l&lt;r && height[l]&lt;=tmp)</div><div class="line">        l++;</div><div class="line">      }</div><div class="line">      <span class="keyword">else</span>{</div><div class="line">        <span class="keyword">int</span> tmp=height[r];</div><div class="line">        <span class="keyword">while</span>(l&lt;r && height[r]&lt;=tmp)</div><div class="line">        r--;</div><div class="line">      }</div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> maxsofar;</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Trapping_Rain_Water">Trapping Rain Water</h2>
+<blockquote>
+<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.<br>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/08/rainwatertrap.png" alt="eg"></p>
+</blockquote>
+<h3 id="Crazy_Smart_Solution">Crazy Smart Solution</h3>
+<p>left[i] to store the largest to the left of i; right[i] to store the largest to the right of i. The min of these two, subtracted by A[i], determines how much water A[i] can hold<br>remember to add up volume from 1 to n-2, since two sides cannot hold water.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span>(<span class="keyword">int</span>[] A) {</div><div class="line">      <span class="keyword">if</span> (A == <span class="keyword">null</span> || A.length == <span class="number">0</span>) {  </div><div class="line">          <span class="keyword">return</span> <span class="number">0</span>;  </div><div class="line">      }  </div><div class="line">      <span class="keyword">int</span> i, n=A.length,vol=<span class="number">0</span>,max=<span class="number">0</span>,left[]=<span class="keyword">new</span> <span class="keyword">int</span>[n],right[]=<span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">      <span class="comment">//left to right</span></div><div class="line">      <span class="keyword">for</span>(i=<span class="number">1</span>, max=A[<span class="number">0</span>], left[<span class="number">0</span>]=A[<span class="number">0</span>]; i&lt;n;i++ ){</div><div class="line">          <span class="keyword">if</span>(A[i]&gt;max) {max=A[i]; left[i]=A[i];}</div><div class="line">          <span class="keyword">else</span> left[i]=max;</div><div class="line">      }</div><div class="line">      <span class="comment">//right to left</span></div><div class="line">      <span class="keyword">for</span>(i = n-<span class="number">2</span>, max=A[n-<span class="number">1</span>],right[n-<span class="number">1</span>]=A[n-<span class="number">1</span>];i&gt;=<span class="number">0</span>;i--){</div><div class="line">          <span class="keyword">if</span>(A[i]&gt;max){max=A[i]; right[i]=max;}</div><div class="line">          <span class="keyword">else</span> right[i]=max;</div><div class="line">      }</div><div class="line">      <span class="keyword">for</span>(i =<span class="number">1</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">          <span class="keyword">int</span> tmp= <span class="number">1</span> * (Math.min(left[i],right[i])-A[i]);</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="number">0</span>) vol+=tmp;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> vol;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnettwerkmusicgroup%2Fthe-paper-kites-bloom-bonus&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/1.14-2/">
+                Valid Palindrome, Palindrome Number, Scramble String, Reverse Binary, Interleaving String
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.14-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.14-2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Valid_Palindrome">Valid Palindrome</h2>
+<blockquote>
+<p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.<br>For example,<br>“A man, a plan, a canal: Panama” is a palindrome.<br>“race a car” is not a palindrome.<br>Note:<br>Have you consider that the string might be empty? This is a good question to ask during an interview.<br>For the purpose of this problem, we define empty string as valid palindrome.</p>
+</blockquote>
+<li>Only count numeric and alphabetical, ignore cases</li>
+
+<li>Empty String count as palindrome</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span>(String s) {</div><div class="line">           <span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">           s=s.toUpperCase();</div><div class="line">           <span class="keyword">int</span> l=<span class="number">0</span>, r=s.length()-<span class="number">1</span>;</div><div class="line">           <span class="keyword">while</span>(l&lt;r){</div><div class="line">               Character tmpl=s.charAt(l), tmpr=s.charAt(r);</div><div class="line">               <span class="keyword">if</span>(!(tmpl&gt;=<span class="string">'0'</span>&& tmpl&lt;=<span class="string">'9'</span>||tmpl&gt;=<span class="string">'A'</span>&&tmpl&lt;=<span class="string">'Z'</span>)) {l++; <span class="keyword">continue</span>;}</div><div class="line">               <span class="keyword">else</span> <span class="keyword">if</span>(!(tmpr&gt;=<span class="string">'0'</span>&& tmpr&lt;=<span class="string">'9'</span>||tmpr&gt;=<span class="string">'A'</span>&&tmpr&lt;=<span class="string">'Z'</span>)) {r--;<span class="keyword">continue</span>;}</div><div class="line">               </div><div class="line">               <span class="keyword">else</span>{</div><div class="line">                   <span class="keyword">if</span>(tmpl.equals(tmpr)){l++;r--;}</div><div class="line">                   <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">               }          </div><div class="line">           }</div><div class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">       }</div></pre></td></tr></table></figure>
+
+<h2 id="Palindrome_Number">Palindrome Number</h2>
+<blockquote>
+<p>Determine whether an integer is a palindrome. Do this without extra space.<br>Could negative integers be palindromes? (ie, -1)<br>If you are thinking of converting the integer to string, note the restriction of using extra space.<br>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?<br>There is a more generic way of solving this problem.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>refer my solution to reverse integer.</p>
+<li>reverse the number. If the number is the same as its reversed, then it must be a palindrome.</li>
+
+<li>negative integers as non-palindromes.</li>
+
+<p>Even thought this passed OJ, didn’t deal with overflow issues.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span>(<span class="keyword">int</span> x) {</div><div class="line">     <span class="keyword">int</span> res=<span class="number">0</span>,orig=x;</div><div class="line">     <span class="keyword">if</span>(x&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     <span class="keyword">while</span>(x!=<span class="number">0</span>){</div><div class="line">         res=res*<span class="number">10</span>+x%<span class="number">10</span>;</div><div class="line">         x=x/<span class="number">10</span>;</div><div class="line">     } </div><div class="line">     <span class="keyword">return</span> res==orig ? <span class="keyword">true</span>:<span class="keyword">false</span>;</div><div class="line">     </div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<h3 id="Another_Solution"><a href="http://leetcode.com/2012/01/palindrome-number.html" target="_blank" rel="external">Another Solution</a></h3>
+<p>First, compare the first and last digit. If they are not the same, it must not be a palindrome. If they are the same, chop off one digit from both ends and continue until you have no digits left, which you conclude that it must be a palindrome.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome2</span>(<span class="keyword">int</span> x) {</div><div class="line">          <span class="keyword">if</span> (x &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">          <span class="keyword">int</span> div = <span class="number">1</span>;</div><div class="line">          <span class="keyword">while</span> (x / div &gt;= <span class="number">10</span>) {</div><div class="line">            div *= <span class="number">10</span>;</div><div class="line">          }        </div><div class="line">          <span class="keyword">while</span> (x != <span class="number">0</span>) {</div><div class="line">            <span class="keyword">int</span> l = x / div;</div><div class="line">            <span class="keyword">int</span> r = x % <span class="number">10</span>;</div><div class="line">            <span class="keyword">if</span> (l != r) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            x = (x % div) / <span class="number">10</span>;</div><div class="line">            div /= <span class="number">100</span>;</div><div class="line">          }</div><div class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        }</div></pre></td></tr></table></figure>
+
+<h2 id="Scramble_String">Scramble String</h2>
+<blockquote>
+<p>Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.<br>Below is one possible representation of s1 = “great”:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    great</div><div class="line">   /    <span class="command">\</span></div><div class="line">  gr    eat</div><div class="line"> / <span class="command">\ </span>   /  <span class="command">\</span></div><div class="line">g   r  e   at</div><div class="line">           / <span class="command">\</span></div><div class="line">          a   t</div></pre></td></tr></table></figure>
+
+
+<p>To scramble the string, we may choose any non-leaf node and swap its two children.<br>For example, if we choose the node “gr” and swap its two children, it produces a scrambled string “rgeat”.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    rgeat</div><div class="line">   /    <span class="command">\</span></div><div class="line">  rg    eat</div><div class="line"> / <span class="command">\ </span>   /  <span class="command">\</span></div><div class="line">r   g  e   at</div><div class="line">           / <span class="command">\</span></div><div class="line">          a   t</div></pre></td></tr></table></figure>
+
+
+<p>We say that “rgeat” is a scrambled string of “great”.<br>Similarly, if we continue to swap the children of nodes “eat” and “at”, it produces a scrambled string “rgtae”.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    rgtae</div><div class="line">   /    <span class="command">\</span></div><div class="line">  rg    tae</div><div class="line"> / <span class="command">\ </span>   /  <span class="command">\</span></div><div class="line">r   g  ta  e</div><div class="line">       / <span class="command">\</span></div><div class="line">      t   a</div></pre></td></tr></table></figure>
+
+
+<p>We say that “rgtae” is a scrambled string of “great”.<br>Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.</p>
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<p>If string s1 and s2 are scramble strings, there must be a point(i) that breaks s1 to two parts s11, s12, and a point(l-i) that breaks s2 to two parts, s21, s22, and isScramble(s11, s21) &amp;&amp; isScramble(s12, s22) is true, or isScramble(s11, s22) &amp;&amp; isScramble(s12, s21) is true.</p>
+<p>Cases to consider to avoid LTE:</p>
+<li>If the lengths of two strings are different, they can’t be scramble.</li>
+
+<li>If the characters in two strings are different, they can’t be scramble either.</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isScramble</span>(String s1, String s2) {</div><div class="line">       <span class="comment">//check length</span></div><div class="line">       <span class="keyword">if</span>(s1.length()!=s2.length()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       <span class="keyword">int</span> i=<span class="number">0</span>;<span class="keyword">int</span> L = s1.length();</div><div class="line">       <span class="keyword">if</span>(s1.equals(s2)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   </div><div class="line">         <span class="comment">// check letters</span></div><div class="line">         <span class="keyword">int</span>[] count=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</div><div class="line">         <span class="keyword">for</span>(;i&lt;L;i++){</div><div class="line">           count[s1.charAt(i)-<span class="string">'a'</span>]++;</div><div class="line">           count[s2.charAt(i)-<span class="string">'a'</span>]--;</div><div class="line">         }</div><div class="line">         <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++){</div><div class="line">           <span class="keyword">if</span>(count[i]!=<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">         }</div><div class="line">  </div><div class="line">       <span class="comment">//check scramble, starting from 1</span></div><div class="line">       <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;L;i++){</div><div class="line">         String s11=s1.substring(<span class="number">0</span>, i);</div><div class="line">         String s12=s1.substring(i);</div><div class="line">         String s21=s2.substring(<span class="number">0</span>,i);</div><div class="line">         String s22=s2.substring(i);</div><div class="line">         <span class="keyword">if</span>(isScramble(s11,s21)&&isScramble(s12,s22)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">         <span class="keyword">else</span> {</div><div class="line">           s21=s2.substring(<span class="number">0</span>,L-i);</div><div class="line">           s22=s2.substring(L-i);</div><div class="line">           <span class="keyword">if</span>(isScramble(s11,s22)&&isScramble(s12,s21)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">         }</div><div class="line">       }<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     }</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution"><a href="http://blog.csdn.net/linhuanmars/article/details/24506703" target="_blank" rel="external">DP Solution</a></h3>
+<li>t[i][j][len]=1 means that two substrings of length k, one starts from i of string s1, another one starts from j of string s2, are scramble</li>
+
+<li>we are looking for t[0][0][L]</li>
+
+<li>given a len, we can cut the substring in len-1 ways, if one of them proves to be scramble then t[i][j][k]=true</li>
+
+<li>Changing Rule: t[i][j][k] &amp;&amp; t[i+k][j+k][Len-k] || t[i][j+Len-k][k] &amp;&amp; t[i+k][j][Len-k]</li>
+
+<li>Time is O(n^4), space is O(n^3).</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isScramble</span>(String s1, String s2) {</div><div class="line">     <span class="keyword">if</span>(s1.length()!=s2.length()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     <span class="keyword">if</span>(s1.equals(s2)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">     <span class="keyword">int</span> L=s1.length();</div><div class="line">     <span class="keyword">boolean</span> [][][] t=<span class="keyword">new</span> <span class="keyword">boolean</span>[L][L][L+<span class="number">1</span>];</div><div class="line">     <span class="comment">//init base value</span></div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;L;i++){</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;L;j++){</div><div class="line">             t[i][j][<span class="number">1</span>] = s1.charAt(i)==s2.charAt(j);</div><div class="line">         }</div><div class="line">     }</div><div class="line">     <span class="comment">//calculate the whole table</span></div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> len=<span class="number">2</span>;len&lt;=L;len++){</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;L-len+<span class="number">1</span>;i++){</div><div class="line">             <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;L-len+<span class="number">1</span>;j++){</div><div class="line">                 <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;len;k++){</div><div class="line">                   <span class="comment">//等号左右两边只要有一个是1就行了</span></div><div class="line">                    t[i][j][len] |= (t[i][j][k] &&  t[i+k][j+k][len-k] || t[i][j+len-k][k] && t[i+k][j][len-k]) ;</div><div class="line">                     </div><div class="line">                     }</div><div class="line">                 }</div><div class="line">             }</div><div class="line">         }</div><div class="line">    <span class="comment">//return the last value</span></div><div class="line">    <span class="keyword">return</span> t[<span class="number">0</span>][<span class="number">0</span>][L];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Reverse_Binary">Reverse Binary</h2>
+<p>1) 1010-&gt;0101 1111-&gt;0000</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">ReverseBinary2</span>(<span class="keyword">int</span> d){</div><div class="line">    <span class="keyword">int</span> n=Integer.toBinaryString(d).length();</div><div class="line">    String res=<span class="string">""</span>;</div><div class="line">    System.out.println(<span class="string">" d "</span>+d);</div><div class="line">    <span class="keyword">while</span>(d!=<span class="number">0</span>){</div><div class="line">         <span class="keyword">int</span> tmp = <span class="number">1</span>-d & <span class="number">0x01</span>;</div><div class="line">         System.out.println(<span class="string">" d "</span>+Integer.toBinaryString(d) +<span class="string">" tmp "</span>+tmp);</div><div class="line">         res=tmp+res;</div><div class="line">         d &gt;&gt;= <span class="number">1</span>;</div><div class="line">         System.out.println(<span class="string">" d: "</span>+d+ <span class="string">" b "</span>+Integer.toBinaryString(d));</div><div class="line">    }</div><div class="line">    System.out.println(res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<p>2) 1100-&gt;0011 1111-&gt;1111</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">ReverseBinary</span>(<span class="keyword">int</span> d){</div><div class="line">    <span class="keyword">int</span> n=Integer.toBinaryString(d).length();</div><div class="line">    StringBuffer sb=<span class="keyword">new</span> StringBuffer();</div><div class="line">    System.out.println(<span class="string">" d "</span>+d);</div><div class="line">    <span class="keyword">while</span>(d!=<span class="number">0</span>){</div><div class="line">         sb.append(d ^ <span class="number">0x01</span>);</div><div class="line">         System.out.println(<span class="string">" d "</span>+d+<span class="string">" sb "</span>+sb+ <span class="string">" "</span>+<span class="number">0x01</span>);</div><div class="line">         d &gt;&gt;= <span class="number">1</span>;</div><div class="line">         System.out.println(<span class="string">" d: "</span>+d+ <span class="string">" b "</span>+Integer.toBinaryString(d));</div><div class="line">    }</div><div class="line">    String s=sb.toString();</div><div class="line">    System.out.println(<span class="string">" s: "</span>+s);</div><div class="line">    String res=Integer.valueOf(s, <span class="number">2</span>).toString();</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<h2 id="Interleaving_String">Interleaving String</h2>
+<blockquote>
+<p>Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.<br>For example,<br>Given:<br>s1 = “aabcc”,<br>s2 = “dbbca”,<br>When s3 = “aadbbcbcac”, return true.<br>When s3 = “aadbbbaccc”, return false.</p>
+</blockquote>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<p>Three pointers, four cases:</p>
+<li>char at p3 equals to both p2, p1. either result could be true</li>
+
+<li>char at p3 only equals to p2, increment these two pointers. If one of p1, p2 reached its length, just compare the rest substring</li>
+
+<li>vice versa</li>
+
+<li>char at p3 equals to none, break and return false</li>
+
+<p>This solution is LTE, as expected…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isInterleave</span>(String s1, String s2, String s3) {</div><div class="line">     <span class="keyword">if</span>(s1.length()+s2.length()!=s3.length()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     <span class="keyword">return</span> rec(s1,<span class="number">0</span>,s2,<span class="number">0</span>,s3,<span class="number">0</span>); </div><div class="line">     }</div><div class="line">   </div><div class="line">   <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">rec</span>(String s1, <span class="keyword">int</span> p1, String s2, <span class="keyword">int</span> p2, String s3, <span class="keyword">int</span> p3){</div><div class="line">       <span class="keyword">if</span>(p3==s3.length()) <span class="keyword">return</span> <span class="keyword">true</span>;  </div><div class="line">     <span class="keyword">if</span>(p2==s2.length()) <span class="keyword">return</span> s1.substring(p1).equals(s3.substring(p3));</div><div class="line">     <span class="keyword">if</span>(p1==s1.length()) <span class="keyword">return</span> s2.substring(p2).equals(s3.substring(p3));</div><div class="line">     <span class="keyword">if</span>(s3.charAt(p3)==s1.charAt(p1) && s3.charAt(p3)==s2.charAt(p2))</div><div class="line">       <span class="keyword">return</span> rec(s1,p1+<span class="number">1</span>,s2,p2,s3,p3+<span class="number">1</span>) || rec(s1,p1,s2,p2+<span class="number">1</span>,s3,p3+<span class="number">1</span>);</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(s3.charAt(p3)==s1.charAt(p1))</div><div class="line">       <span class="keyword">return</span> rec(s1,p1+<span class="number">1</span>,s2,p2,s3,p3+<span class="number">1</span>);</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(s3.charAt(p3)==s2.charAt(p2))</div><div class="line">       <span class="keyword">return</span> rec(s1,p1,s2,p2+<span class="number">1</span>,s3,p3+<span class="number">1</span>);</div><div class="line">     <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution-1"><a href="http://blog.csdn.net/u011095253/article/details/9248073" target="_blank" rel="external">DP Solution</a></h3>
+<p>特么才一辈子都凑不粗来好么…</p>
+<li>t[i][j] shows whether using the first i and j elements of s1, s2 can form the first i+j elements of s3.</li>
+
+
+<li>Initialization: for t[s1+1][s2+1], the first column and row are set by comparing chars to target string, and the previous tuple.</li>
+
+
+<li>Changing Rule: depends on top and left tuple. Set to true if current char in s1 equals to corresponding char in s3, and previous tuple is true.</li>
+
+
+<li>Target: t[s1][s2]</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isInterleave</span>(String s1, String s2, String s3) {</div><div class="line">     <span class="keyword">if</span>(s1.length()+s2.length()!=s3.length()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     <span class="keyword">boolean</span>[][] t=<span class="keyword">new</span> <span class="keyword">boolean</span>[s1.length()+<span class="number">1</span>][s2.length()+<span class="number">1</span>];</div><div class="line">     t[<span class="number">0</span>][<span class="number">0</span>]=<span class="keyword">true</span>;</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;s1.length()+<span class="number">1</span>;i++){</div><div class="line">       t[i][<span class="number">0</span>]= s1.charAt(i-<span class="number">1</span>)==s3.charAt(i-<span class="number">1</span>) && t[i-<span class="number">1</span>][<span class="number">0</span>];</div><div class="line">     }</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;s2.length()+<span class="number">1</span>;i++){</div><div class="line">       t[<span class="number">0</span>][i]= s2.charAt(i-<span class="number">1</span>)==s3.charAt(i-<span class="number">1</span>) && t[<span class="number">0</span>][i-<span class="number">1</span>];</div><div class="line">     } </div><div class="line">     <span class="comment">//deduct the whole table </span></div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;s1.length()+<span class="number">1</span>;i++){</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;s2.length()+<span class="number">1</span>;j++){</div><div class="line">         t[i][j]= (t[i-<span class="number">1</span>][j] && s1.charAt(i-<span class="number">1</span>)==s3.charAt(i+j-<span class="number">1</span>)) || (t[i][j-<span class="number">1</span>] && s2.charAt(j-<span class="number">1</span>)==s3.charAt(i+j-<span class="number">1</span>));</div><div class="line">       }</div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> t[s1.length()][s2.length()]; </div><div class="line">     }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fprotocolrecordings%2Fbobina-vigel-crunch-official&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/String/"> #String </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/1.10/">
+                Multiply Strings, Implement strStr(), Reverse Words in a String, String to Integer (atoi)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.10/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.10/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Multiply_Strings">Multiply Strings</h2>
+<blockquote>
+<p>Multiply Strings<br>Given two numbers represented as strings, return multiplication of the numbers as a string.<br>Note: The numbers can be arbitrarily large and are non-negative.</p>
+</blockquote>
+<h3 id="First_Solution">First Solution</h3>
+<li>reverse two input strings, so index and digits are the same</li>
+
+<li>create a tmp int[] to store the additions of two digits multiply results</li>
+
+<li>add up the array, while inserting into a stringbuilder</li>
+
+<li>delete zeros in the beginning</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"> <span class="keyword">public</span> String <span class="title">multiply</span>(String num1, String num2) {</div><div class="line"> num1=<span class="keyword">new</span> StringBuilder(num1).reverse().toString();</div><div class="line"> num2=<span class="keyword">new</span> StringBuilder(num2).reverse().toString();</div><div class="line"> <span class="keyword">int</span>[] tmp= <span class="keyword">new</span> <span class="keyword">int</span>[num1.length()+num2.length()];</div><div class="line"> StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line"> <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; num1.length();i++){</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;num2.length();j++){</div><div class="line">     tmp[i+j]+=(num1.charAt(i)-<span class="string">'0'</span>)*(num2.charAt(j)-<span class="string">'0'</span>);</div><div class="line">   }</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tmp.length;i++){</div><div class="line">   <span class="keyword">int</span> carries=<span class="number">0</span>, num=<span class="number">0</span>;</div><div class="line">   num=tmp[i]%<span class="number">10</span>;</div><div class="line">   carries=tmp[i]/<span class="number">10</span>;</div><div class="line">   res.insert(<span class="number">0</span>, num);</div><div class="line">   <span class="keyword">if</span>(i!=tmp.length-<span class="number">1</span>){tmp[i+<span class="number">1</span>]+=carries;}</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">while</span>(res.length()&gt;<span class="number">1</span>&&res.charAt(<span class="number">0</span>)==<span class="string">'0'</span>){res.deleteCharAt(<span class="number">0</span>);}</div><div class="line"> <span class="keyword">return</span> res.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Second_Solution">Second Solution</h3>
+<p>Do it reversly, same process:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> String <span class="title">multiply</span>(String num1, String num2) {</div><div class="line">  <span class="keyword">int</span>[] tmp= <span class="keyword">new</span> <span class="keyword">int</span>[num1.length()+num2.length()];</div><div class="line">  StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">int</span> j=<span class="number">0</span>,i,num,carries=<span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span>( i = num1.length()-<span class="number">1</span>; i&gt;=<span class="number">0</span> ;i--){</div><div class="line">      carries=<span class="number">0</span>; num=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>( j = num2.length()-<span class="number">1</span>; j&gt;=<span class="number">0</span>;j--){        </div><div class="line">      num=(num1.charAt(i)-<span class="string">'0'</span>)*(num2.charAt(j)-<span class="string">'0'</span>)+tmp[i+j+<span class="number">1</span>]+carries;</div><div class="line">      tmp[i+j+<span class="number">1</span>]=num%<span class="number">10</span>;</div><div class="line">      carries=num/<span class="number">10</span>;</div><div class="line">    }</div><div class="line">    tmp[i+j+<span class="number">1</span>]=carries;</div><div class="line">  }</div><div class="line">  i=<span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span>(i&lt;tmp.length-<span class="number">1</span>&&tmp[i]==<span class="number">0</span>){i++;}</div><div class="line">  <span class="keyword">while</span>(i&lt;tmp.length){res.append(tmp[i++]);}</div><div class="line">  <span class="keyword">return</span> res.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Implement_strStr()">Implement strStr()</h2>
+<blockquote>
+<p>Implement strStr().<br>Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.<br>Update (2014-11-02):<br>The signature of the function had been updated to return the index instead of the pointer. If you still see your function signature returns a char * or String, please click the reload button to reset your code definition.</p>
+</blockquote>
+<h3 id="Naive_Solution">Naive Solution</h3>
+<p>Two pointers:</p>
+<li>i: from 0 to n-m, check each substring(i,i+m) equals to needle</li>
+
+<li>j: from i to m+i-1, break if non-equal character found</li><br><li>If j=m+i after some round, then we found a substring(i, i+m) matches the needle.</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">strStr</span>(String haystack, String needle) </div><div class="line">  {  </div><div class="line">    <span class="keyword">int</span> n = haystack.length();  </div><div class="line">    <span class="keyword">int</span> m = needle.length(); </div><div class="line">    <span class="comment">//if haystack empty but needle not</span></div><div class="line">    <span class="keyword">if</span> (n==<span class="number">0</span> && m!=<span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    <span class="comment">//special case </span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">0</span>||m==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">else</span>{</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - m+<span class="number">1</span>; i++)  </div><div class="line">      {   <span class="keyword">int</span> j=i;</div><div class="line">        <span class="keyword">for</span> (; j &lt; m+i; j++)  </div><div class="line">        {  </div><div class="line">          <span class="keyword">if</span> (needle.charAt(j-i) != haystack.charAt(j)) <span class="keyword">break</span>;  </div><div class="line">        }  </div><div class="line">        <span class="keyword">if</span> (j == m+i) <span class="keyword">return</span>  i;</div><div class="line">      }  </div><div class="line">      <span class="keyword">return</span> -<span class="number">1</span>;  }</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<p>More Consice:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">strStr</span>(String haystack, String needle) {</div><div class="line">       <span class="keyword">if</span>(haystack == <span class="keyword">null</span> || needle == <span class="keyword">null</span>) {</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       }</div><div class="line">       <span class="keyword">int</span> i, j;</div><div class="line">       <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; haystack.length() - needle.length() + <span class="number">1</span>; i++) {</div><div class="line">           <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; needle.length(); j++) {</div><div class="line">               <span class="keyword">if</span>(haystack.charAt(i + j) != needle.charAt(j)) {</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">           <span class="keyword">if</span>(j == needle.length()) {</div><div class="line">               <span class="keyword">return</span> i;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<p><a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">KMP</a> is another solution.</p>
+<hr>
+<h2 id="Reverse_Words_in_a_String">Reverse Words in a String</h2>
+<blockquote>
+<p>Given an input string, reverse the string word by word.<br>For example,<br>Given s = “the sky is blue”,<br>return “blue is sky the”.<br>Clarification:<br>What constitutes a word?<br>A sequence of non-space characters constitutes a word.<br>Could the input string contain leading or trailing spaces?<br>Yes. However, your reversed string should not contain leading or trailing spaces.<br>How about multiple spaces between two words?<br>Reduce them to a single space in the reversed string.</p>
+</blockquote>
+<h3 id="Correct_Solution:">Correct Solution:</h3>
+<p>First, split words into array by spaces. Then from last element in array, append to stringBuilder if not space, add one space after that element in the new string. At last, get the substring from 0 to sb.length()-1 to delete the ending space.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">reverseWords</span>(String s) {</div><div class="line">  <span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">  String[] words=s.split(<span class="string">" "</span>);</div><div class="line">  <span class="keyword">int</span> n=words.length;</div><div class="line">  StringBuilder sb=<span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=n-<span class="number">1</span>; i&gt;=<span class="number">0</span>;i--){</div><div class="line">    <span class="keyword">if</span>(!words[i].equals(<span class="string">""</span>)){</div><div class="line">      sb.append(words[i]).append(<span class="string">" "</span>);}</div><div class="line">  } <span class="keyword">return</span> sb.length() == <span class="number">0</span> ? <span class="string">""</span> : sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="String_to_Integer_(atoi)">String to Integer (atoi)</h2>
+<blockquote>
+<p>Implement atoi to convert a string to an integer.<br>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.<br>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.</p>
+</blockquote>
+<h3 id="Naive_Sulotion">Naive Sulotion</h3>
+<li>Case 1: general case, given string is a valid input, convert to int directly</li>
+
+<li>Case 2: input string is null or all blank, return 0;</li>
+
+<li>Case 3: sign of number(+/-, default as +)</li>
+
+<li>Case 4: overflow</li>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">atoi</span>(String str){</div><div class="line">    <span class="keyword">if</span>(str==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="comment">//remove spaces at beginning and end</span></div><div class="line">    str=str.trim();</div><div class="line">    <span class="keyword">int</span> n=str.length(),i=<span class="number">0</span>;</div><div class="line">    <span class="comment">//use long to store result</span></div><div class="line">    <span class="keyword">long</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(str.charAt(i)==<span class="string">'+'</span>) {sign=<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str.charAt(i)==<span class="string">'-'</span>) {sign=-<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">      <span class="keyword">char</span> tmp=str.charAt(i);</div><div class="line">      <span class="keyword">if</span>(tmp&gt;<span class="string">'9'</span>||tmp&lt;<span class="string">'0'</span>||tmp==<span class="string">' '</span>) <span class="keyword">break</span>;</div><div class="line">      res=res*<span class="number">10</span>+(tmp-<span class="string">'0'</span>);</div><div class="line">      <span class="keyword">if</span>(res&gt;Integer.MAX_VALUE) <span class="keyword">return</span> sign==<span class="number">1</span> ? Integer.MAX_VALUE: Integer.MIN_VALUE;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)res*sign;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<h3 id="An_alternative_solution">An alternative solution</h3>
+<p>without using long, is to use the following during loop:</p>
+<li>Integer.MAX_VALUE/10 &lt; res;</li>
+
+<p>res*10 will become bigger than MAX</p>
+<li>Integer.MAX_VALUE/10 == res &amp;&amp; Integer.MAX_VALUE%10 &lt;(str.charAt(i) - ‘0’)</li>
+
+<p>compare last digit when res*10=MAX</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">atoi</span>(String str){</div><div class="line">    <span class="keyword">if</span>(str==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    str=str.trim();</div><div class="line">    <span class="keyword">int</span> n=str.length(),i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(str.charAt(i)==<span class="string">'+'</span>) {sign=<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str.charAt(i)==<span class="string">'-'</span>) {sign=-<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">      <span class="keyword">char</span> tmp=str.charAt(i);</div><div class="line">      <span class="keyword">if</span>(tmp&gt;<span class="string">'9'</span>||tmp&lt;<span class="string">'0'</span>||tmp==<span class="string">' '</span>) <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">if</span>(Integer.MAX_VALUE/<span class="number">10</span> &lt; res || (Integer.MAX_VALUE/<span class="number">10</span> == res && Integer.MAX_VALUE%<span class="number">10</span> &lt;(str.charAt(i) - <span class="string">'0'</span>)))</div><div class="line">      <span class="keyword">return</span> sign==<span class="number">1</span> ? Integer.MAX_VALUE: Integer.MIN_VALUE;    </div><div class="line">      res=res*<span class="number">10</span>+(tmp-<span class="string">'0'</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)res*sign;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fmrsuicidesheep%2Flights-motion-aerials&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/12.31/">
+                Add Binary, Add Two Numbers
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/12.31/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/12.31/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Add_Binary">Add Binary</h2>
+<blockquote>
+<p>Given two binary strings, return their sum (also a binary string).<br>For example,<br>a = “11”<br>b = “1”<br>Return “100”.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>Note:Int can be converted to String for manipulation, however, converting String to Int might cause overflow errors.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> String <span class="title">addBinary</span>(String a, String b) {</div><div class="line">		</div><div class="line">		<span class="keyword">if</span>(a==<span class="keyword">null</span>|a.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> b;</div><div class="line">		<span class="keyword">if</span>(b==<span class="keyword">null</span>|b.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> a;</div><div class="line"><span class="comment">//switch a,b if a is shorter than b </span></div><div class="line">        <span class="keyword">if</span>(a.length() &lt; b.length()){</div><div class="line">            String temp = a;</div><div class="line">            a = b;</div><div class="line">            b = temp;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> m = a.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> n = b.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        String rst = <span class="string">""</span>;</div><div class="line">        </div><div class="line"><span class="comment">//Add from last digit</span></div><div class="line">        <span class="keyword">while</span>(n &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + (<span class="keyword">int</span>)(b.charAt(n) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">            n --;</div><div class="line">        }</div><div class="line"><span class="comment">//Add the longer digits        </span></div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(m &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">        }       </div><div class="line">        </div><div class="line"><span class="comment">//Don't forget the highest digit </span></div><div class="line">        <span class="keyword">if</span> (res == <span class="number">1</span>)</div><div class="line">            rst = <span class="string">"1"</span> + rst;</div><div class="line">        <span class="keyword">return</span> rst;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Add_Two_Numbers">Add Two Numbers</h2>
+<blockquote>
+<p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.<br>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<p>We don’t have to compare the length of two lists an match digits since we are given reversed order. So just add each pair and the rest, pay attention to the last carries.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span>(ListNode l1, ListNode l2) {</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(l1==<span class="keyword">null</span> && l2==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        ListNode head=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode cur=head;</div><div class="line">        <span class="keyword">int</span> carries=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>&&l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=l1.val+l2.val+carries;</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            ListNode n=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            cur.next=n;</div><div class="line">            </div><div class="line">            l1=l1.next;</div><div class="line">            l2=l2.next;</div><div class="line">            cur=cur.next; </div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l1.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l1=l1.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l2.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l2=l2.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(carries!=<span class="number">0</span>){</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(carries%<span class="number">10</span>);</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> head.next;</div><div class="line">           }</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flabyrinth-ear%2Furchin&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/24/1.19/">
+                東京喰種, 寄生兽
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/追剧/">追剧</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/24/1.19/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/24/1.19/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <embed id="STK_137722048114034" width="550" height="450" wmode="transparent" quality="high" allowfullscreen="true" flashvars="playMovie=true&auto=1" pluginspage="http://get.adobe.com/cn/flashplayer/" allowscriptaccess="never" src="http://static.hdslb.com/miniloader.swf?aid=1871342&page=1" type="application/x-shockwave-flash" style="visibility: visible;">
+
+
+
+<hr>
+<embed src="http://www.tudou.com/a/ljWaEal7TxI/&bid=05&iid=132329539&resourceId=0_05_05_99/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400">    
+
+
+
+
+
+
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Cici Sun" />
+          <p class="site-author-name">Cici Sun</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="//atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CICISUN/" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/insertsomthin" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/bingjiesun" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Cici Sun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'sunbingjie';
+      var disqus_identifier = 'page/5/';
+      var disqus_url = '';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+</body>
+</html>

@@ -1,0 +1,1619 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+
+
+  <meta name="keywords" content="LeetCode,Programming" />
+
+
+
+  <link rel="alternate" href="//atom.xml" title="Cici's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Cici's Blog </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Cici's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          Home
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          Archives
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/01/mapreduceinonepage/">
+                MapReduce的模式、算法和用例
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/学习/">学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/mapreduceinonepage/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/mapreduceinonepage/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2>
+<p>在这篇文章里总结了几种网上或者论文中常见的MapReduce模式和算法，并系统化的解释了这些技术的不同之处。所有描述性的文字和代码都使用了标准hadoop的MapReduce模型，包括Mappers, Reduces, Combiners, Partitioners,和 sorting。如下图所示。<br><img src="http://www.kuqin.com/upimg/allimg/130629/192PQ950-.png" alt=""></p>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/01/mapreduceinonepage/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/"> #Hadoop </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/01/scrapy/">
+                Web scraping with Scrapy
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/学习/">学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/scrapy/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/scrapy/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/01/scrapy/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crawler/"> #Crawler </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/01/Paganini/">
+                Niccolo Paganini Selected Works
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-05-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/Music/">Music</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/01/Paganini/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/01/Paganini/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Leonid Kogan - Cantabile, Paganini</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/xsFJS4I_05E" frameborder="0" allowfullscreen></iframe>
+
+<p>Kogan - La Campanella</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/lWaOnqmtr9U" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Jascha Heifetz - Caprice No. 24</p>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/vPcnGrie__M" frameborder="0" allowfullscreen></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Classical/"> #Classical </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/18/4.11/">
+                Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/18/4.11/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/18/4.11/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Path_Sum">Path Sum</h2>
+<blockquote>
+<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.<br>For example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Given the below binary tree and sum = 22,</div><div class="line">              5</div><div class="line">             / <span class="command">\</span></div><div class="line">            4   8</div><div class="line">           /   / <span class="command">\</span></div><div class="line">          11  13  4</div><div class="line">         /  <span class="command">\ </span>     <span class="command">\</span></div><div class="line">        7    2      1</div></pre></td></tr></table></figure>
+
+<p>return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</p>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/18/4.11/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tree/"> #Tree </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/18/4.12/">
+                Letter Combinations of a Phone Number, Single Number, Single Number II, Decode Ways, Triangle
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/18/4.12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/18/4.12/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Letter_Combinations_of_a_Phone_Number">Letter Combinations of a Phone Number</h2>
+<blockquote>
+<p>Given a digit string, return all possible letter combinations that the number could represent.<br>A mapping of digit to letters (just like on the telephone buttons) is given below.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt=""><br>Input:Digit string “23”<br>Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/18/4.12/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/Bit-Manipulation/"> #Bit Manipulation </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/16/4.10/">
+                Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Tree Zigzag Level Order Traversal, Binary Search Tree Iterator
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/16/4.10/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/16/4.10/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Validate_Binary_Search_Tree">Validate Binary Search Tree</h2>
+<blockquote>
+<p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:<br>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than the node’s key.<br>Both the left and right subtrees must also be binary search trees.</p>
+</blockquote>
+<h3 id="Brute_force_Solution">Brute force Solution</h3>
+<p>Inorder traversal, then compare each value…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    LinkedList&lt;Integer&gt; p = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    inorder(root, p);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j =<span class="number">0</span>;j&lt; p.size() - <span class="number">1</span>;j++) {</div><div class="line">        <span class="keyword">if</span>(p.get(j)&gt;=p.get(j+<span class="number">1</span>))</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode r, LinkedList&lt;Integer&gt; p){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(r.left,p);</div><div class="line">    p.add(r.val);</div><div class="line">    inorder(r.right,p);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or use static variable to store the previous val:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> pre = Integer.MIN_VALUE; </div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.left)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(root.val&lt;=pre) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    System.out.println(pre);</div><div class="line">    pre=root.val;</div><div class="line">    <span class="keyword">if</span>(!isValidBST(root.right)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive/MinMax_Solution">Recursive/MinMax Solution</h3>
+<p>At each node we must satisty</p>
+<ul>
+<li>left subtree max value must not exceed cur.val</li>
+<li>right subtree min value must not be lower than cur.val</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span>(TreeNode root) {</div><div class="line">    <span class="keyword">return</span> dfs(root, (<span class="keyword">long</span>)Integer.MIN_VALUE-<span class="number">1</span>,(<span class="keyword">long</span>)Integer.MAX_VALUE+<span class="number">1</span>);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(TreeNode r,<span class="keyword">long</span> minv, <span class="keyword">long</span> maxv){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">if</span>(r.val&gt;=maxv ||r.val&lt;=minv) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span>  dfs(r.left, minv, r.val) && dfs(r.right, r.val, maxv);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="Unique_Binary_Search_Trees">Unique Binary Search Trees</h2>
+<blockquote>
+<p>Given n, how many structurally unique BST’s (binary search trees) that store values 1…n?<br>For example,<br>Given n = 3, there are a total of 5 unique BST’s.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
+
+<h3 id="DP_Solution">DP Solution</h3>
+<ul>
+<li>Define c[i] as the number of unique binary tree possibly generated with [0….i]</li>
+<li>A tree with i as its root, left subtree is consist of [1…i-1], right subtree is consist of [i+1…n]</li>
+<li>c[0] = 0 ; c[1]=1 ; c[2] = c[0]<em>c[1] //1 as root + c[1]</em>c[0] //0 as root; c[3] = c[0] <em> c[2] //1 as root + c[1] </em> c[1] //2 as root + c[2] * c[0] //3 as root</li>
+<li>Ct+1 += Ci*Ct-i(0&lt;= i &lt;= t)</li>
+<li>Ct += Ci*t-1-i(0&lt;=i&lt;=t-1, 1&lt;=t&lt;=n)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>||n == <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span>[] C = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        C[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>;t&lt;=n;t++){  </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=t-<span class="number">1</span>;i++){  </div><div class="line">            C[t] += C[i]*C[t-<span class="number">1</span>-i];  </div><div class="line">        }  </div><div class="line">    }</div><div class="line">        <span class="keyword">return</span> C[n];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Unique_Binary_Search_Trees_II">Unique Binary Search Trees II</h2>
+<blockquote>
+<p>Given n, generate all structurally unique BST’s (binary search trees) that store values 1…n.<br>For example,<br>Given n = 3, your program should return all 5 unique BST’s shown below.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1         3     3      2      1</div><div class="line"> <span class="command">\ </span>      /     /      / <span class="command">\ </span>     <span class="command">\</span></div><div class="line">  3     2     1      1   3      2</div><div class="line"> /     /       <span class="command">\ </span>                <span class="command">\</span></div><div class="line">2     1         2                 3</div></pre></td></tr></table></figure>
+
+<h3 id="DFS_Solution"><a href="http://www.cnblogs.com/springfor/p/3884029.html" target="_blank" rel="external">DFS Solution</a></h3>
+<p>Similar to I, we pick (1…n) as root, recursivly get all left and right subtrees.<br>We pick one from left subtree and one from right subtree, attach them to current root and return all the possibilities.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">generateTrees</span>(<span class="keyword">int</span> n) {</div><div class="line">    <span class="keyword">return</span> buildTrees(<span class="number">1</span>,n);</div><div class="line">    </div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;TreeNode&gt; <span class="title">buildTrees</span>(<span class="keyword">int</span> min, <span class="keyword">int</span> max){</div><div class="line">    ArrayList&lt;TreeNode&gt; res = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(min&gt;max){res.add(<span class="keyword">null</span>); <span class="keyword">return</span> res;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=min;i&lt;=max;i++){</div><div class="line">        ArrayList&lt;TreeNode&gt; l = buildTrees(min,i-<span class="number">1</span>);</div><div class="line">        ArrayList&lt;TreeNode&gt; r = buildTrees(i+<span class="number">1</span>,max);</div><div class="line">        <span class="keyword">for</span>(TreeNode j: l){</div><div class="line">            <span class="keyword">for</span>(TreeNode k:r){</div><div class="line">                TreeNode root =  <span class="keyword">new</span> TreeNode(i);</div><div class="line">                root.left = j;</div><div class="line">                root.right = k;</div><div class="line">                res.add(root);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Preorder_Traversal">Binary Tree Preorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the preorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    preorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">preorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    res.add(n.val);</div><div class="line">    preorder(n.left,res);</div><div class="line">    preorder(n.right,res);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; <span class="comment">//别忘了这句...</span></div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        res.add(tmp.val);</div><div class="line">        <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">        <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Inorder_Traversal">Binary Tree Inorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; stk=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        stk.push(root);</div><div class="line">        <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">            TreeNode tmp = stk.pop();</div><div class="line">            <span class="keyword">if</span>(tmp == <span class="keyword">null</span>){</div><div class="line">                res.add(stk.pop().val);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){stk.push(tmp.right);}</div><div class="line">                stk.push(tmp);</div><div class="line">                stk.push(<span class="keyword">null</span>);</div><div class="line">                <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>){stk.push(tmp.left);}</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Postorder_Traversal">Binary Tree Postorder Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the postorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line">    \</div><div class="line">     <span class="number">2</span></div><div class="line">    /</div><div class="line">   <span class="number">3</span></div><div class="line"><span class="keyword">return</span> [<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution-1">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    postorder(root, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postorder</span>(TreeNode n, ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(n==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    postorder(n.left,res);</div><div class="line">    postorder(n.right,res);</div><div class="line">    res.add(n.val);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stk =<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res; </div><div class="line">    stk.push(root);</div><div class="line">    <span class="keyword">while</span>(!stk.isEmpty()){</div><div class="line">        TreeNode tmp = stk.pop();</div><div class="line">        <span class="keyword">if</span>(tmp==<span class="keyword">null</span>) res.add(stk.pop().val);</div><div class="line">        <span class="keyword">else</span>{</div><div class="line">            stk.push(tmp);</div><div class="line">            stk.push(<span class="keyword">null</span>);</div><div class="line">            <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) stk.push(tmp.right);</div><div class="line">            <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) stk.push(tmp.left);</div><div class="line">        }</div><div class="line">    }        </div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Zigzag_Level_Order_Traversal">Binary Tree Zigzag Level Order Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the zigzag level order traversal of its nodes’ values. (ie, from left to right, then right to left for the next level and alternate between).<br>For example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given binary tree {<span class="number">3</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="comment">#,#,15,7},</span></div><div class="line">    <span class="number">3</span></div><div class="line">   / \</div><div class="line">  <span class="number">9</span>  <span class="number">20</span></div><div class="line">    /  \</div><div class="line">   <span class="number">15</span>   <span class="number">7</span></div><div class="line"><span class="command">return</span> <span class="keyword">its</span> zigzag level order traversal <span class="keyword">as</span>:</div><div class="line">[</div><div class="line">  [<span class="number">3</span>],</div><div class="line">  [<span class="number">20</span>,<span class="number">9</span>],</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution-1">Recursive Solution</h3>
+<ul>
+<li>Simple DFS, check height%2 each level</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;List&lt;Integer&gt;&gt; <span class="title">zigzagLevelOrder</span>(TreeNode root) {</div><div class="line"> ArrayList&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</div><div class="line"> <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line"> dfs(root, res, <span class="number">0</span>);</div><div class="line"> <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(TreeNode r, ArrayList&lt;List&lt;Integer&gt;&gt; res, <span class="keyword">int</span> h){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(h&gt;res.size()-<span class="number">1</span>){</div><div class="line">        res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(h%<span class="number">2</span>==<span class="number">1</span>){</div><div class="line">        res.get(h).add(<span class="number">0</span>,r.val);</div><div class="line">    }  </div><div class="line">    <span class="keyword">else</span>{</div><div class="line">        res.get(h).add(r.val);</div><div class="line">    }</div><div class="line">    dfs(r.left, res, h+<span class="number">1</span>);</div><div class="line">    dfs(r.right,res,h+<span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<ul>
+<li>a queue to store nodes in BFS order</li>
+<li>a boolean value to decide insert order in each level list</li>
+<li>each new level, set poopsite direction, clear list and add to result</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;List&lt;Integer&gt;&gt; <span class="title">zigzagLevelOrder</span>(TreeNode root) {</div><div class="line">  ArrayList&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">  Queue&lt;TreeNode&gt; q = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">  List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">  q.offer(root);</div><div class="line">  <span class="keyword">int</span> size = q.size();</div><div class="line">  <span class="keyword">boolean</span> l2r = <span class="keyword">true</span>;</div><div class="line">  <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">      TreeNode cur = q.poll();</div><div class="line">      size--;</div><div class="line">      <span class="keyword">if</span>(l2r){</div><div class="line">         tmp.add(cur.val);</div><div class="line">         }</div><div class="line">      <span class="keyword">else</span>{</div><div class="line">         tmp.add(<span class="number">0</span>,cur.val);</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>) q.offer(cur.left);</div><div class="line">      <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>) q.offer(cur.right);</div><div class="line">      <span class="keyword">if</span>(size==<span class="number">0</span>){</div><div class="line">          res.add(<span class="keyword">new</span> ArrayList(tmp));</div><div class="line">          l2r=!l2r;</div><div class="line">          tmp.clear();</div><div class="line">          size = q.size();</div><div class="line">      }</div><div class="line">  }</div><div class="line">  <span class="keyword">return</span> res;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Search_Tree_Iterator">Binary Search Tree Iterator</h2>
+<blockquote>
+<p>Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.<br>Calling next() will return the next smallest number in the BST.<br>Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>Use one Array to store the inorder traversal of nodes </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">ArrayDeque&lt;TreeNode&gt; arr;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    arr = <span class="keyword">new</span> ArrayDeque&lt;TreeNode&gt;();</div><div class="line">    inorder(root, arr);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode root, ArrayDeque&lt;TreeNode&gt; arr){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(root.left, arr);</div><div class="line">    arr.add(root);</div><div class="line">    inorder(root.right,arr);</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !arr.isEmpty();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(hasNext()) <span class="keyword">return</span> arr.poll().val;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="O(1)_Time_O(h)_Memory_Solution">O(1) Time O(h) Memory Solution</h3>
+<ul>
+<li>Dissect inorder into two parts</li>
+<li>push root’s all left children into stack</li>
+<li>upon calling next(), pop one node and push all right child’s left child into stack </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">Stack&lt;TreeNode&gt; stk;</div><div class="line"><span class="keyword">public</span> <span class="title">BSTIterator</span>(TreeNode root) {</div><div class="line">    stk = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">    <span class="keyword">while</span>(root!=<span class="keyword">null</span>){</div><div class="line">        stk.push(root);</div><div class="line">        root=root.left;</div><div class="line">    }</div><div class="line">   </div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> whether we have a next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">    <span class="keyword">return</span> !stk.isEmpty();</div><div class="line">}</div><div class="line"><span class="javadoc">/**<span class="javadoctag"> @return</span> the next smallest number */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span>() {</div><div class="line">    <span class="keyword">if</span>(!stk.isEmpty())</div><div class="line">        {TreeNode tmp = stk.pop();</div><div class="line">         <span class="keyword">int</span> res=tmp.val;</div><div class="line">         <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){</div><div class="line">             TreeNode node = tmp.right;</div><div class="line">             <span class="keyword">while</span>(node!=<span class="keyword">null</span>){</div><div class="line">                 stk.push(node);</div><div class="line">                 node=node.left;</div><div class="line">             }</div><div class="line">         }</div><div class="line">         <span class="keyword">return</span> res;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MYSVMgRr6pw" frameborder="0" allowfullscreen></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tree/"> #Tree </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/Stack/"> #Stack </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/12/4.6/">
+                Number of Islands
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-12
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/12/4.6/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/12/4.6/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Update—Leetcode now includes this problem:</p>
+<h2 id="Number_of_Islands">Number of Islands</h2>
+<blockquote>
+<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
+
+<h2 id="Solution">Solution</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
+<blockquote>
+<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
+
+<p>Return 5， 1， 2</p>
+<h3 id="Solution-1">Solution</h3>
+<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
+<ul>
+<li>Mark each node visited to avoid duplicated counting.</li>
+</ul>
+<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
+    <span class="keyword">int</span> one,count;
+    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
+    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
+
+    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
+        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
+
+            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
+                res.add(dfs(i,j, mat, mark));
+            }
+        }
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
+    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
+        <span class="keyword">return</span> <span class="number">0</span>;
+    mark[i][j] = <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
+    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
+    countIslands c = <span class="keyword">new</span> countIslands();
+    System.<span class="keyword">out</span>.println(c.countIslands(test));
+}
+</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/11/4.9/">
+                Maximum Subarray, Maximum Product Subarray
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/11/4.9/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/11/4.9/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Maximum_Subarray">Maximum Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],<br>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
+</blockquote>
+<h3 id="O(n)_Solution">O(n) Solution</h3>
+<ul>
+<li>It’s called the Kadane’s Algorithm…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span> max_so_far = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> max_ending_here = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">        max_ending_here+=A[i];</div><div class="line">        max_ending_here = Math.max(max_ending_here, A[i]);</div><div class="line">        max_so_far = Math.max(max_ending_here, max_so_far);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> max_so_far;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Divide_and_Conquer_Solution_O(nlogn)">Divide and Conquer Solution O(nlogn)</h3>
+<ul>
+<li>more subtle does not mean cleaner…</li>
+<li>divide the given array in two halves and return the maximum of following three</li>
+<li>Maximum subarray sum in left half </li>
+</ul>
+<ul>
+<li>Maximum subarray sum in right half </li>
+<li>Maximum subarray sum such that the subarray crosses the midpoint</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>, r=A.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">return</span> rec(A, l, r);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rec</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">if</span>(l==r) <span class="keyword">return</span> A[l];</div><div class="line">        <span class="keyword">int</span> m= (l+r)/<span class="number">2</span>; </div><div class="line">        <span class="keyword">return</span> Math.max(Math.max(rec(A,l,m),rec(A,m+<span class="number">1</span>,r)),cross(A,m,l,r));</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">cross</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">int</span> suml=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluel=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m-<span class="number">1</span>;i&gt;=l;i--){</div><div class="line">            suml+=A[i];</div><div class="line">            <span class="keyword">if</span>(suml&gt;maxvaluel){</div><div class="line">                maxvaluel=suml;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">int</span> sumr=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluer=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=r;i++){</div><div class="line">            sumr+=A[i];</div><div class="line">            <span class="keyword">if</span>(sumr&gt;maxvaluer){</div><div class="line">                maxvaluer=sumr;</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxvaluel+maxvaluer-A[m];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Maximum_Product_Subarray">Maximum Product Subarray</h2>
+<blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.<br>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
+</blockquote>
+<h2 id="Near_Brute_force">Near Brute force</h2>
+<ul>
+<li>If we store result from i to j in t[i][j], the runtime is O(n^2)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=<span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;A.length;i++){</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;A.length;j++){</div><div class="line">			<span class="keyword">int</span> tmp=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=j;k++){</div><div class="line">			tmp*=A[k];</div><div class="line">					}</div><div class="line">			<span class="keyword">if</span>(tmp&gt;maxvalue){</div><div class="line">				maxvalue=tmp;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="DP?_Solution">DP? Solution</h2>
+<ul>
+<li>There are only two cases when we get a larger result</li>
+<li>mininum(negative) value multiply cur value(which happens to be negative)</li>
+<li>maximum value multiply cur value</li>
+<li>Be careful with the special case when multiplying both would decrease the result, then change start point to self</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> minval=A[<span class="number">0</span>], maxval=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">	    <span class="keyword">int</span> a=A[i] * minval;</div><div class="line">	    <span class="keyword">int</span> b=A[i] * maxval;</div><div class="line">	    maxval=Math.max(Math.max(a,b),A[i]);</div><div class="line">	    minval=Math.min(Math.min(a,b),A[i]);</div><div class="line">	    maxvalue=Math.max(maxvalue,maxval);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fpatrick-champarnaud%2Fticking-bomb%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/02/4.1/">
+                StringtoLong, Implement Trinary Tree
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-04-02
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/02/4.1/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/02/4.1/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="StringtoLong">StringtoLong</h2>
+<blockquote>
+<p>Converts input String to Long</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>input validation</li>
+<li>Over/Underflow</li>
+<li>positive/negative </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> stringToLong(String s)</div><div class="line">	{</div><div class="line">		<span class="comment">// Use Regex to filter out illegal inputs</span></div><div class="line">		<span class="keyword">if</span>(!s.matches(<span class="string">"-?\\d+"</span>)){ </div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" is illegal number format"</span>);</div><div class="line">		}</div><div class="line">		<span class="comment">// Convert a string to a long </span></div><div class="line">		<span class="keyword">long</span> result = <span class="number">0</span>;</div><div class="line">		<span class="keyword">boolean</span> IsNegative = s.charAt(<span class="number">0</span>)== <span class="string">'-'</span>;</div><div class="line">		<span class="keyword">int</span> start=IsNegative ? <span class="number">1</span>:<span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;s.length();i++){</div><div class="line">			<span class="comment">/* Deal with overflow and underflow */</span></div><div class="line">			</div><div class="line">			<span class="keyword">if</span>(((!IsNegative) && result &gt; (Long.MAX_VALUE)/<span class="number">10</span> )|| ((!IsNegative) && result == (Long.MAX_VALUE)/<span class="number">10</span> && (s.charAt(i) - <span class="number">48</span>)&gt;<span class="number">7</span>)){</div><div class="line">				</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" out of bound (overflow)"</span>);</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span> <span class="keyword">if</span>((IsNegative && (-<span class="number">1</span> * result) &lt; (Long.MIN_VALUE)/<span class="number">10</span> ) || (IsNegative &&  (-<span class="number">1</span> * result) == (Long.MIN_VALUE)/<span class="number">10</span> ) && (s.charAt(i) - <span class="number">48</span>)&gt;<span class="number">8</span> ){</div><div class="line">				</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException(<span class="string">"input String "</span> + s + <span class="string">" out of bound (underflow)"</span>);</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				result=result * <span class="number">10</span> + (s.charAt(i) - <span class="number">48</span>);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> IsNegative ? -result : result;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<h2 id="Implement_Trinary_Tree">Implement Trinary Tree</h2>
+<blockquote>
+<p>Insersion and Deletion</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li>Define Node class</li>
+<li>Recursivly add/delete node</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrinaryNode</span></span>{</div><div class="line">	<span class="keyword">int</span> val;</div><div class="line">	TrinaryNode left;</div><div class="line">	TrinaryNode right;</div><div class="line">	TrinaryNode middle;</div><div class="line">	TrinaryNode(<span class="keyword">int</span> x){</div><div class="line">		<span class="keyword">this</span>.val = x;</div><div class="line">	}</div><div class="line"></div><div class="line">}</div><div class="line"><span class="comment">////////////</span></div><div class="line">TrinaryNode root;</div><div class="line">	TrinaryTree(){</div><div class="line">		root = <span class="keyword">null</span>;</div><div class="line">	}</div><div class="line">	TrinaryTree(<span class="keyword">int</span> x){</div><div class="line">		root = <span class="keyword">new</span> TrinaryNode(x);</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Insertion</span></div><div class="line">	TrinaryNode insert(TrinaryNode root, <span class="keyword">int</span> x){</div><div class="line"></div><div class="line">		TrinaryNode tmp = <span class="keyword">new</span> TrinaryNode(x);</div><div class="line">		<span class="comment">//Insert root if root is not set</span></div><div class="line">		<span class="keyword">if</span>(root==<span class="keyword">null</span>){</div><div class="line">			root = tmp;</div><div class="line">			<span class="keyword">return</span> root;</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in left subtree if x is smaller than current node</span></div><div class="line">		<span class="keyword">if</span>(root.val &gt; x){</div><div class="line">			<span class="keyword">if</span>(root.left==<span class="keyword">null</span>){</div><div class="line">				root.left = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.left, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in right subtree if x is larger than current node</span></div><div class="line">		<span class="keyword">if</span>(root.val &lt; x){</div><div class="line">			<span class="keyword">if</span>(root.right==<span class="keyword">null</span>){</div><div class="line">				root.right = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.right, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="comment">//Find target position in middle subtree if x is equal to current node</span></div><div class="line">		<span class="keyword">if</span>(root.val == x){</div><div class="line">			<span class="keyword">if</span>(root.middle==<span class="keyword">null</span>){</div><div class="line">				root.middle = tmp;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				insert(root.middle, x);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> root;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Deletion</span></div><div class="line">	TrinaryNode delete(TrinaryNode root, <span class="keyword">int</span> x){</div><div class="line">		<span class="comment">//Target node is in left subtree</span></div><div class="line">		<span class="keyword">if</span>(root.val &gt; x){</div><div class="line">			root.left = delete(root.left, x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Target node is in right subtree</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; x){</div><div class="line">			root.right = delete(root.right, x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Target node equals current node</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.middle != <span class="keyword">null</span>){</div><div class="line">			<span class="comment">//Delete middle node that is equal to current node</span></div><div class="line">			root.middle = delete(root.middle ,x);</div><div class="line">		}</div><div class="line">		<span class="comment">//Replace current node with its successor in right subtree</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(root.right !=<span class="keyword">null</span>){ </div><div class="line">			root.val = Sucessor(root.right).val;</div><div class="line">			delete(root, Sucessor(root.right).val);</div><div class="line">		}</div><div class="line">		<span class="comment">//Transplant left subtree directly</span></div><div class="line">		<span class="keyword">else</span> {</div><div class="line">			root = root.left;</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> root;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Function to find successor in right subtree</span></div><div class="line">	TrinaryNode Sucessor(TrinaryNode root){</div><div class="line">		TrinaryNode tmp = root;</div><div class="line">		<span class="keyword">while</span>(tmp.left!=<span class="keyword">null</span>){</div><div class="line">			tmp=tmp.left;</div><div class="line">		} </div><div class="line">		<span class="keyword">return</span> tmp;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">//Function to in-order traverse the tree for testing purpose</span></div><div class="line">	<span class="keyword">void</span> test_print(TrinaryNode root){</div><div class="line">		<span class="keyword">if</span> (root!=<span class="keyword">null</span>){</div><div class="line">			System.out.println(<span class="string">"Node Value: "</span> + root.val);</div><div class="line">		}</div><div class="line">		<span class="keyword">else</span> <span class="keyword">return</span>;</div><div class="line">		test_print(root.left);</div><div class="line">		test_print(root.middle);</div><div class="line">		test_print(root.right);</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+
+
+
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fsamsmithworld%2Fsamsmithasaprocky&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/String/"> #String </a>
+          
+            <a href="/tags/Tree/"> #Tree </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/03/24/3.19/">
+                Unique Combination of Factors, Factorial Trailing Zeroes
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-03-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/24/3.19/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/24/3.19/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Unique_Combination_of_Factors">Unique Combination of Factors</h2>
+<blockquote>
+<p>Print all unique combinations of factors of a positive integer. For example given 24:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">24<span class="keyword">*</span>1</div><div class="line">12<span class="keyword">*</span>2</div><div class="line">8<span class="keyword">*</span>3</div><div class="line">6<span class="keyword">*</span>4</div><div class="line">6<span class="keyword">*</span>2<span class="keyword">*</span>2</div><div class="line">4<span class="keyword">*</span>3<span class="keyword">*</span>2</div><div class="line">3<span class="keyword">*</span>2<span class="keyword">*</span>2<span class="keyword">*</span>2</div></pre></td></tr></table></figure>
+
+<h3 id="Solution">Solution</h3>
+<p>Reverse DFS all possible division combinations. Keep track of current dividend, try all divisors. Use backtracking to gather all all possible division combinations.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">     24</div><div class="line">  /   |  <span class="command">\</span></div><div class="line"> 1    6    24</div><div class="line">/ <span class="command">\ </span>/ | <span class="command">\ </span> / <span class="command">\</span></div><div class="line">....  2  4 ....</div><div class="line">	   |</div><div class="line">	  / <span class="command">\</span></div><div class="line">    1   2</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">factorCombinations</span>(<span class="keyword">int</span> n){</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; first=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		first.add(n);first.add(<span class="number">1</span>);</div><div class="line">		res.add(first);</div><div class="line">		res=dfs(res, n, n/<span class="number">2</span>, tmp);</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">private</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">dfs</span>(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, <span class="keyword">int</span> Curdividend, <span class="keyword">int</span> Largestdivisor, ArrayList&lt;Integer&gt; tmp){</div><div class="line">		<span class="keyword">if</span>(Curdividend==<span class="number">1</span>){</div><div class="line">			res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=Largestdivisor; i&gt;<span class="number">1</span>;i--){</div><div class="line">			<span class="keyword">if</span>(Curdividend%i==<span class="number">0</span>){</div><div class="line">				tmp.add(i);</div><div class="line">				dfs(res,Curdividend/i, i,tmp);</div><div class="line">				tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<h2 id="Factorial_Trailing_Zeroes">Factorial Trailing Zeroes</h2>
+<blockquote>
+<p>Given an integer n, return the number of trailing zeroes in n!.</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trailingZeroes</span>(<span class="keyword">int</span> n) {</div><div class="line">       <span class="keyword">if</span>(n&lt;<span class="number">5</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       <span class="keyword">int</span> count_of_five=<span class="number">0</span>;</div><div class="line">       <span class="keyword">while</span>(n&gt;<span class="number">1</span>){</div><div class="line">           n=n/<span class="number">5</span>;</div><div class="line">           count_of_five+=n;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> count_of_five;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+
+
+
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flevvis%2Flewis-watson-into-the-wild-the%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Math/"> #Math </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Cici Sun" />
+          <p class="site-author-name">Cici Sun</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="//atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CICISUN/" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/insertsomthin" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/bingjiesun" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Cici Sun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'sunbingjie';
+      var disqus_identifier = 'page/2/';
+      var disqus_url = '';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+</body>
+</html>
