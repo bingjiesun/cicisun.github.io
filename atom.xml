@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-04T03:14:35.272Z</updated>
+  <updated>2015-09-04T03:24:48.235Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -18,12 +18,13 @@
     <title><![CDATA[Combination Sum,Combination Sum II, Combination Sum III]]></title>
     <link href="http://sunbingjie.tk/2015/09/03/9.3/"/>
     <id>http://sunbingjie.tk/2015/09/03/9.3/</id>
-    <published>2015-09-04T03:14:23.000Z</published>
-    <updated>2015-09-04T03:14:23.000Z</updated>
+    <published>2015-09-04T03:23:46.000Z</published>
+    <updated>2015-09-04T03:23:46.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Combination_Sum">Combination Sum</h2>
 <blockquote>
 <p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
 </blockquote>
+<a id="more"></a>
 <h3 id="Solution">Solution</h3>
 <p>Simple DFS</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">combinationSum</span>(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</div><div class="line">    List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    Arrays.sort(candidates);</div><div class="line">    dfs(res, tmp, candidates, target, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; tmp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start){</div><div class="line">	<span class="keyword">if</span>(target==<span class="number">0</span>) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(target&lt;<span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=start;i&lt;candidates.length;i++){</div><div class="line">		tmp.add(candidates[i]);</div><div class="line">		dfs(res,tmp,candidates,target-candidates[i],i);</div><div class="line">		tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
@@ -53,7 +54,10 @@
     <summary type="html">
     <![CDATA[<h2 id="Combination_Sum">Combination Sum</h2>
 <blockquote>
-<p>Given a set of candidate numbers (C) and a target number (T), find all unique ]]>
+<p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:<br>All numbers (including target) will be positive integers.<br>Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set 2,3,6,7 and target 7,<br>A solution set is:<br>[7]<br>[2, 2, 3] </p>
+</blockquote>
+]]>
+    
     </summary>
     
       <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
