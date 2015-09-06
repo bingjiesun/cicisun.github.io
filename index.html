@@ -120,6 +120,138 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/06/9.4/">
+                Sudoku Solver, N-Queens, N-Queens II
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/06/9.4/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/06/9.4/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Sudoku_Solver">Sudoku Solver</h2>
+<blockquote>
+<p>Write a program to solve a Sudoku puzzle by filling the empty cells.<br>Empty cells are indicated by the character ‘.’.<br>You may assume that there will be only one unique solution.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="pic"><br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt="pic"></p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>for each tuple that’s not a number already, try 1-9 numbers</li>
+<li>if the board is still valid after placing the number, place it for now</li>
+<li>continue to solve board, only if all number placed are valid can we return true</li>
+<li>if we reached unvalid board, redo by setting the numbers to ‘.’</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solveSudoku</span>(<span class="keyword">char</span>[][] board){</div><div class="line">  	solver(board);</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">solver</span>(<span class="keyword">char</span>[][] board){</div><div class="line">  	</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;board.length; i++){</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;board[<span class="number">0</span>].length; j++){</div><div class="line">          	<span class="keyword">if</span>(board[i][j]==<span class="string">'.'</span>){</div><div class="line">          		<span class="keyword">for</span>(<span class="keyword">char</span> k=<span class="string">'1'</span>; k&lt;=<span class="string">'9'</span>; k++){</div><div class="line">          			<span class="keyword">if</span>(isValidSudoku(board, i, j, k)){</div><div class="line">              			board[i][j]=k; <span class="comment">//place number if valid</span></div><div class="line">          				<span class="keyword">if</span>(solver(board))</div><div class="line">          					{</div><div class="line">          						<span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">//if after placed still can be solved</span></div><div class="line">          					}</div><div class="line">          				<span class="keyword">else</span>{</div><div class="line">              				board[i][j]=<span class="string">'.'</span>; <span class="comment">//else redo</span></div><div class="line">              			}</div><div class="line">          			}</div><div class="line">          		}</div><div class="line">          		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">          	}</div><div class="line">          }</div><div class="line">      }</div><div class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidSudoku</span>(<span class="keyword">char</span>[][] board, <span class="keyword">int</span> row, <span class="keyword">int</span> col, <span class="keyword">char</span> tmp) {</div><div class="line">      <span class="comment">//row</span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;board[<span class="number">0</span>].length;i++){</div><div class="line">          <span class="keyword">if</span>(board[row][i]==tmp) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      }</div><div class="line">      <span class="comment">//col</span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;board.length;i++){</div><div class="line">      	<span class="keyword">if</span>(board[i][col]==tmp) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      }</div><div class="line">      <span class="comment">//tuple</span></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> m=row/<span class="number">3</span>*<span class="number">3</span>;m&lt;<span class="number">3</span>+row/<span class="number">3</span>*<span class="number">3</span>;m++){</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> n=col/<span class="number">3</span>*<span class="number">3</span>;n&lt;<span class="number">3</span>+col/<span class="number">3</span>*<span class="number">3</span>;n++){</div><div class="line">              <span class="keyword">if</span>(board[m][n]==tmp) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">          }</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="N-Queens">N-Queens</h2>
+<blockquote>
+<p>The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt="pic"><br>Given an integer n, return all distinct solutions to the n-queens puzzle.<br>Each solution contains a distinct board configuration of the n-queens’ placement, where ‘Q’ and ‘.’ both indicate a queen and an empty space respectively.<br>For example,<br>There exist two distinct solutions to the 4-queens puzzle:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [<span class="string">".Q.."</span>,  // Solution <span class="number">1</span></div><div class="line">  <span class="string">"...Q"</span>,</div><div class="line">  <span class="string">"Q..."</span>,</div><div class="line">  <span class="string">"..Q."</span>],</div><div class="line"></div><div class="line"> [<span class="string">"..Q."</span>,  // Solution <span class="number">2</span></div><div class="line">  <span class="string">"Q..."</span>,</div><div class="line">  <span class="string">"...Q"</span>,</div><div class="line">  <span class="string">".Q.."</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution-1"><a href="http://blog.csdn.net/linhuanmars/article/details/20667175" target="_blank" rel="external">Solution</a></h3>
+<ul>
+<li><p>Very interesting problem: The queen can be moved any number of unoccupied squares in a straight line vertically, horizontally, or diagonally. So easily we come to the conclusion that each row can only stand 1 queen, as well as each column, diagonal.</p>
+</li>
+<li><p>Because of the previous observation, we can use a 1D array to store the positions, instead of using 2D array.<br>ColforRow[i] records the queen in row i is in which column</p>
+</li>
+<li><p>For each row, try all columns and if is valid, check for next row</p>
+</li>
+<li><p>When row == n, all rows have found their queens, these are valid solutions</p>
+</li>
+<li><p>What are valid positions for current row? Only need to check column and diagonal</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">solveNQueens</span>(<span class="keyword">int</span> n) {</div><div class="line">   	List&lt;List&lt;String&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">   	solve(res, n, <span class="number">0</span>, <span class="keyword">new</span> <span class="keyword">int</span>[n]);</div><div class="line">   	<span class="keyword">return</span> res;</div><div class="line">   } </div><div class="line">   </div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">solve</span>(List&lt;List&lt;String&gt;&gt; res, <span class="keyword">int</span> n, <span class="keyword">int</span> row, <span class="keyword">int</span>[] ColforRow){</div><div class="line">   	<span class="keyword">if</span>(row==n){</div><div class="line">   		ArrayList&lt;String&gt; rowitem=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">   		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){	</div><div class="line">   			StringBuilder rowstring = <span class="keyword">new</span> StringBuilder();</div><div class="line">   			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){	</div><div class="line">   				<span class="keyword">if</span>(ColforRow[i]==j){</div><div class="line">   					rowstring.append(<span class="string">'Q'</span>);</div><div class="line">   				}</div><div class="line">   				<span class="keyword">else</span>{</div><div class="line">   					rowstring.append(<span class="string">'.'</span>);</div><div class="line">   				}</div><div class="line">   			}</div><div class="line">   			rowitem.add(rowstring.toString());</div><div class="line">   		}</div><div class="line">   		res.add(rowitem);</div><div class="line">   		<span class="keyword">return</span>;</div><div class="line">   	}</div><div class="line">   	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">   		ColforRow[row] = i;</div><div class="line">   		<span class="keyword">if</span>(isValid(row, ColforRow)){</div><div class="line">   			solve(res, n, row+<span class="number">1</span>, ColforRow);</div><div class="line">   		}</div><div class="line">   	}</div><div class="line">   }</div><div class="line">   </div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isValid</span>(<span class="keyword">int</span> row, <span class="keyword">int</span>[] ColforRow){</div><div class="line">   	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row;i++){</div><div class="line">   		<span class="keyword">if</span>(ColforRow[row]==ColforRow[i] || Math.abs(ColforRow[row]-ColforRow[i])==row-i) <span class="comment">// if same column, or same diagonal</span></div><div class="line">   			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">   	}</div><div class="line">   	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="N-Queens_II">N-Queens II</h2>
+<blockquote>
+<p>Follow up for N-Queens problem.<br>Now, instead outputting board configurations, return the total number of distinct solutions.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt="pic"></p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li>Add count when a new solution is found (row==n)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">totalNQueens</span>(<span class="keyword">int</span> n) {</div><div class="line">      <span class="keyword">int</span>[] count={<span class="number">0</span>};</div><div class="line">  	solve(n, <span class="number">0</span>, <span class="keyword">new</span> <span class="keyword">int</span>[n], count);</div><div class="line">  	<span class="keyword">return</span> count[<span class="number">0</span>];</div><div class="line">  }</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">solve</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> row, <span class="keyword">int</span>[] ColforRow, <span class="keyword">int</span>[] count){</div><div class="line">  	<span class="keyword">if</span>(row==n){</div><div class="line">  		count[<span class="number">0</span>]+=<span class="number">1</span>;</div><div class="line">  		<span class="keyword">return</span>;</div><div class="line">  	}</div><div class="line">  	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">  		ColforRow[row] = i;</div><div class="line">  		<span class="keyword">if</span>(isValid(row, ColforRow)){</div><div class="line">  			solve(n, row+<span class="number">1</span>, ColforRow, count);</div><div class="line">  		}</div><div class="line">  	}</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isValid</span>(<span class="keyword">int</span> row, <span class="keyword">int</span>[] ColforRow){</div><div class="line">  	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row;i++){</div><div class="line">  		<span class="keyword">if</span>(ColforRow[row]==ColforRow[i] || Math.abs(ColforRow[row]-ColforRow[i])==row-i) <span class="comment">// if same column, or same diagonal</span></div><div class="line">  			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  	}</div><div class="line">  	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/Backtracking/"> #Backtracking </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/05/9.2/">
                 Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Valid Sudoku
               </a>
@@ -130,7 +262,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-09-05
+          Posted on 2015-09-06
         </span>
 
         
@@ -1014,97 +1146,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/09/7.23/">
-                Find Median of two Sorted Arrays
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-08-09
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/09/7.23/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/7.23/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
-<blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/09/7.23/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1145,7 +1186,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1159,7 +1200,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>

@@ -120,6 +120,97 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/09/7.23/">
+                Find Median of two Sorted Arrays
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-08-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/09/7.23/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/7.23/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Median_of_Two_Sorted_Arrays">Median of Two Sorted Arrays</h2>
+<blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/09/7.23/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/07/angular/">
                 Learning AngularJS day by day
               </a>
@@ -1092,132 +1183,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/11/4.9/">
-                Maximum Subarray, Maximum Product Subarray
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-04-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/04/11/4.9/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/11/4.9/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Maximum_Subarray">Maximum Subarray</h2>
-<blockquote>
-<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],<br>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
-</blockquote>
-<h3 id="O(n)_Solution">O(n) Solution</h3>
-<ul>
-<li>It’s called the Kadane’s Algorithm…</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">    <span class="keyword">int</span> max_so_far = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> max_ending_here = A[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">        max_ending_here+=A[i];</div><div class="line">        max_ending_here = Math.max(max_ending_here, A[i]);</div><div class="line">        max_so_far = Math.max(max_ending_here, max_so_far);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> max_so_far;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Divide_and_Conquer_Solution_O(nlogn)">Divide and Conquer Solution O(nlogn)</h3>
-<ul>
-<li>more subtle does not mean cleaner…</li>
-<li>divide the given array in two halves and return the maximum of following three</li>
-<li>Maximum subarray sum in left half </li>
-</ul>
-<ul>
-<li>Maximum subarray sum in right half </li>
-<li>Maximum subarray sum such that the subarray crosses the midpoint</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span>(<span class="keyword">int</span>[] A) {</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>, r=A.length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">return</span> rec(A, l, r);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rec</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">if</span>(l==r) <span class="keyword">return</span> A[l];</div><div class="line">        <span class="keyword">int</span> m= (l+r)/<span class="number">2</span>; </div><div class="line">        <span class="keyword">return</span> Math.max(Math.max(rec(A,l,m),rec(A,m+<span class="number">1</span>,r)),cross(A,m,l,r));</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">cross</span>(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">        <span class="keyword">int</span> suml=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluel=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m-<span class="number">1</span>;i&gt;=l;i--){</div><div class="line">            suml+=A[i];</div><div class="line">            <span class="keyword">if</span>(suml&gt;maxvaluel){</div><div class="line">                maxvaluel=suml;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">int</span> sumr=A[m];</div><div class="line">        <span class="keyword">int</span> maxvaluer=A[m];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=m+<span class="number">1</span>;i&lt;=r;i++){</div><div class="line">            sumr+=A[i];</div><div class="line">            <span class="keyword">if</span>(sumr&gt;maxvaluer){</div><div class="line">                maxvaluer=sumr;</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> maxvaluel+maxvaluer-A[m];</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Maximum_Product_Subarray">Maximum Product Subarray</h2>
-<blockquote>
-<p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.<br>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
-</blockquote>
-<h2 id="Near_Brute_force">Near Brute force</h2>
-<ul>
-<li>If we store result from i to j in t[i][j], the runtime is O(n^2)</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=<span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;A.length;i++){</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;A.length;j++){</div><div class="line">			<span class="keyword">int</span> tmp=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;=j;k++){</div><div class="line">			tmp*=A[k];</div><div class="line">					}</div><div class="line">			<span class="keyword">if</span>(tmp&gt;maxvalue){</div><div class="line">				maxvalue=tmp;</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="DP?_Solution">DP? Solution</h2>
-<ul>
-<li>There are only two cases when we get a larger result</li>
-<li>mininum(negative) value multiply cur value(which happens to be negative)</li>
-<li>maximum value multiply cur value</li>
-<li>Be careful with the special case when multiplying both would decrease the result, then change start point to self</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span>(<span class="keyword">int</span>[] A){</div><div class="line">	<span class="keyword">int</span> maxvalue=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> minval=A[<span class="number">0</span>], maxval=A[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;A.length;i++){</div><div class="line">	    <span class="keyword">int</span> a=A[i] * minval;</div><div class="line">	    <span class="keyword">int</span> b=A[i] * maxval;</div><div class="line">	    maxval=Math.max(Math.max(a,b),A[i]);</div><div class="line">	    minval=Math.min(Math.min(a,b),A[i]);</div><div class="line">	    maxvalue=Math.max(maxvalue,maxval);</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> maxvalue;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fpatrick-champarnaud%2Fticking-bomb%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/DP/"> #DP </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1258,7 +1223,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1272,7 +1237,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
