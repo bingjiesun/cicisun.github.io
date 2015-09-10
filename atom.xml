@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-06T23:28:06.912Z</updated>
+  <updated>2015-09-10T03:16:48.707Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Find Minimum in Rotated Sorted Array, Find Minimum in Rotated Sorted Array II , Search in Rotated Sorted Array, Search in Rotated Sorted Array II, Search for a Range]]></title>
+    <link href="http://sunbingjie.tk/2015/09/09/9.9/"/>
+    <id>http://sunbingjie.tk/2015/09/09/9.9/</id>
+    <published>2015-09-10T03:16:35.000Z</published>
+    <updated>2015-09-10T03:16:35.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Find_Minimum_in_Rotated_Sorted_Array">Find Minimum in Rotated Sorted Array</h2>
+<blockquote>
+<p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.<br>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).<br>Find the minimum element.<br>You may assume no duplicate exists in the array.</p>
+</blockquote>
+<ul>
+<li>If median element is larget than both low and high, then left part is increasing, smallest is in the right section</li>
+<li>If median element is larger than low and smaller than high, then whole array is increaing, smallest is the left most item</li>
+<li>If median element is smaller than both low and high, then the left part is increasing, smallest if in the left section</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMin</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">	<span class="keyword">int</span> low=<span class="number">0</span>, high=nums.length-<span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(low&lt;high){</div><div class="line">		<span class="keyword">int</span> mid=(low+high)/<span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span>(nums[low]&lt;=nums[mid] && nums[mid]&lt;=nums[high]) <span class="keyword">return</span> nums[low];</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&lt;=nums[low] && nums[mid]&lt;=nums[high]){</div><div class="line">			high=mid;</div><div class="line">		}</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;=nums[low] && nums[mid]&gt;=nums[high]){</div><div class="line">			low=mid+<span class="number">1</span>;</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> nums[low];</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Find_Minimum_in_Rotated_Sorted_Array_II">Find Minimum in Rotated Sorted Array II</h3>
+<blockquote>
+<p>Follow up for “Find Minimum in Rotated Sorted Array”:<br>What if duplicates are allowed?<br>Would this affect the run-time complexity? How and why?<br>Suppose a sorted array is rotated at some pivot unknown to you beforehand.<br>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).<br>Find the minimum element.<br>The array may contain duplicates.</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>If median equals to either low or high, move two pointers to the first non-duplicate</li>
+<li></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMin2</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">	<span class="keyword">int</span> low=<span class="number">0</span>, high=nums.length-<span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(low&lt;high){</div><div class="line">		<span class="keyword">int</span> mid=(low+high)/<span class="number">2</span>;</div><div class="line">		<span class="keyword">while</span>(nums[low]==nums[mid] && low&lt;mid) low++;</div><div class="line">		<span class="keyword">while</span>(nums[high]==nums[mid] && high&gt;mid) high--;</div><div class="line">		<span class="keyword">if</span>(nums[mid]&gt;nums[high]){</div><div class="line">			low=mid+<span class="number">1</span>;</div><div class="line">		}</div><div class="line">		<span class="keyword">else</span>{</div><div class="line">			high=mid;</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> nums[low];</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_in_Rotated_Sorted_Array">Search in Rotated Sorted Array</h2>
+<blockquote>
+<p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.<br>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).<br>You are given a target value to search. If found in the array return its index, otherwise return -1.<br>You may assume no duplicate exists in the array.</p>
+</blockquote>
+<h3 id="O(Logn)_Solution">O(Logn) Solution</h3>
+<ul>
+<li>Find min, then start from that index use binary search to find key, but this solution is LTE…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">search</span>(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {</div><div class="line">   	<span class="keyword">int</span> low=<span class="number">0</span>, high=nums.length-<span class="number">1</span>, mid=<span class="number">0</span>;</div><div class="line">   	<span class="keyword">while</span>(low&lt;high){</div><div class="line">   		mid=(low+high)/<span class="number">2</span>;</div><div class="line">   		<span class="keyword">while</span>(nums[low]==nums[mid] && low&lt;mid) low++;</div><div class="line">   		<span class="keyword">while</span>(nums[high]==nums[mid] && high&gt;mid) high--;</div><div class="line">   		<span class="keyword">if</span>(nums[mid]&gt;nums[high]){</div><div class="line">   			low=mid+<span class="number">1</span>;</div><div class="line">   		}</div><div class="line">   		<span class="keyword">else</span>{</div><div class="line">   			high=mid;</div><div class="line">   		}</div><div class="line">   	}</div><div class="line">   	<span class="keyword">int</span> min=low;</div><div class="line">   	<span class="keyword">if</span>(nums[nums.length-<span class="number">1</span>]&lt;target) {low=<span class="number">0</span>;high=min-<span class="number">1</span>;}</div><div class="line">   	<span class="keyword">else</span> {low=min; high=nums.length-<span class="number">1</span>;}</div><div class="line">       <span class="keyword">while</span>(low &lt;= high){</div><div class="line">           mid = (low + high)/<span class="number">2</span>;</div><div class="line">           <span class="keyword">if</span>(target &lt; nums[mid]){</div><div class="line">         	  high=mid-<span class="number">1</span>;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> <span class="keyword">if</span>(target &gt; nums[mid]){</div><div class="line">         	  low=mid+<span class="number">1</span>;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> <span class="keyword">return</span> mid;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> -<span class="number">1</span>;	</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li>If target&lt;mid, and mid&lt;high, then right part is increasing, target is in [low,mid-1]</li>
+<li>If target<mid, and="" mid="">=high, then left part is increasing. If now target&lt;low, then target is in [mid+1, high]; Else target is in [low, mid-1]</mid,></li>
+<li>If target&gt;mid, and mid&gt;low, then left part is increasing, target is in [mid+1, high]</li>
+<li>If target&gt;mid, and mid&lt;=low, then right part is increasing. If now target&gt;high, then target is in [low, mid-1];<br>Else target is in [mid+1, high]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span>(<span class="keyword">int</span> [] A,<span class="keyword">int</span> target){</div><div class="line">       <span class="keyword">if</span>(A==<span class="keyword">null</span>||A.length==<span class="number">0</span>)</div><div class="line">         <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        </div><div class="line">       <span class="keyword">int</span> low = <span class="number">0</span>;</div><div class="line">       <span class="keyword">int</span> high = A.length-<span class="number">1</span>;</div><div class="line">      </div><div class="line">       <span class="keyword">while</span>(low &lt;= high){</div><div class="line">           <span class="keyword">int</span> mid = (low + high)/<span class="number">2</span>;</div><div class="line">           <span class="keyword">if</span>(target &lt; A[mid]){</div><div class="line">               <span class="keyword">if</span>(A[mid]&lt;A[high])<span class="comment">//right side is sorted</span></div><div class="line">                 high = mid - <span class="number">1</span>;<span class="comment">//target must in left side</span></div><div class="line">               <span class="keyword">else</span></div><div class="line">                 <span class="keyword">if</span>(target&lt;A[low])<span class="comment">//target&lt;A[mid]&&target&lt;A[low]==&gt;means,target cannot be in [low,mid] since this side is sorted</span></div><div class="line">                    low = mid + <span class="number">1</span>;</div><div class="line">                 <span class="keyword">else</span> </div><div class="line">                    high = mid - <span class="number">1</span>;</div><div class="line">           }<span class="keyword">else</span> <span class="keyword">if</span>(target &gt; A[mid]){</div><div class="line">               <span class="keyword">if</span>(A[low]&lt;A[mid])<span class="comment">//left side is sorted</span></div><div class="line">                 low = mid + <span class="number">1</span>;<span class="comment">//target must in right side</span></div><div class="line">               <span class="keyword">else</span></div><div class="line">                 <span class="keyword">if</span>(target&gt;A[high])<span class="comment">//right side is sorted. If target&gt;A[high] means target is not in this side</span></div><div class="line">                    high = mid - <span class="number">1</span>;</div><div class="line">                 <span class="keyword">else</span></div><div class="line">                    low = mid + <span class="number">1</span>;</div><div class="line">           }<span class="keyword">else</span></div><div class="line">             <span class="keyword">return</span> mid;</div><div class="line">       }</div><div class="line">       </div><div class="line">       <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_in_Rotated_Sorted_Array_II">Search in Rotated Sorted Array II</h2>
+<blockquote>
+<p>Follow up for “Search in Rotated Sorted Array”:<br>What if duplicates are allowed?<br>Would this affect the run-time complexity? How and why?<br>Write a function to determine if a given target is in the array.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">search</span>(<span class="keyword">int</span> [] A,<span class="keyword">int</span> target){</div><div class="line">        <span class="keyword">if</span>(A==<span class="keyword">null</span>||A.length==<span class="number">0</span>)</div><div class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> high = A.length-<span class="number">1</span>;</div><div class="line">       </div><div class="line">        <span class="keyword">while</span>(low &lt;= high){</div><div class="line">            <span class="keyword">int</span> mid = (low + high)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(target &lt; A[mid]){</div><div class="line">                <span class="keyword">if</span>(A[mid]&lt;A[high])<span class="comment">//right side is sorted</span></div><div class="line">                  high = mid - <span class="number">1</span>;<span class="comment">//target must in left side</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(A[mid]==A[high]) high--; <span class="comment">//move upper boundary</span></div><div class="line">                <span class="keyword">else</span></div><div class="line">                  <span class="keyword">if</span>(target&lt;A[low])<span class="comment">//target&lt;A[mid]&&target&lt;A[low]==&gt;means,target cannot be in [low,mid] since this side is sorted</span></div><div class="line">                     low = mid + <span class="number">1</span>;</div><div class="line">                  <span class="keyword">else</span> </div><div class="line">                     high = mid - <span class="number">1</span>;</div><div class="line">            }<span class="keyword">else</span> <span class="keyword">if</span>(target &gt; A[mid]){</div><div class="line">                <span class="keyword">if</span>(A[low]&lt;A[mid])<span class="comment">//left side is sorted</span></div><div class="line">                  low = mid + <span class="number">1</span>;<span class="comment">//target must in right side</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(A[low]==A[mid]) low++; <span class="comment">//move lower boundary</span></div><div class="line">                <span class="keyword">else</span></div><div class="line">                  <span class="keyword">if</span>(target&gt;A[high])<span class="comment">//right side is sorted. If target&gt;A[high] means target is not in this side</span></div><div class="line">                     high = mid - <span class="number">1</span>;</div><div class="line">                  <span class="keyword">else</span></div><div class="line">                     low = mid + <span class="number">1</span>;</div><div class="line">            }<span class="keyword">else</span></div><div class="line">              <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<h2 id="Search_for_a_Range">Search for a Range</h2>
+<blockquote>
+<p>Given a sorted array of integers, find the starting and ending position of a given target value.<br>Your algorithm’s runtime complexity must be in the order of O(log n).<br>If the target is not found in the array, return [-1, -1].<br>For example,<br>Given [5, 7, 7, 8, 8, 10] and target value 8,<br>return [3, 4].</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] <span class="title">searchRange</span>(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {</div><div class="line">        <span class="keyword">int</span> low=<span class="number">0</span>, mid=<span class="number">0</span>; </div><div class="line">        <span class="keyword">int</span> high=nums.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">     </div><div class="line">        <span class="keyword">while</span>(low&lt;=high){</div><div class="line">        	mid=(low+high)/<span class="number">2</span>;</div><div class="line">        	<span class="keyword">if</span>(nums[mid]&lt;target) low=mid+<span class="number">1</span>;</div><div class="line">        	<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target) high=mid-<span class="number">1</span>;</div><div class="line">        	<span class="keyword">else</span>{</div><div class="line">        		<span class="keyword">int</span> l=mid, r=mid;</div><div class="line">        		result[<span class="number">0</span>]=mid; result[<span class="number">1</span>]=mid;</div><div class="line">        		<span class="keyword">while</span>(l&gt;=<span class="number">0</span> && nums[l]==target){			</div><div class="line">        			result[<span class="number">0</span>]=l;</div><div class="line">        			l--;</div><div class="line">        		}</div><div class="line">        		</div><div class="line">        		<span class="keyword">while</span>(r&lt;=nums.length-<span class="number">1</span> && nums[r]==target){</div><div class="line">        			result[<span class="number">1</span>]=r;</div><div class="line">        			r++;</div><div class="line">        		}</div><div class="line">                <span class="keyword">return</span> result;	</div><div class="line">        	}</div><div class="line">        }     </div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]{-<span class="number">1</span>,-<span class="number">1</span>};</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Find_Minimum_in_Rotated_Sorted_Array">Find Minimum in Rotated Sorted Array</h2>
+<blockquote>
+<p>Suppose a sorted array is rotated at]]>
+    </summary>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="Binary Search" scheme="http://sunbingjie.tk/tags/Binary-Search/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Sudoku Solver, N-Queens, N-Queens II]]></title>
@@ -1459,83 +1538,6 @@
       <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
       <category term="Stack" scheme="http://sunbingjie.tk/tags/Stack/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Number of Islands]]></title>
-    <link href="http://sunbingjie.tk/2015/04/12/4.6/"/>
-    <id>http://sunbingjie.tk/2015/04/12/4.6/</id>
-    <published>2015-04-12T06:23:51.000Z</published>
-    <updated>2015-04-12T06:23:51.000Z</updated>
-    <content type="html"><![CDATA[<p>Update—Leetcode now includes this problem:</p>
-<h2 id="Number_of_Islands">Number of Islands</h2>
-<blockquote>
-<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
-
-<h2 id="Solution">Solution</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
-<blockquote>
-<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
-
-<p>Return 5， 1， 2</p>
-<h3 id="Solution-1">Solution</h3>
-<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
-<ul>
-<li>Mark each node visited to avoid duplicated counting.</li>
-</ul>
-<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
-    <span class="keyword">int</span> one,count;
-    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
-    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
-
-    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
-        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
-
-            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
-                res.add(dfs(i,j, mat, mark));
-            }
-        }
-    }
-    <span class="keyword">return</span> res;
-}
-
-<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
-    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
-        <span class="keyword">return</span> <span class="number">0</span>;
-    mark[i][j] = <span class="number">1</span>;
-    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
-}
-
-<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
-    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
-    countIslands c = <span class="keyword">new</span> countIslands();
-    System.<span class="keyword">out</span>.println(c.countIslands(test));
-}
-</code></pre><iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>]]></content>
-    <summary type="html">
-    <![CDATA[<p>Update—Leetcode now includes this problem:</p>
-<h2 id="Number_of_Islands">Number of Islands</h2>
-<blockquote>
-<p>Given a 2d grid map of ‘]]>
-    </summary>
-    
-      <category term="DFS" scheme="http://sunbingjie.tk/tags/DFS/"/>
-    
-      <category term="Recursion" scheme="http://sunbingjie.tk/tags/Recursion/"/>
     
       <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     

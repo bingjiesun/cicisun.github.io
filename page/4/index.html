@@ -120,6 +120,82 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/blackmirror/">
+                Black Mirror Christmas Special
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/追剧/">追剧</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/blackmirror/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/blackmirror/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <object width="1140" height="880"><param name="movie" value="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page"><param name="allowFullScreen" value="true"><param name="allowscriptaccess" value="always"><param name="wmode" value="Transparent"><embed width="1140" height="488" wmode="Transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://share.vrs.sohu.com/2154005/v.swf&topBar=1&autoplay=false&plid=8358521&pub_catecode=0&from=page" type="application/x-shockwave-flash"></object>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/2.5/">
                 Roman to Integer, Integer to Roman, ZigZag Conversion
               </a>
@@ -1421,125 +1497,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.2/">
-                Remove Nth Node From End of List, Merge Two Sorted Lists, Merge K Sorted Lists
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.2/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Remove_Nth_Node_From_End_of_List">Remove Nth Node From End of List</h2>
-<blockquote>
-<p>Given a linked list, remove the nth node from the end of list and return its head.<br>For example,<br>Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.<br>After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Honestly I don’t know how my first solution got accepted, basically I just count the size of list and then remove that element in the second pass.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span>(ListNode head, <span class="keyword">int</span> n) {</div><div class="line">           ListNode cur=head;</div><div class="line">           <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">           <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){cur=cur.next;i++;}</div><div class="line">           System.out.println(i);</div><div class="line">           ListNode cur2=head;</div><div class="line">            </div><div class="line">           <span class="keyword">if</span>(n==i){head=head.next;}</div><div class="line">            </div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;i-n-<span class="number">1</span>;j++){</div><div class="line">               </div><div class="line">               System.out.println(j);</div><div class="line">               cur2=cur2.next;</div><div class="line">           }</div><div class="line">           <span class="keyword">if</span> (cur2.next == <span class="keyword">null</span>) {</div><div class="line">               <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> cur2.next=cur2.next.next;</div><div class="line">           </div><div class="line">           <span class="keyword">return</span> head;      </div><div class="line">       }</div></pre></td></tr></table></figure>
-
-<p>One pass solution using two pointers: one fake pointer to move n steps from the beginning, then move both pointers until list ends.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span>(ListNode head, <span class="keyword">int</span> n) {</div><div class="line">     </div><div class="line">         ListNode cur=head;</div><div class="line">         ListNode p=head;</div><div class="line">         </div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){cur=cur.next;}</div><div class="line">         <span class="comment">//deal with removing head cases</span></div><div class="line">         <span class="keyword">if</span>(cur==<span class="keyword">null</span>) head=head.next;</div><div class="line">         <span class="comment">//made a mistake here, forgot to move cur with p...</span></div><div class="line">         <span class="keyword">else</span> {<span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>){p=p.next;cur=cur.next;}</div><div class="line">         p.next=p.next.next;}</div><div class="line">         <span class="keyword">return</span> head;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Merge_Two_Sorted_Lists">Merge Two Sorted Lists</h2>
-<blockquote>
-<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Note: Algorithm is trivial, however I always forget to copy head to last therefore lost the final head during the iteration…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">mergeTwoLists</span>(ListNode l1, ListNode l2) {</div><div class="line">        ListNode h=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode l=h;</div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>&&l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(l1.val&lt;l2.val){</div><div class="line">                l.next=l1;</div><div class="line">                l1=l1.next;     </div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                l.next=l2;</div><div class="line">                l2=l2.next;</div><div class="line">            }</div><div class="line">            l=l.next;</div><div class="line">        }</div><div class="line">        <span class="comment">//attach the rest of one list</span></div><div class="line">        <span class="keyword">if</span> (l1==<span class="keyword">null</span>) l.next=l2;</div><div class="line">        <span class="keyword">else</span> l.next=l1;</div><div class="line">        <span class="keyword">return</span> h.next;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Merge_K_Sorted_Lists">Merge K Sorted Lists</h2>
-<blockquote>
-<p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<p>First Solution is Divide and Conquer, by calling the above method and reconstruct. The recursion is T(k) = 2T(k/2)+O(n*k)=O(nklogk).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span>(List&lt;ListNode&gt; lists) {</div><div class="line">         </div><div class="line">         <span class="keyword">int</span> n=lists.size();</div><div class="line">         <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">         <span class="comment">//main function call</span></div><div class="line">         <span class="keyword">else</span> <span class="keyword">return</span> mergeKlist(lists,<span class="number">0</span>,n-<span class="number">1</span>);</div><div class="line">         </div><div class="line">     }</div><div class="line">     </div><div class="line">     <span class="keyword">public</span> ListNode <span class="title">mergeKlist</span>(List&lt;ListNode&gt; lists, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">         </div><div class="line">         <span class="keyword">if</span>(l&lt;r){</div><div class="line">             <span class="keyword">int</span> m=(l+r)/<span class="number">2</span>;</div><div class="line">             <span class="comment">//divide the lists by 2 until its size reaches 1, then merge them from bottom to top</span></div><div class="line">             <span class="keyword">return</span> mergeTwoLists(mergeKlist(lists,l,m),mergeKlist(lists,m+<span class="number">1</span>,r));</div><div class="line">         }</div><div class="line">         </div><div class="line">         <span class="keyword">return</span> lists.get(l);</div><div class="line">       }</div></pre></td></tr></table></figure>
-
-<p>Or, instead of dividing into two parts, we can use ArrayDeque Class. (Similar to brute force solution, merges two list each time, whose complexity is n(2+3+…k)=O(nk^2))</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span>(List&lt;ListNode&gt; lists) {</div><div class="line">    </div><div class="line">      <span class="keyword">if</span>(lists == <span class="keyword">null</span> || lists.isEmpty()) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">      ArrayDeque&lt;ListNode&gt; q = <span class="keyword">new</span> ArrayDeque&lt;ListNode&gt;();</div><div class="line">      <span class="keyword">for</span>(ListNode n : lists) {</div><div class="line">          <span class="keyword">if</span> (n != <span class="keyword">null</span>) q.offer(n);</div><div class="line">      }</div><div class="line">      <span class="keyword">while</span>(q.size() &gt; <span class="number">1</span>) {</div><div class="line">          ListNode a = q.poll();</div><div class="line">          ListNode b = q.poll();</div><div class="line">          q.offer(mergeTwoLists(a, b));</div><div class="line">      }</div><div class="line">      </div><div class="line">      <span class="keyword">return</span> q.poll();</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<p>Second Solution is PQ. We can add the heads of all lists into the queue. And we can poll out the smallest one. If the next node of this smallest node is not null, we can add the next node to the queue. Until we empty the PQ, we get the sorted lists. The complexity is also O(nklogk).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span>(List&lt;ListNode&gt; lists) {</div><div class="line">         <span class="keyword">if</span>(lists == <span class="keyword">null</span> || lists.isEmpty()) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">         PriorityQueue&lt;ListNode&gt; heap=<span class="keyword">new</span> PriorityQueue&lt;&gt;(lists.size(), <span class="keyword">new</span> Comparator&lt;ListNode&gt;(){</div><div class="line">            <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span>(ListNode a, ListNode b){</div><div class="line">                <span class="keyword">if</span>(a==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">                <span class="keyword">if</span>(b==<span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">                <span class="keyword">return</span> a.val - b.val;</div><div class="line">            }</div><div class="line">            });</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;lists.size(); i++){</div><div class="line">            <span class="keyword">if</span>(lists.get(i) != <span class="keyword">null</span>){</div><div class="line">                heap.add(lists.get(i));</div><div class="line">            }</div><div class="line">        }</div><div class="line">        ListNode h=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode l=h;</div><div class="line">        <span class="keyword">while</span>(!heap.isEmpty()){</div><div class="line">            ListNode head=heap.poll();</div><div class="line">            l.next=head;</div><div class="line">            l=head;</div><div class="line">            <span class="keyword">if</span>(head.next != <span class="keyword">null</span>){</div><div class="line">                heap.add(head.next);</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> h.next;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Ftheneighbourhood%2Fsweater-weather-little&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1580,7 +1537,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1594,7 +1551,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
