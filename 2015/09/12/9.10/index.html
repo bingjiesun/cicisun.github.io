@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="Sort,Array," />
+  <meta name="keywords" content="Array,String,HashMap," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> First Missing Positive, Sort Colors // Cici's Blog </title>
+  <title> Valid Anagram, Group Anagrams // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              First Missing Positive, Sort Colors
+              Valid Anagram, Group Anagrams
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-02-26
+          Posted on 2015-09-12
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.2－2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.2－2/"></span>
+            <a href="/2015/09/12/9.10/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/12/9.10/"></span>
             </a>
           </span>
           
@@ -161,32 +161,23 @@
       
 
       
-        <h2 id="First_Missing_Positive">First Missing Positive</h2>
+        <h2 id="Valid_Anagram">Valid Anagram</h2>
 <blockquote>
-<p>Given an unsorted integer array, find the first missing positive integer.<br>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.<br>Your algorithm should run in O(n) time and uses constant space.</p>
+<p>Given two strings s and t, write a function to determine if t is an anagram of s.<br>For example,<br>s = “anagram”, t = “nagaram”, return true.<br>s = “rat”, t = “car”, return false.<br>Note:<br>You may assume the string contains only lowercase alphabets.</p>
 </blockquote>
-<h3 id="Solution">Solution</h3>
-<p>First solution I thought of is simply sort the array, then find the fist missing positive by comparing each positive element with index. However, even though this passed the OJ, it’s still O(logn) time.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstMissingPositive</span>(<span class="keyword">int</span> A[]) {</div><div class="line">    <span class="keyword">int</span> n= A.length;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> index=<span class="number">0</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    Arrays.sort(A);</div><div class="line">    <span class="keyword">while</span>(i&lt;n && A[i]&lt;=<span class="number">0</span>) i++;</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span>&&A[i]==A[i-<span class="number">1</span>]) <span class="keyword">continue</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(A[i]-index!=<span class="number">1</span>) <span class="keyword">return</span> index+<span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span> index=A[i];</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> index+<span class="number">1</span>;  </div><div class="line">}</div></pre></td></tr></table></figure>
+<h3 id="HashMap_Solution">HashMap Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAnagram</span>(String s, String t) {</div><div class="line">    	s.toLowerCase();</div><div class="line">    	t.toLowerCase();</div><div class="line">    	<span class="keyword">if</span>(s.length()!=t.length()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    	HashMap&lt;Character, Integer&gt; map=<span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</div><div class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length();i++){</div><div class="line">    		<span class="keyword">if</span>(!map.containsKey(s.charAt(i))){</div><div class="line">    			map.put(s.charAt(i), <span class="number">1</span>);</div><div class="line">    		}</div><div class="line">    		<span class="keyword">else</span> map.put(s.charAt(i), map.get(s.charAt(i))+<span class="number">1</span>);</div><div class="line">    	}</div><div class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t.length();i++){</div><div class="line">    		<span class="keyword">if</span>(map.containsKey(t.charAt(i))){</div><div class="line">    			<span class="keyword">if</span>(map.get(t.charAt(i))&gt;=<span class="number">1</span>){</div><div class="line">    				map.put(t.charAt(i), map.get(t.charAt(i))-<span class="number">1</span>);</div><div class="line">    			}</div><div class="line">    			<span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    		}</div><div class="line">    		<span class="keyword">else</span> <span class="keyword">if</span>(!map.containsKey(t.charAt(i))) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    	}</div><div class="line">    	<span class="keyword">return</span> <span class="keyword">true</span>;  	</div><div class="line">    }</div></pre></td></tr></table></figure>
 
-<p>Second solution sorts every number corresponding with index, index i holds number i+1, if i+1 is not in the array then we return the smallest mismatch. The runtime is O(n).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstMissingPositive</span>(<span class="keyword">int</span> A[]) {</div><div class="line">    <span class="keyword">int</span> n= A.length;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> tmp=<span class="number">0</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">while</span>(i&lt;n){</div><div class="line">        <span class="keyword">if</span>(A[i]&gt;<span class="number">0</span> && A[i]&lt;n && A[i]!=A[A[i]-<span class="number">1</span>])</div><div class="line">        {</div><div class="line">            tmp=A[A[i]-<span class="number">1</span>];</div><div class="line">            A[A[i]-<span class="number">1</span>]=A[i];</div><div class="line">            A[i]=tmp;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> i++;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">        <span class="keyword">if</span>(A[i]!=i+<span class="number">1</span>) <span class="keyword">return</span> i+<span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> n+<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+<h3 id="Sort_Solution">Sort Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAnagramSort</span>(String s, String t) {</div><div class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || t == <span class="keyword">null</span>) {</div><div class="line">            <span class="keyword">return</span> (s == <span class="keyword">null</span> && t == <span class="keyword">null</span>) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (s.equals(t)) {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (s.length() != t.length()) {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">char</span>[] s1 = s.toCharArray();</div><div class="line">        <span class="keyword">char</span>[] t1 = t.toCharArray();</div><div class="line"></div><div class="line">        Arrays.sort(s.toCharArray());</div><div class="line">        Arrays.sort(t.toCharArray());</div><div class="line"></div><div class="line">        <span class="keyword">return</span>  <span class="keyword">new</span> String(s1).equals(<span class="keyword">new</span> String(t1)) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="Sort_Colors">Sort Colors</h2>
+<h2 id="Group_Anagrams">Group Anagrams</h2>
 <blockquote>
-<p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.<br>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.<br>Note:<br>You are not suppose to use the library’s sort function for this problem.</p>
+<p>Given an array of strings, group anagrams together.<br>For example, given: [“eat”, “tea”, “tan”, “ate”, “nat”, “bat”],<br>Return:<br>[<br>  [“ate”, “eat”,”tea”],<br>  [“nat”,”tan”],<br>  [“bat”]<br>]<br>Note:<br>For the return value, each inner list’s elements must follow the lexicographic order.<br>All inputs will be in lower-case.</p>
 </blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>First solution is counting sort, two pass algorithm.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span>(<span class="keyword">int</span>[] A) {     </div><div class="line">      <span class="keyword">int</span> n=A.length;</div><div class="line">      <span class="keyword">int</span>[] B=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">        B[A[i]]++;</div><div class="line">      }</div><div class="line">      <span class="keyword">int</span> p=<span class="number">0</span>;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;B.length;j++){</div><div class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;B[j];k++)</div><div class="line">              A[p++]=j;</div><div class="line">      }          </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>Second Solution is one pass three way partition, using three pointers: pr for the first not red, pb for first not blue and i for current.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       </div><div class="line">       <span class="keyword">int</span> n=A.length;</div><div class="line">       <span class="keyword">int</span> pr=<span class="number">0</span>,pb=n-<span class="number">1</span>,i=<span class="number">0</span>;</div><div class="line">       <span class="keyword">while</span>(pr&lt;n&&A[pr]==<span class="number">0</span>) pr++;</div><div class="line">       <span class="keyword">while</span>(pb&gt;<span class="number">0</span>&&A[pb]==<span class="number">2</span>) pb--;</div><div class="line">       i=pr;</div><div class="line">       <span class="keyword">while</span>(i&lt;=pb){</div><div class="line">           </div><div class="line">           <span class="keyword">if</span>(A[i]==<span class="number">0</span>) {swap(A,i,pr); pr++;}</div><div class="line">           <span class="keyword">if</span>(A[i]==<span class="number">2</span>) {swap(A,i,pb); pb--;}</div><div class="line">           <span class="keyword">else</span> i++;</div><div class="line">       }</div><div class="line">         </div><div class="line">     }</div><div class="line">   </div><div class="line">   <span class="keyword">void</span> swap(<span class="keyword">int</span>[] A,<span class="keyword">int</span> a, <span class="keyword">int</span> b){</div><div class="line">       <span class="keyword">int</span> tmp=A[a];</div><div class="line">       A[a]=A[b];</div><div class="line">       A[b]=tmp;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Ffoundations%2F06-sleepyhead&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
+<h3 id="Sort_+_Hashmap_Solution">Sort + Hashmap Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">groupAnagrams</span>(String[] strs) {</div><div class="line">        HashMap&lt;String, List&lt;String&gt;&gt; dict = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.length; i++) {</div><div class="line">            String s = strs[i];</div><div class="line">            <span class="keyword">char</span>[] chars = s.toCharArray();</div><div class="line">            Arrays.sort(chars);</div><div class="line">            String sortedString = String.valueOf(chars);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (dict.containsKey(sortedString)) {</div><div class="line">                dict.get(sortedString).add(s);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">                list.add(s);</div><div class="line">                dict.put(sortedString, list);</div><div class="line">            }</div><div class="line">        }</div><div class="line">        List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (List&lt;String&gt; list : dict.values()) {</div><div class="line">            <span class="keyword">if</span> (list.size() &gt;= <span class="number">1</span>)</div><div class="line">                Collections.sort(list);</div><div class="line">                res.add(list);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
 
 
       
@@ -196,9 +187,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Sort/"> #Sort </a>
-          
             <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/String/"> #String </a>
+          
+            <a href="/tags/HashMap/"> #HashMap </a>
           
         </div>
       
@@ -207,13 +200,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/02/25/1.2/">Remove Nth Node From End of List, Merge Two Sorted Lists, Merge K Sorted Lists</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/02/25/1.18/">Merge Sorted Array, Merge Intervals, Insert Interval</a>
+              <a href="/2015/09/09/9.9/">Find Minimum in Rotated Sorted Array, Find Minimum in Rotated Sorted Array II , Search in Rotated Sorted Array, Search in Rotated Sorted Array II, Search for a Range</a>
             
           </div>
         </div>
@@ -333,7 +324,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First_Missing_Positive"><span class="nav-number">1.</span> <span class="nav-text">First Missing Positive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sort_Colors"><span class="nav-number">2.</span> <span class="nav-text">Sort Colors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Anagram"><span class="nav-number">1.</span> <span class="nav-text">Valid Anagram</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">HashMap Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort_Solution"><span class="nav-number">1.2.</span> <span class="nav-text">Sort Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group_Anagrams"><span class="nav-number">2.</span> <span class="nav-text">Group Anagrams</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort_+_Hashmap_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">Sort + Hashmap Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -906,8 +897,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/02/25/1.2－2/';
-      var disqus_url = 'http://sunbingjie.tk/2015/02/25/1.2－2/';
+      var disqus_identifier = '2015/09/12/9.10/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/12/9.10/';
 
       (function(){
         var dsq = document.createElement('script');
