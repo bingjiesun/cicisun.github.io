@@ -120,6 +120,84 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/27/1.3/">
+                Shortest word in Dictionary
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-27
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/27/1.3/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/27/1.3/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>有一个输入字符，然后我有一个英文字典，说白了就是字符串数组，然后写一个function返回字典里拥有输入字符串里所有字母(非数字或者空格等符号，就是纯字母)的最短的那个字符串。举个例子：<br>输入字符串”SR 456 T”，字符串数组里有”SORT”，而且是最短的，那么就返回它</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShortestDict</span> </span>{</div><div class="line"></div><div class="line">	<span class="keyword">private</span> List&lt;String&gt; wordList;</div><div class="line">	<span class="keyword">private</span> List&lt;Integer&gt; maskList;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="title">ShortestDict</span>(String[] words) {</div><div class="line">		wordList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		maskList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		<span class="comment">//rewrite comparator to compare string length</span></div><div class="line">		Arrays.sort(words, <span class="keyword">new</span> Comparator&lt;String&gt;(){</div><div class="line">			<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span>(String s1, String s2) {</div><div class="line">				<span class="keyword">return</span> s1.length() - s2.length();</div><div class="line">			}</div><div class="line">		});</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (String word : words) {</div><div class="line">			wordList.add(word);</div><div class="line">			maskList.add(getMask(word));</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> String <span class="title">getShortest</span>(String inputWord) {</div><div class="line">		<span class="keyword">int</span> inputMask = getMask(inputWord);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maskList.size(); i++) {</div><div class="line">			<span class="keyword">if</span> (inputMask == (inputMask & maskList.get(i))) {</div><div class="line">				<span class="keyword">return</span> wordList.get(i);</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMask</span>(String word) { </div><div class="line">		<span class="keyword">int</span> mask = <span class="number">0</span>;</div><div class="line">		word = word.toLowerCase();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c : word.toCharArray()) {</div><div class="line">			<span class="keyword">if</span> (<span class="string">'a'</span> &lt;= c && c &lt;= <span class="string">'z'</span>) {</div><div class="line">				mask |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</div><div class="line">			} </div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> mask;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">		String[] words = <span class="keyword">new</span> String[]{<span class="string">"so99ort"</span>, <span class="string">"so1rt"</span>, <span class="string">"skype"</span>, <span class="string">"so11rt"</span>, <span class="string">"apppples"</span>};</div><div class="line">		ShortestDict d = <span class="keyword">new</span> ShortestDict(words);</div><div class="line">		System.out.println(d.getShortest(<span class="string">"SR 456 T"</span>));</div><div class="line"></div><div class="line">	} </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fitsdimmi%2Fet-voila-dimmi&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/String/"> #String </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/1.28/">
                 把《编程珠玑》读薄
               </a>
@@ -1694,168 +1772,6 @@ nana
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.22/">
-                Construct Binary Tree from Preorder and Inorder Traversal, Construct Binary Tree from Inorder and Postorder Traversal, Binary Tree Inorder Traversal, Convert Sorted Array to Binary Search Tree, Convert Sorted List to Binary Search Tree, Flatten Binary Tree to Linked List
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.22/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.22/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal">Construct Binary Tree from Preorder and Inorder Traversal</h2>
-<blockquote>
-<p>Given preorder and inorder traversal of a tree, construct the binary tree.<br>Note:<br>You may assume that duplicates do not exist in the tree. </p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> pre=<span class="number">0</span>;</div><div class="line"><span class="keyword">public</span> TreeNode <span class="title">buildTree</span>(<span class="keyword">int</span>[] preorder, <span class="keyword">int</span>[] inorder) {</div><div class="line">    <span class="comment">//if(preorder.length==0||inorder.length==0){return null;}</span></div><div class="line">    <span class="keyword">int</span> l=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> r=preorder.length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> build(preorder,inorder,l, r);</div><div class="line">}</div><div class="line"><span class="keyword">public</span> TreeNode <span class="title">build</span>(<span class="keyword">int</span>[] preorder, <span class="keyword">int</span>[] inorder,<span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">    <span class="keyword">if</span>(l&gt;r){<span class="keyword">return</span> <span class="keyword">null</span>;}</div><div class="line">    <span class="keyword">int</span> cur=preorder[pre];</div><div class="line">    TreeNode node=<span class="keyword">new</span> TreeNode(cur);</div><div class="line">    pre++;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (i=l; i&lt;=r; i++){</div><div class="line">        <span class="keyword">if</span>(inorder[i]==cur)</div><div class="line">        {<span class="keyword">break</span>;}</div><div class="line">    }</div><div class="line">     </div><div class="line">    node.left=build(preorder,inorder,l, i-<span class="number">1</span>);</div><div class="line">    node.right=build(preorder,inorder,i+<span class="number">1</span>, r);</div><div class="line">    </div><div class="line">   <span class="keyword">return</span> node;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal">Construct Binary Tree from Inorder and Postorder Traversal</h2>
-<blockquote>
-<p>Given inorder and postorder traversal of a tree, construct the binary tree.<br>Note:<br>You may assume that duplicates do not exist in the tree.</p>
-</blockquote>
-<p>Almost the same with previous one, only this time we scan postorder from backwards and recursively add to the right subtree first.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> pos=<span class="number">0</span>;</div><div class="line">    <span class="keyword">public</span> TreeNode <span class="title">buildTree</span>(<span class="keyword">int</span>[] inorder, <span class="keyword">int</span>[] postorder) {</div><div class="line">        pos=inorder.length-<span class="number">1</span>;</div><div class="line">       <span class="keyword">return</span> helper(inorder, postorder, <span class="number">0</span>, inorder.length-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> TreeNode <span class="title">helper</span>(<span class="keyword">int</span>[] inorder, <span class="keyword">int</span>[] postorder, <span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">            <span class="keyword">if</span>(l&gt;r) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">int</span> cur=postorder[pos];</div><div class="line">            TreeNode tmp=<span class="keyword">new</span> TreeNode(cur);</div><div class="line">            pos--;</div><div class="line">            <span class="keyword">int</span> i=l;</div><div class="line">            <span class="keyword">for</span>(;i&lt;=r;i++){</div><div class="line">                <span class="keyword">if</span>(inorder[i]==cur) <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">            </div><div class="line">            tmp.right=helper(inorder,postorder, i+<span class="number">1</span>, r);</div><div class="line">            tmp.left=helper(inorder, postorder, l, i-<span class="number">1</span>);</div><div class="line">            <span class="keyword">return</span> tmp;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Inorder_Traversal">Binary Tree Inorder Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>For example:<br>Given binary tree {1,#,2,3},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> <span class="command">\</span></div><div class="line">  2</div><div class="line"> /</div><div class="line">3</div></pre></td></tr></table></figure>
-
-<p>return [1,3,2].<br>Note: Recursive solution is trivial, could you do it iteratively?<br>confused what “{1,#,2,3}” means? &gt; read more on how binary tree is serialized on OJ.</p>
-<h3 id="Recursive_Method(Trivial)">Recursive Method(Trivial)</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span>(TreeNode root) {</div><div class="line">    ArrayList&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">      <span class="comment">//第一次没过..少了这句</span></div><div class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">    <span class="keyword">return</span> helper(root,res);</div><div class="line">}</div><div class="line"><span class="keyword">private</span>  ArrayList&lt;Integer&gt; <span class="title">helper</span>(TreeNode cur,ArrayList&lt;Integer&gt; res){</div><div class="line">    <span class="keyword">if</span>(cur==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    helper(cur.left, res);</div><div class="line">    res.add(cur.val);</div><div class="line">    helper(cur.right, res);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Method">Iterative Method</h3>
-<li>Inorder: left child -&gt; parent -&gt; right child</li><br><li>Use a stack to track nodes</li><br><li>Exit while loop when stack is empty and current node is null</li>
-
-<p>push nodes in the stack when current node is not null, then move to left subtree<br>pop node when current node is null, move to right subtree</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; nodestack=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        <span class="keyword">while</span>(!nodestack.isEmpty() || root!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(root!=<span class="keyword">null</span>){</div><div class="line">                nodestack.push(root);</div><div class="line">                root=root.left;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                TreeNode tmp=nodestack.pop();</div><div class="line">                res.add(tmp.val);</div><div class="line">                root=tmp.right;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Convert_Sorted_Array_to_Binary_Search_Tree">Convert Sorted Array to Binary Search Tree</h2>
-<blockquote>
-<p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Use recursion, find median element each time, move to left/right subtree.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">sortedArrayToBST</span>(<span class="keyword">int</span>[] num) {</div><div class="line">       <span class="keyword">return</span> helper(num, <span class="number">0</span>, num.length-<span class="number">1</span>);</div><div class="line">   }</div><div class="line">   </div><div class="line">   <span class="keyword">private</span> TreeNode <span class="title">helper</span>(<span class="keyword">int</span>[] num,<span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">       <span class="keyword">if</span>(l&gt;r) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">       <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</div><div class="line">       TreeNode newnode=<span class="keyword">new</span> TreeNode(num[mid]);</div><div class="line">       newnode.left=helper(num, l, mid-<span class="number">1</span>);</div><div class="line">       newnode.right=helper(num, mid+<span class="number">1</span>, r);</div><div class="line">       <span class="keyword">return</span> newnode;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Convert_Sorted_List_to_Binary_Search_Tree">Convert Sorted List to Binary Search Tree</h2>
-<blockquote>
-<p>Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.</p>
-</blockquote>
-<h3 id="Naive_Solution">Naive Solution</h3>
-<p>Just convert LinkedList to Array first…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">sortedListToBST</span>(ListNode head) {</div><div class="line">       ListNode cur = head;</div><div class="line">       List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">while</span> (cur != <span class="keyword">null</span>) {</div><div class="line">           res.add(cur.val);</div><div class="line">           cur = cur.next;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> helper(res, <span class="number">0</span>, res.size() - <span class="number">1</span>);</div><div class="line">   }</div><div class="line">    <span class="keyword">private</span> TreeNode <span class="title">helper</span>(List&lt;Integer&gt; res,<span class="keyword">int</span> l, <span class="keyword">int</span> r){</div><div class="line">       <span class="keyword">if</span>(l&gt;r) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">       <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</div><div class="line">       TreeNode newnode=<span class="keyword">new</span> TreeNode(res.get(mid));</div><div class="line">       newnode.left=helper(res, l, mid-<span class="number">1</span>);</div><div class="line">       newnode.right=helper(res, mid+<span class="number">1</span>, r);</div><div class="line">       <span class="keyword">return</span> newnode;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<p>The trick here is to use two pointers, one slow and one twice the speed, to find the median element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title">sortedListToBST</span>(ListNode head) {  </div><div class="line">        <span class="keyword">return</span> rec(head, <span class="keyword">null</span>);  </div><div class="line">    }  </div><div class="line">      </div><div class="line">    <span class="comment">// 在区间[start, end)里递归，后面的end是包括在内的，这样可以避免要多用一个指针来记录mid前的节点  </span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title">rec</span>(ListNode start, ListNode end){  </div><div class="line">        <span class="keyword">if</span>(start == end){  </div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">        }  </div><div class="line">          </div><div class="line">        <span class="comment">// 一次遍历找到中点的方法：快慢指针  </span></div><div class="line">        ListNode mid = start;           <span class="comment">// 该指针最终会指向中点  </span></div><div class="line">        ListNode probe = start;         <span class="comment">// 探针最终会到达end  </span></div><div class="line">        <span class="keyword">while</span>(probe!=end && probe.next!=end){       <span class="comment">// 探针完成搜索，注意停止条件是和end比较而不是和null比！  </span></div><div class="line">            mid = mid.next;  </div><div class="line">            probe = probe.next.next;  </div><div class="line">        }  </div><div class="line">          </div><div class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(mid.val);  </div><div class="line">        root.left = rec(start, mid);  </div><div class="line">        root.right = rec(mid.next, end);  </div><div class="line">        <span class="keyword">return</span> root;  </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Flatten_Binary_Tree_to_Linked_List">Flatten Binary Tree to Linked List</h2>
-<blockquote>
-<p>Given a binary tree, flatten it to a linked list in-place.<br>For example,<br>Given</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    1</div><div class="line">   / <span class="command">\</span></div><div class="line">  2   5</div><div class="line"> / <span class="command">\ </span>  <span class="command">\</span></div><div class="line">3   4   6</div></pre></td></tr></table></figure>
-
-<p>The flattened tree should look like:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> <span class="command">\</span></div><div class="line">  2</div><div class="line">   <span class="command">\</span></div><div class="line">    3</div><div class="line">     <span class="command">\</span></div><div class="line">      4</div><div class="line">       <span class="command">\</span></div><div class="line">        5</div><div class="line">         <span class="command">\</span></div><div class="line">          6</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution">Iterative Solution</h3>
-<p>Using a stack to solve this problem is easy: start from root, push right, left into stack. If stack is not empty, set cur.right to stack.peek(). Continue to process the next node from top of stack.<br>But to do it inplace requires to keep track of the origin right node. Overall process is to squeeze the left node into between its parents and right child.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span>(TreeNode root) {</div><div class="line">        TreeNode head=<span class="keyword">new</span> TreeNode(<span class="number">0</span>);</div><div class="line">        head.right=root;</div><div class="line">        TreeNode cur=head;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(cur.right!=<span class="keyword">null</span>){</div><div class="line">            cur=cur.right;</div><div class="line">            <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>){</div><div class="line">                TreeNode end=cur.left;</div><div class="line">                <span class="keyword">while</span>(end.right!=<span class="keyword">null</span>)</div><div class="line">                end=end.right;</div><div class="line">                TreeNode tmp=tmp=cur.right;</div><div class="line">                cur.right=cur.left;</div><div class="line">                end.right=tmp;</div><div class="line">                cur.left=<span class="keyword">null</span>;</div><div class="line">            }</div><div class="line">        } head.right=<span class="keyword">null</span>;</div><div class="line">        </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fanthony-cavazzoli%2Fdeorro-five-hours-original-mix&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-
-
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/BFS/"> #BFS </a>
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1865,7 +1781,7 @@ nana
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
   </div>
 
 
@@ -1896,7 +1812,7 @@ nana
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-count">51</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

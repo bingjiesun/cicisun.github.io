@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="Math,Array,Stack," />
+  <meta name="keywords" content="Math,Array,Stack,Backtracking,Recursion," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Valid Sudoku // Cici's Blog </title>
+  <title> Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Restore IP Addresses, Valid Sudoku // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Valid Sudoku
+              Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Restore IP Addresses, Valid Sudoku
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-09-06
+          Posted on 2015-09-13
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/05/9.2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/05/9.2/"></span>
+            <a href="/2015/09/12/9.2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/12/9.2/"></span>
             </a>
           </span>
           
@@ -214,6 +214,14 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">letterCombinations</span>(String digits) {</div><div class="line">    String map[] = {<span class="string">""</span>,<span class="string">""</span>,<span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"ghi"</span>,<span class="string">"jkl"</span>,<span class="string">"mno"</span>,<span class="string">"pqrs"</span>,<span class="string">"tuv"</span>,<span class="string">"wxyz"</span>};</div><div class="line">    StringBuilder tmp = <span class="keyword">new</span> StringBuilder();</div><div class="line">    ArrayList&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    <span class="keyword">if</span>(digits==<span class="keyword">null</span> || digits.length()==<span class="number">0</span>) <span class="keyword">return</span> res; <span class="comment">//[""] is not []...</span></div><div class="line">    dfs(digits, map, tmp, res, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(String digits, String[] map, StringBuilder tmp, ArrayList&lt;String&gt; res, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(height == digits.length()){</div><div class="line">        res.add(tmp.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line"> </div><div class="line">    <span class="keyword">int</span> num = digits.charAt(height)-<span class="string">'0'</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;map[num].length();i++){</div><div class="line">         tmp.append(map[num].charAt(i));</div><div class="line">         dfs(digits, map, tmp, res, height+<span class="number">1</span>);</div><div class="line">         tmp.deleteCharAt(tmp.length()-<span class="number">1</span>); <span class="comment">//delete when backtracking..</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <hr>
+<h2 id="Restore_IP_Addresses">Restore IP Addresses</h2>
+<blockquote>
+<p>Given a string containing only digits, restore it by returning all possible valid IP address combinations.<br>For example:<br>Given “25525511135”,<br>return [“255.255.11.135”, “255.255.111.35”]. (Order does not matter)</p>
+</blockquote>
+<h3 id="Solution-2"><a href="http://blog.csdn.net/u011095253/article/details/9158449" target="_blank" rel="external">Solution</a></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">restoreIpAddresses</span>(String s) {</div><div class="line">        List&lt;String&gt; res=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">if</span>(s.length()&gt;<span class="number">12</span> || s.length()&lt;<span class="number">4</span>) <span class="keyword">return</span> res; <span class="comment">//prevent overflow</span></div><div class="line">        dfs(res, s, <span class="string">""</span>, <span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;String&gt; res, String left, String current, <span class="keyword">int</span> count){</div><div class="line">        <span class="keyword">if</span>(count==<span class="number">3</span> && isValid(left)){</div><div class="line">            res.add(current+left);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">3</span> && i&lt;left.length(); i++){</div><div class="line">            <span class="keyword">if</span>(isValid(left.substring(<span class="number">0</span>,i))){</div><div class="line">                dfs(res,left.substring(i), current+left.substring(<span class="number">0</span>,i)+<span class="string">"."</span>, count+<span class="number">1</span>);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isValid</span>(String tmp){</div><div class="line">        <span class="keyword">if</span> (tmp.charAt(<span class="number">0</span>)==<span class="string">'0'</span>) <span class="keyword">return</span> tmp.equals(<span class="string">"0"</span>);  <span class="comment">//001 is illegal, only 0 is legal here</span></div><div class="line">        <span class="keyword">int</span> num = Integer.valueOf(tmp);  </div><div class="line">        <span class="keyword">return</span> num&lt;=<span class="number">255</span> && num&gt;<span class="number">0</span>;  </div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
 <h2 id="Valid_Sudoku">Valid Sudoku</h2>
 <blockquote>
 <p>Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.<br>The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="pic"><br>A partially filled sudoku which is valid.<br>Note:<br>A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.</p>
@@ -237,6 +245,10 @@
           
             <a href="/tags/Stack/"> #Stack </a>
           
+            <a href="/tags/Backtracking/"> #Backtracking </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
         </div>
       
 
@@ -244,13 +256,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/06/1.24/">Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Word Ladder, Word Ladder II</a>
+              <a href="/2015/09/12/9.10/">Valid Anagram, Group Anagrams</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/03/4.12/">Single Number, Single Number II, Decode Ways, Triangle</a>
+              <a href="/2015/09/09/9.9/">Find Minimum in Rotated Sorted Array, Find Minimum in Rotated Sorted Array II , Search in Rotated Sorted Array, Search in Rotated Sorted Array II, Search for a Range</a>
             
           </div>
         </div>
@@ -311,7 +323,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-count">51</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -370,7 +382,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Parentheses"><span class="nav-number">1.</span> <span class="nav-text">Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest_Valid_Parentheses"><span class="nav-number">2.</span> <span class="nav-text">Longest Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generate_Parentheses"><span class="nav-number">3.</span> <span class="nav-text">Generate Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_+_Backtracking_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">DFS + Backtracking Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Letter_Combinations_of_a_Phone_Number"><span class="nav-number">4.</span> <span class="nav-text">Letter Combinations of a Phone Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">Iterative Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">4.2.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Sudoku"><span class="nav-number">5.</span> <span class="nav-text">Valid Sudoku</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Parentheses"><span class="nav-number">1.</span> <span class="nav-text">Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest_Valid_Parentheses"><span class="nav-number">2.</span> <span class="nav-text">Longest Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generate_Parentheses"><span class="nav-number">3.</span> <span class="nav-text">Generate Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_+_Backtracking_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">DFS + Backtracking Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Letter_Combinations_of_a_Phone_Number"><span class="nav-number">4.</span> <span class="nav-text">Letter Combinations of a Phone Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">Iterative Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">4.2.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Restore_IP_Addresses"><span class="nav-number">5.</span> <span class="nav-text">Restore IP Addresses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valid_Sudoku"><span class="nav-number">6.</span> <span class="nav-text">Valid Sudoku</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">6.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -943,8 +955,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/09/05/9.2/';
-      var disqus_url = 'http://sunbingjie.tk/2015/09/05/9.2/';
+      var disqus_identifier = '2015/09/12/9.2/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/12/9.2/';
 
       (function(){
         var dsq = document.createElement('script');
