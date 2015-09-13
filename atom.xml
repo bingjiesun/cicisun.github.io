@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-13T03:51:21.574Z</updated>
+  <updated>2015-09-13T05:02:44.619Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -16,10 +16,10 @@
   
   <entry>
     <title><![CDATA[Count and Say, Integer to English Words, Length of Last Word, Simplify Path, Compare Version Numbers]]></title>
-    <link href="http://sunbingjie.tk/2015/09/12/9.11/"/>
-    <id>http://sunbingjie.tk/2015/09/12/9.11/</id>
-    <published>2015-09-13T03:51:10.000Z</published>
-    <updated>2015-09-13T03:51:10.000Z</updated>
+    <link href="http://sunbingjie.tk/2015/09/13/9.11/"/>
+    <id>http://sunbingjie.tk/2015/09/13/9.11/</id>
+    <published>2015-09-13T05:02:36.000Z</published>
+    <updated>2015-09-13T05:02:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Count_and_Say">Count and Say</h2>
 <blockquote>
 <p>The count-and-say sequence is the sequence of integers beginning as follows:<br>1, 11, 21, 1211, 111221, …<br>1 is read off as “one 1” or 11.<br>11 is read off as “two 1s” or 21.<br>21 is read off as “one 2, then one 1” or 1211.<br>Given an integer n, generate the nth sequence.<br>Note: The sequence of integers will be represented as a string.</p>
@@ -67,10 +67,11 @@
 </blockquote>
 <h3 id="Solution-4">Solution</h3>
 <ul>
-<li>To split a string with a literal ‘.’ character in Java, you must use split(“\.”).</li>
+<li>To split a string with a literal ‘.’ character in Java, you must use split(“\\.”).</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">compareVersion</span>(String version1, String version2) {</div><div class="line">     String[] s1 = version1.split(<span class="string">"\\."</span>);</div><div class="line">     String[] s2 = version2.split(<span class="string">"\\."</span>);</div><div class="line">     <span class="keyword">int</span> len = Math.min(s1.length, s2.length);</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++){</div><div class="line">         <span class="keyword">if</span>(Integer.valueOf(s1[i]) &lt; Integer.valueOf(s2[i])){</div><div class="line">             <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">         }</div><div class="line">         <span class="keyword">else</span> <span class="keyword">if</span>(Integer.valueOf(s1[i]) &gt; Integer.valueOf(s2[i])){</div><div class="line">             <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">         }</div><div class="line">     }</div><div class="line">     <span class="keyword">if</span>(s1.length&gt;s2.length){</div><div class="line">     	<span class="keyword">int</span> i=len;</div><div class="line">     	<span class="keyword">while</span>(i&lt;s1.length){</div><div class="line">     		<span class="keyword">if</span>(Integer.valueOf(s1[i])==<span class="number">0</span>)</div><div class="line">     			i++;</div><div class="line">     		<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">     	}</div><div class="line">     };</div><div class="line">     <span class="keyword">if</span>(s1.length&lt;s2.length){</div><div class="line">     	<span class="keyword">int</span> i=len;</div><div class="line">     	<span class="keyword">while</span>(i&lt;s2.length){</div><div class="line">     		<span class="keyword">if</span>(Integer.valueOf(s2[i])==<span class="number">0</span>)</div><div class="line">     			i++;</div><div class="line">     		<span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">     	}</div><div class="line">     };</div><div class="line">     </div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
 
+<iframe src="https://embed.spotify.com/?uri=https%3A%2F%2Fplay.spotify.com%2Ftrack%2F3xcsflsFD1D2AEBZl89NoS" width="300" height="380" frameborder="0" allowtransparency="true" class="spotify"></iframe>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="Count_and_Say">Count and Say</h2>
