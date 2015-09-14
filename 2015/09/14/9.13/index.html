@@ -1,0 +1,985 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+
+
+  <meta name="keywords" content="Array,DP," />
+
+
+
+  <link rel="alternate" href="//atom.xml" title="Cici's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Spiral Matrix, Spiral Matrix II, Search a 2D Matrix, Search a 2D Matrix II, Set Matrix Zeroes, Pascal's Triangle, Pascal's Triangle II // Cici's Blog </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Cici's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          Home
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          Archives
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Spiral Matrix, Spiral Matrix II, Search a 2D Matrix, Search a 2D Matrix II, Set Matrix Zeroes, Pascal's Triangle, Pascal's Triangle II
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/14/9.13/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/14/9.13/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<blockquote>
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>You should return [1,2,3,6,9,8,7,4,5].</p>
+<a id="more"></a>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<p>Similar to the previous <a href="http://sunbingjie.tk/2015/02/25/1.27/" target="_blank" rel="external">solution</a></p>
+<ul>
+<li>Subproblem is [m-2, n-2]</li>
+<li>Corner case 1 : m/n&lt;=0, even number of rows and columns all processed, just return</li>
+<li>Corner case 2 : if m&amp;&amp;n=1, only one number is left, just add that cell</li>
+<li>Corner case 3 : if m||n=1, only add the last (x,y) by passing in m=1, n=1</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span> || matrix.length==<span class="number">0</span> || matrix[<span class="number">0</span>].length==<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">return</span> spiralOrder(matrix,<span class="number">0</span>,<span class="number">0</span>,matrix.length,matrix[<span class="number">0</span>].length);</div><div class="line">    }</div><div class="line">    </div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span> [][] matrix, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> m, <span class="keyword">int</span> n){</div><div class="line">       ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">if</span>(m&lt;=<span class="number">0</span>||n&lt;=<span class="number">0</span>) <span class="keyword">return</span> res;<span class="comment">//corner case</span></div><div class="line">       <span class="keyword">if</span>(m==<span class="number">1</span>&&n==<span class="number">1</span>) {<span class="comment">//菜心儿</span></div><div class="line">           res.add(matrix[x][y]);</div><div class="line">           <span class="keyword">return</span> res;</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go right until n-1</span></div><div class="line">           res.add(matrix[x][y++]);</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go down until m-1</span></div><div class="line">           res.add(matrix[x++][y]);</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(m&gt;<span class="number">1</span>){<span class="comment">//if &gt;=2 rows left </span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go left until n-1</span></div><div class="line">               res.add(matrix[x][y--]);</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(n&gt;<span class="number">1</span>){<span class="comment">//if &gt;=2 columns left</span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go up until m-1</span></div><div class="line">               res.add(matrix[x--][y]);</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(m==<span class="number">1</span>||n==<span class="number">1</span>)<span class="comment">//一条线儿</span></div><div class="line">           res.addAll(spiralOrder(matrix,x,y,<span class="number">1</span>,<span class="number">1</span>));</div><div class="line">       <span class="keyword">else</span>    </div><div class="line">           res.addAll(spiralOrder(matrix,x+<span class="number">1</span>,y+<span class="number">1</span>,m-<span class="number">2</span>,n-<span class="number">2</span>));</div><div class="line">       <span class="keyword">return</span> res;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Spiral_Matrix_II">Spiral Matrix II</h2>
+<blockquote>
+<p>Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.<br>For example,<br>Given n = 3,<br>You should return the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">8</span>, <span class="number">9</span>, <span class="number">4</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] <span class="title">generateMatrix</span>(<span class="keyword">int</span> n) {</div><div class="line">		<span class="keyword">int</span>[][] res=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</div><div class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">		generateMatrix(n,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,res);</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">generateMatrix</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> num, <span class="keyword">int</span> [][] res){</div><div class="line">		<span class="keyword">if</span>(n&lt;=<span class="number">0</span>) <span class="keyword">return</span>;<span class="comment">//corner case</span></div><div class="line">		<span class="keyword">if</span>(n==<span class="number">1</span>) {<span class="comment">//菜心儿</span></div><div class="line">			res[x][y]=num++;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go right until n-1</span></div><div class="line">			res[x][y++]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go down until n-1</span></div><div class="line">			res[x++][y]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go left until n-1</span></div><div class="line">			res[x][y--]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go up until n-1</span></div><div class="line">			res[x--][y]=num++;</div><div class="line">		}</div><div class="line">		generateMatrix(n-<span class="number">2</span>,x+<span class="number">1</span>,y+<span class="number">1</span>,num,res);</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_a_2D_Matrix">Search a 2D Matrix</h2>
+<blockquote>
+<p>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted from left to right.<br>The first integer of each row is greater than the last integer of the previous row.<br>For example,<br>Consider the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">1</span>,   <span class="number">3</span>,  <span class="number">5</span>,  <span class="number">7</span>],</div><div class="line">  [<span class="number">10</span>, <span class="number">11</span>, <span class="number">16</span>, <span class="number">20</span>],</div><div class="line">  [<span class="number">23</span>, <span class="number">30</span>, <span class="number">34</span>, <span class="number">50</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>Given target = 3, return true.</p>
+<h3 id="Solution-1">Solution</h3>
+<p>eh</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span>(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> target) {</div><div class="line">     <span class="keyword">int</span> row=<span class="number">0</span>;</div><div class="line">     <span class="keyword">while</span>(row&lt;a.length){</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>,r=a[row].length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">while</span>(l&lt;=r){</div><div class="line">             <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</div><div class="line">             <span class="keyword">if</span>(target&lt;a[row][mid]){</div><div class="line">                 r=mid-<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span>(target&gt;a[row][mid]){</div><div class="line">                 l=mid+<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">         }</div><div class="line">         row++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_a_2D_Matrix_II">Search a 2D Matrix II</h2>
+<blockquote>
+<p>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted in ascending from left to right.<br>Integers in each column are sorted in ascending from top to bottom.<br>For example,<br>Consider the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">1</span>,   <span class="number">4</span>,  <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>],</div><div class="line">  [<span class="number">2</span>,   <span class="number">5</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">19</span>],</div><div class="line">  [<span class="number">3</span>,   <span class="number">6</span>,  <span class="number">9</span>, <span class="number">16</span>, <span class="number">22</span>],</div><div class="line">  [<span class="number">10</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">17</span>, <span class="number">24</span>],</div><div class="line">  [<span class="number">18</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">30</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>Given target = 5, return true.<br>Given target = 20, return false.</p>
+<h3 id="solution">solution</h3>
+<ul>
+<li>Start from the top-right corner, and use O(m+n) to search for the result</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span>(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> target) {</div><div class="line">    <span class="keyword">int</span> row=<span class="number">0</span>, col=a[<span class="number">0</span>].length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(row&lt;a.length && col&gt;=<span class="number">0</span>){</div><div class="line">    	<span class="keyword">if</span>(target &gt; a[row][col]) row++;</div><div class="line">    	<span class="keyword">else</span> <span class="keyword">if</span>(target &lt; a[row][col]) col--;</div><div class="line">    	<span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Set_Matrix_Zeroes">Set Matrix Zeroes</h2>
+<blockquote>
+<p>Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.<br>click to show follow up.<br>Follow up:<br>Did you use extra space?<br>A straight forward solution using O(mn) space is probably a bad idea.<br>A simple improvement uses O(m + n) space, but still not the best solution.<br>Could you devise a constant space solution?</p>
+</blockquote>
+<h3 id="Inplace_Solution_O(1)_space">Inplace Solution O(1) space</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setZeroes</span>(<span class="keyword">int</span>[][] a) {</div><div class="line">       <span class="keyword">boolean</span> rhavezero=<span class="keyword">false</span>;</div><div class="line">       <span class="keyword">boolean</span> chavezero=<span class="keyword">false</span>;</div><div class="line">       </div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a[<span class="number">0</span>].length;i++){</div><div class="line">           <span class="keyword">if</span>(a[<span class="number">0</span>][i]==<span class="number">0</span>) {rhavezero=<span class="keyword">true</span>; <span class="keyword">break</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length;i++){</div><div class="line">           <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>) {chavezero=<span class="keyword">true</span>; <span class="keyword">break</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++){<span class="comment">//start from 1, to avoid a[0][0]=0 case to destroy two index rows</span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a[<span class="number">0</span>].length;j++){</div><div class="line">               <span class="keyword">if</span>(a[i][j]==<span class="number">0</span>){</div><div class="line">                   a[i][<span class="number">0</span>]=<span class="number">0</span>;</div><div class="line">                   a[<span class="number">0</span>][j]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a[<span class="number">0</span>].length;i++){</div><div class="line">           <span class="keyword">if</span>(a[<span class="number">0</span>][i]==<span class="number">0</span>){</div><div class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a.length;j++){</div><div class="line">                   a[j][i]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++){</div><div class="line">           <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>){</div><div class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a[<span class="number">0</span>].length;j++){</div><div class="line">                   a[i][j]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(rhavezero){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a[<span class="number">0</span>].length;i++){ a[<span class="number">0</span>][i]=<span class="number">0</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(chavezero){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length;i++){ a[i][<span class="number">0</span>]=<span class="number">0</span>;}</div><div class="line">       }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Pascal’s_Triangle">Pascal’s Triangle</h2>
+<blockquote>
+<p>Given numRows, generate the first numRows of Pascal’s triangle.<br>For example, given numRows = 5,<br>Return</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">     [<span class="number">1</span>],</div><div class="line">    [<span class="number">1</span>,<span class="number">1</span>],</div><div class="line">   [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>],</div><div class="line"> [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">1</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>Corner case row=1</li>
+<li>Start from row=2, get previous list and sum up pairs [0,row-3], add 1 in two side</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">generate</span>(<span class="keyword">int</span> numRows) {</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    <span class="keyword">if</span>(numRows&lt;=<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    List&lt;Integer&gt; rowone=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    rowone.add(<span class="number">1</span>);</div><div class="line">    res.add(rowone);</div><div class="line">    <span class="keyword">if</span>(numRows==<span class="number">1</span>) <span class="keyword">return</span> res;</div><div class="line">    <span class="keyword">int</span> row=<span class="number">2</span>;</div><div class="line">    <span class="keyword">while</span>(row&lt;=numRows){</div><div class="line">        List&lt;Integer&gt; tmp=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        tmp.add(<span class="number">1</span>); <span class="comment">//first </span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row-<span class="number">2</span>;i++){</div><div class="line">            tmp.add(res.get(row-<span class="number">2</span>).get(i) + res.get(row-<span class="number">2</span>).get(i+<span class="number">1</span>));</div><div class="line">        }</div><div class="line">        tmp.add(<span class="number">1</span>); <span class="comment">//last</span></div><div class="line">        res.add(tmp);</div><div class="line">        row++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Pascal’s_Triangle_II">Pascal’s Triangle II</h2>
+<blockquote>
+<p>My Submissions Question Solution<br>Total Accepted: 51519 Total Submissions: 174765 Difficulty: Easy<br>Given an index k, return the kth row of the Pascal’s triangle.<br>For example, given k = 3,<br>Return [1,3,3,1].<br>Note:<br>Could you optimize your algorithm to use only O(k) extra space?</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<ul>
+<li>Use two lists to store current and previous layer</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getRow</span>(<span class="keyword">int</span> rowIndex) {</div><div class="line">     List&lt;Integer&gt; pre=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">     pre.add(<span class="number">1</span>);</div><div class="line">     <span class="keyword">if</span>(rowIndex==<span class="number">0</span>) <span class="keyword">return</span> pre;</div><div class="line">     <span class="keyword">int</span> row=<span class="number">1</span>;</div><div class="line">     <span class="keyword">while</span>(row&lt;=rowIndex){</div><div class="line">         List&lt;Integer&gt; cur=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">         cur.add(<span class="number">1</span>); <span class="comment">//first </span></div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;pre.size()-<span class="number">1</span>;i++){</div><div class="line">             cur.add(pre.get(i) + pre.get(i+<span class="number">1</span>));</div><div class="line">         }</div><div class="line">         cur.add(<span class="number">1</span>); <span class="comment">//last</span></div><div class="line">         pre=cur;</div><div class="line">         row++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> pre;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/14/9.12/">Minimum Path Sum, Unique Paths, Unique Paths II</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Cici Sun" />
+          <p class="site-author-name">Cici Sun</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="//atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CICISUN/" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/insertsomthin" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/bingjiesun" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spiral_Matrix"><span class="nav-number">1.</span> <span class="nav-text">Spiral Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Recursive Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spiral_Matrix_II"><span class="nav-number">2.</span> <span class="nav-text">Spiral Matrix II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search_a_2D_Matrix"><span class="nav-number">3.</span> <span class="nav-text">Search a 2D Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">3.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search_a_2D_Matrix_II"><span class="nav-number">4.</span> <span class="nav-text">Search a 2D Matrix II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solution"><span class="nav-number">4.1.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set_Matrix_Zeroes"><span class="nav-number">5.</span> <span class="nav-text">Set Matrix Zeroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Inplace_Solution_O(1)_space"><span class="nav-number">5.1.</span> <span class="nav-text">Inplace Solution O(1) space</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pascal’s_Triangle"><span class="nav-number">6.</span> <span class="nav-text">Pascal’s Triangle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">6.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pascal’s_Triangle_II"><span class="nav-number">7.</span> <span class="nav-text">Pascal’s Triangle II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">7.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Cici Sun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'sunbingjie';
+      var disqus_identifier = '2015/09/14/9.13/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/14/9.13/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+</body>
+</html>

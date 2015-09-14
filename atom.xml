@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-13T05:02:44.619Z</updated>
+  <updated>2015-09-14T20:44:10.736Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,179 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Spiral Matrix, Spiral Matrix II, Search a 2D Matrix, Search a 2D Matrix II, Set Matrix Zeroes, Pascal's Triangle, Pascal's Triangle II]]></title>
+    <link href="http://sunbingjie.tk/2015/09/14/9.13/"/>
+    <id>http://sunbingjie.tk/2015/09/14/9.13/</id>
+    <published>2015-09-14T20:16:26.000Z</published>
+    <updated>2015-09-14T20:16:26.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<blockquote>
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>You should return [1,2,3,6,9,8,7,4,5].</p>
+<a id="more"></a>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<p>Similar to the previous <a href="http://sunbingjie.tk/2015/02/25/1.27/" target="_blank" rel="external">solution</a></p>
+<ul>
+<li>Subproblem is [m-2, n-2]</li>
+<li>Corner case 1 : m/n&lt;=0, even number of rows and columns all processed, just return</li>
+<li>Corner case 2 : if m&amp;&amp;n=1, only one number is left, just add that cell</li>
+<li>Corner case 3 : if m||n=1, only add the last (x,y) by passing in m=1, n=1</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span> || matrix.length==<span class="number">0</span> || matrix[<span class="number">0</span>].length==<span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">return</span> spiralOrder(matrix,<span class="number">0</span>,<span class="number">0</span>,matrix.length,matrix[<span class="number">0</span>].length);</div><div class="line">    }</div><div class="line">    </div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span> [][] matrix, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> m, <span class="keyword">int</span> n){</div><div class="line">       ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">if</span>(m&lt;=<span class="number">0</span>||n&lt;=<span class="number">0</span>) <span class="keyword">return</span> res;<span class="comment">//corner case</span></div><div class="line">       <span class="keyword">if</span>(m==<span class="number">1</span>&&n==<span class="number">1</span>) {<span class="comment">//菜心儿</span></div><div class="line">           res.add(matrix[x][y]);</div><div class="line">           <span class="keyword">return</span> res;</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go right until n-1</span></div><div class="line">           res.add(matrix[x][y++]);</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go down until m-1</span></div><div class="line">           res.add(matrix[x++][y]);</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(m&gt;<span class="number">1</span>){<span class="comment">//if &gt;=2 rows left </span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go left until n-1</span></div><div class="line">               res.add(matrix[x][y--]);</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(n&gt;<span class="number">1</span>){<span class="comment">//if &gt;=2 columns left</span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go up until m-1</span></div><div class="line">               res.add(matrix[x--][y]);</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(m==<span class="number">1</span>||n==<span class="number">1</span>)<span class="comment">//一条线儿</span></div><div class="line">           res.addAll(spiralOrder(matrix,x,y,<span class="number">1</span>,<span class="number">1</span>));</div><div class="line">       <span class="keyword">else</span>    </div><div class="line">           res.addAll(spiralOrder(matrix,x+<span class="number">1</span>,y+<span class="number">1</span>,m-<span class="number">2</span>,n-<span class="number">2</span>));</div><div class="line">       <span class="keyword">return</span> res;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Spiral_Matrix_II">Spiral Matrix II</h2>
+<blockquote>
+<p>Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.<br>For example,<br>Given n = 3,<br>You should return the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">8</span>, <span class="number">9</span>, <span class="number">4</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] <span class="title">generateMatrix</span>(<span class="keyword">int</span> n) {</div><div class="line">		<span class="keyword">int</span>[][] res=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</div><div class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">		generateMatrix(n,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,res);</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">generateMatrix</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> num, <span class="keyword">int</span> [][] res){</div><div class="line">		<span class="keyword">if</span>(n&lt;=<span class="number">0</span>) <span class="keyword">return</span>;<span class="comment">//corner case</span></div><div class="line">		<span class="keyword">if</span>(n==<span class="number">1</span>) {<span class="comment">//菜心儿</span></div><div class="line">			res[x][y]=num++;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go right until n-1</span></div><div class="line">			res[x][y++]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go down until n-1</span></div><div class="line">			res[x++][y]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go left until n-1</span></div><div class="line">			res[x][y--]=num++;</div><div class="line">		}</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){<span class="comment">//start from (x,y), go up until n-1</span></div><div class="line">			res[x--][y]=num++;</div><div class="line">		}</div><div class="line">		generateMatrix(n-<span class="number">2</span>,x+<span class="number">1</span>,y+<span class="number">1</span>,num,res);</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_a_2D_Matrix">Search a 2D Matrix</h2>
+<blockquote>
+<p>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted from left to right.<br>The first integer of each row is greater than the last integer of the previous row.<br>For example,<br>Consider the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">1</span>,   <span class="number">3</span>,  <span class="number">5</span>,  <span class="number">7</span>],</div><div class="line">  [<span class="number">10</span>, <span class="number">11</span>, <span class="number">16</span>, <span class="number">20</span>],</div><div class="line">  [<span class="number">23</span>, <span class="number">30</span>, <span class="number">34</span>, <span class="number">50</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>Given target = 3, return true.</p>
+<h3 id="Solution-1">Solution</h3>
+<p>eh</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span>(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> target) {</div><div class="line">     <span class="keyword">int</span> row=<span class="number">0</span>;</div><div class="line">     <span class="keyword">while</span>(row&lt;a.length){</div><div class="line">         <span class="keyword">int</span> l=<span class="number">0</span>,r=a[row].length-<span class="number">1</span>;</div><div class="line">         <span class="keyword">while</span>(l&lt;=r){</div><div class="line">             <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</div><div class="line">             <span class="keyword">if</span>(target&lt;a[row][mid]){</div><div class="line">                 r=mid-<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span> <span class="keyword">if</span>(target&gt;a[row][mid]){</div><div class="line">                 l=mid+<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">         }</div><div class="line">         row++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Search_a_2D_Matrix_II">Search a 2D Matrix II</h2>
+<blockquote>
+<p>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted in ascending from left to right.<br>Integers in each column are sorted in ascending from top to bottom.<br>For example,<br>Consider the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">1</span>,   <span class="number">4</span>,  <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>],</div><div class="line">  [<span class="number">2</span>,   <span class="number">5</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">19</span>],</div><div class="line">  [<span class="number">3</span>,   <span class="number">6</span>,  <span class="number">9</span>, <span class="number">16</span>, <span class="number">22</span>],</div><div class="line">  [<span class="number">10</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">17</span>, <span class="number">24</span>],</div><div class="line">  [<span class="number">18</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">30</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>Given target = 5, return true.<br>Given target = 20, return false.</p>
+<h3 id="solution">solution</h3>
+<ul>
+<li>Start from the top-right corner, and use O(m+n) to search for the result</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span>(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> target) {</div><div class="line">    <span class="keyword">int</span> row=<span class="number">0</span>, col=a[<span class="number">0</span>].length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(row&lt;a.length && col&gt;=<span class="number">0</span>){</div><div class="line">    	<span class="keyword">if</span>(target &gt; a[row][col]) row++;</div><div class="line">    	<span class="keyword">else</span> <span class="keyword">if</span>(target &lt; a[row][col]) col--;</div><div class="line">    	<span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Set_Matrix_Zeroes">Set Matrix Zeroes</h2>
+<blockquote>
+<p>Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.<br>click to show follow up.<br>Follow up:<br>Did you use extra space?<br>A straight forward solution using O(mn) space is probably a bad idea.<br>A simple improvement uses O(m + n) space, but still not the best solution.<br>Could you devise a constant space solution?</p>
+</blockquote>
+<h3 id="Inplace_Solution_O(1)_space">Inplace Solution O(1) space</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setZeroes</span>(<span class="keyword">int</span>[][] a) {</div><div class="line">       <span class="keyword">boolean</span> rhavezero=<span class="keyword">false</span>;</div><div class="line">       <span class="keyword">boolean</span> chavezero=<span class="keyword">false</span>;</div><div class="line">       </div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a[<span class="number">0</span>].length;i++){</div><div class="line">           <span class="keyword">if</span>(a[<span class="number">0</span>][i]==<span class="number">0</span>) {rhavezero=<span class="keyword">true</span>; <span class="keyword">break</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length;i++){</div><div class="line">           <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>) {chavezero=<span class="keyword">true</span>; <span class="keyword">break</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++){<span class="comment">//start from 1, to avoid a[0][0]=0 case to destroy two index rows</span></div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a[<span class="number">0</span>].length;j++){</div><div class="line">               <span class="keyword">if</span>(a[i][j]==<span class="number">0</span>){</div><div class="line">                   a[i][<span class="number">0</span>]=<span class="number">0</span>;</div><div class="line">                   a[<span class="number">0</span>][j]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a[<span class="number">0</span>].length;i++){</div><div class="line">           <span class="keyword">if</span>(a[<span class="number">0</span>][i]==<span class="number">0</span>){</div><div class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a.length;j++){</div><div class="line">                   a[j][i]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;a.length;i++){</div><div class="line">           <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>){</div><div class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;a[<span class="number">0</span>].length;j++){</div><div class="line">                   a[i][j]=<span class="number">0</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(rhavezero){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a[<span class="number">0</span>].length;i++){ a[<span class="number">0</span>][i]=<span class="number">0</span>;}</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(chavezero){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;a.length;i++){ a[i][<span class="number">0</span>]=<span class="number">0</span>;}</div><div class="line">       }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Pascal’s_Triangle">Pascal’s Triangle</h2>
+<blockquote>
+<p>Given numRows, generate the first numRows of Pascal’s triangle.<br>For example, given numRows = 5,<br>Return</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">     [<span class="number">1</span>],</div><div class="line">    [<span class="number">1</span>,<span class="number">1</span>],</div><div class="line">   [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>],</div><div class="line">  [<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>],</div><div class="line"> [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">1</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>Corner case row=1</li>
+<li>Start from row=2, get previous list and sum up pairs [0,row-3], add 1 in two side</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title">generate</span>(<span class="keyword">int</span> numRows) {</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    <span class="keyword">if</span>(numRows&lt;=<span class="number">0</span>) <span class="keyword">return</span> res;</div><div class="line">    List&lt;Integer&gt; rowone=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    rowone.add(<span class="number">1</span>);</div><div class="line">    res.add(rowone);</div><div class="line">    <span class="keyword">if</span>(numRows==<span class="number">1</span>) <span class="keyword">return</span> res;</div><div class="line">    <span class="keyword">int</span> row=<span class="number">2</span>;</div><div class="line">    <span class="keyword">while</span>(row&lt;=numRows){</div><div class="line">        List&lt;Integer&gt; tmp=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        tmp.add(<span class="number">1</span>); <span class="comment">//first </span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;row-<span class="number">2</span>;i++){</div><div class="line">            tmp.add(res.get(row-<span class="number">2</span>).get(i) + res.get(row-<span class="number">2</span>).get(i+<span class="number">1</span>));</div><div class="line">        }</div><div class="line">        tmp.add(<span class="number">1</span>); <span class="comment">//last</span></div><div class="line">        res.add(tmp);</div><div class="line">        row++;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Pascal’s_Triangle_II">Pascal’s Triangle II</h2>
+<blockquote>
+<p>My Submissions Question Solution<br>Total Accepted: 51519 Total Submissions: 174765 Difficulty: Easy<br>Given an index k, return the kth row of the Pascal’s triangle.<br>For example, given k = 3,<br>Return [1,3,3,1].<br>Note:<br>Could you optimize your algorithm to use only O(k) extra space?</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<ul>
+<li>Use two lists to store current and previous layer</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getRow</span>(<span class="keyword">int</span> rowIndex) {</div><div class="line">     List&lt;Integer&gt; pre=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">     pre.add(<span class="number">1</span>);</div><div class="line">     <span class="keyword">if</span>(rowIndex==<span class="number">0</span>) <span class="keyword">return</span> pre;</div><div class="line">     <span class="keyword">int</span> row=<span class="number">1</span>;</div><div class="line">     <span class="keyword">while</span>(row&lt;=rowIndex){</div><div class="line">         List&lt;Integer&gt; cur=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">         cur.add(<span class="number">1</span>); <span class="comment">//first </span></div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;pre.size()-<span class="number">1</span>;i++){</div><div class="line">             cur.add(pre.get(i) + pre.get(i+<span class="number">1</span>));</div><div class="line">         }</div><div class="line">         cur.add(<span class="number">1</span>); <span class="comment">//last</span></div><div class="line">         pre=cur;</div><div class="line">         row++;</div><div class="line">     }</div><div class="line">     <span class="keyword">return</span> pre;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<blockquote>
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>You should return [1,2,3,6,9,8,7,4,5].</p>
+]]>
+    
+    </summary>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Minimum Path Sum, Unique Paths, Unique Paths II]]></title>
+    <link href="http://sunbingjie.tk/2015/09/14/9.12/"/>
+    <id>http://sunbingjie.tk/2015/09/14/9.12/</id>
+    <published>2015-09-14T19:03:58.000Z</published>
+    <updated>2015-09-14T19:03:58.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Minimum_Path_Sum">Minimum Path Sum</h2>
+<blockquote>
+<p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.<br>Note: You can only move either down or right at any point in time.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>2D DP problem, min of up and left cells are the unique path for current cell</li>
+</ul>
+<hr>
+<h2 id="Unique_Paths">Unique Paths</h2>
+<blockquote>
+<p>A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below).<br>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).<br>How many possible unique paths are there?<br><img src="http://leetcode.com/wp-content/uploads/2014/12/robot_maze.png" alt="pic"></p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li><ul>
+<li>2D DP problem, sum of up and left cells are the unique path for current cell</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">uniquePaths</span>(<span class="keyword">int</span> m, <span class="keyword">int</span> n) {</div><div class="line">     <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){</div><div class="line">             <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>){</div><div class="line">                 dp[i][j]=<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span>{</div><div class="line">                 dp[i][j]=dp[i-<span class="number">1</span>][j] +dp[i][j-<span class="number">1</span>]; </div><div class="line">             }</div><div class="line">             }</div><div class="line">         }</div><div class="line">         <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">     }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Unique_Paths_II">Unique Paths II</h2>
+<blockquote>
+<p>Follow up for “Unique Paths”:<br>Now consider if some obstacles are added to the grids. How many unique paths would there be?<br>An obstacle and empty space is marked as 1 and 0 respectively in the grid.<br>For example,<br>There is one obstacle in the middle of a 3x3 grid as illustrated below.<br>[<br>  [0,0,0],<br>  [0,1,0],<br>  [0,0,0]<br>]<br>The total number of unique paths is 2.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>If up or left cell is 1, then set it to 0</li>
+<li>If current cell is 1, set it to 0 </li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span>(<span class="keyword">int</span>[][] a)</div><div class="line">	{</div><div class="line">		<span class="keyword">int</span> m=a.length; <span class="keyword">int</span> n=a[<span class="number">0</span>].length;</div><div class="line">		<span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">		<span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(i&lt;m){</div><div class="line">			<span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">1</span>) <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">else</span> {dp[i][<span class="number">0</span>]=<span class="number">1</span>;i++;}</div><div class="line">		}</div><div class="line">		<span class="keyword">int</span> j=<span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(j&lt;n){</div><div class="line">			<span class="keyword">if</span>(a[<span class="number">0</span>][j]==<span class="number">1</span>) <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">else</span> {dp[<span class="number">0</span>][j]=<span class="number">1</span>;j++;}</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;m;i++){</div><div class="line">			<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">			        <span class="keyword">if</span>(a[i][j]==<span class="number">1</span>) dp[i][j]=<span class="number">0</span>;<span class="comment">//别忘了这个case</span></div><div class="line">					<span class="keyword">else</span> dp[i][j]= (a[i-<span class="number">1</span>][j]==<span class="number">1</span> ? <span class="number">0</span> : dp[i-<span class="number">1</span>][j]) + (a[i][j-<span class="number">1</span>]==<span class="number">1</span> ? <span class="number">0</span> : dp[i][j-<span class="number">1</span>]); <span class="comment">//加括号...</span></div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Minimum_Path_Sum">Minimum Path Sum</h2>
+<blockquote>
+<p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.<br>Note: You can only move either down or right at any point in time.</p>
+</blockquote>
+]]>
+    
+    </summary>
+    
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
+    
+      <category term="Array" scheme="http://sunbingjie.tk/tags/Array/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Count and Say, Integer to English Words, Length of Last Word, Simplify Path, Compare Version Numbers]]></title>
@@ -1367,96 +1540,6 @@
       <category term="Hadoop" scheme="http://sunbingjie.tk/tags/Hadoop/"/>
     
       <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Web scraping with Scrapy]]></title>
-    <link href="http://sunbingjie.tk/2015/05/01/scrapy/"/>
-    <id>http://sunbingjie.tk/2015/05/01/scrapy/</id>
-    <published>2015-05-01T22:50:53.000Z</published>
-    <updated>2015-05-01T22:50:53.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
-</blockquote>
-<a id="more"></a>
-<ul>
-<li>To write a web crawler, we need at least basic knowledge on XPath and Python, that’s enough! </li>
-</ul>
-<h3 id="Installation">Installation</h3>
-<p>Install using pip</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install Scrapy</div></pre></td></tr></table></figure>
-
-<p>Create project</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy startproject name</div></pre></td></tr></table></figure>
-
-<p>This will create a name dir with the following files</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">name/</div><div class="line">    scrapy.cfg</div><div class="line">    tutorial/</div><div class="line">        __init__.py</div><div class="line">        items.py</div><div class="line">        pipelines.py</div><div class="line">        settings.py</div><div class="line">        spiders/</div><div class="line">            __init__.py</div><div class="line">            <span class="keyword">...</span></div></pre></td></tr></table></figure>
-
-<h3 id="Defining_the_Items_you_will_extract">Defining the Items you will extract</h3>
-<p>In items.py, item class which loads our data are declared by creating a scrapy.Item class and defining its attributes as scrapy.Field objects, like you will in an ORM.</p>
-<p>Here’s my Item definition:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    des = scrapy.Field()</div><div class="line">    image_urls = scrapy.Field()</div><div class="line">    images = scrapy.Field()</div></pre></td></tr></table></figure>
-
-<h3 id="Writing_a_spider_to_crawl_a_site_and_extract_Items">Writing a spider to crawl a site and extract Items</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> Rule, CrawlSpider</div><div class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> crawl.items <span class="keyword">import</span> CrawlItem</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrawlSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line"></div><div class="line">    name = <span class="string">"crawl"</span></div><div class="line">    allowed_domains = [<span class="string">"polyvore.com"</span>]</div><div class="line">    start_urls = [<span class="string">"http://www.polyvore.com/?filter=fashion"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow =[<span class="string">'/.*'</span>]), <span class="string">'parse_crawl'</span>)]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_crawl</span><span class="params">(self, response)</span>:</span></div><div class="line"> </div><div class="line">        item =CrawlItem()</div><div class="line"></div><div class="line">        link_rel = response.xpath(<span class="string">"//img[@class='img_size_l']/@title"</span>).extract()</div><div class="line">        </div><div class="line">        item[<span class="string">'des'</span>] = [x <span class="keyword">for</span> x <span class="keyword">in</span> link_rel]</div><div class="line"> </div><div class="line">        link = response.xpath(<span class="string">"//img[@class='img_size_l']/@src"</span>).extract()</div><div class="line"> </div><div class="line">        item[<span class="string">'image_urls'</span>] = [ x <span class="keyword">for</span> x <span class="keyword">in</span> link]</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-
-<p>Start crawling…</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl crawl</div></pre></td></tr></table></figure>
-
-<h3 id="Writing_an_Item_Pipeline_to_store_the_extracted_Items">Writing an Item Pipeline to store the extracted Items</h3>
-<p>If we are just downloading the images to local<br>Add these two lines in setting.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = {<span class="string">'scrapy.contrib.pipeline.images.ImagesPipeline'</span>: <span class="number">1</span>}</div><div class="line"> </div><div class="line">IMAGES_STORE = <span class="string">"img"</span></div></pre></td></tr></table></figure>
-
-<p>Results: all images are stored under name/img/full directory;)</p>
-<p>If we need to Write items to a JSON file,  by using the Feed exports.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl dmoz -o items.json</div></pre></td></tr></table></figure>
-
-<p>If backendDB is required:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> MySQLdb</div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySQLStorePipeline</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self.conn = MySQLdb.connect(user=<span class="string">'user'</span>, <span class="string">'passwd'</span>, <span class="string">'dbname'</span>, <span class="string">'host'</span>, charset=<span class="string">"utf8"</span>, use_unicode=<span class="keyword">True</span>)</div><div class="line">    self.cursor = self.conn.cursor()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span>    </div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        self.cursor.execute(<span class="string">"""INSERT INTO test (des, image_urls)  </span></div><div class="line">                        VALUES (%s, %s)""", </div><div class="line">                       (item[<span class="string">'des'</span>].encode(<span class="string">'utf-8'</span>), </div><div class="line">                        item[<span class="string">'image_urls'</span>].encode(<span class="string">'utf-8'</span>)))</div><div class="line"></div><div class="line">        self.conn.commit()</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">except</span> MySQLdb.Error, e:</div><div class="line">        <span class="keyword">print</span> <span class="string">"Error %d: %s"</span> % (e.args[<span class="number">0</span>], e.args[<span class="number">1</span>])</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-
-<hr>
-<p>recently falling for a bit METAL…ヾ(○´▽｀○)ノ </p>
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fnuclearblastrecords%2Fnightwish-amaranth&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p><a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank" rel="external">Scrapy</a> is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.<br>So you need to extract some information from a website, but the website doesn’t provide any API or mechanism to access that info programmatically. Scrapy can help you extract that information.</p>
-</blockquote>
-]]>
-    
-    </summary>
-    
-      <category term="Crawler" scheme="http://sunbingjie.tk/tags/Crawler/"/>
-    
-      <category term="学习" scheme="http://sunbingjie.tk/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Niccolo Paganini Selected Works]]></title>
-    <link href="http://sunbingjie.tk/2015/05/01/Paganini/"/>
-    <id>http://sunbingjie.tk/2015/05/01/Paganini/</id>
-    <published>2015-05-01T21:01:59.000Z</published>
-    <updated>2015-05-01T21:01:59.000Z</updated>
-    <content type="html"><![CDATA[<p>Leonid Kogan - Cantabile, Paganini</p>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/xsFJS4I_05E" frameborder="0" allowfullscreen></iframe>
-
-<p>Kogan - La Campanella</p>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/lWaOnqmtr9U" frameborder="0" allowfullscreen></iframe>
-
-
-<p>Jascha Heifetz - Caprice No. 24</p>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/vPcnGrie__M" frameborder="0" allowfullscreen></iframe>]]></content>
-    <summary type="html">
-    <![CDATA[<p>Leonid Kogan - Cantabile, Paganini</p>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/xsFJS4I_05E" frameborder="0" a]]>
-    </summary>
-    
-      <category term="Classical" scheme="http://sunbingjie.tk/tags/Classical/"/>
-    
-      <category term="Music" scheme="http://sunbingjie.tk/categories/Music/"/>
     
   </entry>
   

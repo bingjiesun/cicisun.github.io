@@ -120,6 +120,805 @@
           
           
             
+              <a class="post-title-link" href="/2015/03/13/2.12/">
+                Basic Comparisons
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-03-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/CC/">CC</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/13/2.12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/13/2.12/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <ul>
+<li><a href="#list">LinkedList vs ArrayList</a></li>
+<li><a href="#map">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</a></li>
+<li><a href="#setlistmap">Set vs. List vs. Map</a></li>
+<li><a href="#search">BST vs. HashTable</a></li>
+<li><a href="#graph">BFS vs. DFS</a></li>
+<li><a href="#treegraph">Graph vs. Tree</a></li>
+</ul>
+<p><a name="list"></a></p>
+<h2 id="Linkedlist_vs-_Arraylist_vs-_Vector">Linkedlist vs. Arraylist vs. Vector</h2>
+<ul>
+<li><p>Operations</p>
+<ul>
+<li>LinkedList<ul>
+<li>get(index): O(n)</li>
+<li>add(element): O(1)</li>
+<li>add(index, element): O(n)</li>
+<li>remove(index): O(n)</li>
+<li>Iterator.remove(): O(1), main benefit</li>
+<li>Iterator.add(element): O(1), main benefit</li>
+</ul>
+</li>
+<li>ArrayList<ul>
+<li>get(index): O(1), main benefit</li>
+<li>add(element): O(1) amortized, worst case O(n) because need to resize array and copy</li>
+<li>add(index, element): O(n-index) amortized, worst case O(n)</li>
+<li>remove(index): O(n-index), remove last is O(1)</li>
+<li>Iterator.remove(): O(n-index)</li>
+<li>Iterator.add(element): O(n-index)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Compare</p>
+<ul>
+<li>Linkedlist<ul>
+<li>O(1) time insertions or removals using iterator, but only sequential access</li>
+<li>finding a position in the linkedlist takes time O(n)</li>
+<li>each element of linkedlist have more memory overhead because pointers need to be stored</li>
+<li>linkedlist also implements queue interface which adds more methods such as offer(), peek(), poll()</li>
+</ul>
+</li>
+<li>Arraylist<ul>
+<li>fast random read access in O(1)</li>
+<li>adding or removing element except at the end require shifting latter elements, if add more elements, need to allocate new array and copy old values</li>
+<li>iterating over arraylist is technically faster</li>
+<li>to avoid overhead of resizing, construct arraylist with initial capacity</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Similarities</p>
+<ul>
+<li>both are implementation of list interface</li>
+<li>maintain elements in insertion order</li>
+<li>non-synchronized, but can be made synchronized explicitly</li>
+<li>if list is structurally modified after iterator is created, except through iterator’s own remove or add method, iterator will throw exception</li>
+</ul>
+</li>
+<li><p>When to use which</p>
+<ul>
+<li>frequent addition and deletion: linkedlist</li>
+<li>frequent search: arraylist</li>
+<li>less memory to store many elements: arraylist</li>
+</ul>
+</li>
+<li><p>Vector</p>
+<ul>
+<li>almost identical to arraylist, but is synchronized</li>
+<li>more overhead because of synchronization</li>
+<li>still use arraylist because they can make it synchronized explicitly by encapsulating: </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">coll </span>=<span class="string"> Collections.synchronizedCollection(coll);</span></div></pre></td></tr></table></figure>
+
+<p><a name="map"></a></p>
+<h2 id="HashMap_vs-_TreeMap_vs-_HashTable_vs-_LinkedHashMap">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</h2>
+<ul>
+<li><p>Overview</p>
+<ul>
+<li>HashMap: implemented as a hash table, no ordering on keys or values</li>
+<li>TreeMap: implemented based on red-black tree, ordered by key</li>
+<li>LinkedHashMap: preserves insertion order</li>
+<li>HashTable: synchronized in constrast to HashMap</li>
+</ul>
+</li>
+<li><p>HashMap</p>
+<ul>
+<li>operation<ul>
+<li>put(): average O(1), worst O(n) when collision</li>
+<li>get(), remove(): O(1)</li>
+</ul>
+</li>
+<li>if key is self-defined objects, need to implement equals() and hashCode()</li>
+<li>iteration order not predictable</li>
+<li>does not allow two identical elements<ul>
+<li>equals(): return true if two references refer to the same object</li>
+<li>hashCode(): return distinct integers for distinct objects</li>
+</ul>
+</li>
+<li>allow null keys and values</li>
+</ul>
+</li>
+<li><p>TreeMap</p>
+<ul>
+<li>operation<ul>
+<li>put(), get(), remove(): worst O(logn)</li>
+</ul>
+</li>
+<li>sorted by keys</li>
+<li>object for key has to implement Comparable interface</li>
+<li>only allow values to be null</li>
+</ul>
+</li>
+<li><p>HashTable</p>
+<ul>
+<li>HashMap is roughly equivalent to HashTable, except hashmap is not synchronized and permits null</li>
+<li>Hashtable does not allow null keys or values. HashMap allows one null key and any number of null values.</li>
+</ul>
+</li>
+<li><p>LinkedHashMap</p>
+<ul>
+<li>operation: see arraylist</li>
+<li>subclass of HashMap</li>
+<li>linkedlist preserves the insertion order</li>
+<li>allow null keys and values</li>
+</ul>
+</li>
+</ul>
+<p><a name="setlistmap"></a></p>
+<h2 id="Set_vs-_List_vs-_Map">Set vs. List vs. Map</h2>
+<ul>
+<li><p>Set</p>
+<ul>
+<li>unordered collection</li>
+<li>unique objects (!e1.equals(e2))</li>
+<li>contains at most one null</li>
+</ul>
+</li>
+<li><p>List</p>
+<ul>
+<li>ordered collection(sequence)</li>
+<li>access by index and search</li>
+<li>may contain duplicates</li>
+<li>user has control over where element inserted</li>
+</ul>
+</li>
+<li><p>Map</p>
+<ul>
+<li>object that maps keys to values</li>
+<li>no duplicated allowed</li>
+<li>a key can map to at most one value</li>
+</ul>
+</li>
+</ul>
+<p><a name="search"></a></p>
+<h2 id="BST_vs-_HashTable">BST vs. HashTable</h2>
+<ul>
+<li><p>BST</p>
+<ul>
+<li>insert and retrieve: O(logn)</li>
+<li>store data sorted</li>
+<li>no need to know size of input in advance</li>
+<li>memory efficient: do not reserve more memory than they need to</li>
+</ul>
+</li>
+<li><p>HashTable</p>
+<ul>
+<li>insert and retrieve: O(1)</li>
+<li>elements stored unsorted</li>
+<li>with more inputs, collisions may show up</li>
+<li>need more space than input data if to avoid collision</li>
+<li>need to know data size, otherwise might need to resize the table</li>
+</ul>
+</li>
+</ul>
+<p><a name="graph"></a></p>
+<h2 id="BFS_vs-_DFS">BFS vs. DFS</h2>
+<ul>
+<li><p>Overview</p>
+<ul>
+<li>search algorithms for graphs and trees</li>
+<li>used for unordered graph and tree</li>
+<li>graph representation<ul>
+<li>adjacent list: space O(V+E)</li>
+<li>adjacent matrix: space O(V^2)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>BFS</p>
+<ul>
+<li>start with root node</li>
+<li>scan each node in the each level</li>
+<li>while traversing each level, decide if target is found</li>
+</ul>
+</li>
+<li><p>DFS</p>
+<ul>
+<li>start with root node</li>
+<li>follow on branch as far as possible until target is found or hit a leaf node</li>
+<li>if hit a leaf node, continue search at the nearest ancestor</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Comparison<ul>
+<li>memory<ul>
+<li>BFS uses a large amount of memory because need to store pointers to a level(serious problem if the tree is very wide)</li>
+<li>DFS uses less memory because no need to store all child pointers at a level</li>
+</ul>
+</li>
+<li>depend on the data you search for<ul>
+<li>look for people alive in family tree: DFS because targets are likely to be on the bottom of the tree</li>
+<li>look for people who died: BFS</li>
+</ul>
+</li>
+<li>implementation<ul>
+<li>BFS: queue</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">BFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">a</span> <span class="title">queue</span> <span class="title">Q</span></div><div class="line">   <span class="title">Q</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">while</span> <span class="title">Q</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">Q</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">          <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">             <span class="title">Q</span>.<span class="title">push</span><span class="params">(w)</span></div><div class="line">             <span class="title">label</span> <span class="title">w</span> <span class="title">as</span> <span class="title">visited</span></div></pre></td></tr></table></figure>
+
+<pre><code>-<span class="ruby"> <span class="constant">DFS</span><span class="symbol">:</span> stack
+</span>  + recursive
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">   <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">       <span class="title">if</span> <span class="title">w</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">           <span class="title">DFS</span><span class="params">(G,w)</span></div></pre></td></tr></table></figure>
+
+<pre><code>  + iterative
+</code></pre><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">procedure</span> <span class="title">DFS</span><span class="params">(G,v)</span></span></div><div class="line">   <span class="title">initialize</span> <span class="title">stack</span> <span class="title">S</span></div><div class="line">   <span class="title">S</span>.<span class="title">push</span><span class="params">(v)</span></div><div class="line">   <span class="title">while</span> <span class="title">S</span> <span class="title">is</span> <span class="title">not</span> <span class="title">empty</span></div><div class="line">      <span class="title">v</span> &lt;- <span class="title">S</span>.<span class="title">pop</span><span class="params">()</span></div><div class="line">      <span class="title">if</span> <span class="title">v</span> <span class="title">is</span> <span class="title">not</span> <span class="title">visited</span></div><div class="line">         <span class="title">label</span> <span class="title">v</span> <span class="title">as</span> <span class="title">visited</span></div><div class="line">            <span class="title">for</span> <span class="title">all</span> <span class="title">edges</span> <span class="title">from</span> <span class="title">v</span> <span class="title">to</span> <span class="title">w</span> <span class="title">in</span> <span class="title">adjacent</span><span class="params">(v)</span></div><div class="line">                <span class="title">S</span>.<span class="title">push</span><span class="params">(w)</span></div></pre></td></tr></table></figure>
+
+<ul>
+<li>solution<ul>
+<li>BFS: complete algorithm, give optimal solution</li>
+<li>DFS: suboptimal solution</li>
+</ul>
+</li>
+<li>complexity<ul>
+<li>BFS: worst time O(V+E), worst space O(V)</li>
+<li>DFS: worst time O(v+E), worst space O(V)</li>
+</ul>
+</li>
+</ul>
+<p><a name="treegraph"></a></p>
+<h2 id="Tree_vs-_Graph">Tree vs. Graph</h2>
+<ul>
+<li>tree is restricted form of a graph(directed acyclic graph)</li>
+<li>trees have direction(parent/child relationship)</li>
+<li>tree does not contain cycles</li>
+<li>in trees, a child can only have one parent</li>
+</ul>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Finterscope%2Fthe-pretty-reckless-make-me-2%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Concepts/"> #Concepts </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/03/13/2.12-3/">
+                Java Related Questions
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-03-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/CC/">CC</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/13/2.12-3/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/13/2.12-3/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="Java_Questions">Java Questions</h1>
+<p>Contents:</p>
+<ul>
+<li><a href="#Keywords">Keywords</a></li>
+<li><a href="#Concepts">Concepts</a></li>
+<li><a href="#OOP">OOP</a></li>
+<li><a href="#Collections">Collections</a></li>
+<li><a href="#Thread">Threading</a></li>
+</ul>
+<h2 id="Object_Oriented">Object Oriented</h2>
+<ul>
+<li>model organized around objects rather than actions and data rather than logic</li>
+<li>based on the concept of “objects”</li>
+<li>contain data in the form of fields(attributes)</li>
+<li>code in the form of procedures(methods)</li>
+<li>object’s procedures can access and modify the data fields of the associated object</li>
+</ul>
+<p><a name="Keywords"></a></p>
+<h2 id="Java_Keywords">Java Keywords</h2>
+<ul>
+<li><p>Access modifiers</p>
+<p>| modifier | access in same package | access in different package |<br>| ———— | ——————————— | —————————————- |<br>| private  |         no             |          no                 |<br>| public   |         yes            |         yes                 |<br>| default  |         yes            |          no                 |<br>| protected|         yes            |     only if extend class    |  </p>
+</li>
+<li><p><code>final</code> keyword</p>
+<ul>
+<li>can be assigned to variable, method, class, object</li>
+<li>if assigned<ul>
+<li>variable: behave like a constant and cannot change value</li>
+<li>method: cannot be overridden in its child class</li>
+<li>class: no other class can extend it</li>
+<li>object: only instantiated once</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>synchronized</code> keyword</p>
+<ul>
+<li>provide lock on the object and prevent race condition</li>
+<li>can be applied to static/non-static methods or block of code</li>
+<li>only one thread at a time can access synchronized methods</li>
+<li>if multiple threads, need to wait for execution complete</li>
+</ul>
+</li>
+<li><p><code>volatile</code> keyword</p>
+<ul>
+<li>volatile variable stored in main memory</li>
+<li>every thread can access </li>
+<li>local copy updated from main memory</li>
+<li>has performance issues</li>
+</ul>
+</li>
+<li><p><code>static</code> variable</p>
+<ul>
+<li><code>static</code> cannot be used for class</li>
+<li>everything declared as <code>static</code> is related to class not object</li>
+<li>multiple objects of a class share the same instance of static variable</li>
+</ul>
+</li>
+<li><p><code>static</code> method</p>
+<ul>
+<li>can be accessed without creating the objects</li>
+<li>use class name to access static method</li>
+<li>static method can only access static variables and not local or global non-static variable: because if the class is not instantiated and therefore the variables are not initialized and cannot be accessed from a static method</li>
+<li>static method can only call static methods and not non-static methods</li>
+<li>non-static methods can call static methods</li>
+</ul>
+</li>
+<li><p>static class</p>
+<ul>
+<li>class cannot be declared as static</li>
+<li>class is static if all variables and methods are static and constructor is private, so the only way to access is to use class name </li>
+</ul>
+</li>
+<li><p><code>throw</code> keyword</p>
+<ul>
+<li>throw exception manually</li>
+<li>used when program fails the condition and wants to give warning</li>
+<li>throw the exception from a method to the calling method</li>
+<li>calling method can decide to handle exception or throw to its calling method</li>
+</ul>
+</li>
+</ul>
+<p><a name="Concepts"></a></p>
+<h2 id="Concepts">Concepts</h2>
+<ul>
+<li><p>object vs. class</p>
+<ul>
+<li>an object is an instance of a class<ul>
+<li>object refers to an actual instance of a class</li>
+<li>every object must belong to a class</li>
+<li>objects are created and then destroyed, only live in the program for limited time</li>
+</ul>
+</li>
+<li>objects have a lifespan but classes do not<ul>
+<li>properties of objects can change while they live</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>static</code> and <code>instance</code> method</p>
+<ul>
+<li>instance method<ul>
+<li>belong to the instance of a class and require the instance before it can be called</li>
+<li>dynamic binding</li>
+<li>JVM selects the method to invoke based on the type of object reference, known at run time </li>
+</ul>
+</li>
+<li>static method<ul>
+<li>belong to the class itself</li>
+<li>static binding </li>
+<li>JVM selects the method to invoke based on the actual class of the object, known at compile time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>abstract</code> class and <code>interface</code></p>
+<ul>
+<li>abstract class<ul>
+<li>contain at least one abstract method</li>
+<li>can contain numbers of concrete methods</li>
+<li>variable can be <code>public</code>, <code>private</code>,<code>protected</code>, <code>default</code>, or constants</li>
+<li>a class can only extend one abstract class</li>
+<li>not compulsory to implement all methods</li>
+<li>if want to add a new feature, simply implement in the abstract class and call it from subclass</li>
+</ul>
+</li>
+<li>interface<ul>
+<li>only contain abstract methods</li>
+<li>variable is by default <code>public final</code>, only has constants</li>
+<li>a class can implement multiple interfaces</li>
+<li>compulsory to implement all methods</li>
+<li>if want to add a new feature, need to implement the method in all classes implementing the interface</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>instanceof</code> and <code>isInstance(Object obj)</code></p>
+<ul>
+<li><code>instacneof</code> is a keyword but <code>isInstance()</code> is a method</li>
+<li><code>instanceof</code> check whether the object is type of particular class or subclass</li>
+<li><code>isInstance()</code> only used to identify if object is of a particular class</li>
+</ul>
+</li>
+<li><p>pass by value and pass by reference</p>
+<ul>
+<li>Java only supports pass by value, actual value is passed</li>
+<li>Java passes the references by value, the pointer to the object is passed as value</li>
+<li>references passed to the method are actually copies of the original references</li>
+</ul>
+</li>
+<li><p><code>==</code> and <code>equals()</code></p>
+<ul>
+<li><code>==</code> is used to compare the references of the objects</li>
+<li><code>equals()</code> can compare the values of two objects</li>
+</ul>
+</li>
+<li><p><code>StringBuffer</code> and <code>StringBuild</code></p>
+<ul>
+<li><code>StringBuffer</code> is synchronized but <code>StringBuild</code> is not</li>
+</ul>
+</li>
+<li><p><code>final</code>, <code>finally</code>,<code>finalize()</code></p>
+<ul>
+<li><code>final</code>: a final variable acts like constant, a final method cannot be overridden, a final class is immutable</li>
+<li><code>finally</code>: handles exception, clean up after try block</li>
+<li><code>finalize()</code>: method helps in garbage collection, invoked before an object is discarded by the garbage collector, allowing it to clean up its state</li>
+</ul>
+</li>
+<li><p>static block and init block</p>
+<ul>
+<li>static block is loaded when class is loaded by JVM for the first time</li>
+<li>init block is loaded every time the class is loaded</li>
+</ul>
+</li>
+<li><p>object reflections</p>
+<ul>
+<li>provide a way to get reflective information of class and object</li>
+<li>perform operations such as<ul>
+<li>get information about methods and fields present inside the class at runtime</li>
+<li>get a new instance of a class</li>
+<li>get and set object fields directly by getting field reference, regardless what the access modifier is</li>
+</ul>
+</li>
+<li>advantage<ul>
+<li>help in observing or manipulating runtime behavior</li>
+<li>help in debugging or testing programs</li>
+<li>can call method by name when we do not know the method in advance  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Overload, Override<br>-Overloading and overriding are complementary things, overloading means the same method name but different parameters, and overriding means the same method name in a subclass with the same parameters. So its not possible for overloading and overriding to happen at the same time because overloading implies different parameters.</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/// }</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">A</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth() { <span class="comment">/* method overriden */</span> }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> doSth(String b) { <span class="comment">/* method overloaded */</span> }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+<p><a name="OOP"></a></p>
+<h2 id="OOP">OOP</h2>
+<ul>
+<li><p>polymorphism</p>
+<ul>
+<li>define more than one function with the same name</li>
+<li>compile time polymorphism(overloading) and runtime polymorphism(overriding)</li>
+<li>method override: a class method has same name and signature as a method in parent class, JVM determines the proper method to call at runtime</li>
+<li>method overloading: method with same name but different signature, determined at compile time</li>
+</ul>
+</li>
+<li><p>inheritance</p>
+<ul>
+<li>allow a child class to inherit some properties from its parent class</li>
+<li>use <code>extends</code> keyword</li>
+<li>only public and protected access modifiers can be accessed in child class</li>
+</ul>
+</li>
+<li><p>multiple inheritance</p>
+<ul>
+<li>Java does not support multiple inheritance</li>
+<li>diamond problem</li>
+<li>use of multiple interfaces (or extend a class and implement some interfaces)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">A</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">A</span>,<span class="title">B</span></span>{</div><div class="line">   add();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li><p>abstraction</p>
+<ul>
+<li>convert real world objects in terms of class</li>
+</ul>
+</li>
+<li><p>encapsulation</p>
+<ul>
+<li>achieved by combining the methods and attribute into a class</li>
+<li>class acting like a container encapsulation the properties</li>
+<li>hide how things work and expose the user requests</li>
+</ul>
+</li>
+</ul>
+<p><a name="Collections"></a></p>
+<h2 id="Collections">Collections</h2>
+<ul>
+<li><p>ArrayList and vector</p>
+<ul>
+<li>synchronization<ul>
+<li>ArrayList is not thread-safe but vector is </li>
+<li>each method in vector class is surrounded by a synchronized block</li>
+</ul>
+</li>
+<li>data growth<ul>
+<li>both use arrays to store contents</li>
+<li>enlarge array if not enough space</li>
+</ul>
+</li>
+<li>performance<ul>
+<li>vector is slower than arraylist because of thread-safe</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Sort objects in lists</p>
+<ul>
+<li>implement Comparable interface for the object class and override compareTo() method</li>
+<li>if object class is a jar file, create Comparator and override compare() method</li>
+<li>call Collection.sort()</li>
+</ul>
+</li>
+<li><p>HashMap and HashTable</p>
+<ul>
+<li>HashMap is not synchronized but HashTable is</li>
+<li>use Iterator for HashMap(fail-safe) and enumerator for Hashtable(not fail-safe)</li>
+<li>HashMap allows null values and only one null key; Hashtable does not allow null key or null value</li>
+</ul>
+</li>
+<li><p>List interface</p>
+<ul>
+<li>ArrayList<ul>
+<li>resizable array implementation</li>
+<li>dynamic size</li>
+<li>not thread-safe</li>
+</ul>
+</li>
+<li>Vector<ul>
+<li>ArrayList implementation</li>
+<li>thread-safe</li>
+</ul>
+</li>
+<li>LinkedList<ul>
+<li>also implements Queue interface</li>
+<li>FIFO</li>
+<li>faster for insertion and deletion</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Set interface</p>
+<ul>
+<li>SortedSet<ul>
+<li>interface extends Set</li>
+<li>allow data to be sorted</li>
+<li>all elements inserted must implement Comparator or Comparable interface</li>
+</ul>
+</li>
+<li>TreeSet<ul>
+<li>implementation of SortedSet interface</li>
+<li>O(logn) time for add, remove, contains operations</li>
+<li>not synchronized</li>
+</ul>
+</li>
+<li>HashSet<ul>
+<li>implements Set interface</li>
+<li>back up by hash table</li>
+<li>no guarantee on constant order</li>
+<li>allow null element</li>
+<li>O(1) time for add,remove,contains</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Arrays and ArrayList</p>
+<ul>
+<li>arrays are fixed size but ArrayLists are dynamic</li>
+<li>elements in the array list can be added or removed at runtime</li>
+<li>array contains elements of same type but arraylist can contain elements of different type</li>
+</ul>
+</li>
+<li><p>ArrayList and LinkedList</p>
+<ul>
+<li>both fast in insertion, inserting into arraylist and into first position of linkedlist takes O(1) time</li>
+<li>random lookup in ArrayList is fast, but slow for LinkedList</li>
+<li>remove is slow for ArrayList(elements need to be shifted) but fast for LinkedList</li>
+</ul>
+</li>
+<li><p>Advantage of iterator</p>
+<ul>
+<li>used when no clue about object type</li>
+<li>iterator allows updates</li>
+</ul>
+</li>
+<li><p>Preferred declaration</p>
+<ul>
+<li><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;()</code> not <code>ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;()</code></li>
+<li>because function may take List as parameter</li>
+<li>more flexible</li>
+</ul>
+</li>
+<li><p>Iterator access and index access</p>
+<ul>
+<li>insert,update,or delete is faster for iterator access for elements in between the structure</li>
+<li>insert,update,or delete is faster for index access for elements at the end</li>
+<li>search is fast for index access</li>
+</ul>
+</li>
+</ul>
+<p><a name="Thread"></a></p>
+<h2 id="Threading">Threading</h2>
+<ul>
+<li>Thread vs. Process<ul>
+<li>definition<ul>
+<li>process: executing instance of an application</li>
+<li>thread: a path of execution within a process</li>
+</ul>
+</li>
+<li>relationship<ul>
+<li>a process can contain multiple threads</li>
+<li>thread considered as lightweight process</li>
+</ul>
+</li>
+<li>comparison<ul>
+<li>thread for small tasks, process for heavy tasks</li>
+<li>thread within the same process share the same address space(allow threads to read and write data to the same structures and variables, allow communication between threads), but different processes do not</li>
+<li>threads are easier to create than processes because they do not require a separate address space</li>
+<li>multi-threading: be careful that threads share structures that should be modified by one thread at a time</li>
+<li>processes are independent of each other</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fxenyriki%2Fthe-pretty-reckless-under-the&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Concepts/"> #Concepts </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/27/1.3/">
                 Shortest word in Dictionary
               </a>
@@ -1430,348 +2229,6 @@ nana
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.27/">
-                Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.27/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.27/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
-<blockquote>
-<p>Implement regular expression matching with support for ‘.’ and ‘‘.<br>‘.’ Matches any single character.<br>‘‘ Matches zero or more of the preceding element.<br>The matching should cover the entire input string (not partial).<br>The function prototype should be:<br>bool isMatch(const char s, const char p)<br>Some examples:<br>isMatch(“aa”,”a”) → false<br>isMatch(“aa”,”aa”) → true<br>isMatch(“aaa”,”aa”) → false<br>isMatch(“aa”, “a“) → true<br>isMatch(“aa”, “.“) → true<br>isMatch(“ab”, “.“) → true<br>isMatch(“aab”, “ca*b”) → true</p>
-</blockquote>
-<h3 id="Recursive_solution">Recursive solution</h3>
-<p>So hard to think of all the cases….</p>
-<p>Base case: p was cut to zero<br>Special Case: p=1, when to return false? (now p!=’‘, this case will be process next<br>Case 1: p.charAt(1) is not ‘‘,<br>Case 2: p.charAt(1) is ‘*’,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(String s, String p){</div><div class="line">  <span class="comment">//base case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">0</span>) <span class="keyword">return</span> s.length()==<span class="number">0</span>;</div><div class="line">  <span class="comment">//p=1 special case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">1</span> || p.charAt(<span class="number">1</span>)!=<span class="string">'*'</span>){</div><div class="line">    <span class="comment">//false case: s len=0; </span></div><div class="line">        <span class="comment">/*if the first char of s and the first char of p is not the same, </span></div><div class="line">        and the char of p is not '.', return false; </div><div class="line">    if(s.length()&lt;1 || p.charAt(0)!=s.charAt(0) && p.charAt(0)!='.')</div><div class="line">      return false;</div><div class="line">    //otherwise, compare the rest of the string of s and p.</div><div class="line">    else return isMatch(s.substring(1),p.substring(1));</div><div class="line">  }</div><div class="line">  //p!=1 and  when the second char of p is '*'</div><div class="line">  else{</div><div class="line">    int i=-1;</div><div class="line">    while(i&lt;s.length() && (i&lt; 0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){</div><div class="line">      //start from isMatch(s itself, p.substring(2)) stands for 0 preceding element</div><div class="line">      //when the '*' stands for 1 or more preceding element,try every possible number</div><div class="line">      if(isMatch(s.substring(i+1), p.substring(2)))</div><div class="line">        return true;</div><div class="line">      i++;}</div><div class="line">  }</div><div class="line">  return false;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Edit_Distance">Edit Distance</h2>
-<blockquote>
-<p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)<br>You have the following 3 operations permitted on a word:<br>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
-</blockquote>
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">        <span class="keyword">if</span>(word1.equals(word2)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(word1==<span class="keyword">null</span> || word1.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">        <span class="keyword">if</span>(word2==<span class="keyword">null</span> || word2.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> delete_dis=minDistance(word1.substring(<span class="number">1</span>),word2)+<span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> add_dis=minDistance(word1,word2.substring(<span class="number">1</span>))+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> change_dis=minDistance(word1.substring(<span class="number">1</span>),word2.substring(<span class="number">1</span>)) + word1.charAt(<span class="number">0</span>)==word2.charAt(<span class="number">0</span>) ?  <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> Math.min(Math.min(delete_dis, add_dis), change_dis);</div><div class="line">    </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-
-<h3 id="DP_Solution">DP Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">    <span class="keyword">if</span>(word2.length()==<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">    <span class="keyword">if</span>(word1.length()==<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">    <span class="keyword">int</span> m=word1.length()+<span class="number">1</span>, n=word2.length()+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span>[][] Dis=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">    <span class="comment">//initiate null cases</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){Dis[i][<span class="number">0</span>]=i;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){Dis[<span class="number">0</span>][j]=j;}</div><div class="line">    <span class="comment">//fill up whole table</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;m;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">            <span class="keyword">int</span> del_dis=Dis[i-<span class="number">1</span>][j]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> add_dis=Dis[i][j-<span class="number">1</span>]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> change_dis=Dis[i-<span class="number">1</span>][j-<span class="number">1</span>]+ (word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>)? <span class="number">0</span> :<span class="number">1</span>);</div><div class="line">            Dis[i][j]=Math.min(Math.min(del_dis,add_dis),change_dis);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Dis[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Rotate_Image">Rotate Image</h2>
-<blockquote>
-<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>swap four directions layer by layer:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">  </div><div class="line">    <span class="keyword">int</span> len = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> layer = <span class="number">0</span>; layer &lt; len / <span class="number">2</span>; layer++) {</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = layer; i &lt; len - <span class="number">1</span> - layer; i++) {</div><div class="line">        <span class="comment">// save upper</span></div><div class="line">        <span class="keyword">int</span> temp = matrix[layer][i];</div><div class="line">     </div><div class="line">        <span class="comment">// upper = left</span></div><div class="line">        matrix[layer][i] = matrix[len - <span class="number">1</span> - i][layer];</div><div class="line">        <span class="comment">// left = bottom</span></div><div class="line">   </div><div class="line">        matrix[len - <span class="number">1</span> - i][layer] = matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i];</div><div class="line">      </div><div class="line">        <span class="comment">// bottom = right</span></div><div class="line">        matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i] = matrix[i][len - <span class="number">1</span> - layer];</div><div class="line">        <span class="comment">// right = up</span></div><div class="line">        matrix[i][len - <span class="number">1</span> - layer] = temp;</div><div class="line">        </div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-
-
-<hr>
-<h2 id="Spiral_Matrix">Spiral Matrix</h2>
-<blockquote>
-<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<p>You should return [1,2,3,6,9,8,7,4,5].</p>
-<h3 id="Solution-1">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">    ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> result;</div><div class="line">    <span class="keyword">int</span> m = matrix.length;</div><div class="line">    <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>; </div><div class="line">    <span class="keyword">int</span> y=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(m&gt;<span class="number">0</span> && n&gt;<span class="number">0</span>){</div><div class="line">        <span class="comment">//if one row/column left, no circle can be formed</span></div><div class="line">        <span class="keyword">if</span>(m==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">                result.add(matrix[x][y++]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++){</div><div class="line">                result.add(matrix[x++][y]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">//below, process a circle</span></div><div class="line">        <span class="comment">//top - move right</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y++]);</div><div class="line">        }</div><div class="line">        <span class="comment">//right - move down</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x++][y]);</div><div class="line">        }</div><div class="line">        <span class="comment">//bottom - move left</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y--]);</div><div class="line">        }</div><div class="line">        <span class="comment">//left - move up</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x--][y]);</div><div class="line">        }</div><div class="line">        x++;</div><div class="line">        y++;</div><div class="line">        m=m-<span class="number">2</span>;</div><div class="line">        n=n-<span class="number">2</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falextambo%2Flinkin-park-session&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-
-
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/String/"> #String </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.23/">
-                Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.23/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.23/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Same_Tree">Same Tree</h2>
-<blockquote>
-<p>Given two binary trees, write a function to check if they are equal or not.<br>Two binary trees are considered equal if they are structurally identical and the nodes have the same value.</p>
-</blockquote>
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSameTree</span>(TreeNode p, TreeNode q) {</div><div class="line">      <span class="keyword">if</span>(p==<span class="keyword">null</span> && q==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      <span class="keyword">if</span>(p!=<span class="keyword">null</span> && q!=<span class="keyword">null</span> && p.val==q.val){</div><div class="line">          <span class="keyword">return</span> isSameTree(p.left,q.left) && isSameTree(p.right,q.right);</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Symmetric_Tree">Symmetric Tree</h2>
-<blockquote>
-<p>Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).<br>For example, this binary tree is symmetric:</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    1</div><div class="line">   / <span class="command">\</span></div><div class="line">  2   2</div><div class="line"> / <span class="command">\ </span>/ <span class="command">\</span></div><div class="line">3  4 4  3</div></pre></td></tr></table></figure>
-
-<p>But the following is not:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  1</div><div class="line"> / <span class="command">\</span></div><div class="line">2   2</div><div class="line"> <span class="command">\ </span>  <span class="command">\</span></div><div class="line"> 3    3</div></pre></td></tr></table></figure>
-
-<p>Note:<br>Bonus points if you could solve it both recursively and iteratively.</p>
-<h3 id="Recursive_Solution-1">Recursive Solution</h3>
-<p>Just traverse both on left and right branches of the root symmetricaly and check if the values are equal.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span>(TreeNode root) {</div><div class="line">     <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">     <span class="keyword">return</span> rec(root.left ,root.right);</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">rec</span>(TreeNode l, TreeNode r){</div><div class="line">     <span class="keyword">if</span>(l==<span class="keyword">null</span> && r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(l!=<span class="keyword">null</span> && r!=<span class="keyword">null</span> && l.val==r.val) </div><div class="line">     <span class="keyword">return</span> rec(l.left,r.right) && rec(l.right, r.left);</div><div class="line">     <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution">Iterative Solution</h3>
-<p>Two Stacks to store the two partitions of nodes that are supposed to be equal.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span>(TreeNode root) {</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        Stack&lt;TreeNode&gt; l=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; r=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        l.push(root.left);</div><div class="line">        r.push(root.right);</div><div class="line">        <span class="keyword">while</span>(!l.isEmpty() && ! r.isEmpty()){</div><div class="line">            TreeNode left=l.pop();</div><div class="line">            TreeNode right=r.pop();</div><div class="line">            <span class="keyword">if</span>(left==<span class="keyword">null</span> && right==<span class="keyword">null</span>) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(left!=<span class="keyword">null</span> && right!=<span class="keyword">null</span> && right.val==left.val){</div><div class="line">                l.push(left.left); l.push(left.right);</div><div class="line">                r.push(right.right); r.push(right.left); </div><div class="line">            } </div><div class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Balanced_Binary_Tree">Balanced Binary Tree</h2>
-<blockquote>
-<p>Given a binary tree, determine if it is height-balanced.<br>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.</p>
-</blockquote>
-<h3 id="Recursive_Solution-1">Recursive Solution</h3>
-<p>Two Nested Recursive:</p>
-<p>getheight returns the highest depths of current node</p>
-<p>break and return false if two children’s height differ by more than 1</p>
-<p>else continue checking for both children, until reached null node.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span>(TreeNode root) {</div><div class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      <span class="keyword">if</span>(Math.abs(getheight(root.left) - getheight(root.right)) &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">return</span> isBalanced(root.left) && isBalanced(root.right);</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getheight</span>(TreeNode cur){</div><div class="line">      <span class="keyword">if</span>(cur==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">      <span class="keyword">return</span> <span class="number">1</span>+Math.max(getheight(cur.left), getheight(cur.right));</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Binary_Tree_Level_Order_Traversal">Binary Tree Level Order Traversal</h2>
-<blockquote>
-<p>Given a binary tree, return the level order traversal of its nodes’ values. (ie, from left to right, level by level).<br>For example:<br>Given binary tree {3,9,20,#,#,15,7},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / <span class="command">\</span></div><div class="line">9  20</div><div class="line">  /  <span class="command">\</span></div><div class="line"> 15   7</div></pre></td></tr></table></figure>
-
-<p>return its level order traversal as:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">3</span>],</div><div class="line">  [<span class="number">9</span>,<span class="number">20</span>],</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<h3 id="BFS_Solution">BFS Solution</h3>
-<p>use two queues to store all nodes on the current level and their children level, when current level queue is empty, go to the next level</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrder</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        curlevel.add(root);</div><div class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">while</span>(!curlevel.isEmpty())</div><div class="line">        {</div><div class="line">            TreeNode cur=curlevel.poll();</div><div class="line">            tmp.add(cur.val);</div><div class="line">            <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.left);</div><div class="line">            <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.right);</div><div class="line">            </div><div class="line">            <span class="keyword">if</span>(curlevel.isEmpty()){</div><div class="line">              curlevel=nextlevel;</div><div class="line">              nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">              res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">              tmp.clear();</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-
-<h3 id="DFS_Solution">DFS Solution</h3>
-<p>recursively add new levels to the list, keep a variable height to track when to create new list:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> height=<span class="number">0</span>;</div><div class="line">   <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrder</span>(TreeNode root){</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    dfs(res, root,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"> <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>( ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, TreeNode root, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(height&gt;=res.size()){</div><div class="line">      res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    res.get(height).add(root.val);</div><div class="line">    dfs(res, root.left, height+<span class="number">1</span>);</div><div class="line">    dfs(res, root.right, height+<span class="number">1</span>);</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-
-
-<hr>
-<h2 id="Binary_Tree_Level_Order_Traversal_II">Binary Tree Level Order Traversal II</h2>
-<blockquote>
-<p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).<br>For example:<br>Given binary tree {3,9,20,#,#,15,7},</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / <span class="command">\</span></div><div class="line">9  20</div><div class="line">  /  <span class="command">\</span></div><div class="line"> 15   7</div></pre></td></tr></table></figure>
-
-<p>return its bottom-up level order traversal as:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>],</div><div class="line">  [<span class="number">9</span>,<span class="number">20</span>],</div><div class="line">  [<span class="number">3</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<h3 id="BFS_Solution-1">BFS Solution</h3>
-<p>Just reverse the result list at the end…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrderBottom</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        curlevel.add(root);</div><div class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">while</span>(!curlevel.isEmpty())</div><div class="line">        {</div><div class="line">            TreeNode cur=curlevel.poll();</div><div class="line">            tmp.add(cur.val);</div><div class="line">            <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.left);</div><div class="line">            <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.right);</div><div class="line">            </div><div class="line">            <span class="keyword">if</span>(curlevel.isEmpty()){</div><div class="line">              curlevel=nextlevel;</div><div class="line">              nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">              res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">              tmp.clear();</div><div class="line">            }</div><div class="line">        }</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; resnew=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=res.size()-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--){</div><div class="line">            resnew.add(res.get(i));</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> resnew;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>Or More concise</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrderBottom(TreeNode root) {</div><div class="line">      ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">      Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">      <span class="keyword">if</span>(root==<span class="literal">null</span>) return res;</div><div class="line">      curlevel.add(root);</div><div class="line">      <span class="keyword">while</span>(!curlevel.<span class="built_in">isEmpty</span>())</div><div class="line">      {</div><div class="line">         <span class="built_in">int</span> levelnum=curlevel.size();</div><div class="line">         ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">         <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;levelnum;i++){</div><div class="line">             <span class="keyword">if</span>(curlevel.peek().<span class="built_in">left</span>!=<span class="literal">null</span>) curlevel.offer(curlevel.peek().<span class="built_in">left</span>);</div><div class="line">             <span class="keyword">if</span>(curlevel.peek().<span class="built_in">right</span>!=<span class="literal">null</span>) curlevel.offer(curlevel.peek().<span class="built_in">right</span>);</div><div class="line">             tmp.add(curlevel.poll().val);</div><div class="line">         }</div><div class="line">         res.add(<span class="number">0</span>,tmp);</div><div class="line">      }</div><div class="line">      </div><div class="line">      return res;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<h3 id="DFS_Solution-1">DFS Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> height=<span class="number">0</span>;</div><div class="line">   <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrderBottom</span>(TreeNode root){</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    dfs(res, root,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"> <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>( ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, TreeNode root, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(height&gt;=res.size()){</div><div class="line">      res.add(<span class="number">0</span>,<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    res.get(res.size()-height-<span class="number">1</span>).add(root.val);</div><div class="line">    dfs(res, root.left, height+<span class="number">1</span>);</div><div class="line">    dfs(res, root.right, height+<span class="number">1</span>);</div><div class="line"> }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Maximum_Depth_of_Binary_Tree">Maximum Depth of Binary Tree</h2>
-<blockquote>
-<p>Given a binary tree, find its maximum depth.<br>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
-</blockquote>
-<h3 id="DFS_Solution-1">DFS Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>+Math.max(maxDepth(root.left),maxDepth(root.right));</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Iterative_Solution-1">Iterative Solution</h3>
-<p>Use a List to store BFS nodes, and an extra node to keep track of the last node on current level:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span>(TreeNode root) {</div><div class="line">      <span class="keyword">int</span> depth=<span class="number">0</span>;</div><div class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> depth;</div><div class="line">      LinkedList&lt;TreeNode&gt; q=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">      q.offer(root);</div><div class="line">      TreeNode levelend=root, tmp;</div><div class="line">      <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">          tmp=q.poll();</div><div class="line">          <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) q.offer(tmp.left);</div><div class="line">          <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) q.offer(tmp.right);</div><div class="line">          <span class="keyword">if</span>(tmp==levelend){</div><div class="line">              depth++;</div><div class="line">              levelend=q.peekLast();</div><div class="line">          }</div><div class="line">      } <span class="keyword">return</span> depth;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Minimum_Depth_of_Binary_Tree">Minimum Depth of Binary Tree</h2>
-<blockquote>
-<p>Given a binary tree, find its minimum depth.<br>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
-</blockquote>
-<h3 id="DFS_Solution-1">DFS Solution</h3>
-<p>A little different from max path: when one child is null, return the other half, when both is null return 1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span> && root.right==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.right)+<span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(root.right==<span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.left)+<span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> Math.min(minDepth(root.left), minDepth(root.right))+<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="BFS_Solution-1">BFS Solution</h3>
-<p>One List to store BFS nodes, one list to store depth, min path found when reached any leaf:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    LinkedList&lt;TreeNode&gt; l=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">    LinkedList&lt;Integer&gt; count=<span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    l.offer(root); count.offer(<span class="number">1</span>);</div><div class="line">    <span class="keyword">while</span>(!l.isEmpty()){</div><div class="line">        TreeNode tmp=l.poll();</div><div class="line">        res=count.poll();</div><div class="line">        <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>){</div><div class="line">            l.offer(tmp.left);</div><div class="line">            count.offer(res+<span class="number">1</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){</div><div class="line">            l.offer(tmp.right);</div><div class="line">            count.offer(res+<span class="number">1</span>);</div><div class="line">            }</div><div class="line">        <span class="keyword">if</span>(tmp.left==<span class="keyword">null</span> && tmp.right==<span class="keyword">null</span>) <span class="keyword">return</span> res;    </div><div class="line">    } <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fcashmerecat%2Fdo-you-cashmere-cat-remix&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/BFS/"> #BFS </a>
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1812,7 +2269,7 @@ nana
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

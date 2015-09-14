@@ -18,7 +18,7 @@
 
 
 
-  <meta name="keywords" content="Recursion,String,Array," />
+  <meta name="keywords" content="DP,Array," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix // Cici's Blog </title>
+  <title> Minimum Path Sum, Unique Paths, Unique Paths II // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix
+              Minimum Path Sum, Unique Paths, Unique Paths II
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-02-26
+          Posted on 2015-09-14
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.27/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.27/"></span>
+            <a href="/2015/09/14/9.12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/14/9.12/"></span>
             </a>
           </span>
           
@@ -161,57 +161,40 @@
       
 
       
-        <h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
+        <h2 id="Minimum_Path_Sum">Minimum Path Sum</h2>
 <blockquote>
-<p>Implement regular expression matching with support for ‘.’ and ‘‘.<br>‘.’ Matches any single character.<br>‘‘ Matches zero or more of the preceding element.<br>The matching should cover the entire input string (not partial).<br>The function prototype should be:<br>bool isMatch(const char s, const char p)<br>Some examples:<br>isMatch(“aa”,”a”) → false<br>isMatch(“aa”,”aa”) → true<br>isMatch(“aaa”,”aa”) → false<br>isMatch(“aa”, “a“) → true<br>isMatch(“aa”, “.“) → true<br>isMatch(“ab”, “.“) → true<br>isMatch(“aab”, “ca*b”) → true</p>
+<p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.<br>Note: You can only move either down or right at any point in time.</p>
 </blockquote>
-<h3 id="Recursive_solution">Recursive solution</h3>
-<p>So hard to think of all the cases….</p>
-<p>Base case: p was cut to zero<br>Special Case: p=1, when to return false? (now p!=’‘, this case will be process next<br>Case 1: p.charAt(1) is not ‘‘,<br>Case 2: p.charAt(1) is ‘*’,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(String s, String p){</div><div class="line">  <span class="comment">//base case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">0</span>) <span class="keyword">return</span> s.length()==<span class="number">0</span>;</div><div class="line">  <span class="comment">//p=1 special case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">1</span> || p.charAt(<span class="number">1</span>)!=<span class="string">'*'</span>){</div><div class="line">    <span class="comment">//false case: s len=0; </span></div><div class="line">        <span class="comment">/*if the first char of s and the first char of p is not the same, </span></div><div class="line">        and the char of p is not '.', return false; </div><div class="line">    if(s.length()&lt;1 || p.charAt(0)!=s.charAt(0) && p.charAt(0)!='.')</div><div class="line">      return false;</div><div class="line">    //otherwise, compare the rest of the string of s and p.</div><div class="line">    else return isMatch(s.substring(1),p.substring(1));</div><div class="line">  }</div><div class="line">  //p!=1 and  when the second char of p is '*'</div><div class="line">  else{</div><div class="line">    int i=-1;</div><div class="line">    while(i&lt;s.length() && (i&lt; 0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){</div><div class="line">      //start from isMatch(s itself, p.substring(2)) stands for 0 preceding element</div><div class="line">      //when the '*' stands for 1 or more preceding element,try every possible number</div><div class="line">      if(isMatch(s.substring(i+1), p.substring(2)))</div><div class="line">        return true;</div><div class="line">      i++;}</div><div class="line">  }</div><div class="line">  return false;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Edit_Distance">Edit Distance</h2>
-<blockquote>
-<p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)<br>You have the following 3 operations permitted on a word:<br>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
-</blockquote>
-<h3 id="Recursive_Solution">Recursive Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">        <span class="keyword">if</span>(word1.equals(word2)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(word1==<span class="keyword">null</span> || word1.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">        <span class="keyword">if</span>(word2==<span class="keyword">null</span> || word2.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> delete_dis=minDistance(word1.substring(<span class="number">1</span>),word2)+<span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> add_dis=minDistance(word1,word2.substring(<span class="number">1</span>))+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> change_dis=minDistance(word1.substring(<span class="number">1</span>),word2.substring(<span class="number">1</span>)) + word1.charAt(<span class="number">0</span>)==word2.charAt(<span class="number">0</span>) ?  <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> Math.min(Math.min(delete_dis, add_dis), change_dis);</div><div class="line">    </div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-
-<h3 id="DP_Solution">DP Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">    <span class="keyword">if</span>(word2.length()==<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">    <span class="keyword">if</span>(word1.length()==<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">    <span class="keyword">int</span> m=word1.length()+<span class="number">1</span>, n=word2.length()+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span>[][] Dis=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">    <span class="comment">//initiate null cases</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){Dis[i][<span class="number">0</span>]=i;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){Dis[<span class="number">0</span>][j]=j;}</div><div class="line">    <span class="comment">//fill up whole table</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;m;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">            <span class="keyword">int</span> del_dis=Dis[i-<span class="number">1</span>][j]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> add_dis=Dis[i][j-<span class="number">1</span>]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> change_dis=Dis[i-<span class="number">1</span>][j-<span class="number">1</span>]+ (word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>)? <span class="number">0</span> :<span class="number">1</span>);</div><div class="line">            Dis[i][j]=Math.min(Math.min(del_dis,add_dis),change_dis);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Dis[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Rotate_Image">Rotate Image</h2>
-<blockquote>
-<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
-</blockquote>
+<a id="more"></a>
 <h3 id="Solution">Solution</h3>
-<p>swap four directions layer by layer:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">  </div><div class="line">    <span class="keyword">int</span> len = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> layer = <span class="number">0</span>; layer &lt; len / <span class="number">2</span>; layer++) {</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = layer; i &lt; len - <span class="number">1</span> - layer; i++) {</div><div class="line">        <span class="comment">// save upper</span></div><div class="line">        <span class="keyword">int</span> temp = matrix[layer][i];</div><div class="line">     </div><div class="line">        <span class="comment">// upper = left</span></div><div class="line">        matrix[layer][i] = matrix[len - <span class="number">1</span> - i][layer];</div><div class="line">        <span class="comment">// left = bottom</span></div><div class="line">   </div><div class="line">        matrix[len - <span class="number">1</span> - i][layer] = matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i];</div><div class="line">      </div><div class="line">        <span class="comment">// bottom = right</span></div><div class="line">        matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i] = matrix[i][len - <span class="number">1</span> - layer];</div><div class="line">        <span class="comment">// right = up</span></div><div class="line">        matrix[i][len - <span class="number">1</span> - layer] = temp;</div><div class="line">        </div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-
+<ul>
+<li>2D DP problem, min of up and left cells are the unique path for current cell</li>
+</ul>
+<hr>
+<h2 id="Unique_Paths">Unique Paths</h2>
+<blockquote>
+<p>A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below).<br>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).<br>How many possible unique paths are there?<br><img src="http://leetcode.com/wp-content/uploads/2014/12/robot_maze.png" alt="pic"></p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<ul>
+<li><ul>
+<li>2D DP problem, sum of up and left cells are the unique path for current cell</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">uniquePaths</span>(<span class="keyword">int</span> m, <span class="keyword">int</span> n) {</div><div class="line">     <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){</div><div class="line">             <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>){</div><div class="line">                 dp[i][j]=<span class="number">1</span>;</div><div class="line">             }</div><div class="line">             <span class="keyword">else</span>{</div><div class="line">                 dp[i][j]=dp[i-<span class="number">1</span>][j] +dp[i][j-<span class="number">1</span>]; </div><div class="line">             }</div><div class="line">             }</div><div class="line">         }</div><div class="line">         <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">     }</div></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<h2 id="Unique_Paths_II">Unique Paths II</h2>
 <blockquote>
-<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+<p>Follow up for “Unique Paths”:<br>Now consider if some obstacles are added to the grids. How many unique paths would there be?<br>An obstacle and empty space is marked as 1 and 0 respectively in the grid.<br>For example,<br>There is one obstacle in the middle of a 3x3 grid as illustrated below.<br>[<br>  [0,0,0],<br>  [0,1,0],<br>  [0,0,0]<br>]<br>The total number of unique paths is 2.</p>
 </blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
-
-<p>You should return [1,2,3,6,9,8,7,4,5].</p>
-<h3 id="Solution-1">Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">    ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> result;</div><div class="line">    <span class="keyword">int</span> m = matrix.length;</div><div class="line">    <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>; </div><div class="line">    <span class="keyword">int</span> y=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(m&gt;<span class="number">0</span> && n&gt;<span class="number">0</span>){</div><div class="line">        <span class="comment">//if one row/column left, no circle can be formed</span></div><div class="line">        <span class="keyword">if</span>(m==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">                result.add(matrix[x][y++]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++){</div><div class="line">                result.add(matrix[x++][y]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">//below, process a circle</span></div><div class="line">        <span class="comment">//top - move right</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y++]);</div><div class="line">        }</div><div class="line">        <span class="comment">//right - move down</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x++][y]);</div><div class="line">        }</div><div class="line">        <span class="comment">//bottom - move left</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y--]);</div><div class="line">        }</div><div class="line">        <span class="comment">//left - move up</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x--][y]);</div><div class="line">        }</div><div class="line">        x++;</div><div class="line">        y++;</div><div class="line">        m=m-<span class="number">2</span>;</div><div class="line">        n=n-<span class="number">2</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falextambo%2Flinkin-park-session&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-
-
-
-
-
-
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>If up or left cell is 1, then set it to 0</li>
+<li>If current cell is 1, set it to 0 </li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span>(<span class="keyword">int</span>[][] a)</div><div class="line">	{</div><div class="line">		<span class="keyword">int</span> m=a.length; <span class="keyword">int</span> n=a[<span class="number">0</span>].length;</div><div class="line">		<span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">		<span class="keyword">int</span> i=<span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(i&lt;m){</div><div class="line">			<span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">1</span>) <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">else</span> {dp[i][<span class="number">0</span>]=<span class="number">1</span>;i++;}</div><div class="line">		}</div><div class="line">		<span class="keyword">int</span> j=<span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(j&lt;n){</div><div class="line">			<span class="keyword">if</span>(a[<span class="number">0</span>][j]==<span class="number">1</span>) <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">else</span> {dp[<span class="number">0</span>][j]=<span class="number">1</span>;j++;}</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;m;i++){</div><div class="line">			<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">			        <span class="keyword">if</span>(a[i][j]==<span class="number">1</span>) dp[i][j]=<span class="number">0</span>;<span class="comment">//别忘了这个case</span></div><div class="line">					<span class="keyword">else</span> dp[i][j]= (a[i-<span class="number">1</span>][j]==<span class="number">1</span> ? <span class="number">0</span> : dp[i-<span class="number">1</span>][j]) + (a[i][j-<span class="number">1</span>]==<span class="number">1</span> ? <span class="number">0</span> : dp[i][j-<span class="number">1</span>]); <span class="comment">//加括号...</span></div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">	}</div></pre></td></tr></table></figure>
 
 
       
@@ -221,9 +204,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/String/"> #String </a>
+            <a href="/tags/DP/"> #DP </a>
           
             <a href="/tags/Array/"> #Array </a>
           
@@ -234,13 +215,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/02/25/1.5/">Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II</a>
+              <a href="/2015/09/14/9.13/">Spiral Matrix, Spiral Matrix II, Search a 2D Matrix, Search a 2D Matrix II, Set Matrix Zeroes, Pascal's Triangle, Pascal's Triangle II</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/02/25/1.23/">Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree</a>
+              <a href="/2015/09/13/9.11/">Count and Say, Integer to English Words, Length of Last Word, Simplify Path, Compare Version Numbers</a>
             
           </div>
         </div>
@@ -360,7 +341,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Regular_Expression_Matching"><span class="nav-number">1.</span> <span class="nav-text">Regular Expression Matching</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_solution"><span class="nav-number">1.1.</span> <span class="nav-text">Recursive solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edit_Distance"><span class="nav-number">2.</span> <span class="nav-text">Edit Distance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">Recursive Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DP_Solution"><span class="nav-number">2.2.</span> <span class="nav-text">DP Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rotate_Image"><span class="nav-number">3.</span> <span class="nav-text">Rotate Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spiral_Matrix"><span class="nav-number">4.</span> <span class="nav-text">Spiral Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">4.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Minimum_Path_Sum"><span class="nav-number">1.</span> <span class="nav-text">Minimum Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unique_Paths"><span class="nav-number">2.</span> <span class="nav-text">Unique Paths</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unique_Paths_II"><span class="nav-number">3.</span> <span class="nav-text">Unique Paths II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">3.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -933,8 +914,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/02/25/1.27/';
-      var disqus_url = 'http://sunbingjie.tk/2015/02/25/1.27/';
+      var disqus_identifier = '2015/09/14/9.12/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/14/9.12/';
 
       (function(){
         var dsq = document.createElement('script');

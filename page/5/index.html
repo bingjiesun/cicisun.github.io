@@ -120,6 +120,348 @@
           
           
             
+              <a class="post-title-link" href="/2015/02/25/1.27/">
+                Regular Expression Matching, Edit Distance, Rotate Image, Spiral Matrix
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.27/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.27/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Regular_Expression_Matching">Regular Expression Matching</h2>
+<blockquote>
+<p>Implement regular expression matching with support for ‘.’ and ‘‘.<br>‘.’ Matches any single character.<br>‘‘ Matches zero or more of the preceding element.<br>The matching should cover the entire input string (not partial).<br>The function prototype should be:<br>bool isMatch(const char s, const char p)<br>Some examples:<br>isMatch(“aa”,”a”) → false<br>isMatch(“aa”,”aa”) → true<br>isMatch(“aaa”,”aa”) → false<br>isMatch(“aa”, “a“) → true<br>isMatch(“aa”, “.“) → true<br>isMatch(“ab”, “.“) → true<br>isMatch(“aab”, “ca*b”) → true</p>
+</blockquote>
+<h3 id="Recursive_solution">Recursive solution</h3>
+<p>So hard to think of all the cases….</p>
+<p>Base case: p was cut to zero<br>Special Case: p=1, when to return false? (now p!=’‘, this case will be process next<br>Case 1: p.charAt(1) is not ‘‘,<br>Case 2: p.charAt(1) is ‘*’,</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span>(String s, String p){</div><div class="line">  <span class="comment">//base case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">0</span>) <span class="keyword">return</span> s.length()==<span class="number">0</span>;</div><div class="line">  <span class="comment">//p=1 special case</span></div><div class="line">  <span class="keyword">if</span>(p.length()==<span class="number">1</span> || p.charAt(<span class="number">1</span>)!=<span class="string">'*'</span>){</div><div class="line">    <span class="comment">//false case: s len=0; </span></div><div class="line">        <span class="comment">/*if the first char of s and the first char of p is not the same, </span></div><div class="line">        and the char of p is not '.', return false; </div><div class="line">    if(s.length()&lt;1 || p.charAt(0)!=s.charAt(0) && p.charAt(0)!='.')</div><div class="line">      return false;</div><div class="line">    //otherwise, compare the rest of the string of s and p.</div><div class="line">    else return isMatch(s.substring(1),p.substring(1));</div><div class="line">  }</div><div class="line">  //p!=1 and  when the second char of p is '*'</div><div class="line">  else{</div><div class="line">    int i=-1;</div><div class="line">    while(i&lt;s.length() && (i&lt; 0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){</div><div class="line">      //start from isMatch(s itself, p.substring(2)) stands for 0 preceding element</div><div class="line">      //when the '*' stands for 1 or more preceding element,try every possible number</div><div class="line">      if(isMatch(s.substring(i+1), p.substring(2)))</div><div class="line">        return true;</div><div class="line">      i++;}</div><div class="line">  }</div><div class="line">  return false;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Edit_Distance">Edit Distance</h2>
+<blockquote>
+<p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)<br>You have the following 3 operations permitted on a word:<br>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
+</blockquote>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">        <span class="keyword">if</span>(word1.equals(word2)) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(word1==<span class="keyword">null</span> || word1.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">        <span class="keyword">if</span>(word2==<span class="keyword">null</span> || word2.length()&lt;=<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">         </div><div class="line">        <span class="keyword">int</span> delete_dis=minDistance(word1.substring(<span class="number">1</span>),word2)+<span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> add_dis=minDistance(word1,word2.substring(<span class="number">1</span>))+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> change_dis=minDistance(word1.substring(<span class="number">1</span>),word2.substring(<span class="number">1</span>)) + word1.charAt(<span class="number">0</span>)==word2.charAt(<span class="number">0</span>) ?  <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> Math.min(Math.min(delete_dis, add_dis), change_dis);</div><div class="line">    </div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+
+<h3 id="DP_Solution">DP Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span>(String word1, String word2) {</div><div class="line">    <span class="keyword">if</span>(word2.length()==<span class="number">0</span>) <span class="keyword">return</span> word1.length();</div><div class="line">    <span class="keyword">if</span>(word1.length()==<span class="number">0</span>) <span class="keyword">return</span> word2.length();</div><div class="line">    <span class="keyword">int</span> m=word1.length()+<span class="number">1</span>, n=word2.length()+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span>[][] Dis=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">    <span class="comment">//initiate null cases</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++){Dis[i][<span class="number">0</span>]=i;}</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++){Dis[<span class="number">0</span>][j]=j;}</div><div class="line">    <span class="comment">//fill up whole table</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;m;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++){</div><div class="line">            <span class="keyword">int</span> del_dis=Dis[i-<span class="number">1</span>][j]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> add_dis=Dis[i][j-<span class="number">1</span>]+<span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> change_dis=Dis[i-<span class="number">1</span>][j-<span class="number">1</span>]+ (word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>)? <span class="number">0</span> :<span class="number">1</span>);</div><div class="line">            Dis[i][j]=Math.min(Math.min(del_dis,add_dis),change_dis);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Dis[m-<span class="number">1</span>][n-<span class="number">1</span>];</div><div class="line">    </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rotate_Image">Rotate Image</h2>
+<blockquote>
+<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
+</blockquote>
+<h3 id="Solution">Solution</h3>
+<p>swap four directions layer by layer:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">  </div><div class="line">    <span class="keyword">int</span> len = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> layer = <span class="number">0</span>; layer &lt; len / <span class="number">2</span>; layer++) {</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = layer; i &lt; len - <span class="number">1</span> - layer; i++) {</div><div class="line">        <span class="comment">// save upper</span></div><div class="line">        <span class="keyword">int</span> temp = matrix[layer][i];</div><div class="line">     </div><div class="line">        <span class="comment">// upper = left</span></div><div class="line">        matrix[layer][i] = matrix[len - <span class="number">1</span> - i][layer];</div><div class="line">        <span class="comment">// left = bottom</span></div><div class="line">   </div><div class="line">        matrix[len - <span class="number">1</span> - i][layer] = matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i];</div><div class="line">      </div><div class="line">        <span class="comment">// bottom = right</span></div><div class="line">        matrix[len - <span class="number">1</span> - layer][len - <span class="number">1</span> - i] = matrix[i][len - <span class="number">1</span> - layer];</div><div class="line">        <span class="comment">// right = up</span></div><div class="line">        matrix[i][len - <span class="number">1</span> - layer] = temp;</div><div class="line">        </div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="Spiral_Matrix">Spiral Matrix</h2>
+<blockquote>
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ],</div><div class="line"> [ <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ],</div><div class="line"> [ <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>You should return [1,2,3,6,9,8,7,4,5].</p>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">spiralOrder</span>(<span class="keyword">int</span>[][] matrix) {</div><div class="line">    ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> result;</div><div class="line">    <span class="keyword">int</span> m = matrix.length;</div><div class="line">    <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>; </div><div class="line">    <span class="keyword">int</span> y=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(m&gt;<span class="number">0</span> && n&gt;<span class="number">0</span>){</div><div class="line">        <span class="comment">//if one row/column left, no circle can be formed</span></div><div class="line">        <span class="keyword">if</span>(m==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">                result.add(matrix[x][y++]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">1</span>){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++){</div><div class="line">                result.add(matrix[x++][y]);</div><div class="line">            }</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">//below, process a circle</span></div><div class="line">        <span class="comment">//top - move right</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y++]);</div><div class="line">        }</div><div class="line">        <span class="comment">//right - move down</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x++][y]);</div><div class="line">        }</div><div class="line">        <span class="comment">//bottom - move left</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x][y--]);</div><div class="line">        }</div><div class="line">        <span class="comment">//left - move up</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m-<span class="number">1</span>;i++){</div><div class="line">            result.add(matrix[x--][y]);</div><div class="line">        }</div><div class="line">        x++;</div><div class="line">        y++;</div><div class="line">        m=m-<span class="number">2</span>;</div><div class="line">        n=n-<span class="number">2</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falextambo%2Flinkin-park-session&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/String/"> #String </a>
+          
+            <a href="/tags/Array/"> #Array </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/02/25/1.23/">
+                Same Tree, Symmetric Tree, Balanced Binary Tree, Binary Tree Level Order Traversal, Binary Tree Level Order Traversal II, Maximum Depth of Binary Tree, Minimum Depth of Binary Tree
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-02-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/25/1.23/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.23/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Same_Tree">Same Tree</h2>
+<blockquote>
+<p>Given two binary trees, write a function to check if they are equal or not.<br>Two binary trees are considered equal if they are structurally identical and the nodes have the same value.</p>
+</blockquote>
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSameTree</span>(TreeNode p, TreeNode q) {</div><div class="line">      <span class="keyword">if</span>(p==<span class="keyword">null</span> && q==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      <span class="keyword">if</span>(p!=<span class="keyword">null</span> && q!=<span class="keyword">null</span> && p.val==q.val){</div><div class="line">          <span class="keyword">return</span> isSameTree(p.left,q.left) && isSameTree(p.right,q.right);</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Symmetric_Tree">Symmetric Tree</h2>
+<blockquote>
+<p>Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).<br>For example, this binary tree is symmetric:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    1</div><div class="line">   / <span class="command">\</span></div><div class="line">  2   2</div><div class="line"> / <span class="command">\ </span>/ <span class="command">\</span></div><div class="line">3  4 4  3</div></pre></td></tr></table></figure>
+
+<p>But the following is not:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  1</div><div class="line"> / <span class="command">\</span></div><div class="line">2   2</div><div class="line"> <span class="command">\ </span>  <span class="command">\</span></div><div class="line"> 3    3</div></pre></td></tr></table></figure>
+
+<p>Note:<br>Bonus points if you could solve it both recursively and iteratively.</p>
+<h3 id="Recursive_Solution-1">Recursive Solution</h3>
+<p>Just traverse both on left and right branches of the root symmetricaly and check if the values are equal.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span>(TreeNode root) {</div><div class="line">     <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">     <span class="keyword">return</span> rec(root.left ,root.right);</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">rec</span>(TreeNode l, TreeNode r){</div><div class="line">     <span class="keyword">if</span>(l==<span class="keyword">null</span> && r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(l!=<span class="keyword">null</span> && r!=<span class="keyword">null</span> && l.val==r.val) </div><div class="line">     <span class="keyword">return</span> rec(l.left,r.right) && rec(l.right, r.left);</div><div class="line">     <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<p>Two Stacks to store the two partitions of nodes that are supposed to be equal.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span>(TreeNode root) {</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        Stack&lt;TreeNode&gt; l=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        Stack&lt;TreeNode&gt; r=<span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        l.push(root.left);</div><div class="line">        r.push(root.right);</div><div class="line">        <span class="keyword">while</span>(!l.isEmpty() && ! r.isEmpty()){</div><div class="line">            TreeNode left=l.pop();</div><div class="line">            TreeNode right=r.pop();</div><div class="line">            <span class="keyword">if</span>(left==<span class="keyword">null</span> && right==<span class="keyword">null</span>) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(left!=<span class="keyword">null</span> && right!=<span class="keyword">null</span> && right.val==left.val){</div><div class="line">                l.push(left.left); l.push(left.right);</div><div class="line">                r.push(right.right); r.push(right.left); </div><div class="line">            } </div><div class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Balanced_Binary_Tree">Balanced Binary Tree</h2>
+<blockquote>
+<p>Given a binary tree, determine if it is height-balanced.<br>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.</p>
+</blockquote>
+<h3 id="Recursive_Solution-1">Recursive Solution</h3>
+<p>Two Nested Recursive:</p>
+<p>getheight returns the highest depths of current node</p>
+<p>break and return false if two children’s height differ by more than 1</p>
+<p>else continue checking for both children, until reached null node.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span>(TreeNode root) {</div><div class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      <span class="keyword">if</span>(Math.abs(getheight(root.left) - getheight(root.right)) &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">return</span> isBalanced(root.left) && isBalanced(root.right);</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getheight</span>(TreeNode cur){</div><div class="line">      <span class="keyword">if</span>(cur==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">      <span class="keyword">return</span> <span class="number">1</span>+Math.max(getheight(cur.left), getheight(cur.right));</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Level_Order_Traversal">Binary Tree Level Order Traversal</h2>
+<blockquote>
+<p>Given a binary tree, return the level order traversal of its nodes’ values. (ie, from left to right, level by level).<br>For example:<br>Given binary tree {3,9,20,#,#,15,7},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / <span class="command">\</span></div><div class="line">9  20</div><div class="line">  /  <span class="command">\</span></div><div class="line"> 15   7</div></pre></td></tr></table></figure>
+
+<p>return its level order traversal as:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">3</span>],</div><div class="line">  [<span class="number">9</span>,<span class="number">20</span>],</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution">BFS Solution</h3>
+<p>use two queues to store all nodes on the current level and their children level, when current level queue is empty, go to the next level</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrder</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        curlevel.add(root);</div><div class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">while</span>(!curlevel.isEmpty())</div><div class="line">        {</div><div class="line">            TreeNode cur=curlevel.poll();</div><div class="line">            tmp.add(cur.val);</div><div class="line">            <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.left);</div><div class="line">            <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.right);</div><div class="line">            </div><div class="line">            <span class="keyword">if</span>(curlevel.isEmpty()){</div><div class="line">              curlevel=nextlevel;</div><div class="line">              nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">              res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">              tmp.clear();</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+
+<h3 id="DFS_Solution">DFS Solution</h3>
+<p>recursively add new levels to the list, keep a variable height to track when to create new list:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> height=<span class="number">0</span>;</div><div class="line">   <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrder</span>(TreeNode root){</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    dfs(res, root,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"> <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>( ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, TreeNode root, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(height&gt;=res.size()){</div><div class="line">      res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    res.get(height).add(root.val);</div><div class="line">    dfs(res, root.left, height+<span class="number">1</span>);</div><div class="line">    dfs(res, root.right, height+<span class="number">1</span>);</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="Binary_Tree_Level_Order_Traversal_II">Binary Tree Level Order Traversal II</h2>
+<blockquote>
+<p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).<br>For example:<br>Given binary tree {3,9,20,#,#,15,7},</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / <span class="command">\</span></div><div class="line">9  20</div><div class="line">  /  <span class="command">\</span></div><div class="line"> 15   7</div></pre></td></tr></table></figure>
+
+<p>return its bottom-up level order traversal as:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="number">15</span>,<span class="number">7</span>],</div><div class="line">  [<span class="number">9</span>,<span class="number">20</span>],</div><div class="line">  [<span class="number">3</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution-1">BFS Solution</h3>
+<p>Just reverse the result list at the end…</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrderBottom</span>(TreeNode root) {</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        Queue&lt;TreeNode&gt; nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">        curlevel.add(root);</div><div class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">while</span>(!curlevel.isEmpty())</div><div class="line">        {</div><div class="line">            TreeNode cur=curlevel.poll();</div><div class="line">            tmp.add(cur.val);</div><div class="line">            <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.left);</div><div class="line">            <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>)</div><div class="line">            nextlevel.add(cur.right);</div><div class="line">            </div><div class="line">            <span class="keyword">if</span>(curlevel.isEmpty()){</div><div class="line">              curlevel=nextlevel;</div><div class="line">              nextlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">              res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(tmp));</div><div class="line">              tmp.clear();</div><div class="line">            }</div><div class="line">        }</div><div class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; resnew=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=res.size()-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--){</div><div class="line">            resnew.add(res.get(i));</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> resnew;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<p>Or More concise</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrderBottom(TreeNode root) {</div><div class="line">      ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">      Queue&lt;TreeNode&gt; curlevel=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">      <span class="keyword">if</span>(root==<span class="literal">null</span>) return res;</div><div class="line">      curlevel.add(root);</div><div class="line">      <span class="keyword">while</span>(!curlevel.<span class="built_in">isEmpty</span>())</div><div class="line">      {</div><div class="line">         <span class="built_in">int</span> levelnum=curlevel.size();</div><div class="line">         ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">         <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;levelnum;i++){</div><div class="line">             <span class="keyword">if</span>(curlevel.peek().<span class="built_in">left</span>!=<span class="literal">null</span>) curlevel.offer(curlevel.peek().<span class="built_in">left</span>);</div><div class="line">             <span class="keyword">if</span>(curlevel.peek().<span class="built_in">right</span>!=<span class="literal">null</span>) curlevel.offer(curlevel.peek().<span class="built_in">right</span>);</div><div class="line">             tmp.add(curlevel.poll().val);</div><div class="line">         }</div><div class="line">         res.add(<span class="number">0</span>,tmp);</div><div class="line">      }</div><div class="line">      </div><div class="line">      return res;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<h3 id="DFS_Solution-1">DFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> height=<span class="number">0</span>;</div><div class="line">   <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; <span class="title">levelOrderBottom</span>(TreeNode root){</div><div class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">    dfs(res, root,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line"> }</div><div class="line"> <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>( ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res, TreeNode root, <span class="keyword">int</span> height){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(height&gt;=res.size()){</div><div class="line">      res.add(<span class="number">0</span>,<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">    }</div><div class="line">    res.get(res.size()-height-<span class="number">1</span>).add(root.val);</div><div class="line">    dfs(res, root.left, height+<span class="number">1</span>);</div><div class="line">    dfs(res, root.right, height+<span class="number">1</span>);</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Maximum_Depth_of_Binary_Tree">Maximum Depth of Binary Tree</h2>
+<blockquote>
+<p>Given a binary tree, find its maximum depth.<br>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+</blockquote>
+<h3 id="DFS_Solution-1">DFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>+Math.max(maxDepth(root.left),maxDepth(root.right));</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<p>Use a List to store BFS nodes, and an extra node to keep track of the last node on current level:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span>(TreeNode root) {</div><div class="line">      <span class="keyword">int</span> depth=<span class="number">0</span>;</div><div class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> depth;</div><div class="line">      LinkedList&lt;TreeNode&gt; q=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">      q.offer(root);</div><div class="line">      TreeNode levelend=root, tmp;</div><div class="line">      <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">          tmp=q.poll();</div><div class="line">          <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) q.offer(tmp.left);</div><div class="line">          <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) q.offer(tmp.right);</div><div class="line">          <span class="keyword">if</span>(tmp==levelend){</div><div class="line">              depth++;</div><div class="line">              levelend=q.peekLast();</div><div class="line">          }</div><div class="line">      } <span class="keyword">return</span> depth;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Minimum_Depth_of_Binary_Tree">Minimum Depth of Binary Tree</h2>
+<blockquote>
+<p>Given a binary tree, find its minimum depth.<br>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
+</blockquote>
+<h3 id="DFS_Solution-1">DFS Solution</h3>
+<p>A little different from max path: when one child is null, return the other half, when both is null return 1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span> && root.right==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.right)+<span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(root.right==<span class="keyword">null</span>) <span class="keyword">return</span> minDepth(root.left)+<span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> Math.min(minDepth(root.left), minDepth(root.right))+<span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution-1">BFS Solution</h3>
+<p>One List to store BFS nodes, one list to store depth, min path found when reached any leaf:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    LinkedList&lt;TreeNode&gt; l=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">    LinkedList&lt;Integer&gt; count=<span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">    l.offer(root); count.offer(<span class="number">1</span>);</div><div class="line">    <span class="keyword">while</span>(!l.isEmpty()){</div><div class="line">        TreeNode tmp=l.poll();</div><div class="line">        res=count.poll();</div><div class="line">        <span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>){</div><div class="line">            l.offer(tmp.left);</div><div class="line">            count.offer(res+<span class="number">1</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>){</div><div class="line">            l.offer(tmp.right);</div><div class="line">            count.offer(res+<span class="number">1</span>);</div><div class="line">            }</div><div class="line">        <span class="keyword">if</span>(tmp.left==<span class="keyword">null</span> && tmp.right==<span class="keyword">null</span>) <span class="keyword">return</span> res;    </div><div class="line">    } <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fcashmerecat%2Fdo-you-cashmere-cat-remix&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BFS/"> #BFS </a>
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/02/25/1.22/">
                 Construct Binary Tree from Preorder and Inorder Traversal, Construct Binary Tree from Inorder and Postorder Traversal, Binary Tree Inorder Traversal, Convert Sorted Array to Binary Search Tree, Convert Sorted List to Binary Search Tree, Flatten Binary Tree to Linked List
               </a>
@@ -1179,264 +1521,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.10/">
-                Multiply Strings, Implement strStr(), Reverse Words in a String, String to Integer (atoi)
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.10/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.10/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Multiply_Strings">Multiply Strings</h2>
-<blockquote>
-<p>Multiply Strings<br>Given two numbers represented as strings, return multiplication of the numbers as a string.<br>Note: The numbers can be arbitrarily large and are non-negative.</p>
-</blockquote>
-<h3 id="First_Solution">First Solution</h3>
-<li>reverse two input strings, so index and digits are the same</li>
-
-<li>create a tmp int[] to store the additions of two digits multiply results</li>
-
-<li>add up the array, while inserting into a stringbuilder</li>
-
-<li>delete zeros in the beginning</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"> <span class="keyword">public</span> String <span class="title">multiply</span>(String num1, String num2) {</div><div class="line"> num1=<span class="keyword">new</span> StringBuilder(num1).reverse().toString();</div><div class="line"> num2=<span class="keyword">new</span> StringBuilder(num2).reverse().toString();</div><div class="line"> <span class="keyword">int</span>[] tmp= <span class="keyword">new</span> <span class="keyword">int</span>[num1.length()+num2.length()];</div><div class="line"> StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line"> <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; num1.length();i++){</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;num2.length();j++){</div><div class="line">     tmp[i+j]+=(num1.charAt(i)-<span class="string">'0'</span>)*(num2.charAt(j)-<span class="string">'0'</span>);</div><div class="line">   }</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;tmp.length;i++){</div><div class="line">   <span class="keyword">int</span> carries=<span class="number">0</span>, num=<span class="number">0</span>;</div><div class="line">   num=tmp[i]%<span class="number">10</span>;</div><div class="line">   carries=tmp[i]/<span class="number">10</span>;</div><div class="line">   res.insert(<span class="number">0</span>, num);</div><div class="line">   <span class="keyword">if</span>(i!=tmp.length-<span class="number">1</span>){tmp[i+<span class="number">1</span>]+=carries;}</div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">while</span>(res.length()&gt;<span class="number">1</span>&&res.charAt(<span class="number">0</span>)==<span class="string">'0'</span>){res.deleteCharAt(<span class="number">0</span>);}</div><div class="line"> <span class="keyword">return</span> res.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="Second_Solution">Second Solution</h3>
-<p>Do it reversly, same process:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  <span class="keyword">public</span> String <span class="title">multiply</span>(String num1, String num2) {</div><div class="line">  <span class="keyword">int</span>[] tmp= <span class="keyword">new</span> <span class="keyword">int</span>[num1.length()+num2.length()];</div><div class="line">  StringBuilder res=<span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">int</span> j=<span class="number">0</span>,i,num,carries=<span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span>( i = num1.length()-<span class="number">1</span>; i&gt;=<span class="number">0</span> ;i--){</div><div class="line">      carries=<span class="number">0</span>; num=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>( j = num2.length()-<span class="number">1</span>; j&gt;=<span class="number">0</span>;j--){        </div><div class="line">      num=(num1.charAt(i)-<span class="string">'0'</span>)*(num2.charAt(j)-<span class="string">'0'</span>)+tmp[i+j+<span class="number">1</span>]+carries;</div><div class="line">      tmp[i+j+<span class="number">1</span>]=num%<span class="number">10</span>;</div><div class="line">      carries=num/<span class="number">10</span>;</div><div class="line">    }</div><div class="line">    tmp[i+j+<span class="number">1</span>]=carries;</div><div class="line">  }</div><div class="line">  i=<span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span>(i&lt;tmp.length-<span class="number">1</span>&&tmp[i]==<span class="number">0</span>){i++;}</div><div class="line">  <span class="keyword">while</span>(i&lt;tmp.length){res.append(tmp[i++]);}</div><div class="line">  <span class="keyword">return</span> res.toString();</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Implement_strStr()">Implement strStr()</h2>
-<blockquote>
-<p>Implement strStr().<br>Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.<br>Update (2014-11-02):<br>The signature of the function had been updated to return the index instead of the pointer. If you still see your function signature returns a char * or String, please click the reload button to reset your code definition.</p>
-</blockquote>
-<h3 id="Naive_Solution">Naive Solution</h3>
-<p>Two pointers:</p>
-<li>i: from 0 to n-m, check each substring(i,i+m) equals to needle</li>
-
-<li>j: from i to m+i-1, break if non-equal character found</li><br><li>If j=m+i after some round, then we found a substring(i, i+m) matches the needle.</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">strStr</span>(String haystack, String needle) </div><div class="line">  {  </div><div class="line">    <span class="keyword">int</span> n = haystack.length();  </div><div class="line">    <span class="keyword">int</span> m = needle.length(); </div><div class="line">    <span class="comment">//if haystack empty but needle not</span></div><div class="line">    <span class="keyword">if</span> (n==<span class="number">0</span> && m!=<span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    <span class="comment">//special case </span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">0</span>||m==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">else</span>{</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - m+<span class="number">1</span>; i++)  </div><div class="line">      {   <span class="keyword">int</span> j=i;</div><div class="line">        <span class="keyword">for</span> (; j &lt; m+i; j++)  </div><div class="line">        {  </div><div class="line">          <span class="keyword">if</span> (needle.charAt(j-i) != haystack.charAt(j)) <span class="keyword">break</span>;  </div><div class="line">        }  </div><div class="line">        <span class="keyword">if</span> (j == m+i) <span class="keyword">return</span>  i;</div><div class="line">      }  </div><div class="line">      <span class="keyword">return</span> -<span class="number">1</span>;  }</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<p>More Consice:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">strStr</span>(String haystack, String needle) {</div><div class="line">       <span class="keyword">if</span>(haystack == <span class="keyword">null</span> || needle == <span class="keyword">null</span>) {</div><div class="line">           <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       }</div><div class="line">       <span class="keyword">int</span> i, j;</div><div class="line">       <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; haystack.length() - needle.length() + <span class="number">1</span>; i++) {</div><div class="line">           <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; needle.length(); j++) {</div><div class="line">               <span class="keyword">if</span>(haystack.charAt(i + j) != needle.charAt(j)) {</div><div class="line">                   <span class="keyword">break</span>;</div><div class="line">               }</div><div class="line">           }</div><div class="line">           <span class="keyword">if</span>(j == needle.length()) {</div><div class="line">               <span class="keyword">return</span> i;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<p><a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">KMP</a> is another solution.</p>
-<hr>
-<h2 id="Reverse_Words_in_a_String">Reverse Words in a String</h2>
-<blockquote>
-<p>Given an input string, reverse the string word by word.<br>For example,<br>Given s = “the sky is blue”,<br>return “blue is sky the”.<br>Clarification:<br>What constitutes a word?<br>A sequence of non-space characters constitutes a word.<br>Could the input string contain leading or trailing spaces?<br>Yes. However, your reversed string should not contain leading or trailing spaces.<br>How about multiple spaces between two words?<br>Reduce them to a single space in the reversed string.</p>
-</blockquote>
-<h3 id="Correct_Solution:">Correct Solution:</h3>
-<p>First, split words into array by spaces. Then from last element in array, append to stringBuilder if not space, add one space after that element in the new string. At last, get the substring from 0 to sb.length()-1 to delete the ending space.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> String <span class="title">reverseWords</span>(String s) {</div><div class="line">  <span class="keyword">if</span>(s==<span class="keyword">null</span>||s.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">  String[] words=s.split(<span class="string">" "</span>);</div><div class="line">  <span class="keyword">int</span> n=words.length;</div><div class="line">  StringBuilder sb=<span class="keyword">new</span> StringBuilder();</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=n-<span class="number">1</span>; i&gt;=<span class="number">0</span>;i--){</div><div class="line">    <span class="keyword">if</span>(!words[i].equals(<span class="string">""</span>)){</div><div class="line">      sb.append(words[i]).append(<span class="string">" "</span>);}</div><div class="line">  } <span class="keyword">return</span> sb.length() == <span class="number">0</span> ? <span class="string">""</span> : sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="String_to_Integer_(atoi)">String to Integer (atoi)</h2>
-<blockquote>
-<p>Implement atoi to convert a string to an integer.<br>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.<br>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.</p>
-</blockquote>
-<h3 id="Naive_Sulotion">Naive Sulotion</h3>
-<li>Case 1: general case, given string is a valid input, convert to int directly</li>
-
-<li>Case 2: input string is null or all blank, return 0;</li>
-
-<li>Case 3: sign of number(+/-, default as +)</li>
-
-<li>Case 4: overflow</li>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">atoi</span>(String str){</div><div class="line">    <span class="keyword">if</span>(str==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="comment">//remove spaces at beginning and end</span></div><div class="line">    str=str.trim();</div><div class="line">    <span class="keyword">int</span> n=str.length(),i=<span class="number">0</span>;</div><div class="line">    <span class="comment">//use long to store result</span></div><div class="line">    <span class="keyword">long</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(str.charAt(i)==<span class="string">'+'</span>) {sign=<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str.charAt(i)==<span class="string">'-'</span>) {sign=-<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">      <span class="keyword">char</span> tmp=str.charAt(i);</div><div class="line">      <span class="keyword">if</span>(tmp&gt;<span class="string">'9'</span>||tmp&lt;<span class="string">'0'</span>||tmp==<span class="string">' '</span>) <span class="keyword">break</span>;</div><div class="line">      res=res*<span class="number">10</span>+(tmp-<span class="string">'0'</span>);</div><div class="line">      <span class="keyword">if</span>(res&gt;Integer.MAX_VALUE) <span class="keyword">return</span> sign==<span class="number">1</span> ? Integer.MAX_VALUE: Integer.MIN_VALUE;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)res*sign;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<h3 id="An_alternative_solution">An alternative solution</h3>
-<p>without using long, is to use the following during loop:</p>
-<li>Integer.MAX_VALUE/10 &lt; res;</li>
-
-<p>res*10 will become bigger than MAX</p>
-<li>Integer.MAX_VALUE/10 == res &amp;&amp; Integer.MAX_VALUE%10 &lt;(str.charAt(i) - ‘0’)</li>
-
-<p>compare last digit when res*10=MAX</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">atoi</span>(String str){</div><div class="line">    <span class="keyword">if</span>(str==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    str=str.trim();</div><div class="line">    <span class="keyword">int</span> n=str.length(),i=<span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> res=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(str.charAt(i)==<span class="string">'+'</span>) {sign=<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(str.charAt(i)==<span class="string">'-'</span>) {sign=-<span class="number">1</span>;i++;}</div><div class="line">    <span class="keyword">for</span>(;i&lt;n;i++){</div><div class="line">      <span class="keyword">char</span> tmp=str.charAt(i);</div><div class="line">      <span class="keyword">if</span>(tmp&gt;<span class="string">'9'</span>||tmp&lt;<span class="string">'0'</span>||tmp==<span class="string">' '</span>) <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">if</span>(Integer.MAX_VALUE/<span class="number">10</span> &lt; res || (Integer.MAX_VALUE/<span class="number">10</span> == res && Integer.MAX_VALUE%<span class="number">10</span> &lt;(str.charAt(i) - <span class="string">'0'</span>)))</div><div class="line">      <span class="keyword">return</span> sign==<span class="number">1</span> ? Integer.MAX_VALUE: Integer.MIN_VALUE;    </div><div class="line">      res=res*<span class="number">10</span>+(tmp-<span class="string">'0'</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)res*sign;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fmrsuicidesheep%2Flights-motion-aerials&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Sort/"> #Sort </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/Math/"> #Math </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/12.31/">
-                Add Binary, Add Two Numbers
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/12.31/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/12.31/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Add_Binary">Add Binary</h2>
-<blockquote>
-<p>Given two binary strings, return their sum (also a binary string).<br>For example,<br>a = “11”<br>b = “1”<br>Return “100”.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Note:Int can be converted to String for manipulation, however, converting String to Int might cause overflow errors.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> String <span class="title">addBinary</span>(String a, String b) {</div><div class="line">		</div><div class="line">		<span class="keyword">if</span>(a==<span class="keyword">null</span>|a.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> b;</div><div class="line">		<span class="keyword">if</span>(b==<span class="keyword">null</span>|b.length()==<span class="number">0</span>)</div><div class="line">			<span class="keyword">return</span> a;</div><div class="line"><span class="comment">//switch a,b if a is shorter than b </span></div><div class="line">        <span class="keyword">if</span>(a.length() &lt; b.length()){</div><div class="line">            String temp = a;</div><div class="line">            a = b;</div><div class="line">            b = temp;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> m = a.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> n = b.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        String rst = <span class="string">""</span>;</div><div class="line">        </div><div class="line"><span class="comment">//Add from last digit</span></div><div class="line">        <span class="keyword">while</span>(n &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + (<span class="keyword">int</span>)(b.charAt(n) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">            n --;</div><div class="line">        }</div><div class="line"><span class="comment">//Add the longer digits        </span></div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(m &gt;= <span class="number">0</span>){</div><div class="line">            <span class="keyword">int</span> sum = (<span class="keyword">int</span>)(a.charAt(m) - <span class="string">'0'</span>) + res;</div><div class="line">            rst = String.valueOf(sum % <span class="number">2</span>) + rst;</div><div class="line">            res = sum / <span class="number">2</span>;</div><div class="line">            m --;</div><div class="line">        }       </div><div class="line">        </div><div class="line"><span class="comment">//Don't forget the highest digit </span></div><div class="line">        <span class="keyword">if</span> (res == <span class="number">1</span>)</div><div class="line">            rst = <span class="string">"1"</span> + rst;</div><div class="line">        <span class="keyword">return</span> rst;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Add_Two_Numbers">Add Two Numbers</h2>
-<blockquote>
-<p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.<br>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>We don’t have to compare the length of two lists an match digits since we are given reversed order. So just add each pair and the rest, pay attention to the last carries.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span>(ListNode l1, ListNode l2) {</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(l1==<span class="keyword">null</span> && l2==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        ListNode head=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode cur=head;</div><div class="line">        <span class="keyword">int</span> carries=<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>&&l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=l1.val+l2.val+carries;</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            ListNode n=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            cur.next=n;</div><div class="line">            </div><div class="line">            l1=l1.next;</div><div class="line">            l2=l2.next;</div><div class="line">            cur=cur.next; </div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l1.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l1=l1.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">while</span>(l2!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">int</span> sum=carries+l2.val;</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(sum%<span class="number">10</span>);</div><div class="line">            carries=sum/<span class="number">10</span>;</div><div class="line">            cur=cur.next;</div><div class="line">            l2=l2.next;</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(carries!=<span class="number">0</span>){</div><div class="line">            cur.next=<span class="keyword">new</span> ListNode(carries%<span class="number">10</span>);</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> head.next;</div><div class="line">           }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flabyrinth-ear%2Furchin&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1477,7 +1561,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
