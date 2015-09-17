@@ -120,6 +120,461 @@
           
           
             
+              <a class="post-title-link" href="/2015/03/13/2.12-2/">
+                Basic Data Structure
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-03-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/CC/">CC</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/13/2.12-2/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/13/2.12-2/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="List">List</h1>
+<h2 id="Iterator">Iterator</h2>
+<ul>
+<li>if structural change is made(add, remove, clear), iterator is no longer valid</li>
+<li>if iterator invokes its remove method, then iterator is still valid</li>
+<li>main advantage of remove method from iterator is that Collection’s remove method must first find the item to remove</li>
+</ul>
+<h2 id="ArrayList">ArrayList</h2>
+<ul>
+<li>advantage<ul>
+<li>calls to get and set take constant time</li>
+</ul>
+</li>
+<li>disadvantage<ul>
+<li>insertion and removal might be expensive unless changes are made at the end of arraylist</li>
+<li>inefficient for search</li>
+<li>notation of capacity(size of underlying array)</li>
+</ul>
+</li>
+<li>operation<ul>
+<li>get, set: O(1)</li>
+<li>insertion(add to front) and removal: O(n)</li>
+</ul>
+</li>
+</ul>
+<h2 id="LinkedList">LinkedList</h2>
+<ul>
+<li>advantage<ul>
+<li>insertion and removal is cheap(constant time), provided the position of the changes is known</li>
+</ul>
+</li>
+<li>disadvantage<ul>
+<li>not easily indexable</li>
+<li>calls to get and set might be expensive</li>
+<li>inefficient for search</li>
+</ul>
+</li>
+<li>operation<ul>
+<li>get, set: O(n)</li>
+<li>insertion, removal: O(1)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Stack">Stack</h2>
+<ul>
+<li>operation<ul>
+<li>push: O(1)</li>
+<li>pop: O(1)</li>
+</ul>
+</li>
+<li>implementation<ul>
+<li>list: push is to add node to the front of list and pop is to remove from front of list</li>
+<li>array: topOfStack is initialized to -1, when push, arr[topOfStack++]=element; when pop, return arr[—topOfStack]; use topOfStack==-1 to check if emtpy</li>
+</ul>
+</li>
+<li>applications<ul>
+<li>balance symbols</li>
+<li>postfix expression</li>
+<li>infix to postfix conversion</li>
+<li>method calls</li>
+</ul>
+</li>
+</ul>
+<h2 id="Queue">Queue</h2>
+<ul>
+<li>idea<ul>
+<li>insertion is done at one end</li>
+<li>deletion is doen at the other end</li>
+</ul>
+</li>
+<li>operation<ul>
+<li>enqueue: O(1)</li>
+<li>dequeue: O(1)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Nested_Class_vs-_Inner_Class">Nested Class vs. Inner Class</h2>
+<ul>
+<li>nested class<ul>
+<li>when make something a nested class, it is placed inside of another class which is the outer class</li>
+<li>must use <code>static</code> to signify it is nested; without <code>static</code>, it would be inner class</li>
+<li>nested class can be made private so that it is inaccessible from classes outside outer class</li>
+</ul>
+</li>
+<li>inner class<ul>
+<li>when declare inner class, compiler adds implicit reference to outer class that caused the inner class’s construction</li>
+<li>The inner class is useful in a situation in which each inner class object is associated with exactly one instance of an outer class object. In such a case, the inner class object can never exist without having an outer class object with which to be associated</li>
+</ul>
+</li>
+</ul>
+<h1 id="Tree">Tree</h1>
+<h2 id="General_trees">General trees</h2>
+<ul>
+<li>representation<ul>
+<li>first child + next sibling for tree node</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">class</span> TreeNode{</div><div class="line">   <span class="title">Object</span> element;</div><div class="line">   <span class="title">TreeNode</span> firstChild;</div><div class="line">   <span class="title">TreeNode</span> nextSibling;</div></pre></td></tr></table></figure>
+
+<ul>
+<li>traversal<ul>
+<li>preorder traversal<ul>
+<li>root-&gt;left-&gt;right</li>
+<li>application in file system(list all files in directory)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listAll</span>(){</div><div class="line">   listAll(<span class="number">0</span>);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">listAll</span>(<span class="keyword">int</span> depth){</div><div class="line">   printFileName(depth);</div><div class="line">   <span class="keyword">if</span>(isDirectory()){</div><div class="line">      <span class="keyword">for</span> each file <span class="keyword">in</span> the directory</div><div class="line">          listAll(depth+<span class="number">1</span>)</div><div class="line">   }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>postorder traversal<ul>
+<li>left-&gt;right-&gt;root</li>
+<li>compute size of directory</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dirSize</span>(){</div><div class="line">    <span class="keyword">int</span> totalSize = sizeOfFile();</div><div class="line">    <span class="keyword">if</span>(isDirectory()){</div><div class="line">      <span class="keyword">for</span> each file f <span class="keyword">in</span> directory</div><div class="line">          totalSize += c.dirSize()</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> totalSize;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>levelorder traversal</li>
+<li>inorder traversal<ul>
+<li>left-&gt;root-&gt;right</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>application<ul>
+<li>file system</li>
+</ul>
+</li>
+</ul>
+<h2 id="Binary_Tree">Binary Tree</h2>
+<ul>
+<li>overview<ul>
+<li>average depth is O(sqrt(N)), worst case depth is N-1</li>
+<li>for binary search tree, average depth is O(logN)</li>
+</ul>
+</li>
+<li>representation</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryNode</span></span>{</div><div class="line">   <span class="type">Object</span> element;</div><div class="line">   <span class="type">BinaryNode</span> <span class="keyword">left</span>;</div><div class="line">   <span class="type">BinaryNode</span> <span class="keyword">right</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>application<ul>
+<li>expression tree<ul>
+<li>push operands to stack while reading</li>
+<li>if see an operator, pop two trees(operands) from stack, build a new tree and push onto the stack</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Binary_Search_Tree">Binary Search Tree</h2>
+<ul>
+<li><p>overview</p>
+<ul>
+<li>values in left subtree less than root value</li>
+<li>values in right subtree larger than root value</li>
+</ul>
+</li>
+<li><p>operations</p>
+<ul>
+<li>time O(depth), for average depth, time O(logn)</li>
+</ul>
+</li>
+<li><p>balance and self-adjusting</p>
+</li>
+</ul>
+<h2 id="AVL_Tree">AVL Tree</h2>
+<ul>
+<li><p>overview</p>
+<ul>
+<li>almost identical to binary search tree</li>
+<li>for every node, height of left and right subtree differ at most 1</li>
+</ul>
+</li>
+<li><p>rotation</p>
+</li>
+</ul>
+<h2 id="Splay_Tree">Splay Tree</h2>
+<h2 id="B-Tree">B-Tree</h2>
+<h1 id="Set_and_Map_in_Standard_Libary">Set and Map in Standard Libary</h1>
+<h2 id="Set">Set</h2>
+<ul>
+<li><p>overview</p>
+<ul>
+<li>do not allow duplicate</li>
+</ul>
+</li>
+<li><p>types</p>
+<ul>
+<li>TreeSet(Sorted Set): worst time O(logn)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Map">Map</h2>
+<ul>
+<li><p>overview</p>
+<ul>
+<li>a collection of entries of keys and values</li>
+<li>keys must be unique</li>
+<li>several keys can be mapped to the same value</li>
+<li>map does not provide iterator</li>
+</ul>
+</li>
+<li><p>types</p>
+<ul>
+<li>TreeMap(Sorted Map): keep keys in sorted order</li>
+</ul>
+</li>
+</ul>
+<h1 id="Hashing">Hashing</h1>
+<ul>
+<li>overview<ul>
+<li>perform insertion, deletion, searching in average O(1) time</li>
+<li>print in sorted order in O(n) not supported</li>
+<li>load factor: ratio of number of elements in the hash table to the table size</li>
+</ul>
+</li>
+</ul>
+<h2 id="hash_function">hash function</h2>
+<ul>
+<li>determinism: given an input, always generate the same value</li>
+<li>uniformity: map inputs as evenly as possible over its output range</li>
+<li>defined range: desirable that outputs of hash function have fixed size</li>
+<li>continuity: a hash function that is used to search for similar data must be as continuous as possible, two inputs differing a little should be mapped to nearly equal hash values</li>
+<li>non-invertible: impossible to reconstruct input from hash value</li>
+</ul>
+<h2 id="collisions">collisions</h2>
+<ul>
+<li>given inputs map to the same hash value</li>
+<li>separate chaining<ul>
+<li>idea: keep a list elements that hash to the same value</li>
+<li>operations<ul>
+<li>search: first determine which list to traverse and then search appropriate list</li>
+<li>insertion: first check appropriate list to see whether element is already in place(if duplicates allowed, keep an extra field); if element is new, insert into the front of list because recently inserted elements are more likely to be used in the near future</li>
+</ul>
+</li>
+<li>disadvantage<ul>
+<li>using linkedlist</li>
+<li>slow down time to allocate new cells</li>
+<li>require implementation of another data structure</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>probing<ul>
+<li>hash function: h_i(x) = (hash(x) + f(i)) % TABLE_SIZE</li>
+<li>types<ul>
+<li>linear probing<ul>
+<li>f(i) = i</li>
+<li>primary clustering: as long as table is large enough, a free cell can always be found but might take a long time; when table is relatively empty, blocks of occupied cells start forming</li>
+<li>insertions and unsuccessful search require the same number of probes</li>
+<li>on average, successful search takes less time than unsuccessful search</li>
+</ul>
+</li>
+<li>quadratic probing<ul>
+<li>f(i) = i^2</li>
+<li>eliminate the primary clustering</li>
+<li>no guarantee finding free cell when table gets more than half full or even before if table size is not prime because at most half of the table can be used as alternative locations to resolve collisions</li>
+<li>table size must be prime, otherwise insertion might fail</li>
+<li>secondary hashing<ul>
+<li>solution by double hashing: f(i)=i*hash2(x)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="rehashing">rehashing</h2>
+<ul>
+<li>when table gets too full, operations start taking too long</li>
+<li>solution: build another table with twice size, compute new hash value for new table</li>
+<li>running time: O(n)</li>
+<li>options<ul>
+<li>rehash as soon as table is half full</li>
+<li>rehash only when an insertion fails</li>
+<li>rehash when table reaches a certain load factor</li>
+</ul>
+</li>
+</ul>
+<h2 id="hash_tables_with_worst_O(1)_time">hash tables with worst O(1) time</h2>
+<h1 id="Priority_Queue(Heap)">Priority Queue(Heap)</h1>
+<ul>
+<li>structure property<ul>
+<li>a heap is a binary tree that is completely filled(exception at the bottom level), the average height of complete binary tree is O(logN)</li>
+<li>for any element in array position i<ul>
+<li>left child: 2i</li>
+<li>right child: 2i+1</li>
+<li>parent: floor(i/2)</li>
+</ul>
+</li>
+<li>heap consists of Comparable objects</li>
+</ul>
+</li>
+<li>heap order property<ul>
+<li>smallest(largest) element at the root</li>
+<li>min-heap: for every node X, key in the parent of X is &lt;= key in X</li>
+<li>order property ensures findMin() in O(1) time</li>
+</ul>
+</li>
+<li>operations<ul>
+<li>insert()<ul>
+<li>create a hole in next available position, if order property not violated, done; otherwise, heapify up</li>
+<li>time O(logN) if inserted element is new minimum(maximum)</li>
+</ul>
+</li>
+<li>deleteMin()<ul>
+<li>find minimum is easy</li>
+<li>removing minimum will create a hole in the root, we must move last element X in the heap to correct position</li>
+<li>put X in correct spot along a path from the root containing minimum children(heapify down)</li>
+<li>time: worst O(logN), average O(logN)</li>
+</ul>
+</li>
+<li>decreaseKey()<ul>
+<li>lowers the value of item at position p by positive amount</li>
+<li>if violate order property, heapify up</li>
+<li>application: make something with higher priority</li>
+</ul>
+</li>
+<li>increaseKey()<ul>
+<li>increase the value of item at position p by positive amount</li>
+<li>if violate order property, heapify down</li>
+<li>application: scheduler drops the priority of a process that is consuming excessive CPU time</li>
+</ul>
+</li>
+<li>delete()<ul>
+<li>remove node at position p</li>
+<li>first perform decreaseKey(p,infinity) then perform deleteMin()</li>
+<li>application: process terminated by user</li>
+</ul>
+</li>
+<li>buildHeap()<ul>
+<li>done with N successive inserts</li>
+<li>insert takes O(1) average, O(logN) worst</li>
+<li>build takes O(N) average, O(NlogN) worst</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>applications<ul>
+<li>selection problem<ul>
+<li>approach one(k smallest elements)<ul>
+<li>read N elements into array and buildHeap</li>
+<li>perform k deleteMin()</li>
+<li>time: buildHeap O(N), deleteMin O(logN), total is O(N+klogN)</li>
+</ul>
+</li>
+<li>approach two(k largest elements)<ul>
+<li>idea: at any time, maintain a set of k largest elements</li>
+<li>read first k elements</li>
+<li>when a new element is read, compare it with kth largest element Sk(Sk is the smallest element in set S)<ul>
+<li>if new element is larger, it replaces Sk</li>
+<li>otherwise, do nothing</li>
+</ul>
+</li>
+<li>finally, return the smallest element in S</li>
+<li>time: build with first k elements O(k), time to process remaining (N-k)O(logk), total is O(k+(N-k)logk) = O(Nlogk)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>event simulation</li>
+</ul>
+</li>
+</ul>
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Finterscope%2Fthe-pretty-reckless-just-1%3Fin%3Dcici-42%2Fsets%2Fwinter-house&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Concepts/"> #Concepts </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/03/13/2.12/">
                 Basic Comparisons
               </a>
@@ -2107,128 +2562,6 @@ nana
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/02/25/1.5/">
-                Remove Duplicates from Sorted List I & II, Remove Duplicates from Sorted Array I & II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-02-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/02/25/1.5/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/25/1.5/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Remove_Duplicates_from_Sorted_List_I">Remove Duplicates from Sorted List I</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all duplicates such that each element appear only once.<br>For example,<br>Given 1-&gt;1-&gt;2, return 1-&gt;2.<br>Given 1-&gt;1-&gt;2-&gt;3-&gt;3, return 1-&gt;2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution">Solution</h3>
-<p>Two loops One pointer solution, only move cursor to next when we confirmed cur.next.val!==cur.val.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">    ListNode h = head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur= head;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.next.val==cur.val)</div><div class="line">        cur.next=cur.next.next;</div><div class="line">        cur=cur.next;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Or we can use only one loop:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">      ListNode h = head;</div><div class="line">      <span class="keyword">if</span>(head==<span class="keyword">null</span>||head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">      ListNode cur= head;</div><div class="line">      <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">          ListNode tmp=cur.next;</div><div class="line">          <span class="keyword">if</span>(tmp!=<span class="keyword">null</span>&&tmp.val==cur.val){</div><div class="line">              cur.next=tmp.next;}</div><div class="line">          <span class="keyword">else</span> cur=cur.next;</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> h;</div><div class="line">  }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_List_II">Remove Duplicates from Sorted List II</h2>
-<blockquote>
-<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5, return 1-&gt;2-&gt;5.<br>Given 1-&gt;1-&gt;1-&gt;2-&gt;3, return 2-&gt;3.</p>
-</blockquote>
-<h3 id="Solution-1">Solution</h3>
-<p>Similar to how we deleted duplicates in I, now we add a pre pointer to record the last non-duplicate element, and a dummy head to deal with cases where head needs to be removed. Note: we can only move pre to next when we confirmed now cur is pointing to a unique element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span>(ListNode head) {</div><div class="line">       ListNode dummy=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next=head;</div><div class="line">       ListNode cur=head, pre=dummy;</div><div class="line">       <span class="keyword">while</span>(cur!=<span class="keyword">null</span>&& cur.next!=<span class="keyword">null</span>){</div><div class="line">           <span class="comment">//if dup found, keep cur at last dup element</span></div><div class="line">           <span class="keyword">if</span>(cur.val==cur.next.val){</div><div class="line">           <span class="keyword">while</span>(cur.next!=<span class="keyword">null</span>&&cur.val==cur.next.val){cur=cur.next;}</div><div class="line">           <span class="comment">//remove the dups, remember to move the cur for detecting more dups</span></div><div class="line">           pre.next=cur.next;</div><div class="line">           cur=cur.next;}</div><div class="line">           <span class="comment">//move the two pointers next when no dup found</span></div><div class="line">           <span class="keyword">else</span> {pre=pre.next; cur=cur.next;}     </div><div class="line">       }       </div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array">Remove Duplicates from Sorted Array</h2>
-<blockquote>
-<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = [1,1,2],<br>Your function should return length = 2, and A is now [1,2].</p>
-</blockquote>
-<h3 id="Solution-2">Solution</h3>
-<p>Just replace current element with the first non-duplicate, in other words, non-equal-to-current element.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">          <span class="keyword">int</span> n=A.length;</div><div class="line">          <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">          <span class="keyword">if</span>(A.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++){</div><div class="line">              <span class="comment">//count points to the last element of our new array, i pointer finds the next non-dup element</span></div><div class="line">              <span class="keyword">if</span>(A[i]!=A[count]){A[++count]=A[i];}</div><div class="line">          }<span class="keyword">return</span> count+<span class="number">1</span>;</div><div class="line">      }</div></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Remove_Duplicates_from_Sorted_Array_II">Remove Duplicates from Sorted Array II</h2>
-<blockquote>
-<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = [1,1,1,2,2,3],<br>Your function should return length = 5, and A is now [1,1,2,2,3].</p>
-</blockquote>
-<h3 id="Solution-3">Solution</h3>
-<p>The solution is a bit tricky. We use two pointers, pre to keep the second duplicate element, and cur to keep the first element different from current duplicate element. Then we replcace the next element of pre, to whatever next element cur is pointing at.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span>(<span class="keyword">int</span>[] A) {</div><div class="line">       <span class="keyword">int</span> n = A.length;</div><div class="line">       <span class="keyword">int</span> pre=<span class="number">1</span>,cur=<span class="number">2</span>;</div><div class="line">       <span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>||n==<span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">       <span class="keyword">while</span>(cur&lt;n){</div><div class="line">           <span class="comment">//confirm no three dups in new array  </span></div><div class="line">           <span class="keyword">if</span>(A[cur]==A[pre-<span class="number">1</span>]){</div><div class="line">               <span class="comment">//cur points to the first element different from current dups</span></div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">           <span class="keyword">else</span> {</div><div class="line">               <span class="comment">//move pre to the third dup element</span></div><div class="line">               pre++;</div><div class="line">               <span class="comment">//replace the third dup with the next element </span></div><div class="line">               A[pre]=A[cur];</div><div class="line">               cur++;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> pre+<span class="number">1</span>;</div><div class="line">       </div><div class="line">   }</div></pre></td></tr></table></figure>
-
-<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flidogotsongs%2Fbastille-bad-blood-lido-remix-1&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -2269,7 +2602,7 @@ nana
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-count">54</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -2283,7 +2616,7 @@ nana
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>

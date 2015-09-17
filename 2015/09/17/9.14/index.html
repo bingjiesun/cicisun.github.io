@@ -1,0 +1,1005 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+
+
+  <meta name="keywords" content="LinkedList,Sort," />
+
+
+
+  <link rel="alternate" href="//atom.xml" title="Cici's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer // Cici's Blog </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Cici's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          Home
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          Archives
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/17/9.14/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/17/9.14/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Sort_List">Sort List</h2>
+<blockquote>
+<p>Sort a linked list in O(n log n) time using constant space complexity.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>Merge sort: use merge two sorted list as helper function. </li>
+<li>Corner case: if only one node left, just return the head to be merged </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">mergetwosortedlist</span>(ListNode a, ListNode b){</div><div class="line">		ListNode head = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">		ListNode h=head;</div><div class="line">		<span class="keyword">while</span>(a!= <span class="keyword">null</span> && b!=<span class="keyword">null</span>){</div><div class="line">			<span class="keyword">if</span>(a.val&gt;b.val){</div><div class="line">				h.next=b;</div><div class="line">				b=b.next;</div><div class="line">			}</div><div class="line">			<span class="keyword">else</span>{</div><div class="line">				h.next=a;</div><div class="line">				a=a.next;</div><div class="line">			}</div><div class="line">			h=h.next;</div><div class="line">		}</div><div class="line">		<span class="keyword">if</span>(a==<span class="keyword">null</span>) h.next=b;</div><div class="line">		<span class="keyword">else</span> h.next=a;</div><div class="line">		<span class="keyword">return</span> head;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> ListNode <span class="title">sortList</span>(ListNode head) {</div><div class="line">		<span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">		ListNode fast=head;</div><div class="line">		ListNode slow=head;</div><div class="line">		<span class="keyword">while</span>(fast.next!=<span class="keyword">null</span> &&  fast.next.next!=<span class="keyword">null</span>){</div><div class="line">			fast=fast.next.next;</div><div class="line">			slow=slow.next;</div><div class="line">		}</div><div class="line">		fast=slow.next;<span class="comment">//fast now points to mid</span></div><div class="line">		slow.next=<span class="keyword">null</span>;</div><div class="line">		slow=sortList(head);<span class="comment">//sort first half</span></div><div class="line">		fast=sortList(fast);<span class="comment">//sort second half</span></div><div class="line">		<span class="keyword">return</span> mergetwosortedlist(slow, fast);    </div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Insertion_Sort_List">Insertion Sort List</h2>
+<blockquote>
+<p>Sort a linked list using insertion sort.</p>
+</blockquote>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">insertionSortList</span>(ListNode head) {</div><div class="line">    ListNode pre=head, cur=head, post=head;</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span> ||  head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode dummyhead=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        ListNode tmp=dummyhead;</div><div class="line">        <span class="keyword">while</span>(tmp.next!=<span class="keyword">null</span> && tmp.next.val&lt;cur.val){</div><div class="line">            tmp=tmp.next;</div><div class="line">        }</div><div class="line">        <span class="comment">//now tmp is before the element larger than cur, need to insert cur before</span></div><div class="line">        post=cur.next;</div><div class="line">        cur.next=tmp.next;</div><div class="line">        tmp.next=cur;</div><div class="line">        cur=post;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> dummyhead.next;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Reverse_Linked_List">Reverse Linked List</h2>
+<blockquote>
+<p>Reverse a singly linked list.<br>click to show more hints.<br>Hint:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">reverseList</span>(ListNode head) {</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode cur=head, post=head, pre=<span class="keyword">null</span>;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        post=cur.next;</div><div class="line">        cur.next=pre;</div><div class="line">        pre=cur;</div><div class="line">        cur=post;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> pre;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">reverseList</span>(ListNode head) {</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span> head;</div><div class="line">    ListNode post=head.next;</div><div class="line">    ListNode subhead=reverseList(post);</div><div class="line">    post.next=head;</div><div class="line">    head.next=<span class="keyword">null</span>;</div><div class="line">    <span class="keyword">return</span> subhead;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Palindrome_Linked_List">Palindrome Linked List</h2>
+<blockquote>
+<p>Given a singly linked list, determine if it is a palindrome.<br>Follow up:<br>Could you do it in O(n) time and O(1) space?</p>
+</blockquote>
+<h3 id="Solution_o(n)_space">Solution o(n) space</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span>(ListNode head) {</div><div class="line">        <span class="keyword">if</span>(head==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        ListNode slow=head, fast=head;</div><div class="line">        Stack&lt;Integer&gt; stk=<span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">        stk.push(head.val);</div><div class="line">        <span class="keyword">while</span>(fast.next!=<span class="keyword">null</span> && fast.next.next!=<span class="keyword">null</span>){</div><div class="line">            fast=fast.next.next;</div><div class="line">            slow=slow.next;</div><div class="line">            stk.push(slow.val);</div><div class="line">        }</div><div class="line">        </div><div class="line">        <span class="comment">//slow is now at the lower median</span></div><div class="line">        <span class="keyword">if</span>(fast.next==<span class="keyword">null</span> && !stk.isEmpty()) stk.pop();<span class="comment">//odd number, pop median</span></div><div class="line">        slow=slow.next;</div><div class="line">        <span class="keyword">while</span>(slow!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(slow.val!=stk.pop()) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            slow=slow.next;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="Solution_o(1)_space">Solution o(1) space</h3>
+<ul>
+<li>reverse last half of the list when we reached median, compare each node</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span>(ListNode head) {</div><div class="line">        <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        ListNode slow=head, fast=head;</div><div class="line">        <span class="keyword">while</span>(fast.next!=<span class="keyword">null</span> && fast.next.next!=<span class="keyword">null</span>){</div><div class="line">            fast=fast.next.next;</div><div class="line">            slow=slow.next;</div><div class="line">        }</div><div class="line">        <span class="comment">//slow is now at the lower median</span></div><div class="line">        slow=slow.next;</div><div class="line">        ListNode pre=<span class="keyword">null</span>, cur=slow, post=cur;</div><div class="line">        <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">            post=cur.next;</div><div class="line">            cur.next=pre;</div><div class="line">            pre=cur;</div><div class="line">            cur=post;</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span>(head!=<span class="keyword">null</span> && pre!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(head.val!=pre.val) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            head=head.next;</div><div class="line">            pre=pre.next;</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Delete_Node_in_a_Linked_List">Delete Node in a Linked List</h2>
+<blockquote>
+<p>Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.<br>Supposed the linked list is 1 -&gt; 2 -&gt; 3 -&gt; 4 and you are given the third node with value 3, the linked list should become 1 -&gt; 2 -&gt; 4 after calling your function.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span>(ListNode node) {</div><div class="line">    <span class="keyword">if</span>(node==<span class="keyword">null</span> || node.next==<span class="keyword">null</span>) <span class="keyword">return</span>; <span class="comment">//tails dont matter</span></div><div class="line">    node.val = node.next.val;</div><div class="line">    node.next = node.next.next;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Remove_Linked_List_Elements">Remove Linked List Elements</h2>
+<blockquote>
+<p>Remove all elements from a linked list of integers that have value val.<br>Example<br>Given: 1 —&gt; 2 —&gt; 6 —&gt; 3 —&gt; 4 —&gt; 5 —&gt; 6, val = 6<br>Return: 1 —&gt; 2 —&gt; 3 —&gt; 4 —&gt; 5<br>Credits:<br>Special thanks to @mithmatt for adding this problem and creating all test cases.</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">removeElements</span>(ListNode head, <span class="keyword">int</span> val) {</div><div class="line">    ListNode dummyhead=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">    dummyhead.next=head;</div><div class="line">    ListNode cur=dummyhead;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span> && cur.next!=<span class="keyword">null</span>){</div><div class="line">        <span class="keyword">if</span>(cur.next.val==val){</div><div class="line">            cur.next=cur.next.next;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span> cur=cur.next; <span class="comment">// use else here because we want to keep checking continuous vals</span></div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> dummyhead.next;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Intersection_of_Two_Linked_Lists">Intersection of Two Linked Lists</h2>
+<blockquote>
+<p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For example, <span class="operator">the</span> following <span class="constant">two</span> linked lists:</div><div class="line"></div><div class="line">A:          a1 → a2</div><div class="line">                   ↘</div><div class="line">                     c1 → c2 → c3</div><div class="line">                   ↗            </div><div class="line">B:     b1 → b2 → b3</div><div class="line">begin <span class="built_in">to</span> <span class="built_in">intersect</span> <span class="keyword">at</span> node c1.</div></pre></td></tr></table></figure>
+
+<p>Notes:<br>If the two linked lists have no intersection at all, return null.<br>The linked lists must retain their original structure after the function returns.<br>You may assume there are no cycles anywhere in the entire linked structure.<br>Your code should preferably run in O(n) time and use only O(1) memory.</p>
+<h3 id="Solution-4">Solution</h3>
+<ul>
+<li>find length of two lists, and skip the longer list until starting from same length</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span>(ListNode headA, ListNode headB) {</div><div class="line">       <span class="keyword">int</span> lena=<span class="number">0</span>, lenb=<span class="number">0</span>;</div><div class="line">       ListNode cura=headA, curb=headB;</div><div class="line">       <span class="keyword">while</span>(cura!=<span class="keyword">null</span>){</div><div class="line">           cura=cura.next;</div><div class="line">           lena++;</div><div class="line">       }</div><div class="line">       <span class="keyword">while</span>(curb!=<span class="keyword">null</span>){</div><div class="line">           curb=curb.next;</div><div class="line">           lenb++;</div><div class="line">       }</div><div class="line">       cura=headA;</div><div class="line">       curb=headB;</div><div class="line">       <span class="keyword">if</span>(lena&gt;lenb){</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(lena-lenb);i++){</div><div class="line">               cura=cura.next;</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">else</span>{</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(lenb-lena);i++){</div><div class="line">               curb=curb.next;</div><div class="line">           }           </div><div class="line">       }</div><div class="line">       <span class="keyword">while</span>(cura!=<span class="keyword">null</span> && curb!=<span class="keyword">null</span>){</div><div class="line">           <span class="keyword">if</span>(cura.val==curb.val) <span class="keyword">return</span> cura;</div><div class="line">           cura=cura.next;</div><div class="line">           curb=curb.next;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<h3 id="Cycle_Solution">Cycle Solution</h3>
+<p>+Two pointer solution (O(n+m) running time, O(1) memory):<br>Maintain two pointers pA and pB initialized at the head of A and B, respectively. Then let them both traverse through the lists, one node at a time.<br>When pA reaches the end of a list, then redirect it to the head of B (yes, B, that’s right.); similarly when pB reaches the end of a list, redirect it the head of A.<br>If at any point pA meets pB, then pA/pB is the intersection node.<br>To see why the above trick would work, consider the following two lists: A = {1,3,5,7,9,11} and B = {2,4,9,11}, which are intersected at node ‘9’. Since B.length (=4) &lt; A.length (=6), pB would reach the end of the merged list first, because pB traverses exactly 2 nodes less than pA does. By redirecting pB to head A, and pA to head B, we now ask pB to travel exactly 2 more nodes than pA would. So in the second iteration, they are guaranteed to reach the intersection node at the same time.<br>If two lists have intersection, then their last nodes must be the same one. So when pA/pB reaches the end of a list, record the last element of A/B respectively. If the two last elements are not the same one, then the two lists have no intersections.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span>(ListNode headA, ListNode headB) {</div><div class="line">        <span class="keyword">if</span> (headA == <span class="keyword">null</span> || headB == <span class="keyword">null</span>) {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        }</div><div class="line">        </div><div class="line">        ListNode pA = headA;</div><div class="line">        ListNode pB = headB;</div><div class="line">        </div><div class="line">        ListNode tailA = <span class="keyword">null</span>;</div><div class="line">        ListNode tailB = <span class="keyword">null</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">            <span class="keyword">if</span> (pA == <span class="keyword">null</span>) {</div><div class="line">                pA = headB;</div><div class="line">            }</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> (pB == <span class="keyword">null</span>) {</div><div class="line">                pB = headA;</div><div class="line">            }</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> (pA.next == <span class="keyword">null</span>) {</div><div class="line">                tailA = pA;</div><div class="line">            }</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> (pB.next == <span class="keyword">null</span>) {</div><div class="line">                tailB = pB;</div><div class="line">            }</div><div class="line">            </div><div class="line">            <span class="comment">//The two links have different tails. So just return null;</span></div><div class="line">            <span class="keyword">if</span> (tailA != <span class="keyword">null</span> && tailB != <span class="keyword">null</span> && tailA != tailB) {</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            }</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> (pA == pB) {</div><div class="line">                <span class="keyword">return</span> pA;</div><div class="line">            }</div><div class="line">            </div><div class="line">            pA = pA.next;</div><div class="line">            pB = pB.next;</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Reorder_List">Reorder List</h2>
+<blockquote>
+<p>Given a singly linked list L: L0→L1→…→Ln-1→Ln,<br>reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…<br>You must do this in-place without altering the nodes’ values.<br>For example,<br>Given {1,2,3,4}, reorder it to {1,4,2,3}.</p>
+</blockquote>
+<h3 id="Solution-5">Solution</h3>
+<ul>
+<li>find median, reverse second half, merge two parts</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reorderList</span>(ListNode head) {</div><div class="line">     <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.next==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">     ListNode slow=head, fast=head;</div><div class="line">     <span class="keyword">while</span>(fast.next!=<span class="keyword">null</span> && fast.next.next!=<span class="keyword">null</span>){</div><div class="line">         fast=fast.next.next;</div><div class="line">         slow=slow.next;</div><div class="line">     }</div><div class="line">     ListNode cur=slow.next, post=cur, pre=<span class="keyword">null</span>;</div><div class="line">     slow.next=<span class="keyword">null</span>;</div><div class="line">     <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">         post=cur.next;</div><div class="line">         cur.next=pre;</div><div class="line">         pre=cur;</div><div class="line">         cur=post;</div><div class="line">     }</div><div class="line">     <span class="keyword">while</span>(pre!=<span class="keyword">null</span> && head!=<span class="keyword">null</span>){</div><div class="line">         post=head.next;</div><div class="line">         head.next=pre;</div><div class="line">         pre=pre.next;</div><div class="line">         head.next.next=post;</div><div class="line">         head=post;</div><div class="line">     }</div><div class="line"> }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Copy_List_with_Random_Pointer">Copy List with Random Pointer</h2>
+<blockquote>
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.<br>Return a deep copy of the list.</p>
+</blockquote>
+<h3 id="Recursive_Solution-1">Recursive <a href="http://traceformula.blogspot.com/2015/07/copy-list-with-random-pointers.html" target="_blank" rel="external">Solution</a></h3>
+<ul>
+<li>Java limits recursion stack size to 128k, so I hit stackoverflow, while c++ could pass the OJ…</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> RandomListNode <span class="title">copyRandomList</span>(RandomListNode head) {</div><div class="line">    <span class="keyword">if</span>(head==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    <span class="comment">//copy current node value, next pointer</span></div><div class="line">    <span class="keyword">if</span>(map.containsKey(head)){</div><div class="line">        <span class="keyword">return</span> map.get(head);</div><div class="line">    }</div><div class="line">    RandomListNode newhead = <span class="keyword">new</span> RandomListNode(head.label);</div><div class="line">    map.put(head, newhead);</div><div class="line">    newhead.next=copyRandomList(head.next);</div><div class="line">    <span class="comment">//random pointer</span></div><div class="line">    newhead.random=copyRandomList(head.random);</div><div class="line">    <span class="keyword">return</span> newhead;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution-1">Iterative Solution</h3>
+<ul>
+<li>Use a hashmap to keep <a, copyofa=""> paris, for copying random pointers</a,></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> RandomListNode <span class="title">copyRandomList</span>(RandomListNode head) {</div><div class="line">    <span class="keyword">if</span>(head == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">    HashMap&lt;RandomListNode, RandomListNode&gt; map = <span class="keyword">new</span> HashMap&lt;RandomListNode, RandomListNode&gt;();  </div><div class="line">    RandomListNode newhead = <span class="keyword">new</span> RandomListNode(head.label);  </div><div class="line">    map.put(head, newhead);  </div><div class="line">    <span class="comment">//copy next pointers</span></div><div class="line">    RandomListNode cur = head.next, copylast = newhead; </div><div class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>){  </div><div class="line">        copylast.next = <span class="keyword">new</span> RandomListNode(cur.label);  </div><div class="line">        map.put(cur, copylast.next);  </div><div class="line">        cur = cur.next;</div><div class="line">        copylast = copylast.next;</div><div class="line">    }  </div><div class="line">    cur=head; copylast=newhead;</div><div class="line">    <span class="keyword">while</span>(cur!=<span class="keyword">null</span>){</div><div class="line">        copylast.random = cur.random == <span class="keyword">null</span> ? <span class="keyword">null</span> : map.get(cur.random);</div><div class="line">        cur=cur.next;</div><div class="line">        copylast=copylast.next;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> newhead;  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/15/4.6/">Number of Islands, Word Search, Word Search II, Implement Trie (Prefix Tree)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Cici Sun" />
+          <p class="site-author-name">Cici Sun</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="//atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CICISUN/" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/insertsomthin" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/bingjiesun" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sort_List"><span class="nav-number">1.</span> <span class="nav-text">Sort List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insertion_Sort_List"><span class="nav-number">2.</span> <span class="nav-text">Insertion Sort List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse_Linked_List"><span class="nav-number">3.</span> <span class="nav-text">Reverse Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Iterative Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">3.2.</span> <span class="nav-text">Recursive Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Palindrome_Linked_List"><span class="nav-number">4.</span> <span class="nav-text">Palindrome Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution_o(n)_space"><span class="nav-number">4.1.</span> <span class="nav-text">Solution o(n) space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution_o(1)_space"><span class="nav-number">4.2.</span> <span class="nav-text">Solution o(1) space</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete_Node_in_a_Linked_List"><span class="nav-number">5.</span> <span class="nav-text">Delete Node in a Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove_Linked_List_Elements"><span class="nav-number">6.</span> <span class="nav-text">Remove Linked List Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">6.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intersection_of_Two_Linked_Lists"><span class="nav-number">7.</span> <span class="nav-text">Intersection of Two Linked Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">7.1.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cycle_Solution"><span class="nav-number">7.2.</span> <span class="nav-text">Cycle Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reorder_List"><span class="nav-number">8.</span> <span class="nav-text">Reorder List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-5"><span class="nav-number">8.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy_List_with_Random_Pointer"><span class="nav-number">9.</span> <span class="nav-text">Copy List with Random Pointer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution-1"><span class="nav-number">9.1.</span> <span class="nav-text">Recursive Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution-1"><span class="nav-number">9.2.</span> <span class="nav-text">Iterative Solution</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Cici Sun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'sunbingjie';
+      var disqus_identifier = '2015/09/17/9.14/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/17/9.14/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+</body>
+</html>

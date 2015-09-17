@@ -120,6 +120,277 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/17/9.14/">
+                Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/17/9.14/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/17/9.14/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Sort_List">Sort List</h2>
+<blockquote>
+<p>Sort a linked list in O(n log n) time using constant space complexity.</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/17/9.14/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+            <a href="/tags/Sort/"> #Sort </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/15/4.6/">
+                Number of Islands, Word Search, Word Search II, Implement Trie (Prefix Tree)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/15/4.6/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/15/4.6/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Update—Leetcode now includes this problem:</p>
+<h2 id="Number_of_Islands">Number of Islands</h2>
+<blockquote>
+<p>Given a 2d grid map of ‘1’s (land) and ‘0’s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br>Example 1:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11110</span></div><div class="line"><span class="number">11010</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00000</span></div><div class="line"><span class="label">Answer:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">11000</span></div><div class="line"><span class="number">00100</span></div><div class="line"><span class="number">00011</span></div><div class="line"><span class="label">Answer:</span> <span class="number">3</span></div></pre></td></tr></table></figure>
+
+<h2 id="Solution">Solution</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span>(<span class="keyword">char</span>[][] grid) {</div><div class="line">    <span class="keyword">if</span>(grid.length==<span class="number">0</span> || grid==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;grid.length; i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;grid[<span class="number">0</span>].length;j++){</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>){</div><div class="line">                count++;</div><div class="line">                dfs(grid, i, j);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">    <span class="keyword">if</span>(i&lt;grid.length && i&gt;=<span class="number">0</span> & j&lt;grid[<span class="number">0</span>].length && j&gt;=<span class="number">0</span> && grid[i][j]==<span class="string">'1'</span>){</div><div class="line">        grid[i][j]=<span class="string">'0'</span>;</div><div class="line">        dfs(grid, i-<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i+<span class="number">1</span>,j);</div><div class="line">        dfs(grid, i,j-<span class="number">1</span>);</div><div class="line">        dfs(grid, i,j+<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="CountIslands/Floodfill">CountIslands/Floodfill</h2>
+<blockquote>
+<p>给定matrix，只有0和1，求1的连通size，连通只算上下左右，不算对角线</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 1 0 0 1 </div><div class="line">1 1 1 0 0</div><div class="line">1 0 0 0 1</div><div class="line">0 0 0 0 1</div></pre></td></tr></table></figure>
+
+<p>Return 5， 1， 2</p>
+<h3 id="Solution-1">Solution</h3>
+<p>For each 1 in the matrix, recursivly search for the four neighbors, terminate if 0/boundary found.</p>
+<ul>
+<li>Mark each node visited to avoid duplicated counting.</li>
+</ul>
+<pre><code><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">countIslands</span>(<span class="keyword">int</span>[][] mat){
+    <span class="keyword">int</span> one,count;
+    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();
+    <span class="keyword">int</span>[][] mark = <span class="keyword">new</span> <span class="keyword">int</span>[mat.length][mat[<span class="number">0</span>].length];
+
+    <span class="keyword">if</span>(mat == <span class="keyword">null</span> || mat.length == <span class="number">0</span>) <span class="keyword">return</span> res;
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;mat.length; i++){
+        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;mat[<span class="number">0</span>].length; j++){
+
+            <span class="keyword">if</span>(mark[i][j]!=<span class="number">1</span> &amp;&amp; mat[i][j]==<span class="number">1</span>){
+                res.add(dfs(i,j, mat, mark));
+            }
+        }
+    }
+    <span class="keyword">return</span> res;
+}
+
+<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span>(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] mat, <span class="keyword">int</span>[][] mark){
+    <span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> || i&gt;mat.length-<span class="number">1</span> || j&gt;mat[<span class="number">0</span>].length-<span class="number">1</span> || mat[i][j]==<span class="number">0</span> || mark[i][j]==<span class="number">1</span>)
+        <span class="keyword">return</span> <span class="number">0</span>;
+    mark[i][j] = <span class="number">1</span>;
+    <span class="keyword">return</span> <span class="number">1</span>+dfs(i-<span class="number">1</span>,j,mat,mark)+dfs(i+<span class="number">1</span>,j,mat,mark)+dfs(i,j-<span class="number">1</span>,mat,mark)+dfs(i,j+<span class="number">1</span>,mat,mark);
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {
+    <span class="keyword">int</span>[][] test = {{<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>} ,{<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>}, {<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}, {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>}};
+    countIslands c = <span class="keyword">new</span> countIslands();
+    System.<span class="keyword">out</span>.println(c.countIslands(test));
+}
+</code></pre><hr>
+<h2 id="Word_Search">Word Search</h2>
+<blockquote>
+<p>Given a 2D board and a word, find if the word exists in the grid.<br>The word can be constructed from letters of sequentially adjacent cell, where “adjacent” cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.<br>For example,<br>Given board =</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="string">"ABCE"</span>],</div><div class="line">  [<span class="string">"SFCS"</span>],</div><div class="line">  [<span class="string">"ADEE"</span>]</div><div class="line">]</div><div class="line">word = <span class="string">"ABCCED"</span>, -&gt; returns <span class="keyword">true</span>,</div><div class="line">word = <span class="string">"SEE"</span>, -&gt; returns <span class="keyword">true</span>,</div><div class="line">word = <span class="string">"ABCB"</span>, -&gt; returns <span class="keyword">false</span>.</div></pre></td></tr></table></figure>
+
+<h3 id="Solution-2">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">boolean</span> <span class="title">exist</span>(<span class="keyword">char</span>[][] board, String word) {</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;board.length;i++){</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;board[<span class="number">0</span>].length;j++){</div><div class="line">				<span class="keyword">if</span>(dfs(board, word, i,j)){</div><div class="line">					<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">				}</div><div class="line">			}</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	}</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] a, String word, <span class="keyword">int</span> i, <span class="keyword">int</span> j){</div><div class="line">		<span class="keyword">if</span>(word.equals(<span class="string">""</span>)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		<span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> ||j&gt;=a[<span class="number">0</span>].length || i&gt;=a.length ) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">if</span>(a[i][j]==word.charAt(<span class="number">0</span>)){</div><div class="line">			<span class="keyword">char</span> tmp=a[i][j];</div><div class="line">			a[i][j]=<span class="string">'#'</span>;</div><div class="line">			<span class="keyword">boolean</span> res = (dfs(a, word.substring(<span class="number">1</span>), i+<span class="number">1</span>, j) || dfs(a, word.substring(<span class="number">1</span>), i, j+<span class="number">1</span>) || dfs(a, word.substring(<span class="number">1</span>), i-<span class="number">1</span>, j) || dfs(a, word.substring(<span class="number">1</span>), i, j-<span class="number">1</span>));</div><div class="line">			<span class="keyword">if</span>(res) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			<span class="keyword">else</span> a[i][j]=tmp;</div><div class="line">		}</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Search_II">Word Search II</h2>
+<blockquote>
+<p>Given a 2D board and a list of words from the dictionary, find all words in the board.<br>Each word must be constructed from letters of sequentially adjacent cell, where “adjacent” cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.<br>For example,<br>Given words = [“oath”,”pea”,”eat”,”rain”] and board =</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="attribute">'o</span>',<span class="attribute">'a</span>',<span class="attribute">'a</span>',<span class="attribute">'n</span>'],</div><div class="line">  [<span class="attribute">'e</span>',<span class="attribute">'t</span>',<span class="attribute">'a</span>',<span class="attribute">'e</span>'],</div><div class="line">  [<span class="attribute">'i</span>',<span class="literal">'h'</span>,<span class="attribute">'k</span>',<span class="attribute">'r</span>'],</div><div class="line">  [<span class="attribute">'i</span>',<span class="attribute">'f</span>',<span class="literal">'l'</span>,<span class="attribute">'v</span>']</div><div class="line">]</div><div class="line"><span class="keyword">Return</span> [<span class="string">"eat"</span>,<span class="string">"oath"</span>].</div><div class="line">Note:</div><div class="line">You may assume that <span class="keyword">all</span> inputs are consist <span class="keyword">of</span> lowercase letters a-z.</div></pre></td></tr></table></figure>
+
+<h3 id="DFS_Solution">DFS Solution</h3>
+<ul>
+<li>LTE… </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;String&gt; <span class="title">findWords</span>(<span class="keyword">char</span>[][] board, String[] words) {</div><div class="line">    List&lt;String&gt; res= <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">   	<span class="keyword">for</span>(String s : words){</div><div class="line">   		<span class="keyword">if</span>(exist(board, s)){</div><div class="line">   			res.add(s);</div><div class="line">   		}</div><div class="line">   	}</div><div class="line">   	<span class="keyword">return</span> res;</div><div class="line">   }</div><div class="line">   </div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">exist</span>(<span class="keyword">char</span>[][] board, String word) {</div><div class="line">       <span class="keyword">boolean</span>[][] visited= <span class="keyword">new</span> <span class="keyword">boolean</span>[board.length][board[<span class="number">0</span>].length];</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;board.length;i++){</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;board[<span class="number">0</span>].length;j++){</div><div class="line">		    <span class="keyword">if</span>(board[i][j]==word.charAt(<span class="number">0</span>)){</div><div class="line">   				<span class="keyword">if</span>(dfs(board, word, i,j, visited)){</div><div class="line">   					<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   				}</div><div class="line">		    }</div><div class="line">		}</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">dfs</span>(<span class="keyword">char</span>[][] a, String word, <span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">boolean</span>[][] visited){</div><div class="line">	<span class="keyword">if</span>(word.equals(<span class="string">""</span>)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	<span class="keyword">if</span>(i&lt;<span class="number">0</span> || j&lt;<span class="number">0</span> ||j&gt;=a[<span class="number">0</span>].length || i&gt;=a.length ) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">if</span>(a[i][j]==word.charAt(<span class="number">0</span>) && !visited[i][j]){</div><div class="line">		visited[i][j]=<span class="keyword">true</span>;</div><div class="line">		<span class="keyword">boolean</span> res = (dfs(a, word.substring(<span class="number">1</span>), i+<span class="number">1</span>, j, visited) || dfs(a, word.substring(<span class="number">1</span>), i, j+<span class="number">1</span>, visited) || dfs(a, word.substring(<span class="number">1</span>), i-<span class="number">1</span>, j, visited) || dfs(a, word.substring(<span class="number">1</span>), i, j-<span class="number">1</span>, visited));</div><div class="line">		<span class="keyword">if</span>(res) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		<span class="keyword">else</span> visited[i][j]=<span class="keyword">false</span>;</div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Trie_Solution"><a href="https://leetcode.com/discuss/51505/my-java-solution-using-trie" target="_blank" rel="external">Trie Solution</a></h3>
+<ul>
+<li>Trie helps with worst case ([“aaaaaa…aaas”, “aaaaaaa..aaaay”…])</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>{</div><div class="line">        <span class="keyword">public</span> <span class="keyword">boolean</span> isWord = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">public</span> TrieNode[] child = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">        <span class="keyword">public</span> <span class="title">TrieNode</span>(){</div><div class="line"></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    TrieNode root = <span class="keyword">new</span> TrieNode();</div><div class="line">    <span class="keyword">boolean</span>[][] flag;</div><div class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title">findWords</span>(<span class="keyword">char</span>[][] board, String[] words) {</div><div class="line">        Set&lt;String&gt; result = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">        flag = <span class="keyword">new</span> <span class="keyword">boolean</span>[board.length][board[<span class="number">0</span>].length];</div><div class="line"></div><div class="line">        addToTrie(words);</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.length; i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].length; j++){</div><div class="line">                <span class="keyword">if</span>(root.child[board[i][j] - <span class="string">'a'</span>] != <span class="keyword">null</span>){</div><div class="line">                    search(board, i, j, root, <span class="string">""</span>, result);</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LinkedList&lt;&gt;(result);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addToTrie</span>(String[] words){</div><div class="line">        <span class="keyword">for</span>(String word: words){</div><div class="line">            TrieNode node = root;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++){</div><div class="line">                <span class="keyword">char</span> ch = word.charAt(i);</div><div class="line">                <span class="keyword">if</span>(node.child[ch - <span class="string">'a'</span>] == <span class="keyword">null</span>){</div><div class="line">                    node.child[ch - <span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode();</div><div class="line">                }</div><div class="line">                node = node.child[ch - <span class="string">'a'</span>];</div><div class="line">            }</div><div class="line">            node.isWord = <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">search</span>(<span class="keyword">char</span>[][] board, <span class="keyword">int</span> i, <span class="keyword">int</span> j, TrieNode node, String word, Set&lt;String&gt; result){</div><div class="line">        <span class="keyword">if</span>(i &gt;= board.length || i &lt; <span class="number">0</span> || j &gt;= board[i].length || j &lt; <span class="number">0</span> || flag[i][j]){</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(node.child[board[i][j] - <span class="string">'a'</span>] == <span class="keyword">null</span>){</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        flag[i][j] = <span class="keyword">true</span>;</div><div class="line">        node = node.child[board[i][j] - <span class="string">'a'</span>];</div><div class="line">        <span class="keyword">if</span>(node.isWord){</div><div class="line">            result.add(word + board[i][j]);</div><div class="line">        }</div><div class="line"></div><div class="line">        search(board, i-<span class="number">1</span>, j, node, word + board[i][j], result);</div><div class="line">        search(board, i+<span class="number">1</span>, j, node, word + board[i][j], result);</div><div class="line">        search(board, i, j-<span class="number">1</span>, node, word + board[i][j], result);</div><div class="line">        search(board, i, j+<span class="number">1</span>, node, word + board[i][j], result);</div><div class="line"></div><div class="line">        flag[i][j] = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Implement_Trie_(Prefix_Tree)">Implement Trie (Prefix Tree)</h2>
+<blockquote>
+<p>Implement a trie with insert, search, and startsWith methods.<br>Note:<br>You may assume that all inputs are consist of lowercase letters a-z.</p>
+</blockquote>
+<h3 id="Solution-3">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">class TrieNode {</div><div class="line">    <span class="comment">// Initialize your data structure here.</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isword;</div><div class="line">    <span class="keyword">public</span> TrieNode[] children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">    <span class="keyword">public</span> <span class="title">TrieNode</span>() {}</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>{</div><div class="line">    <span class="keyword">private</span> TrieNode root;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">Trie</span>() {</div><div class="line">        root = <span class="keyword">new</span> TrieNode();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Inserts a word into the trie.</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span>(String word) {</div><div class="line">        TrieNode r=root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;word.length();i++){</div><div class="line">            <span class="keyword">if</span>(r.children[word.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>){</div><div class="line">                r.children[word.charAt(i)-<span class="string">'a'</span>]=<span class="keyword">new</span> TrieNode();</div><div class="line">            }</div><div class="line">            r=r.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        }</div><div class="line">        r.isword=<span class="keyword">true</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Returns if the word is in the trie.</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span>(String word) {</div><div class="line">        TrieNode r=root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;word.length();i++){</div><div class="line">            <span class="keyword">if</span>(r.children[word.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            r=r.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> r.isword;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Returns if there is any word in the trie</span></div><div class="line">    <span class="comment">// that starts with the given prefix.</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span>(String prefix) {</div><div class="line">        TrieNode r=root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;prefix.length();i++){</div><div class="line">            <span class="keyword">if</span>(r.children[prefix.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            r=r.children[prefix.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// Your Trie object will be instantiated and called as such:</span></div><div class="line"><span class="comment">// Trie trie = new Trie();</span></div><div class="line"><span class="comment">// trie.insert("somestring");</span></div><div class="line"><span class="comment">// trie.search("key");</span></div></pre></td></tr></table></figure>
+
+<iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdanielasings%2Fgnarls-barkley-crazy-cover-by%3Fin%3Dcici-42%2Fsets%2Fsuits&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/Trie/"> #Trie </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/14/9.13/">
                 Spiral Matrix, Spiral Matrix II, Search a 2D Matrix, Search a 2D Matrix II, Set Matrix Zeroes, Pascal's Triangle, Pascal's Triangle II
               </a>
@@ -189,7 +460,98 @@
           
             <a href="/tags/Array/"> #Array </a>
           
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/14/5.30/">
+                Jump Game, Jump Game II, Climbing Stairs
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/14/5.30/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/14/5.30/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Jump_Game">Jump Game</h2>
+<blockquote>
+<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Determine if you are able to reach the last index.<br>For example:<br>A = [2,3,1,1,4], return true.<br>A = [3,2,1,0,4], return false.</p>
+</blockquote>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/14/5.30/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
             <a href="/tags/DP/"> #DP </a>
+          
+            <a href="/tags/Array/"> #Array </a>
           
         </div>
       
@@ -770,291 +1132,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/06/1.24/">
-                Plus One, Largest Number, Pow(x, n), Sqrt(x) , Min Stack, Word Ladder, Word Ladder II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/06/1.24/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/06/1.24/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Plus_One">Plus One</h2>
-<blockquote>
-<p>Given a non-negative number represented as an array of digits, plus one to the number.<br>The digits are stored such that the most significant digit is at the head of the list.</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/06/1.24/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Math/"> #Math </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/String/"> #String </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/03/4.12/">
-                Single Number, Single Number II, Decode Ways, Triangle
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/03/4.12/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/4.12/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Single_Number">Single Number</h2>
-<blockquote>
-<p>Given an array of integers, every element appears twice except for one. Find that single one.<br>Note:<br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/03/4.12/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DFS/"> #DFS </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/Bit-Manipulation/"> #Bit Manipulation </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/03/4.18/">
-                The Great Tree-List Recursion Problem, LRU Cache, Search Insert Position, Longest Common Prefix, Linked List Cycle, Linked List Cycle II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-04
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/03/4.18/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/4.18/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="First_Problem_ఠ_ఠ">First Problem ఠ_ఠ</h2>
-<blockquote>
-<p>Convert a given Binary Tree to Doubly Linked List</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/03/4.18/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Tree/"> #Tree </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/LinkedList/"> #LinkedList </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1095,7 +1172,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-count">54</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1109,7 +1186,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
