@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-09-20
+          Posted on 2015-09-23
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/19/9.15/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/9.15/"></span>
+            <a href="/2015/09/23/9.15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/23/9.15/"></span>
             </a>
           </span>
           
@@ -167,6 +167,7 @@
 </blockquote>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">  / <span class="command">\</span></div><div class="line"> /   <span class="command">\</span></div><div class="line">0 --- 2</div><div class="line">     / <span class="command">\</span></div><div class="line">     <span class="command">\_</span>/</div></pre></td></tr></table></figure>
 
+<a id="more"></a>
 <h3 id="BFS_Solution">BFS Solution</h3>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span>(UndirectedGraphNode node) {</div><div class="line">       <span class="comment">// use a map to save cloned nodes</span></div><div class="line">       <span class="keyword">if</span>(node==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();</div><div class="line">       LinkedList&lt;UndirectedGraphNode&gt; q = <span class="keyword">new</span> LinkedList&lt;UndirectedGraphNode&gt;();</div><div class="line">       q.offer(node);</div><div class="line">       <span class="comment">// clone the root</span></div><div class="line">       map.put(node, <span class="keyword">new</span> UndirectedGraphNode(node.label));</div><div class="line">       <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">           UndirectedGraphNode cur = q.poll();</div><div class="line">           <span class="keyword">for</span> (UndirectedGraphNode neighbor : cur.neighbors) {</div><div class="line">               <span class="keyword">if</span>(!map.containsKey(neighbor)){</div><div class="line">                   map.put(neighbor, <span class="keyword">new</span> UndirectedGraphNode(neighbor.label));</div><div class="line">                   q.offer(neighbor);</div><div class="line">               }</div><div class="line">               map.get(cur).neighbors.add(map.get(neighbor));</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> map.get(node);</div><div class="line">   }</div></pre></td></tr></table></figure>
 
@@ -241,13 +242,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/19/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers</a>
+              <a href="/2015/09/23/9.16/">Lowest Common Ancestor of a Binary Search Tree, Lowest Common Ancestor of a Binary Tree, Invert Binary Tree, Kth Smallest Element in a BST, Binary Tree Right Side View, Count Complete Tree Nodes</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/17/9.14/">Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer</a>
+              <a href="/2015/09/19/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers</a>
             
           </div>
         </div>
@@ -940,8 +941,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/09/19/9.15/';
-      var disqus_url = 'http://sunbingjie.tk/2015/09/19/9.15/';
+      var disqus_identifier = '2015/09/23/9.15/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/23/9.15/';
 
       (function(){
         var dsq = document.createElement('script');
