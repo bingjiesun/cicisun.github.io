@@ -1,0 +1,961 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+
+
+  <meta name="keywords" content="Graph,BFS,DFS,Backtracking,LinkedList," />
+
+
+
+  <link rel="alternate" href="//atom.xml" title="Cici's Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Clone Graph, Populating Next Right Pointers in Each Node, Populating Next Right Pointers in Each Node II, Word Ladder, Word Ladder II // Cici's Blog </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Cici's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          Home
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          Categories
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          Archives
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          Tags
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          About
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Clone Graph, Populating Next Right Pointers in Each Node, Populating Next Right Pointers in Each Node II, Word Ladder, Word Ladder II
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/19/9.15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/9.15/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h2 id="Clone_Graph">Clone Graph</h2>
+<blockquote>
+<p>Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.<br>OJ’s undirected graph serialization:<br>Nodes are labeled uniquely.<br>We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.<br>As an example, consider the serialized graph {0,1,2#1,2#2,2}.<br>The graph has a total of three nodes, and therefore contains three parts as separated by #.<br>First node is labeled as 0. Connect node 0 to both nodes 1 and 2.<br>Second node is labeled as 1. Connect node 1 to node 2.<br>Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.<br>Visually, the graph looks like the following:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">  / <span class="command">\</span></div><div class="line"> /   <span class="command">\</span></div><div class="line">0 --- 2</div><div class="line">     / <span class="command">\</span></div><div class="line">     <span class="command">\_</span>/</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution">BFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span>(UndirectedGraphNode node) {</div><div class="line">       <span class="comment">// use a map to save cloned nodes</span></div><div class="line">       <span class="keyword">if</span>(node==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();</div><div class="line">       LinkedList&lt;UndirectedGraphNode&gt; q = <span class="keyword">new</span> LinkedList&lt;UndirectedGraphNode&gt;();</div><div class="line">       q.offer(node);</div><div class="line">       <span class="comment">// clone the root</span></div><div class="line">       map.put(node, <span class="keyword">new</span> UndirectedGraphNode(node.label));</div><div class="line">       <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">           UndirectedGraphNode cur = q.poll();</div><div class="line">           <span class="keyword">for</span> (UndirectedGraphNode neighbor : cur.neighbors) {</div><div class="line">               <span class="keyword">if</span>(!map.containsKey(neighbor)){</div><div class="line">                   map.put(neighbor, <span class="keyword">new</span> UndirectedGraphNode(neighbor.label));</div><div class="line">                   q.offer(neighbor);</div><div class="line">               }</div><div class="line">               map.get(cur).neighbors.add(map.get(neighbor));</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> map.get(node);</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Populating_Next_Right_Pointers_in_Each_Node">Populating Next Right Pointers in Each Node</h2>
+<blockquote>
+<p>Given a binary tree</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">    struct TreeLinkNode {</div><div class="line">      TreeLinkNode *left;</div><div class="line">      TreeLinkNode *right;</div><div class="line">      TreeLinkNode *next;</div><div class="line">    }</div><div class="line">Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be <span class="operator"><span class="keyword">set</span> <span class="keyword">to</span> <span class="literal">NULL</span>.</span></div><div class="line"><span class="keyword">Initially</span>, <span class="keyword">all</span> <span class="keyword">next</span> pointers <span class="keyword">are</span> <span class="keyword">set</span> <span class="keyword">to</span> <span class="literal">NULL</span>.</div><div class="line">Note:</div><div class="line">You may <span class="keyword">only</span> <span class="keyword">use</span> constant extra <span class="keyword">space</span>.</div><div class="line">You may assume that it <span class="keyword">is</span> a perfect <span class="built_in">binary</span> tree (ie, <span class="keyword">all</span> <span class="keyword">leaves</span> <span class="keyword">are</span> <span class="keyword">at</span> the same <span class="keyword">level</span>, <span class="keyword">and</span> every parent has two children).</div><div class="line"><span class="keyword">For</span> example,</div><div class="line">Given the following perfect <span class="built_in">binary</span> tree,</div><div class="line">         <span class="number">1</span></div><div class="line">       /  \</div><div class="line">      <span class="number">2</span>    <span class="number">3</span></div><div class="line">     / \  / \</div><div class="line">    <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span></div><div class="line"><span class="keyword">After</span> calling your <span class="keyword">function</span>, the tree should look <span class="keyword">like</span>:</div><div class="line">         <span class="number">1</span> -&gt; <span class="literal">NULL</span></div><div class="line">       /  \</div><div class="line">      <span class="number">2</span> -&gt; <span class="number">3</span> -&gt; <span class="literal">NULL</span></div><div class="line">     / \  / \</div><div class="line">    <span class="number">4</span>-&gt;<span class="number">5</span>-&gt;<span class="number">6</span>-&gt;<span class="number">7</span> -&gt; <span class="literal">NULL</span></div></pre></td></tr></table></figure>
+
+<h3 id="Two_pointer_Solution">Two pointer Solution</h3>
+<ul>
+<li>cur-keep the start of next level ; last-keep iterating the last level</li>
+<li>if last has left child, then child’s next=last.right</li>
+<li>if last has no left child, then reached leaf</li>
+<li>if last has next, then right child’s next=last.next.left</li>
+<li>if last has no next, we reached end of that layer</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span>(TreeLinkNode root) {</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        TreeLinkNode last = root; <span class="comment">//previous level pointer</span></div><div class="line">        TreeLinkNode cur = <span class="keyword">null</span>;<span class="comment">//current level head</span></div><div class="line">        <span class="keyword">while</span>(last!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(cur==<span class="keyword">null</span>){</div><div class="line">                cur=last.left;<span class="comment">//cur level head-leftmost subtree</span></div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(last.left!=<span class="keyword">null</span>){<span class="comment">//如果一个子节点是根节点的左子树，那么它的next就是该根节点的右子树</span></div><div class="line">                last.left.next=last.right;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(last.next!=<span class="keyword">null</span>){<span class="comment">//如果一个子节点是根节点的右子树，那么它的next就是该根节点next节点的左子树</span></div><div class="line">                last.right.next=last.next.left;</div><div class="line">                last=last.next;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                last=cur;</div><div class="line">                cur=<span class="keyword">null</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Populating_Next_Right_Pointers_in_Each_Node_II">Populating Next Right Pointers in Each Node II</h2>
+<blockquote>
+<p>Follow up for problem “Populating Next Right Pointers in Each Node”.<br>What if the given tree could be any binary tree? Would your previous solution still work?<br>Note:<br>You may only use constant extra space.<br>For example,</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given the following binary tree,</div><div class="line">         <span class="number">1</span></div><div class="line">       <span class="subst">/</span>  <span class="subst">\</span></div><div class="line">      <span class="number">2</span>    <span class="number">3</span></div><div class="line">     <span class="subst">/</span> <span class="subst">\</span>    <span class="subst">\</span></div><div class="line">    <span class="number">4</span>   <span class="number">5</span>    <span class="number">7</span></div><div class="line">After calling your function, the tree should look like:</div><div class="line">         <span class="number">1</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div><div class="line">       <span class="subst">/</span>  <span class="subst">\</span></div><div class="line">      <span class="number">2</span> <span class="subst">-&gt; </span><span class="number">3</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div><div class="line">     <span class="subst">/</span> <span class="subst">\</span>    <span class="subst">\</span></div><div class="line">    <span class="number">4</span><span class="subst">-&gt; </span><span class="number">5</span> <span class="subst">-&gt; </span><span class="number">7</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div></pre></td></tr></table></figure>
+
+<h3 id="Four_Pointer_Solution">Four Pointer <a href="http://blog.csdn.net/linhuanmars/article/details/23499383" target="_blank" rel="external">Solution</a></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span>(TreeLinkNode root) {</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    TreeLinkNode lastHead = root; <span class="comment">//previous level head</span></div><div class="line">    TreeLinkNode pre = <span class="keyword">null</span>;<span class="comment">//current level pointer</span></div><div class="line">    TreeLinkNode curHead = <span class="keyword">null</span>;<span class="comment">//current level head</span></div><div class="line">    <span class="keyword">while</span>(lastHead!=<span class="keyword">null</span>)</div><div class="line">    {</div><div class="line">        TreeLinkNode lastCur = lastHead;<span class="comment">//previous level pointer</span></div><div class="line">        <span class="keyword">while</span>(lastCur != <span class="keyword">null</span>)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span>(lastCur.left!=<span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">if</span>(curHead == <span class="keyword">null</span>)</div><div class="line">                {</div><div class="line">                    curHead = lastCur.left;</div><div class="line">                    pre = curHead;</div><div class="line">                }</div><div class="line">                <span class="keyword">else</span></div><div class="line">                {</div><div class="line">                    pre.next = lastCur.left;</div><div class="line">                    pre = pre.next;</div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(lastCur.right!=<span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">if</span>(curHead == <span class="keyword">null</span>)</div><div class="line">                {</div><div class="line">                    curHead = lastCur.right;</div><div class="line">                    pre = curHead;</div><div class="line">                }</div><div class="line">                <span class="keyword">else</span></div><div class="line">                {</div><div class="line">                    pre.next = lastCur.right;</div><div class="line">                    pre = pre.next;</div><div class="line">                }</div><div class="line">            }                </div><div class="line">            lastCur = lastCur.next;</div><div class="line"></div><div class="line">        }</div><div class="line">        lastHead = curHead;</div><div class="line">        curHead = <span class="keyword">null</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Ladder_II">Word Ladder II</h2>
+<blockquote>
+<p>Word Ladder II My Submissions Question Solution<br>Total Accepted: 31002 Total Submissions: 234902 Difficulty: Hard<br>Given two words (beginWord and endWord), and a dictionary’s word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:<br>Only one letter can be changed at a time<br>Each intermediate word must exist in the word list<br>For example,<br>Given:<br>beginWord = “hit”<br>endWord = “cog”<br>wordList = [“hot”,”dot”,”dog”,”lot”,”log”]<br>Return<br>  [<br>    [“hit”,”hot”,”dot”,”dog”,”cog”],<br>    [“hit”,”hot”,”lot”,”log”,”cog”]<br>  ]<br>Note:<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.</p>
+</blockquote>
+<h3 id="BFS_+_DFS_Solution">BFS + DFS Solution</h3>
+<ul>
+<li>BFS once to find shortest path, stored all neighbors, and ladder map </li>
+<li>DFS to output shortest path, start from end, check each time to see if we are on the shortest path (ladder.get(s) == (ladder.get(end)-1))</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">findLadders</span>(String beginWord, String endWord, Set&lt;String&gt; wordList) {</div><div class="line">        HashMap&lt;String, List&lt;String&gt;&gt; neighbors = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line">        HashMap&lt;String, Integer&gt; ladder = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">        bfs(beginWord, endWord, wordList, neighbors, ladder);</div><div class="line">        List&lt;String&gt; path=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        List&lt;List&lt;String&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        dfs(neighbors, ladder, path, res, endWord, beginWord);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>( HashMap&lt;String, List&lt;String&gt;&gt; neighbors, HashMap&lt;String, Integer&gt; ladder, List&lt;String&gt; path, List&lt;List&lt;String&gt;&gt; res, String end, String start){</div><div class="line">        path.add(end);</div><div class="line">        <span class="keyword">if</span>(end.equals(start)){</div><div class="line">            Collections.reverse(path);</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(path));</div><div class="line">            Collections.reverse(path);</div><div class="line">            path.remove(path.size()-<span class="number">1</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        List&lt;String&gt; parents = neighbors.get(end);</div><div class="line">        <span class="keyword">for</span>(String s : parents){</div><div class="line">            <span class="keyword">if</span>(ladder.get(s) == (ladder.get(end)-<span class="number">1</span>)){</div><div class="line">                dfs(neighbors, ladder, path, res, s, start);</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        path.remove(path.size()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bfs</span>(String begin, String end, Set&lt;String&gt; wordlist, HashMap&lt;String, List&lt;String&gt;&gt; neighbors, HashMap&lt;String, Integer&gt; ladder){</div><div class="line">        wordlist.add(begin); wordlist.add(end);</div><div class="line">        LinkedList&lt;String&gt; q = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        q.offer(begin);</div><div class="line">        ladder.put(begin, <span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span>(String s : wordlist){<span class="comment">//create adjacency list for each word</span></div><div class="line">            neighbors.put(s, <span class="keyword">new</span> ArrayList&lt;String&gt;());</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">            String cur=q.poll();</div><div class="line">            ArrayList&lt;String&gt; nextlayer = findnext(cur, wordlist);</div><div class="line">            <span class="keyword">for</span>(String next : nextlayer){</div><div class="line">                neighbors.get(cur).add(next);<span class="comment">//add to adjacency list</span></div><div class="line">                <span class="keyword">if</span>(!ladder.containsKey(next)){<span class="comment">//update shortest path count </span></div><div class="line">                    ladder.put(next, ladder.get(cur) + <span class="number">1</span>);</div><div class="line">                    q.offer(next);</div><div class="line">                }</div><div class="line">                </div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;String&gt; <span class="title">findnext</span>(String cur, Set&lt;String&gt; wordlist){</div><div class="line">        ArrayList&lt;String&gt; nextlayer = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;cur.length();i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>; c&lt;=<span class="string">'z'</span>; c++){</div><div class="line">                <span class="keyword">if</span>(!(cur.charAt(i)==c)){</div><div class="line">                    String next=cur.substring(<span class="number">0</span>,i) + c + cur.substring(i+<span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span>(wordlist.contains(next)) nextlayer.add(next);</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> nextlayer;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="Two_End_BFS_Solution">Two End BFS Solution</h3>
+<ul>
+<li>BFS from two end finds shortest path fast, stored in a map</li>
+<li>DFS to output shortest paths</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">findLadders</span>(String start, String end, Set&lt;String&gt; dict) {</div><div class="line">	<span class="comment">// hash set for both ends</span></div><div class="line">	Set&lt;String&gt; set1 = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">	Set&lt;String&gt; set2 = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// initial words in both ends</span></div><div class="line">	set1.add(start);</div><div class="line">	set2.add(end);</div><div class="line"></div><div class="line">	<span class="comment">// we use a map to help construct the final result</span></div><div class="line">	HashMap&lt;String, List&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// build the map</span></div><div class="line">	helper(dict, set1, set2, map, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">	List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">	List&lt;String&gt; sol = <span class="keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(start));</div><div class="line"></div><div class="line">	<span class="comment">// recursively build the final result</span></div><div class="line">	generateList(start, end, map, sol, res);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">boolean</span> helper(Set&lt;String&gt; dict, Set&lt;String&gt; set1, Set&lt;String&gt; set2, HashMap&lt;String, List&lt;String&gt;&gt; map, <span class="keyword">boolean</span> flip) {</div><div class="line">	<span class="keyword">if</span> (set1.isEmpty()) {</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (set1.size() &gt; set2.size()) {</div><div class="line">		<span class="keyword">return</span> helper(dict, set2, set1, map, !flip);</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">// remove words on current both ends from the dict</span></div><div class="line">	dict.removeAll(set1);</div><div class="line">	dict.removeAll(set2);</div><div class="line"></div><div class="line">	<span class="comment">// as we only need the shortest paths</span></div><div class="line">	<span class="comment">// we use a boolean value help early termination</span></div><div class="line">	<span class="keyword">boolean</span> done = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">	<span class="comment">// set for the next level</span></div><div class="line">	Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// for each string in end 1</span></div><div class="line">	<span class="keyword">for</span> (String str : set1) {</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++) {</div><div class="line">			<span class="comment">// change one character for every position</span></div><div class="line">			<span class="keyword">for</span> (<span class="keyword">char</span> ch = <span class="string">'a'</span>; ch &lt;= <span class="string">'z'</span>; ch++) {</div><div class="line">				<span class="keyword">char</span>[] chars = str.toCharArray();</div><div class="line">				chars[i] = ch;</div><div class="line">				String word = <span class="keyword">new</span> String(chars);</div><div class="line">				<span class="comment">// make sure we construct the tree in the correct direction</span></div><div class="line">				String key = flip ? word : str;</div><div class="line">				String val = flip ? str : word;</div><div class="line">				List&lt;String&gt; list = map.containsKey(key) ? map.get(key) : <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">				<span class="keyword">if</span> (set2.contains(word)) {</div><div class="line">					done = <span class="keyword">true</span>;</div><div class="line">					list.add(val);</div><div class="line">					map.put(key, list);</div><div class="line">				} </div><div class="line">				<span class="keyword">if</span> (!done && dict.contains(word)) {</div><div class="line">					set.add(word);</div><div class="line">					list.add(val);</div><div class="line">					map.put(key, list);</div><div class="line">				}</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">// early terminate if done is true</span></div><div class="line">	<span class="keyword">return</span> done || helper(dict, set2, set, map, !flip);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> generateList(String start, String end, HashMap&lt;String, List&lt;String&gt;&gt; map, List&lt;String&gt; sol, List&lt;List&lt;String&gt;&gt; res) {</div><div class="line">	<span class="keyword">if</span> (start.equals(end)) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(sol));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	<span class="comment">// need this check in case the diff between start and end happens to be one</span></div><div class="line">	<span class="comment">// e.g "a", "c", {"a", "b", "c"}</span></div><div class="line">	<span class="keyword">if</span> (!map.containsKey(start)) {</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	<span class="keyword">for</span> (String word : map.get(start)) {</div><div class="line">		sol.add(word);</div><div class="line">		generateList(word, end, map, sol, res);</div><div class="line">		sol.remove(sol.size() - <span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Graph/"> #Graph </a>
+          
+            <a href="/tags/BFS/"> #BFS </a>
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/Backtracking/"> #Backtracking </a>
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/19/4.11/">Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/17/9.14/">Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Cici Sun" />
+          <p class="site-author-name">Cici Sun</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="//atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CICISUN/" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/insertsomthin" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/bingjiesun" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Clone_Graph"><span class="nav-number">1.</span> <span class="nav-text">Clone Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">BFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Populating_Next_Right_Pointers_in_Each_Node"><span class="nav-number">2.</span> <span class="nav-text">Populating Next Right Pointers in Each Node</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Two_pointer_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">Two pointer Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Populating_Next_Right_Pointers_in_Each_Node_II"><span class="nav-number">3.</span> <span class="nav-text">Populating Next Right Pointers in Each Node II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Four_Pointer_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">Four Pointer Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word_Ladder_II"><span class="nav-number">4.</span> <span class="nav-text">Word Ladder II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFS_+_DFS_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">BFS + DFS Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Two_End_BFS_Solution"><span class="nav-number">4.2.</span> <span class="nav-text">Two End BFS Solution</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Cici Sun</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'sunbingjie';
+      var disqus_identifier = '2015/09/19/9.15/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/19/9.15/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+</body>
+</html>

@@ -120,6 +120,428 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/23/9.16/">
+                Lowest Common Ancestor of a Binary Search Tree, Lowest Common Ancestor of a Binary Tree, Invert Binary Tree, Kth Smallest Element in a BST, Binary Tree Right Side View, Count Complete Tree Nodes
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-23
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/23/9.16/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/23/9.16/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Lowest_Common_Ancestor_of_a_Binary_Search_Tree">Lowest Common Ancestor of a Binary Search Tree</h2>
+<blockquote>
+<p>Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.<br>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">     _______6______</div><div class="line">    /              <span class="command">\</span></div><div class="line"> ___2__          ___8__</div><div class="line">/      <span class="command">\ </span>       /      <span class="command">\</span></div><div class="line">0      _4       7       9</div><div class="line">      /  <span class="command">\</span></div><div class="line">      3   5</div></pre></td></tr></table></figure>
+
+<p>For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.</p>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>As long as both p and q are in the same subtree (meaning their values are both smaller or both larger than root’s), move down current node, walks straight from the root to the LCA</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span>(TreeNode root, TreeNode p, TreeNode q) {</div><div class="line">    <span class="keyword">while</span>((p.val-root.val) * (q.val-root.val) &gt; <span class="number">0</span>){</div><div class="line">        root = p.val &gt; root.val? root.right : root.left;</div><div class="line">    }   </div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Lowest_Common_Ancestor_of_a_Binary_Tree">Lowest Common Ancestor of a Binary Tree</h2>
+<blockquote>
+<p>Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.<br>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">     _______3______</div><div class="line">    /              <span class="command">\</span></div><div class="line"> ___5__          ___1__</div><div class="line">/      <span class="command">\ </span>       /      <span class="command">\</span></div><div class="line">6      _2       0       8</div><div class="line">      /  <span class="command">\</span></div><div class="line">      7   4</div></pre></td></tr></table></figure>
+
+<p>For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.</p>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span>(TreeNode root, TreeNode p, TreeNode q) {</div><div class="line">    <span class="comment">//if q/p found, return the node, if reached null, return null</span></div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span> || root==q || root==p) <span class="keyword">return</span> root;</div><div class="line">    TreeNode left= lowestCommonAncestor(root.left, p, q);</div><div class="line">    TreeNode right= lowestCommonAncestor(root.right, p, q);</div><div class="line">    <span class="keyword">return</span> (left!=<span class="keyword">null</span> && right!=<span class="keyword">null</span>) ? root : (left!=<span class="keyword">null</span>) ? left : right;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>—</p>
+<h2 id="Invert_Binary_Tree">Invert Binary Tree</h2>
+<blockquote>
+<p>Invert a binary tree.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">     4</div><div class="line">   /   <span class="command">\</span></div><div class="line">  2     7</div><div class="line"> / <span class="command">\ </span>  / <span class="command">\</span></div><div class="line">1   3 6   9</div><div class="line">to</div><div class="line">     4</div><div class="line">   /   <span class="command">\</span></div><div class="line">  7     2</div><div class="line"> / <span class="command">\ </span>  / <span class="command">\</span></div><div class="line">9   6 3   1</div></pre></td></tr></table></figure>
+
+<p>Trivia:<br>This problem was inspired by this original tweet by Max Howell:<br>Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.</p>
+<h3 id="DFS_Solution">DFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span> || (root.left==<span class="keyword">null</span> && root.right==<span class="keyword">null</span>)) <span class="keyword">return</span> root;</div><div class="line">    TreeNode tmp=root.left;</div><div class="line">    root.left=root.right;</div><div class="line">    root.right=tmp;</div><div class="line">    <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>){</div><div class="line">        invertTree(root.left);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>){</div><div class="line">        invertTree(root.right);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Or more concisely</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span>(TreeNode root) {</div><div class="line">   <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">   TreeNode tmpright=root.right;</div><div class="line">   root.right=invertTree(root.left);</div><div class="line">   root.left=invertTree(tmpright);</div><div class="line">   <span class="keyword">return</span> root;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution">BFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span>(TreeNode root) {</div><div class="line">   <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">   LinkedList&lt;TreeNode&gt; q=<span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">   q.offer(root);</div><div class="line">   <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">       TreeNode cur=q.poll();</div><div class="line">       TreeNode tmp=cur.left;</div><div class="line">       cur.left=cur.right;</div><div class="line">       cur.right=tmp;</div><div class="line">       <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>) q.offer(cur.left);</div><div class="line">       <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>) q.offer(cur.right);</div><div class="line">   }</div><div class="line">   <span class="keyword">return</span> root;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Kth_Smallest_Element_in_a_BST">Kth Smallest Element in a BST</h2>
+<blockquote>
+<p>Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.<br>Note:<br>You may assume k is always valid, 1 ≤ k ≤ BST’s total elements.<br>Follow up:<br>What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?<br>Hint:<br>Try to utilize the property of a BST.<br>What if you could modify the BST node’s structure?<br>The optimal runtime complexity is O(height of BST).</p>
+</blockquote>
+<h3 id="O(n)_Solution">O(n) Solution</h3>
+<ul>
+<li>Inorder walk, stop when we get to k elementsm, return the kth. </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span>(TreeNode root, <span class="keyword">int</span> k) {</div><div class="line">        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        inorder(root, k, list);</div><div class="line">        <span class="keyword">return</span> list.get(k-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inorder</span>(TreeNode root, <span class="keyword">int</span> k,  ArrayList&lt;Integer&gt; list){</div><div class="line">    <span class="keyword">if</span>(list.size()&gt;=k) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    inorder(root.left, k, list);</div><div class="line">    list.add(root.val);</div><div class="line">    inorder(root.right, k, list);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Augmented_Tree_O(logn)_Solution">Augmented Tree O(logn) Solution</h3>
+<ul>
+<li>Binary search on left subtree count k</li>
+<li>If count == k+1 then current root is kth smallest</li>
+<li>Otherwise keep looking</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNodeWithCount</span></span>{</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line">    TreeNodeWithCount left;</div><div class="line">    TreeNodeWithCount right;</div><div class="line">    TreeNodeWithCount(<span class="keyword">int</span> x) {val = x; count = <span class="number">1</span>;};</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> TreeNodeWithCount <span class="title">buildtree</span>(TreeNode root){</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        TreeNodeWithCount rootWithCount = <span class="keyword">new</span> TreeNodeWithCount(root.val);</div><div class="line">        rootWithCount.left = buildtree(root.left);</div><div class="line">        rootWithCount.right = buildtree(root.right);</div><div class="line">        <span class="keyword">if</span> (rootWithCount.left != <span class="keyword">null</span>) rootWithCount.count += rootWithCount.left.count;</div><div class="line">        <span class="keyword">if</span> (rootWithCount.right != <span class="keyword">null</span>) rootWithCount.count += rootWithCount.right.count;</div><div class="line">        <span class="keyword">return</span> rootWithCount;</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> TreeNodeWithCount <span class="title">findkthsmallest</span>(TreeNodeWithCount root, <span class="keyword">int</span> k){</div><div class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>)  count=root.left.count;</div><div class="line">    <span class="keyword">if</span>(count&gt;=k){</div><div class="line">      <span class="keyword">return</span> findkthsmallest(root.left, k);</div><div class="line">    }</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(count&lt;k-<span class="number">1</span>){</div><div class="line">      <span class="keyword">return</span> findkthsmallest(root.right, k-count-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">  }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Binary_Tree_Right_Side_View">Binary Tree Right Side View</h2>
+<blockquote>
+<p>Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="type">For</span> example:</div><div class="line"><span class="type">Given</span> the following binary tree,</div><div class="line">   <span class="number">1</span>            &lt;-<span class="comment">--</span></div><div class="line"> /   \</div><div class="line"><span class="number">2</span>     <span class="number">3</span>         &lt;-<span class="comment">--</span></div><div class="line"> \     \</div><div class="line">  <span class="number">5</span>     <span class="number">4</span>       &lt;-<span class="comment">--</span></div><div class="line"><span class="type">You</span> should return [<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>].</div></pre></td></tr></table></figure>
+
+<h3 id="Iterative_Solution">Iterative Solution</h3>
+<ul>
+<li>Reverse BFS,add each layer’s first element to result</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">rightSideView</span>(TreeNode root) {</div><div class="line">       List&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">       Queue&lt;TreeNode&gt; q = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">       q.offer(root);</div><div class="line">       <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">           <span class="keyword">int</span> size = q.size();</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++){</div><div class="line">               TreeNode cur = q.poll();</div><div class="line">               <span class="keyword">if</span>(i==<span class="number">0</span>){</div><div class="line">                   res.add(cur.val);</div><div class="line">               }</div><div class="line">               <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>){</div><div class="line">                   q.offer(cur.right);</div><div class="line">               }</div><div class="line">               <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>){</div><div class="line">                   q.offer(cur.left);</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> res;</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<h3 id="Recursive_Solution">Recursive Solution</h3>
+<ul>
+<li>Each depth of the tree only select one node.</li>
+<li>View depth is current size of result list.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">rightSideView</span>(TreeNode root) {</div><div class="line">    List&lt;Integer&gt; res= <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">    dfs(res, root, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;Integer&gt; res, TreeNode r, <span class="keyword">int</span> level){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(level==res.size()) {</div><div class="line">        res.add(r.val);</div><div class="line">    }</div><div class="line">    dfs(res, r.right, level+<span class="number">1</span>);</div><div class="line">    dfs(res, r.left, level+<span class="number">1</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Count_Complete_Tree_Nodes">Count Complete Tree Nodes</h2>
+<blockquote>
+<p>Given a complete binary tree, count the number of nodes.<br>Definition of a complete binary tree from Wikipedia:<br>In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.</p>
+</blockquote>
+<h3 id="Solution-2">Solution</h3>
+<ul>
+<li>Use bit manipulation, faster than Math.pow()</li>
+<li>Find the leftmost height and rightmost height, if equal just return the full nodes, if not continue to subtrees </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countNodes</span>(TreeNode root) {</div><div class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> left = getheight(root.left, <span class="string">"left"</span>);</div><div class="line">    <span class="keyword">int</span> right = getheight(root.right, <span class="string">"right"</span>);</div><div class="line">    <span class="keyword">if</span>(left==right) <span class="keyword">return</span> (<span class="number">2</span>&lt;&lt;left) - <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span> + countNodes(root.left) + countNodes(root.right);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getheight</span>(TreeNode root, String s){</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(s.equals(<span class="string">"left"</span>)){</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span> + getheight(root.left, <span class="string">"left"</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">else</span>{</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span> + getheight(root.right, <span class="string">"right"</span>);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>```</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tree/"> #Tree </a>
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/BFS/"> #BFS </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/19/4.11/">
+                Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/19/4.11/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/4.11/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Path_Sum">Path Sum</h2>
+<blockquote>
+<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.<br>For example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Given the below binary tree and sum = 22,</div><div class="line">              5</div><div class="line">             / <span class="command">\</span></div><div class="line">            4   8</div><div class="line">           /   / <span class="command">\</span></div><div class="line">          11  13  4</div><div class="line">         /  <span class="command">\ </span>     <span class="command">\</span></div><div class="line">        7    2      1</div></pre></td></tr></table></figure>
+
+<p>return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</p>
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/19/4.11/#more">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tree/"> #Tree </a>
+          
+            <a href="/tags/Recursion/"> #Recursion </a>
+          
+            <a href="/tags/DP/"> #DP </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/19/9.15/">
+                Clone Graph, Populating Next Right Pointers in Each Node, Populating Next Right Pointers in Each Node II, Word Ladder, Word Ladder II
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on 2015-09-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <a href="/categories/刷题/">刷题</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/19/9.15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/9.15/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Clone_Graph">Clone Graph</h2>
+<blockquote>
+<p>Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.<br>OJ’s undirected graph serialization:<br>Nodes are labeled uniquely.<br>We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.<br>As an example, consider the serialized graph {0,1,2#1,2#2,2}.<br>The graph has a total of three nodes, and therefore contains three parts as separated by #.<br>First node is labeled as 0. Connect node 0 to both nodes 1 and 2.<br>Second node is labeled as 1. Connect node 1 to node 2.<br>Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.<br>Visually, the graph looks like the following:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">  / <span class="command">\</span></div><div class="line"> /   <span class="command">\</span></div><div class="line">0 --- 2</div><div class="line">     / <span class="command">\</span></div><div class="line">     <span class="command">\_</span>/</div></pre></td></tr></table></figure>
+
+<h3 id="BFS_Solution">BFS Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span>(UndirectedGraphNode node) {</div><div class="line">       <span class="comment">// use a map to save cloned nodes</span></div><div class="line">       <span class="keyword">if</span>(node==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();</div><div class="line">       LinkedList&lt;UndirectedGraphNode&gt; q = <span class="keyword">new</span> LinkedList&lt;UndirectedGraphNode&gt;();</div><div class="line">       q.offer(node);</div><div class="line">       <span class="comment">// clone the root</span></div><div class="line">       map.put(node, <span class="keyword">new</span> UndirectedGraphNode(node.label));</div><div class="line">       <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">           UndirectedGraphNode cur = q.poll();</div><div class="line">           <span class="keyword">for</span> (UndirectedGraphNode neighbor : cur.neighbors) {</div><div class="line">               <span class="keyword">if</span>(!map.containsKey(neighbor)){</div><div class="line">                   map.put(neighbor, <span class="keyword">new</span> UndirectedGraphNode(neighbor.label));</div><div class="line">                   q.offer(neighbor);</div><div class="line">               }</div><div class="line">               map.get(cur).neighbors.add(map.get(neighbor));</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> map.get(node);</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Populating_Next_Right_Pointers_in_Each_Node">Populating Next Right Pointers in Each Node</h2>
+<blockquote>
+<p>Given a binary tree</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">    struct TreeLinkNode {</div><div class="line">      TreeLinkNode *left;</div><div class="line">      TreeLinkNode *right;</div><div class="line">      TreeLinkNode *next;</div><div class="line">    }</div><div class="line">Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be <span class="operator"><span class="keyword">set</span> <span class="keyword">to</span> <span class="literal">NULL</span>.</span></div><div class="line"><span class="keyword">Initially</span>, <span class="keyword">all</span> <span class="keyword">next</span> pointers <span class="keyword">are</span> <span class="keyword">set</span> <span class="keyword">to</span> <span class="literal">NULL</span>.</div><div class="line">Note:</div><div class="line">You may <span class="keyword">only</span> <span class="keyword">use</span> constant extra <span class="keyword">space</span>.</div><div class="line">You may assume that it <span class="keyword">is</span> a perfect <span class="built_in">binary</span> tree (ie, <span class="keyword">all</span> <span class="keyword">leaves</span> <span class="keyword">are</span> <span class="keyword">at</span> the same <span class="keyword">level</span>, <span class="keyword">and</span> every parent has two children).</div><div class="line"><span class="keyword">For</span> example,</div><div class="line">Given the following perfect <span class="built_in">binary</span> tree,</div><div class="line">         <span class="number">1</span></div><div class="line">       /  \</div><div class="line">      <span class="number">2</span>    <span class="number">3</span></div><div class="line">     / \  / \</div><div class="line">    <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span></div><div class="line"><span class="keyword">After</span> calling your <span class="keyword">function</span>, the tree should look <span class="keyword">like</span>:</div><div class="line">         <span class="number">1</span> -&gt; <span class="literal">NULL</span></div><div class="line">       /  \</div><div class="line">      <span class="number">2</span> -&gt; <span class="number">3</span> -&gt; <span class="literal">NULL</span></div><div class="line">     / \  / \</div><div class="line">    <span class="number">4</span>-&gt;<span class="number">5</span>-&gt;<span class="number">6</span>-&gt;<span class="number">7</span> -&gt; <span class="literal">NULL</span></div></pre></td></tr></table></figure>
+
+<h3 id="Two_pointer_Solution">Two pointer Solution</h3>
+<ul>
+<li>cur-keep the start of next level ; last-keep iterating the last level</li>
+<li>if last has left child, then child’s next=last.right</li>
+<li>if last has no left child, then reached leaf</li>
+<li>if last has next, then right child’s next=last.next.left</li>
+<li>if last has no next, we reached end of that layer</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span>(TreeLinkNode root) {</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        TreeLinkNode last = root; <span class="comment">//previous level pointer</span></div><div class="line">        TreeLinkNode cur = <span class="keyword">null</span>;<span class="comment">//current level head</span></div><div class="line">        <span class="keyword">while</span>(last!=<span class="keyword">null</span>){</div><div class="line">            <span class="keyword">if</span>(cur==<span class="keyword">null</span>){</div><div class="line">                cur=last.left;<span class="comment">//cur level head-leftmost subtree</span></div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(last.left!=<span class="keyword">null</span>){<span class="comment">//如果一个子节点是根节点的左子树，那么它的next就是该根节点的右子树</span></div><div class="line">                last.left.next=last.right;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(last.next!=<span class="keyword">null</span>){<span class="comment">//如果一个子节点是根节点的右子树，那么它的next就是该根节点next节点的左子树</span></div><div class="line">                last.right.next=last.next.left;</div><div class="line">                last=last.next;</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span>{</div><div class="line">                last=cur;</div><div class="line">                cur=<span class="keyword">null</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Populating_Next_Right_Pointers_in_Each_Node_II">Populating Next Right Pointers in Each Node II</h2>
+<blockquote>
+<p>Follow up for problem “Populating Next Right Pointers in Each Node”.<br>What if the given tree could be any binary tree? Would your previous solution still work?<br>Note:<br>You may only use constant extra space.<br>For example,</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given the following binary tree,</div><div class="line">         <span class="number">1</span></div><div class="line">       <span class="subst">/</span>  <span class="subst">\</span></div><div class="line">      <span class="number">2</span>    <span class="number">3</span></div><div class="line">     <span class="subst">/</span> <span class="subst">\</span>    <span class="subst">\</span></div><div class="line">    <span class="number">4</span>   <span class="number">5</span>    <span class="number">7</span></div><div class="line">After calling your function, the tree should look like:</div><div class="line">         <span class="number">1</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div><div class="line">       <span class="subst">/</span>  <span class="subst">\</span></div><div class="line">      <span class="number">2</span> <span class="subst">-&gt; </span><span class="number">3</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div><div class="line">     <span class="subst">/</span> <span class="subst">\</span>    <span class="subst">\</span></div><div class="line">    <span class="number">4</span><span class="subst">-&gt; </span><span class="number">5</span> <span class="subst">-&gt; </span><span class="number">7</span> <span class="subst">-&gt; </span><span class="built_in">NULL</span></div></pre></td></tr></table></figure>
+
+<h3 id="Four_Pointer_Solution">Four Pointer <a href="http://blog.csdn.net/linhuanmars/article/details/23499383" target="_blank" rel="external">Solution</a></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span>(TreeLinkNode root) {</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    TreeLinkNode lastHead = root; <span class="comment">//previous level head</span></div><div class="line">    TreeLinkNode pre = <span class="keyword">null</span>;<span class="comment">//current level pointer</span></div><div class="line">    TreeLinkNode curHead = <span class="keyword">null</span>;<span class="comment">//current level head</span></div><div class="line">    <span class="keyword">while</span>(lastHead!=<span class="keyword">null</span>)</div><div class="line">    {</div><div class="line">        TreeLinkNode lastCur = lastHead;<span class="comment">//previous level pointer</span></div><div class="line">        <span class="keyword">while</span>(lastCur != <span class="keyword">null</span>)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span>(lastCur.left!=<span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">if</span>(curHead == <span class="keyword">null</span>)</div><div class="line">                {</div><div class="line">                    curHead = lastCur.left;</div><div class="line">                    pre = curHead;</div><div class="line">                }</div><div class="line">                <span class="keyword">else</span></div><div class="line">                {</div><div class="line">                    pre.next = lastCur.left;</div><div class="line">                    pre = pre.next;</div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(lastCur.right!=<span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">if</span>(curHead == <span class="keyword">null</span>)</div><div class="line">                {</div><div class="line">                    curHead = lastCur.right;</div><div class="line">                    pre = curHead;</div><div class="line">                }</div><div class="line">                <span class="keyword">else</span></div><div class="line">                {</div><div class="line">                    pre.next = lastCur.right;</div><div class="line">                    pre = pre.next;</div><div class="line">                }</div><div class="line">            }                </div><div class="line">            lastCur = lastCur.next;</div><div class="line"></div><div class="line">        }</div><div class="line">        lastHead = curHead;</div><div class="line">        curHead = <span class="keyword">null</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Ladder_II">Word Ladder II</h2>
+<blockquote>
+<p>Word Ladder II My Submissions Question Solution<br>Total Accepted: 31002 Total Submissions: 234902 Difficulty: Hard<br>Given two words (beginWord and endWord), and a dictionary’s word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:<br>Only one letter can be changed at a time<br>Each intermediate word must exist in the word list<br>For example,<br>Given:<br>beginWord = “hit”<br>endWord = “cog”<br>wordList = [“hot”,”dot”,”dog”,”lot”,”log”]<br>Return<br>  [<br>    [“hit”,”hot”,”dot”,”dog”,”cog”],<br>    [“hit”,”hot”,”lot”,”log”,”cog”]<br>  ]<br>Note:<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.</p>
+</blockquote>
+<h3 id="BFS_+_DFS_Solution">BFS + DFS Solution</h3>
+<ul>
+<li>BFS once to find shortest path, stored all neighbors, and ladder map </li>
+<li>DFS to output shortest path, start from end, check each time to see if we are on the shortest path (ladder.get(s) == (ladder.get(end)-1))</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">findLadders</span>(String beginWord, String endWord, Set&lt;String&gt; wordList) {</div><div class="line">        HashMap&lt;String, List&lt;String&gt;&gt; neighbors = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line">        HashMap&lt;String, Integer&gt; ladder = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">        bfs(beginWord, endWord, wordList, neighbors, ladder);</div><div class="line">        List&lt;String&gt; path=<span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        List&lt;List&lt;String&gt;&gt; res= <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        dfs(neighbors, ladder, path, res, endWord, beginWord);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>( HashMap&lt;String, List&lt;String&gt;&gt; neighbors, HashMap&lt;String, Integer&gt; ladder, List&lt;String&gt; path, List&lt;List&lt;String&gt;&gt; res, String end, String start){</div><div class="line">        path.add(end);</div><div class="line">        <span class="keyword">if</span>(end.equals(start)){</div><div class="line">            Collections.reverse(path);</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(path));</div><div class="line">            Collections.reverse(path);</div><div class="line">            path.remove(path.size()-<span class="number">1</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        List&lt;String&gt; parents = neighbors.get(end);</div><div class="line">        <span class="keyword">for</span>(String s : parents){</div><div class="line">            <span class="keyword">if</span>(ladder.get(s) == (ladder.get(end)-<span class="number">1</span>)){</div><div class="line">                dfs(neighbors, ladder, path, res, s, start);</div><div class="line">            }            </div><div class="line">        }</div><div class="line">        path.remove(path.size()-<span class="number">1</span>);</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bfs</span>(String begin, String end, Set&lt;String&gt; wordlist, HashMap&lt;String, List&lt;String&gt;&gt; neighbors, HashMap&lt;String, Integer&gt; ladder){</div><div class="line">        wordlist.add(begin); wordlist.add(end);</div><div class="line">        LinkedList&lt;String&gt; q = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        q.offer(begin);</div><div class="line">        ladder.put(begin, <span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span>(String s : wordlist){<span class="comment">//create adjacency list for each word</span></div><div class="line">            neighbors.put(s, <span class="keyword">new</span> ArrayList&lt;String&gt;());</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span>(!q.isEmpty()){</div><div class="line">            String cur=q.poll();</div><div class="line">            ArrayList&lt;String&gt; nextlayer = findnext(cur, wordlist);</div><div class="line">            <span class="keyword">for</span>(String next : nextlayer){</div><div class="line">                neighbors.get(cur).add(next);<span class="comment">//add to adjacency list</span></div><div class="line">                <span class="keyword">if</span>(!ladder.containsKey(next)){<span class="comment">//update shortest path count </span></div><div class="line">                    ladder.put(next, ladder.get(cur) + <span class="number">1</span>);</div><div class="line">                    q.offer(next);</div><div class="line">                }</div><div class="line">                </div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;String&gt; <span class="title">findnext</span>(String cur, Set&lt;String&gt; wordlist){</div><div class="line">        ArrayList&lt;String&gt; nextlayer = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;cur.length();i++){</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>; c&lt;=<span class="string">'z'</span>; c++){</div><div class="line">                <span class="keyword">if</span>(!(cur.charAt(i)==c)){</div><div class="line">                    String next=cur.substring(<span class="number">0</span>,i) + c + cur.substring(i+<span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span>(wordlist.contains(next)) nextlayer.add(next);</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> nextlayer;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h3 id="Two_End_BFS_Solution">Two End BFS Solution</h3>
+<ul>
+<li>BFS from two end finds shortest path fast, stored in a map</li>
+<li>DFS to output shortest paths</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">findLadders</span>(String start, String end, Set&lt;String&gt; dict) {</div><div class="line">	<span class="comment">// hash set for both ends</span></div><div class="line">	Set&lt;String&gt; set1 = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">	Set&lt;String&gt; set2 = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// initial words in both ends</span></div><div class="line">	set1.add(start);</div><div class="line">	set2.add(end);</div><div class="line"></div><div class="line">	<span class="comment">// we use a map to help construct the final result</span></div><div class="line">	HashMap&lt;String, List&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// build the map</span></div><div class="line">	helper(dict, set1, set2, map, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">	List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">	List&lt;String&gt; sol = <span class="keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(start));</div><div class="line"></div><div class="line">	<span class="comment">// recursively build the final result</span></div><div class="line">	generateList(start, end, map, sol, res);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">boolean</span> helper(Set&lt;String&gt; dict, Set&lt;String&gt; set1, Set&lt;String&gt; set2, HashMap&lt;String, List&lt;String&gt;&gt; map, <span class="keyword">boolean</span> flip) {</div><div class="line">	<span class="keyword">if</span> (set1.isEmpty()) {</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (set1.size() &gt; set2.size()) {</div><div class="line">		<span class="keyword">return</span> helper(dict, set2, set1, map, !flip);</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">// remove words on current both ends from the dict</span></div><div class="line">	dict.removeAll(set1);</div><div class="line">	dict.removeAll(set2);</div><div class="line"></div><div class="line">	<span class="comment">// as we only need the shortest paths</span></div><div class="line">	<span class="comment">// we use a boolean value help early termination</span></div><div class="line">	<span class="keyword">boolean</span> done = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">	<span class="comment">// set for the next level</span></div><div class="line">	Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line"></div><div class="line">	<span class="comment">// for each string in end 1</span></div><div class="line">	<span class="keyword">for</span> (String str : set1) {</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++) {</div><div class="line">			<span class="comment">// change one character for every position</span></div><div class="line">			<span class="keyword">for</span> (<span class="keyword">char</span> ch = <span class="string">'a'</span>; ch &lt;= <span class="string">'z'</span>; ch++) {</div><div class="line">				<span class="keyword">char</span>[] chars = str.toCharArray();</div><div class="line">				chars[i] = ch;</div><div class="line">				String word = <span class="keyword">new</span> String(chars);</div><div class="line">				<span class="comment">// make sure we construct the tree in the correct direction</span></div><div class="line">				String key = flip ? word : str;</div><div class="line">				String val = flip ? str : word;</div><div class="line">				List&lt;String&gt; list = map.containsKey(key) ? map.get(key) : <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">				<span class="keyword">if</span> (set2.contains(word)) {</div><div class="line">					done = <span class="keyword">true</span>;</div><div class="line">					list.add(val);</div><div class="line">					map.put(key, list);</div><div class="line">				} </div><div class="line">				<span class="keyword">if</span> (!done && dict.contains(word)) {</div><div class="line">					set.add(word);</div><div class="line">					list.add(val);</div><div class="line">					map.put(key, list);</div><div class="line">				}</div><div class="line">			}</div><div class="line">		}</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="comment">// early terminate if done is true</span></div><div class="line">	<span class="keyword">return</span> done || helper(dict, set2, set, map, !flip);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> generateList(String start, String end, HashMap&lt;String, List&lt;String&gt;&gt; map, List&lt;String&gt; sol, List&lt;List&lt;String&gt;&gt; res) {</div><div class="line">	<span class="keyword">if</span> (start.equals(end)) {</div><div class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(sol));</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	<span class="comment">// need this check in case the diff between start and end happens to be one</span></div><div class="line">	<span class="comment">// e.g "a", "c", {"a", "b", "c"}</span></div><div class="line">	<span class="keyword">if</span> (!map.containsKey(start)) {</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	}</div><div class="line">	<span class="keyword">for</span> (String word : map.get(start)) {</div><div class="line">		sol.add(word);</div><div class="line">		generateList(word, end, map, sol, res);</div><div class="line">		sol.remove(sol.size() - <span class="number">1</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Graph/"> #Graph </a>
+          
+            <a href="/tags/BFS/"> #BFS </a>
+          
+            <a href="/tags/DFS/"> #DFS </a>
+          
+            <a href="/tags/Backtracking/"> #Backtracking </a>
+          
+            <a href="/tags/LinkedList/"> #LinkedList </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/17/9.14/">
                 Sort List, Insertion Sort List, Reverse Linked List, Palindrome Linked List, Delete Node in a Linked List, Remove Linked List Elements, Intersection of Two Linked Lists, Reorder List, Copy List with Random Pointer
               </a>
@@ -845,293 +1267,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/12/9.2/">
-                Valid Parentheses, Longest Valid Parentheses, Generate Parentheses, Letter Combinations of a Phone Number, Restore IP Addresses, Valid Sudoku
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-13
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/12/9.2/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/12/9.2/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Valid_Parentheses">Valid Parentheses</h2>
-<blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/12/9.2/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Math/"> #Math </a>
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/Stack/"> #Stack </a>
-          
-            <a href="/tags/Backtracking/"> #Backtracking </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/09/9.9/">
-                Find Minimum in Rotated Sorted Array, Find Minimum in Rotated Sorted Array II , Search in Rotated Sorted Array, Search in Rotated Sorted Array II, Search for a Range
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-10
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/09/9.9/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/09/9.9/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Find_Minimum_in_Rotated_Sorted_Array">Find Minimum in Rotated Sorted Array</h2>
-<blockquote>
-<p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.<br>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).<br>Find the minimum element.<br>You may assume no duplicate exists in the array.</p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/09/9.9/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/Binary-Search/"> #Binary Search </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/06/9.4/">
-                Sudoku Solver, N-Queens, N-Queens II
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on 2015-09-06
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <a href="/categories/刷题/">刷题</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/06/9.4/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/06/9.4/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="Sudoku_Solver">Sudoku Solver</h2>
-<blockquote>
-<p>Write a program to solve a Sudoku puzzle by filling the empty cells.<br>Empty cells are indicated by the character ‘.’.<br>You may assume that there will be only one unique solution.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="pic"><br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt="pic"></p>
-</blockquote>
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/06/9.4/#more">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Array/"> #Array </a>
-          
-            <a href="/tags/Recursion/"> #Recursion </a>
-          
-            <a href="/tags/Backtracking/"> #Backtracking </a>
-          
-        </div>
-      
-
-      
-
-      
-      
     </div>
   </div>
 
@@ -1172,7 +1307,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">56</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1186,7 +1321,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>

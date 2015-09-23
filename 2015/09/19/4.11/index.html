@@ -31,7 +31,7 @@
 
 
 
-  <title> Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum // Cici's Blog </title>
+  <title> Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers // Cici's Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
           
           
             
-              Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Minimum Path Sum
+              Path Sum, Path Sum II, Binary Tree Maximum Path Sum, Binary Tree Paths, Sum Root to Leaf Numbers
             
           
         </h1>
@@ -126,7 +126,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          Posted on 2015-04-18
+          Posted on 2015-09-20
         </span>
 
         
@@ -146,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/04/18/4.11/#comments" >
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/18/4.11/"></span>
+            <a href="/2015/09/19/4.11/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/4.11/"></span>
             </a>
           </span>
           
@@ -204,12 +204,24 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span>(TreeNode root) {</div><div class="line">    <span class="keyword">int</span>[] maxsofar = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</div><div class="line">    maxsofar[<span class="number">0</span>]= Integer.MIN_VALUE;</div><div class="line">    dfs(root,maxsofar);</div><div class="line">    <span class="keyword">return</span> maxsofar[<span class="number">0</span>];</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">dfs</span>(TreeNode r, <span class="keyword">int</span>[] maxsofar){</div><div class="line">    <span class="keyword">if</span>(r==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> left = dfs(r.left, maxsofar);</div><div class="line">    <span class="keyword">int</span> right = dfs(r.right, maxsofar);</div><div class="line">    <span class="keyword">int</span> arc = left + right + r.val;</div><div class="line">    <span class="keyword">int</span> single = Math.max(r.val, Math.max(left, right)+r.val);</div><div class="line">    maxsofar[<span class="number">0</span>] = Math.max(maxsofar[<span class="number">0</span>], Math.max(single,arc));</div><div class="line">    <span class="keyword">return</span> single;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="Minimum_Path_Sum">Minimum Path Sum</h2>
+<h2 id="Binary_Tree_Paths">Binary Tree Paths</h2>
 <blockquote>
-<p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.<br>Note: You can only move either down or right at any point in time.</p>
+<p>Given a binary tree, return all root-to-leaf paths.<br>For example, given the following binary tree:</p>
 </blockquote>
-<h3 id="DP_Solution">DP Solution</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minPathSum</span>(<span class="keyword">int</span>[][] grid) {</div><div class="line">    <span class="keyword">int</span> rows = grid.length;</div><div class="line">    <span class="keyword">int</span> cols = grid[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">int</span> sum[][] = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;rows;i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;cols;j++){</div><div class="line">            <span class="keyword">if</span>(i==<span class="number">0</span>&&j==<span class="number">0</span>){</div><div class="line">                sum[i][j] = grid[i][j];</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(i==<span class="number">0</span>&&j!=<span class="number">0</span>){</div><div class="line">                sum[i][j] = sum[i][j-<span class="number">1</span>]+grid[i][j];</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span>&&j==<span class="number">0</span>){</div><div class="line">                sum[i][j] = sum[i-<span class="number">1</span>][j]+grid[i][j];</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span>&&j!=<span class="number">0</span>){</div><div class="line">                <span class="keyword">int</span> a = sum[i-<span class="number">1</span>][j]+grid[i][j];</div><div class="line">                <span class="keyword">int</span> b = sum[i][j-<span class="number">1</span>]+grid[i][j];</div><div class="line">                sum[i][j] = Math.min(a,b);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> sum[rows-<span class="number">1</span>][cols-<span class="number">1</span>];</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">   <span class="number">1</span></div><div class="line"> /   \</div><div class="line"><span class="number">2</span>     <span class="number">3</span></div><div class="line"> \</div><div class="line">  <span class="number">5</span></div><div class="line"><span class="keyword">All</span> root-<span class="keyword">to</span>-leaf paths are:</div><div class="line">[<span class="string">"1-&gt;2-&gt;5"</span>, <span class="string">"1-&gt;3"</span>]</div></pre></td></tr></table></figure>
+
+<h3 id="Solution">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;String&gt; <span class="title">binaryTreePaths</span>(TreeNode root) {</div><div class="line">    List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> res;</div><div class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">    dfs(root, res, sb);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">}</div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span>(TreeNode root, List&lt;String&gt; res, StringBuilder sb){</div><div class="line">    <span class="keyword">if</span>(root.left==<span class="keyword">null</span> && root.right==<span class="keyword">null</span>){</div><div class="line">        sb.append(root.val);</div><div class="line">        res.add(sb.toString());</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    }</div><div class="line">    sb.append(root.val);</div><div class="line">    sb.append(<span class="string">"-&gt;"</span>);</div><div class="line">    <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>){</div><div class="line">        dfs(root.left, res, <span class="keyword">new</span> StringBuilder(sb));</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>){</div><div class="line">        dfs(root.right, res, <span class="keyword">new</span> StringBuilder(sb));</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Sum_Root_to_Leaf_Numbers">Sum Root to Leaf Numbers</h2>
+<blockquote>
+<p>Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.<br>An example is the root-to-leaf path 1-&gt;2-&gt;3 which represents the number 123.<br>Find the total sum of all root-to-leaf numbers.<br>For example,</p>
+</blockquote>
+<pre><code>1
+</code></pre><p>   / \<br>  2   3<br>The root-to-leaf path 1-&gt;2 represents the number 12.<br>The root-to-leaf path 1-&gt;3 represents the number 13.<br>Return the sum = 12 + 13 = 25.</p>
+<h3 id="Solution-1">Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumNumbers</span>(TreeNode root) {</div><div class="line">       ArrayList&lt;Integer&gt; path=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">       List&lt;List&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">       <span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">       dfs(root, path, res);</div><div class="line">       <span class="keyword">return</span> getsum(res);</div><div class="line">   }</div><div class="line">   </div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(TreeNode cur, ArrayList&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res){</div><div class="line">       path.add(cur.val);</div><div class="line">       <span class="keyword">if</span>(cur.left==<span class="keyword">null</span> && cur.right==<span class="keyword">null</span>){</div><div class="line">           res.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;(path));</div><div class="line">           path.remove(path.size()-<span class="number">1</span>);</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(cur.left!=<span class="keyword">null</span>){</div><div class="line">           dfs(cur.left, path, res);</div><div class="line">       }</div><div class="line">       <span class="keyword">if</span>(cur.right!=<span class="keyword">null</span>){</div><div class="line">           dfs(cur.right, path, res);</div><div class="line">       }</div><div class="line">       path.remove(path.size()-<span class="number">1</span>);</div><div class="line">   }</div><div class="line">   </div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getsum</span>(List&lt;List&lt;Integer&gt;&gt; res){</div><div class="line">       <span class="keyword">int</span> sum=<span class="number">0</span>;</div><div class="line">       <span class="keyword">for</span>(List&lt;Integer&gt; path: res){</div><div class="line">           <span class="keyword">int</span> subsum=<span class="number">0</span>;</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;path.size();i++){</div><div class="line">               subsum=<span class="number">10</span>*subsum+path.get(i);</div><div class="line">           }</div><div class="line">           sum+=subsum;</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> sum;</div><div class="line">   }</div></pre></td></tr></table></figure>
 
 <iframe width="100%" height="160" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Flanarey%2Flana-del-rey-lucky-ones-demo&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=true"></iframe>
 
@@ -233,13 +245,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/01/Paganini/">Niccolo Paganini Selected Works</a>
+              <a href="/2015/09/23/9.16/">Lowest Common Ancestor of a Binary Search Tree, Lowest Common Ancestor of a Binary Tree, Invert Binary Tree, Kth Smallest Element in a BST, Binary Tree Right Side View, Count Complete Tree Nodes</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/16/4.10/">Validate Binary Search Tree， Unique Binary Search Trees, Unique Binary Search Trees II, Binary Tree Preorder Traversal,Binary Tree Inorder Traversal ,Binary Tree Postorder Traversal, Binary Tree Zigzag Level Order Traversal, Binary Search Tree Iterator</a>
+              <a href="/2015/09/19/9.15/">Clone Graph, Populating Next Right Pointers in Each Node, Populating Next Right Pointers in Each Node II, Word Ladder, Word Ladder II</a>
             
           </div>
         </div>
@@ -300,7 +312,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">56</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -314,7 +326,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
@@ -359,7 +371,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path_Sum"><span class="nav-number">1.</span> <span class="nav-text">Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Recursive Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">1.2.</span> <span class="nav-text">Iterative Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path_Sum_II"><span class="nav-number">2.</span> <span class="nav-text">Path Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary_Tree_Maximum_Path_Sum"><span class="nav-number">3.</span> <span class="nav-text">Binary Tree Maximum Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_+_DP_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">DFS + DP Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minimum_Path_Sum"><span class="nav-number">4.</span> <span class="nav-text">Minimum Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DP_Solution"><span class="nav-number">4.1.</span> <span class="nav-text">DP Solution</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path_Sum"><span class="nav-number">1.</span> <span class="nav-text">Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive_Solution"><span class="nav-number">1.1.</span> <span class="nav-text">Recursive Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative_Solution"><span class="nav-number">1.2.</span> <span class="nav-text">Iterative Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path_Sum_II"><span class="nav-number">2.</span> <span class="nav-text">Path Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_Solution"><span class="nav-number">2.1.</span> <span class="nav-text">DFS Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary_Tree_Maximum_Path_Sum"><span class="nav-number">3.</span> <span class="nav-text">Binary Tree Maximum Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS_+_DP_Solution"><span class="nav-number">3.1.</span> <span class="nav-text">DFS + DP Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary_Tree_Paths"><span class="nav-number">4.</span> <span class="nav-text">Binary Tree Paths</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">4.1.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sum_Root_to_Leaf_Numbers"><span class="nav-number">5.</span> <span class="nav-text">Sum Root to Leaf Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">5.1.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -932,8 +944,8 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'sunbingjie';
-      var disqus_identifier = '2015/04/18/4.11/';
-      var disqus_url = 'http://sunbingjie.tk/2015/04/18/4.11/';
+      var disqus_identifier = '2015/09/19/4.11/';
+      var disqus_url = 'http://sunbingjie.tk/2015/09/19/4.11/';
 
       (function(){
         var dsq = document.createElement('script');
