@@ -4,7 +4,7 @@
   
   <link href="//atom.xml" rel="self"/>
   <link href="http://sunbingjie.tk/"/>
-  <updated>2015-09-23T21:06:57.651Z</updated>
+  <updated>2015-09-25T00:57:01.325Z</updated>
   <id>http://sunbingjie.tk/</id>
   
   <author>
@@ -13,6 +13,79 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Palindrome Partitioning, Palindrome Partitioning II, Word Break, Word Break, Word Break II]]></title>
+    <link href="http://sunbingjie.tk/2015/09/24/9.17/"/>
+    <id>http://sunbingjie.tk/2015/09/24/9.17/</id>
+    <published>2015-09-25T00:56:29.000Z</published>
+    <updated>2015-09-25T00:56:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Palindrome_Partitioning">Palindrome Partitioning</h2>
+<blockquote>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.<br>Return all possible palindrome partitioning of s.<br>For example, given s = “aab”,<br>Return</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="string">"aa"</span>,<span class="string">"b"</span>],</div><div class="line">  [<span class="string">"a"</span>,<span class="string">"a"</span>,<span class="string">"b"</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<a id="more"></a>
+<h3 id="Solution">Solution</h3>
+<ul>
+<li>template dfs, for each string try to cut from 0 to s.length</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;List&lt;String&gt;&gt; <span class="title">partition</span>(String s) {</div><div class="line">    	List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;(); </div><div class="line">    	List&lt;String&gt; tmp = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">    	dfs(res, s, tmp);</div><div class="line">    	<span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(List&lt;List&lt;String&gt;&gt; res, String s, List&lt;String&gt; tmp){</div><div class="line">    	<span class="keyword">if</span>(s.length()==<span class="number">0</span>){</div><div class="line">    		res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(tmp));</div><div class="line">    		<span class="keyword">return</span>;</div><div class="line">    	}</div><div class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length(); i++){</div><div class="line">    		<span class="keyword">if</span>(isPalin(s.substring(<span class="number">0</span>, i+<span class="number">1</span>))){</div><div class="line">    			tmp.add(s.substring(<span class="number">0</span>, i+<span class="number">1</span>));</div><div class="line">    			dfs(res, s.substring(i+<span class="number">1</span>), tmp);</div><div class="line">    			tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">    		}</div><div class="line">    	}</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPalin</span>(String s){</div><div class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length()/<span class="number">2</span>; i++){</div><div class="line">    		<span class="keyword">if</span>(s.charAt(i) != s.charAt(s.length()-<span class="number">1</span>-i)) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    	}</div><div class="line">    	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Palindrome_Partitioning_II">Palindrome Partitioning II</h2>
+<blockquote>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.<br>Return the minimum cuts needed for a palindrome partitioning of s.<br>For example, given s = “aab”,<br>Return 1 since the palindrome partitioning [“aa”,”b”] could be produced using 1 cut.</p>
+</blockquote>
+<h3 id="DP_Solution_O(n^2)">DP Solution O(n^2)</h3>
+<ul>
+<li>dp[i] records the minimun cuts for substr[0,i]</li>
+<li>isP[i][j] records if [i,j] is palindrome</li>
+<li>for each char, set to be one cut per char first, then check if contains previous palindrome substrs(including itself as a palindrome) </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minCut</span>(String s) {</div><div class="line">       <span class="keyword">int</span> n = s.length();</div><div class="line">       <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">       <span class="keyword">boolean</span>[][] isP = <span class="keyword">new</span> <span class="keyword">boolean</span>[n][n];</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++){</div><div class="line">           dp[i]=i;</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=i; j&gt;=<span class="number">0</span>; j--){</div><div class="line">               <span class="keyword">if</span>(s.charAt(i)==s.charAt(j) && ((i-j)&lt;<span class="number">2</span> || isP[j+<span class="number">1</span>][i-<span class="number">1</span>])){<span class="comment">//[i,j]is palindrom, s.i must equal s.j</span></div><div class="line">                   isP[j][i]=<span class="keyword">true</span>;</div><div class="line">                   <span class="keyword">if</span>(j==<span class="number">0</span>){<span class="comment">//if is palindrome from start of s</span></div><div class="line">                       dp[i]=<span class="number">0</span>;</div><div class="line">                   }</div><div class="line">                   <span class="keyword">else</span>{<span class="comment">//else take cut before j</span></div><div class="line">                       dp[i]=Math.min(dp[j-<span class="number">1</span>]+<span class="number">1</span>, dp[i]);</div><div class="line">                   }</div><div class="line">               }</div><div class="line">           }</div><div class="line">       }</div><div class="line">       <span class="keyword">return</span> dp[n-<span class="number">1</span>];</div><div class="line">   }</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Break">Word Break</h2>
+<blockquote>
+<p>Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.<br>For example, given<br>s = “leetcode”,<br>dict = [“leet”, “code”].<br>Return true because “leetcode” can be segmented as “leet code”.</p>
+</blockquote>
+<h3 id="1D_DP_Solution">1D DP Solution</h3>
+<ul>
+<li>for each i, take substring [j&lt;=i,i] and check if in set. If yes, and j==0(first match), or dp[j-1]=true(previous string is valid), we can set dp[i] to true</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span>(String s, Set&lt;String&gt; wordDict) {</div><div class="line">    <span class="keyword">boolean</span>[] dp=<span class="keyword">new</span> <span class="keyword">boolean</span>[s.length()];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=i;j++){</div><div class="line">            String tmp = s.substring(j,i+<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(wordDict.contains(tmp) && (j==<span class="number">0</span> || dp[j-<span class="number">1</span>])){</div><div class="line">                dp[i]=<span class="keyword">true</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> dp[s.length()-<span class="number">1</span>];</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Word_Break_II">Word Break II</h2>
+<blockquote>
+<p>Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.<br>Return all such possible sentences.<br>For example, given<br>s = “catsanddog”,<br>dict = [“cat”, “cats”, “and”, “sand”, “dog”].<br>A solution is [“cats and dog”, “cat sand dog”].</p>
+</blockquote>
+<h3 id="DP_Check_+_DFS_Output_Solution">DP Check + DFS Output Solution</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;String&gt; <span class="title">wordBreak</span>(String s, Set&lt;String&gt; wordDict) {</div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">boolean</span>[] cancut = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++){</div><div class="line">	        <span class="keyword">if</span>(wordDict.contains(s.substring(<span class="number">0</span>,i+<span class="number">1</span>))){</div><div class="line">	            cancut[i]=<span class="keyword">true</span>;</div><div class="line">	            <span class="keyword">continue</span>;</div><div class="line">	        }</div><div class="line">	        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=i;j++){</div><div class="line">	            <span class="keyword">if</span>(wordDict.contains(s.substring(j, i+<span class="number">1</span>)) && cancut[j-<span class="number">1</span>]){</div><div class="line">	                cancut[i]=<span class="keyword">true</span>;</div><div class="line">	            }</div><div class="line">	        }</div><div class="line">	    }</div><div class="line">	    <span class="keyword">if</span>(!cancut[s.length()-<span class="number">1</span>]) <span class="keyword">return</span> res;</div><div class="line">	    </div><div class="line">        dfs(wordDict, res, <span class="keyword">new</span> ArrayList&lt;String&gt;(), s, <span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    }</div><div class="line">    </div><div class="line">	    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span>(Set&lt;String&gt; dict, List&lt;String&gt; res, List&lt;String&gt; tmp, String s, <span class="keyword">int</span> start){</div><div class="line">	        <span class="keyword">for</span>(<span class="keyword">int</span> i=start; i&lt;s.length(); i++){</div><div class="line">	            String cur = s.substring(start, i+<span class="number">1</span>);</div><div class="line">	            <span class="keyword">if</span>(dict.contains(cur)){</div><div class="line">	                tmp.add(cur);</div><div class="line">	                <span class="keyword">if</span>(i==(s.length()-<span class="number">1</span>)){</div><div class="line">	                    String each=<span class="string">""</span>;</div><div class="line">	                    <span class="keyword">for</span>(String word : tmp){</div><div class="line">	                    	each= each +<span class="string">" "</span> +word;</div><div class="line">	                    }</div><div class="line">	                    res.add(each.trim());</div><div class="line">	                    </div><div class="line">	                }</div><div class="line">	                <span class="keyword">else</span>{</div><div class="line">	                    dfs(dict, res, tmp, s, i+<span class="number">1</span>);</div><div class="line">	                }</div><div class="line">	                tmp.remove(tmp.size()-<span class="number">1</span>);</div><div class="line">	            }</div><div class="line">	        }</div><div class="line">	    }</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Palindrome_Partitioning">Palindrome Partitioning</h2>
+<blockquote>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.<br>Return all possible palindrome partitioning of s.<br>For example, given s = “aab”,<br>Return</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [<span class="string">"aa"</span>,<span class="string">"b"</span>],</div><div class="line">  [<span class="string">"a"</span>,<span class="string">"a"</span>,<span class="string">"b"</span>]</div><div class="line">]</div></pre></td></tr></table></figure>
+
+]]>
+    
+    </summary>
+    
+      <category term="Backtracking" scheme="http://sunbingjie.tk/tags/Backtracking/"/>
+    
+      <category term="String" scheme="http://sunbingjie.tk/tags/String/"/>
+    
+      <category term="DP" scheme="http://sunbingjie.tk/tags/DP/"/>
+    
+      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Lowest Common Ancestor of a Binary Search Tree, Lowest Common Ancestor of a Binary Tree, Invert Binary Tree, Kth Smallest Element in a BST, Binary Tree Right Side View, Count Complete Tree Nodes]]></title>
@@ -1655,41 +1728,6 @@
       <category term="Math" scheme="http://sunbingjie.tk/tags/Math/"/>
     
       <category term="BitManipulation" scheme="http://sunbingjie.tk/tags/BitManipulation/"/>
-    
-      <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Swap Nodes in Pairs]]></title>
-    <link href="http://sunbingjie.tk/2015/08/24/8.15/"/>
-    <id>http://sunbingjie.tk/2015/08/24/8.15/</id>
-    <published>2015-08-24T18:44:51.000Z</published>
-    <updated>2015-08-24T18:44:51.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
-<blockquote>
-<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="Solution_In-Place">Solution In-Place</h3>
-<ul>
-<li>Use a dummyhead to avoid dealin with null cases, as usual</li>
-<li>Keep track of the first node in next pair</li>
-<li>Termination conditions: take care of odd and even node number cases</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ListNode <span class="title">swapPairs</span>(ListNode head) {</div><div class="line">	ListNode dummyhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	dummyhead.next = head; <span class="comment">//use dummyhead to deal with null case</span></div><div class="line">	ListNode first = dummyhead;</div><div class="line">	ListNode second =head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(second!=<span class="keyword">null</span> && second.next!=<span class="keyword">null</span>){<span class="comment">//when second is null (odd), or second next is null(even)</span></div><div class="line">	ListNode tmp = second.next.next; <span class="comment">//record next start</span></div><div class="line">	second.next.next = second; <span class="comment">//reverse</span></div><div class="line">	first.next = second.next; <span class="comment">// link to second</span></div><div class="line">	second.next = tmp; <span class="comment">// link to next start</span></div><div class="line">	first=second; <span class="comment">// move to next</span></div><div class="line">	second = second.next; <span class="comment">//move to next</span></div><div class="line">	}</div><div class="line">	<span class="keyword">return</span> dummyhead.next;</div><div class="line">	}</div></pre></td></tr></table></figure>
-
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Swap_Nodes_in_Pairs">Swap Nodes in Pairs</h2>
-<blockquote>
-<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
-</blockquote>
-]]>
-    
-    </summary>
-    
-      <category term="LinkedList" scheme="http://sunbingjie.tk/tags/LinkedList/"/>
     
       <category term="刷题" scheme="http://sunbingjie.tk/categories/%E5%88%B7%E9%A2%98/"/>
     
